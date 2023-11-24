@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://da0knsa3x3m8s"]
+[gd_scene load_steps=3 format=3 uid="uid://da0knsa3x3m8s"]
 
 [ext_resource type="Script" path="res://modules/remi/character.gd" id="1_80owj"]
+[ext_resource type="Script" path="res://modules/corentin/CharacterHPBar.gd" id="2_o6s42"]
 
 [node name="Character" type="Node2D" groups=["character"]]
 script = ExtResource("1_80owj")
@@ -60,3 +61,11 @@ size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 text = "- 1"
 horizontal_alignment = 1
+
+[node name="CharacterHPBar" type="TextureProgressBar" parent="."]
+offset_left = 183.0
+offset_top = 268.0
+offset_right = 561.0
+offset_bottom = 308.0
+step = 0.0
+script = ExtResource("2_o6s42")
