@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1umdg88cpgjm"
-path="res://.godot/imported/Sliminou_corps_attaqueparlejoueur.svg-ba293561b91a1df6a5ea6d7775e65235.ctex"
+uid="uid://bw6m8kmei6wro"
+path="res://.godot/imported/sliminou_corps_attaqueparlejoueur.svg-f87213d18e35e1671944b2a9ea6aef1b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/aurelie/assets/graphics/Sliminou_corps_attaqueparlejoueur.svg"
-dest_files=["res://.godot/imported/Sliminou_corps_attaqueparlejoueur.svg-ba293561b91a1df6a5ea6d7775e65235.ctex"]
+source_file="res://modules/aurelie/assets/graphics/sliminou_corps_attaqueparlejoueur.svg"
+dest_files=["res://.godot/imported/sliminou_corps_attaqueparlejoueur.svg-f87213d18e35e1671944b2a9ea6aef1b.ctex"]
 
 [params]
 
