@@ -8,7 +8,7 @@ func hit(damage_points : float):
 	life_points -= damage_points
 	_hit_label_animation.call_deferred(damage_points)
 	_hit_color_rect_animation.call_deferred() # also checks for character death
-	# TODO: SLIGHT CAM SHAKE
+	# TODO: SLIGHT CAMERA SHAKE
 
 func heal(heal_points : float):
 	life_points = min(life_points + heal_points, max_life_points)
@@ -18,9 +18,9 @@ func heal(heal_points : float):
 # private
 
 ## state
-var max_life_points : float = 5.0
-var life_points : float = 5.0
-var damage_per_attack : float = 5.0
+var max_life_points : float = 10.0
+var life_points : float = 10.0
+var damage_per_attack : float = 1.0
 
 func _ready():
 	pass
@@ -42,8 +42,8 @@ func _hit_label_animation(damage_points : float):
 	# anim
 	if tween_label_hit != null:
 		tween_label_hit.kill()
-	tween_label_hit = get_tree().create_tween()
-	tween_label_hit.tween_property(label_hit, "position:y", label_hit_initial_position_y + 20.0, 1.0).set_trans(Tween.TRANS_CUBIC)
+	tween_label_hit = create_tween()
+	tween_label_hit.tween_property(label_hit, "position:y", label_hit_initial_position_y - 20.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 	tween_label_hit.parallel().tween_property(label_hit, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 	tween_label_hit.tween_callback(label_hit.hide)
 
@@ -57,17 +57,25 @@ func _hit_color_rect_animation():
 	# anim
 	if tween_color_rect_hit != null:
 		tween_color_rect_hit.kill()
-	tween_color_rect_hit = get_tree().create_tween()
-	tween_color_rect_hit.tween_property(color_rect_hit, "color:a", 1.0, .125).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_hit = create_tween()
+	tween_color_rect_hit.tween_property(color_rect_hit, "color:a", 0.5, .125).set_trans(Tween.TRANS_CUBIC)
 	tween_color_rect_hit.tween_property(color_rect_hit, "color:a", 0.0, .125).set_trans(Tween.TRANS_CUBIC)
 	tween_color_rect_hit.set_loops(4)
 	tween_color_rect_hit.tween_callback(color_rect_hit.hide)
 	tween_color_rect_hit.tween_callback(_attempt_dying)
-	# death ?
 
 func _attempt_dying():
 	if life_points <= 0:
-		# TODO: SPECIFIC ANIMATION FOR DEATH
+		# init
+		color_rect_hit.color.a = 0.0
+		color_rect_hit.show()
+		# anim
+		if tween_color_rect_hit != null:
+			tween_color_rect_hit.kill()
+		tween_color_rect_hit = create_tween()
+		tween_color_rect_hit.tween_property(color_rect_hit, "color:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+		await tween_color_rect_hit.finished
+		# signal
 		just_died.emit()
 
 @onready var label_heal : Label = $CanvasLayer/LabelHeal
@@ -83,8 +91,8 @@ func _heal_label_animation(heal_points : float):
 	# anim
 	if tween_label_hit != null:
 		tween_label_hit.kill()
-	tween_label_hit = get_tree().create_tween()
-	tween_label_hit.tween_property(label_heal, "position:y", label_heal_initial_position_y + 20.0, 1.0).set_trans(Tween.TRANS_CUBIC)
+	tween_label_hit = create_tween()
+	tween_label_hit.tween_property(label_heal, "position:y", label_heal_initial_position_y - 20.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 	tween_label_hit.parallel().tween_property(label_heal, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 	tween_label_hit.tween_callback(label_heal.hide)
 
@@ -98,8 +106,8 @@ func _heal_color_rect_animation():
 	# anim
 	if tween_color_rect_heal != null:
 		tween_color_rect_heal.kill()
-	tween_color_rect_heal = get_tree().create_tween()
-	tween_color_rect_heal.tween_property(color_rect_heal, "color:a", 1.0, .125).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_heal = create_tween()
+	tween_color_rect_heal.tween_property(color_rect_heal, "color:a", 0.5, .125).set_trans(Tween.TRANS_CUBIC)
 	tween_color_rect_heal.tween_property(color_rect_heal, "color:a", 0.0, .125).set_trans(Tween.TRANS_CUBIC)
 	tween_color_rect_heal.set_loops(4)
 	tween_color_rect_heal.tween_callback(color_rect_heal.hide)

@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmp4bci62aaou"]
+
+[ext_resource type="Script" path="res://modules/odilon/mob_enter_name/mob_enter_name.gd" id="1_nuls4"]
+[ext_resource type="Texture2D" uid="uid://bg8r1e26ohqqj" path="res://modules/remi/assets/graphics/hand_man__body_normal.svg" id="2_kv2dn"]
+[ext_resource type="Texture2D" uid="uid://cxqgypsuxwr8l" path="res://modules/remi/assets/graphics/hand_man__body_attacking.svg" id="3_di7ni"]
+[ext_resource type="PackedScene" uid="uid://bfbltf7jwewhc" path="res://modules/odilon/mob_enter_name/hand.tscn" id="4_8bcr1"]
+
+[node name="MobEnterName" type="Node2D"]
+script = ExtResource("1_nuls4")
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Sprite2DNormal" type="Sprite2D" parent="Body"]
+texture = ExtResource("2_kv2dn")
+
+[node name="Sprite2DAttacking" type="Sprite2D" parent="Body"]
+visible = false
+texture = ExtResource("3_di7ni")
+
+[node name="Hands" type="Node2D" parent="."]
+
+[node name="Hand" parent="Hands" instance=ExtResource("4_8bcr1")]
+position = Vector2(365, -124)
+
+[node name="Hand2" parent="Hands" instance=ExtResource("4_8bcr1")]
+position = Vector2(-347, -96)
+
+[node name="Hand3" parent="Hands" instance=ExtResource("4_8bcr1")]
+position = Vector2(285, 119)
+
+[node name="Hand4" parent="Hands" instance=ExtResource("4_8bcr1")]
+position = Vector2(-242, 169)

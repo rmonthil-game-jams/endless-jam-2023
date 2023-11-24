@@ -1,0 +1,42 @@
+[gd_scene load_steps=9 format=3 uid="uid://hdvoneu7k137"]
+
+[ext_resource type="Texture2D" uid="uid://dip4ghhw23a64" path="res://modules/remi/assets/graphics/hand_man__hand.svg" id="1_hbi7p"]
+[ext_resource type="Texture2D" uid="uid://brt5i0horr6qy" path="res://modules/remi/assets/graphics/hand_man__mouth_open_normal.svg" id="2_771m4"]
+[ext_resource type="Texture2D" uid="uid://bnkxaxwvl81cq" path="res://modules/remi/assets/graphics/hand_man__mouth_open_pressed.svg" id="3_al1fi"]
+[ext_resource type="Texture2D" uid="uid://3ioykabejrdg" path="res://modules/remi/assets/graphics/hand_man__mouth_open_hover.svg" id="4_pmnsv"]
+[ext_resource type="Texture2D" uid="uid://b2mi6jw0rr32n" path="res://modules/remi/assets/graphics/hand_man__mouth_closed.svg" id="5_eo31h"]
+[ext_resource type="Texture2D" uid="uid://d2ett7u22pw7y" path="res://modules/remi/assets/graphics/hand_man__mouth_kissed_normal.svg" id="6_rp1cq"]
+[ext_resource type="Texture2D" uid="uid://dcdgge5yfyoih" path="res://modules/remi/assets/graphics/hand_man__mouth_kissed_pressed.svg" id="7_fggfq"]
+[ext_resource type="Texture2D" uid="uid://cf1x0ddug2wd3" path="res://modules/remi/assets/graphics/hand_man__mouth_kissed_hover.svg" id="8_2vmfb"]
+
+[node name="Hand" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_hbi7p")
+
+[node name="TextureButtonOpen" type="TextureButton" parent="."]
+offset_left = -103.0
+offset_top = -70.0
+offset_right = 116.0
+offset_bottom = 156.0
+texture_normal = ExtResource("2_771m4")
+texture_pressed = ExtResource("3_al1fi")
+texture_hover = ExtResource("4_pmnsv")
+
+[node name="TextureButtonClosed" type="TextureButton" parent="."]
+visible = false
+offset_left = -108.0
+offset_top = -51.0
+offset_right = 123.0
+offset_bottom = 57.0
+texture_normal = ExtResource("5_eo31h")
+
+[node name="TextureButtonAttacking" type="TextureButton" parent="."]
+visible = false
+offset_left = -102.0
+offset_top = -71.0
+offset_right = 105.0
+offset_bottom = 80.0
+texture_normal = ExtResource("6_rp1cq")
+texture_pressed = ExtResource("7_fggfq")
+texture_hover = ExtResource("8_2vmfb")

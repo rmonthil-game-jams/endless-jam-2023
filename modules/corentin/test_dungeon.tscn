@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://buwh6h4m35fa"]
+
+[ext_resource type="Script" path="res://modules/corentin/test_dungeon.gd" id="1_i2ucf"]
+[ext_resource type="PackedScene" uid="uid://cxiulyfkfcfd4" path="res://modules/corentin/mob_enter_name/mob_enter_name.tscn" id="2_0genx"]
+[ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_e6tvr"]
+[ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_wdgi3"]
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource("1_i2ucf")
+MOB_SCENES = Array[PackedScene]([ExtResource("2_0genx")])
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+position = Vector2(0, 53)
+texture = ExtResource("2_e6tvr")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background"]
+scale = Vector2(0.444278, 0.463389)
+texture = ExtResource("2_e6tvr")
+
+[node name="RoomContent" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Character" parent="." instance=ExtResource("3_wdgi3")]
+
+[connection signal="just_died" from="Character" to="." method="_on_character_just_died"]
