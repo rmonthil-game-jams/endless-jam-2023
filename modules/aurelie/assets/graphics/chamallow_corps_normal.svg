@@ -2,17 +2,31 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="104.17513mm"
    height="95.106377mm"
    viewBox="0 0 104.17512 95.106377"
    version="1.1"
    id="svg1"
-   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
-   sodipodi:docname="chamallow_corps_normal.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="chamallow_corps_normal.svg">
+  <metadata
+     id="metadata26">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
   <sodipodi:namedview
      id="namedview1"
      pagecolor="#ffffff"
@@ -23,15 +37,16 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.38049603"
-     inkscape:cx="186.59853"
-     inkscape:cy="232.59112"
-     inkscape:window-width="956"
-     inkscape:window-height="1037"
-     inkscape:window-x="960"
-     inkscape:window-y="0"
+     inkscape:zoom="1.0762053"
+     inkscape:cx="150.70314"
+     inkscape:cy="175.50918"
+     inkscape:window-width="1853"
+     inkscape:window-height="1025"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     showgrid="false" />
   <defs
      id="defs1">
     <clipPath
@@ -66,7 +81,7 @@
        sodipodi:cx="-85.570404"
        sodipodi:type="arc"
        id="path1130-0-2-3-1-3"
-       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.33362;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.58867186;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        sodipodi:arc-type="slice" />
     <path
        inkscape:transform-center-y="12.777234"
@@ -81,7 +96,7 @@
        sodipodi:cx="102.90677"
        sodipodi:type="arc"
        id="path1130-0-2-0-6"
-       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.33362;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.58867186;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        sodipodi:arc-type="slice" />
     <rect
        clip-path="none"
@@ -92,7 +107,7 @@
        height="86.024605"
        width="77.047516"
        id="rect829-0-2-7"
-       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.51437;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.5875;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <rect
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.556075;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.743719"
        id="rect829-0-9-0-3-3"
@@ -178,7 +193,7 @@
        inkscape:connector-curvature="0"
        id="path1128-6-9"
        d="m 102.65207,123.57232 c 7.36392,4.02087 7.85686,2.59795 13.28582,-0.41518"
-       style="fill:none;stroke:#000000;stroke-width:0.999792;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:none;stroke:#000000;stroke-width:1.5875;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <path
        d="m 107.51566,173.73592 a 7.9955683,7.7649765 0 0 1 -7.932451,7.76473 7.9955683,7.7649765 0 0 1 -8.057685,-7.64215 l 7.994572,-0.12258 z"
        sodipodi:end="3.1258055"
@@ -189,7 +204,7 @@
        sodipodi:cx="99.520096"
        sodipodi:type="arc"
        id="path1130-5-3"
-       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:0.777617;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.5875;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        sodipodi:arc-type="slice" />
     <path
        d="m 124.1221,173.62276 a 7.9955683,7.7649765 0 0 1 -7.93245,7.76473 7.9955683,7.7649765 0 0 1 -8.05769,-7.64215 l 7.99457,-0.12258 z"
@@ -201,7 +216,7 @@
        sodipodi:cx="116.12653"
        sodipodi:type="arc"
        id="path1130-0-6-6"
-       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:0.777617;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.5875;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        sodipodi:arc-type="slice" />
     <path
        d="m 132.75958,162.28522 a 3.4875932,3.4207532 0 0 1 -3.4642,3.42067 3.4875932,3.4207532 0 0 1 -3.51067,-3.37479 3.4875932,3.4207532 0 0 1 3.41711,-3.46594 3.4875932,3.4207532 0 0 1 3.55651,3.3283 l -3.48634,0.0918 z"
@@ -247,6 +262,6 @@
        cy="104.61012"
        cx="266.6622"
        id="path916-6"
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.743716;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.80497696;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   </g>
 </svg>
