@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnsmnj01rqb7r"
-path="res://.godot/imported/chamallow_corps_normal.svg-f0ddb7f4d40d897d0ac2201ab944c600.ctex"
+uid="uid://bagde64dy2hqk"
+path="res://.godot/imported/chamallow_attaque_attaquereussie_hover.svg-57df77f61fa405fdcc14fd8ab3dbaf54.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/aurelie/assets/graphics/chamallow_corps_normal.svg"
-dest_files=["res://.godot/imported/chamallow_corps_normal.svg-f0ddb7f4d40d897d0ac2201ab944c600.ctex"]
+source_file="res://modules/aurelie/assets/graphics/chamallow_attaque_attaquereussie_hover.svg"
+dest_files=["res://.godot/imported/chamallow_attaque_attaquereussie_hover.svg-57df77f61fa405fdcc14fd8ab3dbaf54.ctex"]
 
 [params]
 

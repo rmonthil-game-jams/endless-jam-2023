@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnsmnj01rqb7r"
-path="res://.godot/imported/chamallow_corps_normal.svg-f0ddb7f4d40d897d0ac2201ab944c600.ctex"
+uid="uid://ddxi6ni63h0fq"
+path="res://.godot/imported/chamallow_corps_bloque.svg-cbd3f321cb2df3d8978c333f0339370f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/aurelie/assets/graphics/chamallow_corps_normal.svg"
-dest_files=["res://.godot/imported/chamallow_corps_normal.svg-f0ddb7f4d40d897d0ac2201ab944c600.ctex"]
+source_file="res://modules/aurelie/assets/graphics/chamallow_corps_bloque.svg"
+dest_files=["res://.godot/imported/chamallow_corps_bloque.svg-cbd3f321cb2df3d8978c333f0339370f.ctex"]
 
 [params]
 

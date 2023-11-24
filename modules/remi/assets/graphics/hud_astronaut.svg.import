@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnsmnj01rqb7r"
-path="res://.godot/imported/chamallow_corps_normal.svg-f0ddb7f4d40d897d0ac2201ab944c600.ctex"
+uid="uid://bmf21cahl3c0w"
+path="res://.godot/imported/hud_astronaut.svg-017c5ae584a317f4c0a0c8de810540c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/aurelie/assets/graphics/chamallow_corps_normal.svg"
-dest_files=["res://.godot/imported/chamallow_corps_normal.svg-f0ddb7f4d40d897d0ac2201ab944c600.ctex"]
+source_file="res://modules/remi/assets/graphics/hud_astronaut.svg"
+dest_files=["res://.godot/imported/hud_astronaut.svg-017c5ae584a317f4c0a0c8de810540c5.ctex"]
 
 [params]
 
