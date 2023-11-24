@@ -1,15 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3clduo33km57"]
+[gd_scene load_steps=3 format=3 uid="uid://c5if44yln1p3k"]
 
-[ext_resource type="Script" path="res://modules/remi/mob_handy_man/mob_handy_man.gd" id="1_euu82"]
-[ext_resource type="Texture2D" uid="uid://dnsmnj01rqb7r" path="res://modules/aurelie/assets/graphics/chamallow_corps_normal.svg" id="2_jp7b1"]
+[ext_resource type="Script" path="res://modules/nathan/mob_enter_name/mob_enter_name.gd" id="1_wa11j"]
+[ext_resource type="Texture2D" uid="uid://dnsmnj01rqb7r" path="res://modules/aurelie/assets/graphics/chamallow_corps_normal.svg" id="2_2l4ra"]
 
-[node name="MobHandyMan" type="Node2D"]
-script = ExtResource("1_euu82")
+[node name="MobEnterName" type="Node2D"]
+script = ExtResource("1_wa11j")
 
 [node name="Body" type="Node2D" parent="."]
 
 [node name="Sprite2DNormal" type="Sprite2D" parent="Body"]
-texture = ExtResource("2_jp7b1")
+texture = ExtResource("2_2l4ra")
 
 [node name="Hands" type="Node2D" parent="."]
 
