@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuuerfu6r762i"]
+
+[ext_resource type="Script" path="res://modules/remi/dungeon.gd" id="1_cokkq"]
+[ext_resource type="PackedScene" uid="uid://d3clduo33km57" path="res://modules/remi/mob_handy_man/mob_handy_man.tscn" id="2_oak5e"]
+[ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_4l76g"]
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource("1_cokkq")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="RoomContent" type="Node2D" parent="."]
+
+[node name="MobHandyMan" parent="RoomContent" instance=ExtResource("2_oak5e")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Character" parent="." instance=ExtResource("3_4l76g")]

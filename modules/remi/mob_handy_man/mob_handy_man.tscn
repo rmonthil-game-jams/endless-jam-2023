@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3clduo33km57"]
+
+[ext_resource type="Script" path="res://modules/remi/mob_handy_man/mob_handy_man.gd" id="1_euu82"]
+
+[node name="MobHandyMan" type="Node2D"]
+script = ExtResource("1_euu82")
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Hands" type="Node2D" parent="."]
+
+[node name="Hand" type="Node2D" parent="Hands"]
+position = Vector2(-55, 0)
+
+[node name="TextureButtonOpen" type="TextureButton" parent="Hands/Hand"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Polygon2D" type="Polygon2D" parent="Hands/Hand/TextureButtonOpen"]
+position = Vector2(26, 23)
+polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
+
+[node name="TextureButtonClosed" type="TextureButton" parent="Hands/Hand"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Polygon2D" type="Polygon2D" parent="Hands/Hand/TextureButtonClosed"]
+position = Vector2(26, 23)
+polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
+
+[node name="TextureButtonAttacking" type="TextureButton" parent="Hands/Hand"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Polygon2D" type="Polygon2D" parent="Hands/Hand/TextureButtonAttacking"]
+position = Vector2(26, 23)
+polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
+
+[node name="Hand2" type="Node2D" parent="Hands"]
+position = Vector2(65, -1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Hands/Hand2"]
+
+[node name="Polygon2D" type="Polygon2D" parent="Hands/Hand2/Sprite2D"]
+polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
