@@ -25,4 +25,10 @@ texture = ExtResource("2_e6tvr")
 
 [node name="Character" parent="." instance=ExtResource("3_wdgi3")]
 
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [connection signal="just_died" from="Character" to="." method="_on_character_just_died"]

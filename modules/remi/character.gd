@@ -3,15 +3,17 @@ extends Node2D
 # public
 
 signal just_died
-
+@export var healthTransTime : float
 func hit(damage_points : float):
 	life_points -= damage_points
+	_set_hpbar_level(life_points)
 	_hit_label_animation.call_deferred(damage_points)
 	_hit_color_rect_animation.call_deferred() # also checks for character death
-	# TODO: SLIGHT CAMERA SHAKE
+	
 
 func heal(heal_points : float):
 	life_points = min(life_points + heal_points, max_life_points)
+	_set_hpbar_level(life_points)
 	_heal_label_animation.call_deferred(heal_points)
 	_heal_color_rect_animation.call_deferred()
 
@@ -22,8 +24,10 @@ var max_life_points : float = 10.0
 var life_points : float = 10.0
 var damage_per_attack : float = 1.0
 
+signal set_maxhp (maxhp : float)
 func _ready():
-	pass
+	_set_hpbar_max(max_life_points)
+
 	# TODO: WHEN CURSOR SHAPES ARE DONE
 	# Input.set_custom_mouse_cursor(preload("res://path/to/cursor.(svg|png|etc...)"))
 	# Input.set_custom_mouse_cursor(preload("res://path/to/cursor.(svg|png|etc...)"))
@@ -112,3 +116,19 @@ func _heal_color_rect_animation():
 	tween_color_rect_heal.set_loops(4)
 	tween_color_rect_heal.tween_callback(color_rect_heal.hide)
 	tween_color_rect_heal.tween_callback(_attempt_dying)
+
+var maxhptween : Tween
+func _set_hpbar_max(maxhp):
+	if maxhptween:
+		maxhptween.kill()
+	maxhptween = get_tree().create_tween()
+	maxhptween.tween_property($CharacterHPBar,"max_value",maxhp,healthTransTime)
+
+var hptween : Tween
+func _set_hpbar_level(hp):
+	if hptween:
+		hptween.kill()
+	hptween = get_tree().create_tween()
+	hptween.tween_property($CharacterHPBar,"value",hp,healthTransTime)
+	# TODO: SLIGHT CAMERA SHAKE
+	

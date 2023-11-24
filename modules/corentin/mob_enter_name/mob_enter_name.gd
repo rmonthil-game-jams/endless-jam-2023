@@ -18,6 +18,7 @@ var HAND_DAMAGE_PER_ATTACK : float = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 ## TODO: NUMBER OF HANDS DEPENDANT OF DIFFICULTY ?
 
 # MOB STATE
+var max_life_points : float = 40.0
 var life_points : float = 40.0
 var state : String # useles at the moment but who knows in the future?
 
@@ -43,6 +44,7 @@ func _ready():
 		hand.get_node("TextureButtonClosed").pressed.connect(_hand_closed_pressed.bind(hand))
 		hand.get_node("TextureButtonAttacking").pressed.connect(_hand_attacking_pressed.bind(hand))
 	character = get_tree().get_nodes_in_group("character").front()
+	$MobHPBar.max_value=max_life_points
 	# avoid using await in the _ready function
 	_play_appearing_animation.call_deferred()
 
@@ -126,10 +128,12 @@ func _hand_open_pressed(hand : Node2D):
 
 func _hit(damage_points : float):
 	life_points -= damage_points
+	_set_hp_bar(max(life_points,0))
 	_attempt_to_play_hit_animation()
 	# TODO: DEATH ANIMATION
 	if life_points <= 0.0:
 		_attempt_to_play_death_animation()
+
 
 var hit_tween : Tween
 
@@ -138,6 +142,15 @@ func _attempt_to_play_hit_animation():
 		hit_tween = create_tween()
 		hit_tween.tween_property($Body, "modulate", Color(1.0, 0.5, 0.5), 0.125).set_trans(Tween.TRANS_CUBIC)
 		hit_tween.tween_property($Body, "modulate", Color(1.0, 1.0, 1.0), 0.125).set_trans(Tween.TRANS_CUBIC)
+
+
+@export var healthTransTime : float
+var hp_bar_tween : Tween
+func _set_hp_bar(hp):
+	if hp_bar_tween:
+		hp_bar_tween.kill()
+	hp_bar_tween = get_tree().create_tween()
+	hp_bar_tween.tween_property($MobHPBar,"value",life_points,healthTransTime)
 
 func _attempt_to_play_death_animation():
 	if state != "dying":
