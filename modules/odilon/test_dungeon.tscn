@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://d30dgpfphvju7"]
+
+[ext_resource type="Script" path="res://modules/odilon/test_dungeon.gd" id="1_3kg2l"]
+[ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_6walf"]
+[ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_ygred"]
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource("1_3kg2l")
+MOB_SCENES = Array[PackedScene]([null])
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+position = Vector2(0, 53)
+texture = ExtResource("2_6walf")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background"]
+scale = Vector2(0.444278, 0.463389)
+texture = ExtResource("2_6walf")
+
+[node name="RoomContent" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Character" parent="." instance=ExtResource("3_ygred")]
+
+[connection signal="just_died" from="Character" to="." method="_on_character_just_died"]

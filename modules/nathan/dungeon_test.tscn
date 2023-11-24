@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy1qgwfun61yr"]
+
+[ext_resource type="Script" path="res://modules/nathan/dungeon_test.gd" id="1_rgx0v"]
+[ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_051rh"]
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource("1_rgx0v")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="RoomContent" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Character" parent="." instance=ExtResource("3_051rh")]
