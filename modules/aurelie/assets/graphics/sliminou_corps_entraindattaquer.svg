@@ -15,7 +15,7 @@
    version="1.1"
    id="svg1848"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="Sliminou_corps_entraindattaquer.svg">
+   sodipodi:docname="sliminou_corps_entraindattaquer.svg">
   <defs
      id="defs1842" />
   <sodipodi:namedview
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="180.01178"
-     inkscape:cy="213.78489"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="430.00016"
+     inkscape:cy="141.51749"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -54,7 +54,7 @@
      id="layer1"
      transform="translate(9.0887001,-68.211368)">
     <ellipse
-       style="fill:#e580ff;fill-opacity:1;stroke:#000000;stroke-width:1.74900007;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#ffb380;fill-opacity:1;stroke:#000000;stroke-width:1.5875;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="path855-3"
        cx="132.03357"
        cy="137.12065"
@@ -85,7 +85,7 @@
        id="path1100-2-7-0-2-3"
        style="fill:#ffd5d5;fill-opacity:1;stroke:#ffd5d5;stroke-width:0.24012437;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <path
-       style="fill:none;stroke:#ffffff;stroke-width:2.89071512;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;stroke:#ffe6d5;stroke-width:2.89071512;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 140.82674,98.743169 c 12.49807,2.280621 22.80985,8.879961 29.69534,22.247591"
        id="path1053-2"
        inkscape:connector-curvature="0"
@@ -178,7 +178,7 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccc" />
     <ellipse
-       style="fill:#dd55ff;fill-opacity:1;stroke:#000000;stroke-width:1.28206062;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#ffb380;fill-opacity:1;stroke:#000000;stroke-width:1.5875;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="path903-9-4"
        cx="-100.72401"
        cy="188.09802"
@@ -210,7 +210,7 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccc" />
     <ellipse
-       style="fill:#dd55ff;fill-opacity:1;stroke:#000000;stroke-width:1.28206062;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#ffb380;fill-opacity:1;stroke:#000000;stroke-width:1.5875;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="path903-3-1"
        cx="170.45795"
        cy="-93.087646"
@@ -222,7 +222,7 @@
        inkscape:connector-curvature="0"
        id="path1128-6-9-0"
        d="m 126.01465,140.90812 c 7.13376,4.41634 7.70353,3.02241 13.28869,0.30973"
-       style="fill:none;stroke:#000000;stroke-width:0.99979258;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:none;stroke:#000000;stroke-width:1.5875;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <ellipse
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.46614218;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="path1801"
