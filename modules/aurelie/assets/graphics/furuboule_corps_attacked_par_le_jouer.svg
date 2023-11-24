@@ -2,17 +2,31 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="121.36198mm"
    height="110.12337mm"
    viewBox="0 0 121.36198 110.12337"
    version="1.1"
    id="svg1"
-   inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
-   sodipodi:docname="furuboule_corps_attacked_par_le_jouer.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="furuboule_corps_attacked_par_le_jouer.svg">
+  <metadata
+     id="metadata17">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
   <sodipodi:namedview
      id="namedview1"
      pagecolor="#ffffff"
@@ -23,15 +37,16 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="2.0686841"
-     inkscape:cx="311.7924"
-     inkscape:cy="275.77917"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:zoom="1.0343421"
+     inkscape:cx="66.757178"
+     inkscape:cy="258.17237"
+     inkscape:window-width="1853"
+     inkscape:window-height="1025"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1"
+     showgrid="false" />
   <defs
      id="defs1" />
   <g
@@ -109,5 +124,41 @@
        rx="4.736515"
        ry="1.6979166"
        transform="rotate(-9.1241786)" />
+    <ellipse
+       style="fill:#ffaaaa;fill-opacity:1;stroke:#ffaaaa;stroke-width:0.71881437;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path891"
+       cx="29.537003"
+       cy="102.15713"
+       rx="0.4053866"
+       ry="0.43434277" />
+    <ellipse
+       style="fill:#ffaaaa;fill-opacity:1;stroke:#ffaaaa;stroke-width:0.71881437;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path891-3"
+       cx="85.429016"
+       cy="97.55275"
+       rx="0.4053866"
+       ry="0.43434277" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.41509011;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path859"
+       sodipodi:type="arc"
+       sodipodi:cx="43.431561"
+       sodipodi:cy="76.834724"
+       sodipodi:rx="1.4398688"
+       sodipodi:ry="0.4893409"
+       sodipodi:start="0"
+       sodipodi:end="6.2319075"
+       d="m 44.871429,76.834724 a 1.4398688,0.4893409 0 0 1 -1.421411,0.489301 1.4398688,0.4893409 0 0 1 -1.457853,-0.476756 1.4398688,0.4893409 0 0 1 1.384034,-0.501524 1.4398688,0.4893409 0 0 1 1.493338,0.463898 l -1.437976,0.02508 z" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.15555416;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path859-0"
+       sodipodi:type="arc"
+       sodipodi:cx="46.014805"
+       sodipodi:cy="77.212875"
+       sodipodi:rx="0.40559086"
+       sodipodi:ry="0.24396344"
+       sodipodi:start="0"
+       sodipodi:end="6.2319075"
+       d="m 46.420396,77.212875 a 0.40559086,0.24396344 0 0 1 -0.400392,0.243944 0.40559086,0.24396344 0 0 1 -0.410657,-0.237689 0.40559086,0.24396344 0 0 1 0.389863,-0.250038 0.40559086,0.24396344 0 0 1 0.420653,0.231279 l -0.405058,0.0125 z" />
   </g>
 </svg>
