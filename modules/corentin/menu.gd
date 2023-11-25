@@ -1,13 +1,18 @@
-extends Control
+extends Node
 
 var difficulty : int
 @export var dungeon : PackedScene
 
 var state : String
 
+var node_dungeon : Node2D = null
+@onready var node_settings : Control = $CanvasLayer/Settings
+@onready var node_start : Control = $CanvasLayer/Start
+@onready var node_black : Control = $CanvasLayer/Black
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	difficulty = 1
+	_on_easy_button_down()
 	state = "main menu"
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
@@ -18,51 +23,87 @@ func _process(delta):
 	
 	if Input.is_action_just_released("ui_cancel") && state == "game":
 		get_tree().paused = true
-		$Settings.show()
+		node_black.show()
+		node_settings.show()
 		next_state = "pause"
-	
 	
 	if Input.is_action_just_released("ui_cancel") && state == "pause":
 		get_tree().paused = false
-		$Settings.hide()
+		node_black.hide()
+		node_settings.hide()
 		next_state = "game"
 	
 	
 	state = next_state
 
-
-
+@onready var easy_button : TextureButton = $CanvasLayer/Settings/VBoxContainer/Difficulty/HBoxContainer/Easy
+@onready var medium_button : TextureButton = $CanvasLayer/Settings/VBoxContainer/Difficulty/HBoxContainer/Medium
+@onready var hard_button : TextureButton = $CanvasLayer/Settings/VBoxContainer/Difficulty/HBoxContainer/Hard
 
 func _on_easy_button_down():
 	difficulty = 1
+	easy_button.disabled = true
+	medium_button.disabled = false
+	hard_button.disabled = false
 
 
 func _on_medium_button_down():
 	difficulty = 2
+	easy_button.disabled = false
+	medium_button.disabled = true
+	hard_button.disabled = false
 
 
 func _on_hard_button_down():
 	difficulty = 3
+	easy_button.disabled = false
+	medium_button.disabled = false
+	hard_button.disabled = true
 
 
 func _on_texture_button_button_up():
-	$StartButton.hide()
-	$Settings.hide()
+	$CanvasLayer/Start/StartButton.disabled = true
+	var tween : Tween = create_tween()
+	# hide settings
+	tween.tween_property(node_settings, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.tween_callback(node_settings.hide)
+	# zoom in
+	tween.tween_property(node_start, "scale", Vector2(1.0, 1.0), 1.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(node_start, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.tween_callback(node_start.hide)
+	await  tween.finished
+	node_settings.modulate.a = 1.0
+	# instance dungeon
 	state = "game"
-	var new_dungeon = dungeon.instantiate()
-	new_dungeon.difficulty = difficulty
-	new_dungeon.name = "Dungeon"
-	new_dungeon.process_mode=Node.PROCESS_MODE_PAUSABLE
-	add_child(new_dungeon)
-	$Dungeon._game_over.connect(_on_game_over)
-	$Dungeon.z_index = -1
-	$Dungeon.position = get_viewport_rect().size / 2
+	node_dungeon = dungeon.instantiate()
+	node_dungeon.difficulty = difficulty
+	node_dungeon.name = "Dungeon"
+	node_dungeon.process_mode=Node.PROCESS_MODE_PAUSABLE
+	$DungeonContainer.add_child(node_dungeon)
+	node_dungeon._game_over.connect(_on_game_over)
+	node_dungeon.z_index = -1
+	# dungeon appear anim
+	tween = create_tween()
+	node_dungeon.modulate.a = 0.0
+	tween.tween_property(node_dungeon, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
 
 func _on_game_over():
-	$Dungeon.queue_free()
+	var tween : Tween = create_tween()
+	# free dungeon
+	node_dungeon.queue_free()
+	# show settings
+	node_settings.modulate.a = 0.0
+	# node_settings.show() # TODO: UNCOMENT IF YOU WANT THE SETTINGS
+	tween.tween_property(node_settings, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	# zoom in
+	node_start.show()
+	tween.parallel().tween_property(node_start, "scale", Vector2(0.5, 0.5), 1.0).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property(node_start, "modulate:a", 1.0, 1.0).set_trans(Tween.TRANS_CUBIC)
+	# test
+	await tween.finished
+	$CanvasLayer/Start/StartButton.disabled = false
+	# state
 	state = "main menu"
-	$StartButton.show()
-	$Settings.show()
 
 func _on_exit_button_up():
 	get_tree().free()
