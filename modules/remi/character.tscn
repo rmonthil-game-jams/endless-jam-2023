@@ -123,18 +123,20 @@ texture = ExtResource("8_37epb")
 
 [node name="UpgradeMenu" type="VBoxContainer" parent="CanvasLayer"]
 visible = false
-offset_left = 295.0
+offset_left = 213.0
 offset_top = 118.0
-offset_right = 867.0
-offset_bottom = 494.0
+offset_right = 1043.0
+offset_bottom = 604.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/UpgradeMenu"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 text = "You survived ! Chose your reward."
 
-[node name="HBoxContainer" type="BoxContainer" parent="CanvasLayer/UpgradeMenu"]
+[node name="HBoxContainer" type="GridContainer" parent="CanvasLayer/UpgradeMenu"]
 layout_mode = 2
+size_flags_vertical = 3
+columns = 3
 
 [node name="Camera2D" type="Camera2D" parent="."]
 visible = false
