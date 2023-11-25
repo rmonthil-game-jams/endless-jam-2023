@@ -1,0 +1,19 @@
+extends Node2D
+
+# TO BE USED AS FOLLOWS
+
+preload()
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	_play_animation.call_deferred()
+
+func _play_animation():
+	# init
+	$Sprite2D.scale = Vector2.ZERO
+	$Sprite2D.modulate.a = 1.0
+	# animation
+	var tween : Tween = create_tween()
+	tween.tween_property($Sprite2D, "scale", Vector2.ONE, 0.5).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property($Sprite2D, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
