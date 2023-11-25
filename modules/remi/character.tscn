@@ -119,6 +119,21 @@ offset_bottom = 310.0
 mouse_filter = 2
 texture = ExtResource("8_37epb")
 
+[node name="UpgradeMenu" type="VBoxContainer" parent="CanvasLayer"]
+visible = false
+offset_left = 295.0
+offset_top = 118.0
+offset_right = 867.0
+offset_bottom = 494.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/UpgradeMenu"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "You survived ! Chose your reward."
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UpgradeMenu"]
+layout_mode = 2
+
 [node name="Camera2D" type="Camera2D" parent="."]
 visible = false
 zoom = Vector2(0.5, 0.5)

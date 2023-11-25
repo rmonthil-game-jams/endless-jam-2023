@@ -4,6 +4,206 @@ extends Node2D
 
 signal just_died
 
+
+
+
+var upgrades : Dictionary = {
+	"HP1" : {
+				"name" : "Health Bonus",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 1,
+				"type" : "HP UP",
+				"tier" : 1,
+				"max_life_points" : 5,
+			},
+	"HP2" : {
+				"name" : "Health Bonus +",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 1,
+				"type" : "HP UP",
+				"tier" : 2,
+				"max_life_points" : 10,
+			},
+	"HP3" : {
+				"name" : "Health Bonus ++",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 1,
+				"type" : "HP UP",
+				"tier" : 3,
+				"max_life_points" : 20,
+			},
+	"DMG1" : {
+				"name" : "Damage per Click",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 1,
+				"type" : "DMG UP",
+				"tier" : 1,
+				"damage_per_attack" : 0.5,
+			},
+	"DMG2" : {
+				"name" : "Damage per Click +",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 1,
+				"type" : "DMG UP",
+				"tier" : 2,
+				"damage_per_attack" : 1,
+			},
+	"DMG3" : {
+				"name" : "Damage per Click ++",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 1,
+				"type" : "DMG UP",
+				"tier" : 3,
+				"damage_per_attack" : 2,
+			},
+	"HEAL1" : {
+				"name" : "Healing potion",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 1,
+				"type" : "HEAL",
+				"tier" : 1,
+				"life_points" : 50,
+			},
+	"HEAL2" : {
+				"name" : "Healing potion+",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 1,
+				"type" : "HEAL",
+				"tier" : 2,
+				"life_points" : 100,
+			},
+	"HEAL3" : {
+				"name" : "Healing potion ++",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 1,
+				"type" : "HEAL",
+				"tier" : 3,
+				"life_points" : 200,
+			},
+	"MORE" : {
+				"name" : "More Upgrade Options",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 0.5,
+				"type" : "OPTIONS",
+				"tier" : 2,
+				"upgrade_options" : 1,
+			},
+	"BETTER1" : {
+				"name" : "Better Upgrade Options",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 3,
+				"type" : "BETTER",
+				"tier" : 1,
+				"upgrade_level" : 0.3,
+			},
+}
+
+signal finished_upgrade
+
+func _apply_up(upgrade : Dictionary):
+	for key in upgrade:
+		match key:
+			
+			"max_life_points" : 
+				max_life_points += upgrade["max_life_points"]
+				_set_hpbar_max(max_life_points)
+				heal(upgrade["max_life_points"])
+				
+			"damage_per_attack" :
+				damage_per_attack += upgrade["damage_per_attack"]
+				
+			"life_points" :
+				heal(upgrade["life_points"])
+				
+			"upgrade_options" :
+				upgrade_options += upgrade["upgrade_options"]
+				
+			"upgrade_level":
+				upgrade_level += upgrade["upgrade_level"]
+				
+
+	
+	$CanvasLayer/UpgradeMenu.hide()
+	for upgrade_button in $CanvasLayer/UpgradeMenu/HBoxContainer.get_children():
+		upgrade_button.queue_free()
+	
+	finished_upgrade.emit()
+	
+
+var upgrade_level : float = 1.6
+var upgrade_options : int = 3
+
+func _loot(room : float):
+	
+	_generate_upgrades(room)
+	$CanvasLayer/UpgradeMenu.show()
+	
+
+
+func _generate_upgrades(room : float):
+	var all_unused_upgrades = upgrades.duplicate(true)
+	for up_option in range(upgrade_options):
+		var upgrade_tier = _chose_upgrade_tier(room)
+		var available_upgrades : Array
+		
+		var cum_prob : Array[float]
+		var tot_weights : float = 0.0
+		for upgrade in all_unused_upgrades:
+			if all_unused_upgrades[upgrade]["tier"] == upgrade_tier:
+				available_upgrades.append(all_unused_upgrades[upgrade])
+				tot_weights += all_unused_upgrades[upgrade]["weight"]
+				cum_prob.append(tot_weights)
+		
+		var selected_up
+		var roll = randf_range(0, tot_weights)
+		for i in range(available_upgrades.size()):
+			if roll<cum_prob[i]:
+				selected_up = available_upgrades[i]
+				break
+		
+		all_unused_upgrades.erase(all_unused_upgrades.find_key(selected_up))
+		
+		var upgrade_button = TextureButton.new()
+		upgrade_button.name = selected_up["name"]
+		upgrade_button.pressed.connect(_apply_up.bind(selected_up))
+		upgrade_button.texture_normal = load(selected_up["icon"])
+		upgrade_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		
+		var upgrade_label = Label.new()
+		upgrade_label.text = selected_up["name"]
+		upgrade_label.anchors_preset = Control.PRESET_FULL_RECT
+		upgrade_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		upgrade_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		$CanvasLayer/UpgradeMenu/HBoxContainer.add_child(upgrade_button)
+		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]).add_child(upgrade_label)
+
+
+@export var TIER_SELECTIVITY : float = 0.6
+@export var MAXTIER : int = 3
+
+func _chose_upgrade_tier(room : float):
+	var tiers_prob : Array
+	var prob_tot : float = 0.0
+	for tier in range(MAXTIER):
+		tiers_prob.append(1/(TIER_SELECTIVITY*sqrt(2*PI))*exp(-1.0/2.0*pow((upgrade_level-tier)/TIER_SELECTIVITY,2.0)))
+		prob_tot += tiers_prob[tier]
+		
+	for tier in range(MAXTIER):
+		tiers_prob[tier] /= prob_tot
+		
+	var cumprobs : Array
+	var part_cum : float = 0.0
+	for tier in range(MAXTIER):
+		cumprobs.append(part_cum+tiers_prob[tier])
+		part_cum += tiers_prob[tier]
+	var roll = randf()
+	for tier in range(MAXTIER):
+		if roll<=cumprobs[tier]:
+			return tier+1
+	return -1
+
+
+
 func hit(damage_points : float):
 	life_points -= damage_points
 	_set_hpbar_level(life_points)
@@ -118,8 +318,8 @@ func _heal_color_rect_animation():
 	tween_color_rect_heal.tween_callback(color_rect_heal.hide)
 	tween_color_rect_heal.tween_callback(_attempt_dying)
 
-const PX_PER_HP : int = 50
-const HEALTH_TRANS_TIME : float = 0.25
+const PX_PER_HP : int = 25
+const HEALTH_TRANS_TIME : float = 0.5
 
 var max_hp_tween : Tween
 
