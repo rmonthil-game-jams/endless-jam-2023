@@ -1,103 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://bvo61s1yid5cv"]
 
 [ext_resource type="Script" path="res://modules/nathan/sliminou_gang/sliminou_gang.gd" id="1_v1m8y"]
-[ext_resource type="Texture2D" uid="uid://chgojwke0pt1i" path="res://modules/aurelie/assets/graphics/sliminou_corps_normal.svg" id="2_upmy3"]
+[ext_resource type="PackedScene" uid="uid://so6jo25adcnv" path="res://modules/nathan/sliminou_gang/sliminou.tscn" id="2_6sk22"]
 
 [node name="SliminouGang" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_v1m8y")
 
-[node name="Body" type="Node2D" parent="."]
-
-[node name="Sprite2DNormal" type="Sprite2D" parent="Body"]
-texture = ExtResource("2_upmy3")
-
-[node name="WeakSpotButton" type="TextureButton" parent="Body"]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Hands" type="Node2D" parent="."]
-
-[node name="HandRight" type="Node2D" parent="Hands"]
-position = Vector2(-55, 0)
-
-[node name="TextureButtonClosed" type="TextureButton" parent="Hands/HandRight"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Polygon2D" type="Polygon2D" parent="Hands/HandRight/TextureButtonClosed"]
-position = Vector2(26, 23)
-polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
-
-[node name="TextureButtonOpened" type="TextureButton" parent="Hands/HandRight"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Polygon2D" type="Polygon2D" parent="Hands/HandRight/TextureButtonOpened"]
-position = Vector2(26, 23)
-polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
-
-[node name="HandLeft" type="Node2D" parent="Hands"]
-position = Vector2(-55, 0)
-
-[node name="TextureButtonClosed" type="TextureButton" parent="Hands/HandLeft"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Polygon2D" type="Polygon2D" parent="Hands/HandLeft/TextureButtonClosed"]
-position = Vector2(26, 23)
-polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
-
-[node name="TextureButtonOpened" type="TextureButton" parent="Hands/HandLeft"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Polygon2D" type="Polygon2D" parent="Hands/HandLeft/TextureButtonOpened"]
-position = Vector2(26, 23)
-polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
-
-[node name="Speach" type="Node2D" parent="."]
-
-[node name="SpeachBubble" type="Node2D" parent="Speach"]
-position = Vector2(100, -250)
-
-[node name="SpeachButton" type="TextureButton" parent="Speach/SpeachBubble"]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Polygon2D" type="Polygon2D" parent="Speach/SpeachBubble/SpeachButton"]
-position = Vector2(26, 23)
-color = Color(0.964706, 0.921569, 0.992157, 1)
-polygon = PackedVector2Array(-13, 38, -29, 29, -58, 67, -42, 17, -45, -14, -28, -31, 13, -39, 62, -42, 143, -41, 203, -31, 233, -11, 245, 16, 236, 37, 192, 49, 99, 51, 36, 49, 6, 44)
-
-[node name="TextureButtonOpened" type="TextureButton" parent="Speach/SpeachBubble"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Polygon2D" type="Polygon2D" parent="Speach/SpeachBubble/TextureButtonOpened"]
-position = Vector2(26, 23)
-polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
-
-[node name="SpeachText" type="Label" parent="Speach/SpeachBubble"]
-offset_left = 1.0
-offset_top = -18.0
-offset_right = 247.0
-offset_bottom = 68.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 26
-text = "test"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
-[node name="Mouth" type="Node2D" parent="Speach"]
-
-[node name="TextureButton" type="TextureButton" parent="Speach/Mouth"]
-offset_left = -44.0
-offset_top = -48.0
-offset_right = 46.0
-offset_bottom = 3.0
+[node name="Sliminou" parent="." instance=ExtResource("2_6sk22")]

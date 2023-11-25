@@ -1,15 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://bcxwkjeaawq3g"]
+[gd_scene load_steps=3 format=3 uid="uid://so6jo25adcnv"]
 
-[ext_resource type="Script" path="res://modules/nathan/sliminou_gang/sliminou_gang.gd" id="1_jb7td"]
-[ext_resource type="Texture2D" uid="uid://dnsmnj01rqb7r" path="res://modules/aurelie/assets/graphics/chamallow_corps_normal.svg" id="2_674rf"]
+[ext_resource type="Script" path="res://modules/nathan/sliminou_gang/Sliminou.gd" id="1_bnk5t"]
+[ext_resource type="Texture2D" uid="uid://chgojwke0pt1i" path="res://modules/aurelie/assets/graphics/sliminou_corps_normal.svg" id="2_u6mt1"]
 
-[node name="SliminouGang" type="Node2D"]
-script = ExtResource("1_jb7td")
+[node name="Sliminou" type="Node2D"]
+script = ExtResource("1_bnk5t")
 
 [node name="Body" type="Node2D" parent="."]
 
 [node name="Sprite2DNormal" type="Sprite2D" parent="Body"]
-texture = ExtResource("2_674rf")
+texture = ExtResource("2_u6mt1")
+
+[node name="WeakSpotButton" type="TextureButton" parent="Body"]
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Hands" type="Node2D" parent="."]
 
@@ -93,7 +98,7 @@ autowrap_mode = 2
 [node name="Mouth" type="Node2D" parent="Speach"]
 
 [node name="TextureButton" type="TextureButton" parent="Speach/Mouth"]
-offset_left = -24.0
-offset_top = -56.0
-offset_right = 38.0
-offset_bottom = -20.0
+offset_left = -44.0
+offset_top = -48.0
+offset_right = 46.0
+offset_bottom = 3.0
