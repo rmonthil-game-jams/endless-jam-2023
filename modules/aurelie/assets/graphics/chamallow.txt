@@ -1,0 +1,3 @@
+C'est un chamallow avec des petites etoiles qui lui tournent autour. Pour l'attaqure, il faut toucher les petites étoiles.
+
+Lui il lance comme attaque des grosses étoiles jaunes. Une fois lancées, on peut l'attaquer sur les grosses étoiles (qui deviennent rouges qand elles sont touchées). Il faut encore toucher les grosses étoiles rouges pour le bloquer. Celles deviennent alors petites puis se transforment en étoiles filantes quand le chamallow est battu.   
