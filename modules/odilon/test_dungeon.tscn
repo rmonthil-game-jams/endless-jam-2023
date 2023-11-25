@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://modules/odilon/test_dungeon.gd" id="1_3kg2l"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_6walf"]
-[ext_resource type="PackedScene" uid="uid://bttiwps2jwhi7" path="res://modules/odilon/super_lechouille/super_lechouille.tscn" id="3_8qyea"]
+[ext_resource type="PackedScene" uid="uid://chk831ldmfjkm" path="res://modules/odilon/super_lechouille/fight.tscn" id="2_72p7d"]
 [ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_ygred"]
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_3kg2l")
-MOB_SCENES = Array[PackedScene]([ExtResource("3_8qyea")])
+MOB_SCENES = Array[PackedScene]([ExtResource("2_72p7d")])
 
 [node name="Background" type="Node2D" parent="."]
 
