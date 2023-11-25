@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5s4k8x2h2vun"
-path="res://.godot/imported/door.svg-39c05e043e555a514dc6991f14d5b168.ctex"
+uid="uid://djdqjjln8dyuj"
+path="res://.godot/imported/sliminou_corps_sautphase2_hover.svg-89d5d9a0feb2f0b277ae4c755c50c460.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/remi/assets/graphics/door.svg"
-dest_files=["res://.godot/imported/door.svg-39c05e043e555a514dc6991f14d5b168.ctex"]
+source_file="res://modules/aurelie/assets/graphics/sliminou_corps_sautphase2_hover.svg"
+dest_files=["res://.godot/imported/sliminou_corps_sautphase2_hover.svg-89d5d9a0feb2f0b277ae4c755c50c460.ctex"]
 
 [params]
 
