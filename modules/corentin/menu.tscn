@@ -1,7 +1,7 @@
 [gd_scene load_steps=29 format=3 uid="uid://bryybme68tf54"]
 
 [ext_resource type="Script" path="res://modules/corentin/menu.gd" id="1_hhpha"]
-[ext_resource type="PackedScene" uid="uid://buwh6h4m35fa" path="res://modules/corentin/dungeon.tscn" id="2_t6ukj"]
+[ext_resource type="PackedScene" uid="uid://bebm1sx3rjxnt" path="res://modules/corentin/dungeon.tscn" id="2_t6ukj"]
 [ext_resource type="Texture2D" uid="uid://d148gudwffotu" path="res://modules/remi/assets/graphics/door_back.svg" id="3_36w7x"]
 [ext_resource type="Texture2D" uid="uid://7ddkleeb5xoc" path="res://modules/remi/assets/graphics/door_normal.svg" id="3_j33qr"]
 [ext_resource type="Script" path="res://modules/corentin/SoundBar.gd" id="4_ed80u"]
