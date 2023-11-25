@@ -47,7 +47,7 @@ func _ready():
 	$MobHPBar.max_value=max_life_points
 	# avoid using await in the _ready function
 	_play_appearing_animation.call_deferred()
-
+	
 func _play_appearing_animation():
 	# init
 	state = "appearing"

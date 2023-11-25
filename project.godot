@@ -15,6 +15,10 @@ run/main_scene="res://modules/remi/dungeon.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [editor]
 
 movie_writer/movie_file="/home/rmonthil/video_game/videos/experimenting_with_reactive_design/image_sequence.png"

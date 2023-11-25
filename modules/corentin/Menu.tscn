@@ -1,0 +1,124 @@
+[gd_scene load_steps=9 format=3 uid="uid://bryybme68tf54"]
+
+[ext_resource type="Texture2D" uid="uid://5s4k8x2h2vun" path="res://modules/remi/assets/graphics/door.svg" id="1_1tke4"]
+[ext_resource type="Script" path="res://modules/corentin/Menu.gd" id="1_uq86i"]
+[ext_resource type="Script" path="res://modules/corentin/SoundBar.gd" id="2_4bq6m"]
+[ext_resource type="PackedScene" uid="uid://buwh6h4m35fa" path="res://modules/corentin/test_dungeon.tscn" id="2_w4yfw"]
+[ext_resource type="Texture2D" uid="uid://b2mi6jw0rr32n" path="res://modules/remi/assets/graphics/hand_man__mouth_closed.svg" id="3_6n1pp"]
+[ext_resource type="Texture2D" uid="uid://cf1x0ddug2wd3" path="res://modules/remi/assets/graphics/hand_man__mouth_kissed_hover.svg" id="4_7vkiq"]
+[ext_resource type="Texture2D" uid="uid://3ioykabejrdg" path="res://modules/remi/assets/graphics/hand_man__mouth_open_hover.svg" id="5_8r0q3"]
+[ext_resource type="Texture2D" uid="uid://dip4ghhw23a64" path="res://modules/remi/assets/graphics/hand_man__hand.svg" id="7_ex1d1"]
+
+[node name="Menu" type="Control"]
+layout_direction = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uq86i")
+dungeon = ExtResource("2_w4yfw")
+
+[node name="StartButton" type="TextureButton" parent="."]
+layout_mode = 2
+offset_left = 229.0
+offset_top = 28.0
+offset_right = 904.0
+offset_bottom = 577.0
+texture_normal = ExtResource("1_1tke4")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="StartButton"]
+layout_mode = 0
+offset_left = 253.0
+offset_top = 137.0
+offset_right = 430.0
+offset_bottom = 162.0
+text = "Enter the DUNGEON !"
+
+[node name="Settings" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 10.0
+offset_top = 91.0
+offset_right = 303.0
+offset_bottom = 536.0
+alignment = 1
+
+[node name="Sound" type="VBoxContainer" parent="Settings"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Sound Volume" type="RichTextLabel" parent="Settings/Sound"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "Sound Volume"
+
+[node name="SoundBar" type="HScrollBar" parent="Settings/Sound"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+rounded = true
+script = ExtResource("2_4bq6m")
+
+[node name="Difficulty" type="VBoxContainer" parent="Settings"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Difficulty" type="RichTextLabel" parent="Settings/Difficulty"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "Difficulty"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/Difficulty"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Easy" type="TextureButton" parent="Settings/Difficulty/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("3_6n1pp")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Medium" type="TextureButton" parent="Settings/Difficulty/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("4_7vkiq")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Hard" type="TextureButton" parent="Settings/Difficulty/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("5_8r0q3")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Sound2" type="VBoxContainer" parent="Settings"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Settings/Sound2"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "Exit"
+
+[node name="Exit" type="TextureButton" parent="Settings/Sound2"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+texture_normal = ExtResource("7_ex1d1")
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="button_up" from="StartButton" to="." method="_on_texture_button_button_up"]
+[connection signal="value_changed" from="Settings/Sound/SoundBar" to="Settings/Sound/SoundBar" method="_on_value_changed"]
+[connection signal="button_down" from="Settings/Difficulty/HBoxContainer/Easy" to="." method="_on_easy_button_down"]
+[connection signal="button_down" from="Settings/Difficulty/HBoxContainer/Medium" to="." method="_on_medium_button_down"]
+[connection signal="button_down" from="Settings/Difficulty/HBoxContainer/Hard" to="." method="_on_hard_button_down"]
+[connection signal="button_up" from="Settings/Sound2/Exit" to="." method="_on_exit_button_up"]
