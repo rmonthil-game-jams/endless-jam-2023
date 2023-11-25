@@ -6,35 +6,46 @@ signal just_died
 
 
 
-
 var upgrades : Dictionary = {
 	"HP1" : {
 				"name" : "Health Bonus",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_health_1_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_health_1_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_health_1_pressed.svg",
+				"tooltip" : "Increases total health by a small amount",
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 1,
-				"max_life_points" : 5,
+				"max_life_points" : 4,
 			},
 	"HP2" : {
 				"name" : "Health Bonus +",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_health_2_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_health_2_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_health_2_pressed.svg",
+				"tooltip" : "Increases total health by a significant amount",
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 2,
-				"max_life_points" : 10,
+				"max_life_points" : 9,
 			},
 	"HP3" : {
 				"name" : "Health Bonus ++",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_health_3_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_health_3_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_health_3_pressed.svg",
+				"tooltip" : "Increases total health by a large amount",
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 3,
-				"max_life_points" : 20,
+				"max_life_points" : 15,
 			},
 	"HPR1" : {
 				"name" : "Health Regen Bonus",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_vitality_1_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_vitality_1_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_vitality_1_pressed.svg",
+				"tooltip" : "Increases health generation after each fight by a small amount",
 				"weight" : 1,
 				"type" : "HP R UP",
 				"tier" : 1,
@@ -42,7 +53,10 @@ var upgrades : Dictionary = {
 			},
 	"HPR2" : {
 				"name" : "Health Regen Bonus +",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_vitality_2_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_vitality_2_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_vitality_2_pressed.svg",
+				"tooltip" : "Increases health generation after each fight by a small amount",
 				"weight" : 1,
 				"type" : "HP R UP",
 				"tier" : 2,
@@ -50,7 +64,10 @@ var upgrades : Dictionary = {
 			},
 	"HPR3" : {
 				"name" : "Health Regen Bonus ++",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_vitality_3_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_vitality_3_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_vitality_3_pressed.svg",
+				"tooltip" : "Increases health generation after each fight by a small amount",
 				"weight" : 1,
 				"type" : "HP R UP",
 				"tier" : 3,
@@ -58,7 +75,10 @@ var upgrades : Dictionary = {
 			},
 	"DMG1" : {
 				"name" : "Damage per Click",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_strength_1_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_strength_1_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_strength_1_pressed.svg",
+				"tooltip" : "Increases damage inflicted by a small amount",
 				"weight" : 1,
 				"type" : "DMG UP",
 				"tier" : 1,
@@ -66,7 +86,10 @@ var upgrades : Dictionary = {
 			},
 	"DMG2" : {
 				"name" : "Damage per Click +",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_strength_2_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_strength_2_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_strength_2_pressed.svg",
+				"tooltip" : "Increases damage inflicted by a significant amount",
 				"weight" : 1,
 				"type" : "DMG UP",
 				"tier" : 2,
@@ -74,7 +97,10 @@ var upgrades : Dictionary = {
 			},
 	"DMG3" : {
 				"name" : "Damage per Click ++",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_strength_3_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_strength_3_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_strength_3_pressed.svg",
+				"tooltip" : "Increases damage inflicted by a large amount",
 				"weight" : 1,
 				"type" : "DMG UP",
 				"tier" : 3,
@@ -82,7 +108,10 @@ var upgrades : Dictionary = {
 			},
 	"HEAL1" : {
 				"name" : "Healing potion",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_heal_1_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_heal_1_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_heal_1_pressed.svg",
+				"tooltip" : "Regenerates your health by a small amount",
 				"weight" : 1,
 				"type" : "HEAL",
 				"tier" : 1,
@@ -90,7 +119,10 @@ var upgrades : Dictionary = {
 			},
 	"HEAL2" : {
 				"name" : "Healing potion +",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_heal_2_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_heal_2_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_heal_2_pressed.svg",
+				"tooltip" : "Regenerates your health by a significant amount",
 				"weight" : 1,
 				"type" : "HEAL",
 				"tier" : 2,
@@ -98,15 +130,45 @@ var upgrades : Dictionary = {
 			},
 	"HEAL3" : {
 				"name" : "Healing potion ++",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_heal_3_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_heal_3_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_heal_3_pressed.svg",
+				"tooltip" : "Regenerates your health by a large amount",
 				"weight" : 1,
 				"type" : "HEAL",
 				"tier" : 3,
 				"life_points" : 200,
 			},
+	"BSK2" : {
+				"name" : "Berserk +",
+				"hover" : "res://modules/remi/assets/graphics/up_steroid_2_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_steroid_2_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_steroid_2_pressed.svg",
+				"tooltip" : "Increases damage at the cost of maximum health by a significant amount",
+				"weight" : 1,
+				"type" : "BSK",
+				"tier" : 1,
+				"max_life_points" : -5,
+				"damage_per_attack" : 1.5,
+			},
+	"BSK3" : {
+				"name" : "Berserk ++",
+				"hover" : "res://modules/remi/assets/graphics/up_steroid_3_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_steroid_3_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_steroid_3_pressed.svg",
+				"tooltip" : "Increases damage at the cost of maximum health by a large amount",
+				"weight" : 1,
+				"type" : "BSK",
+				"tier" : 3,
+				"max_life_points" : -15,
+				"damage_per_attack" : 3,
+			},
 	"MORE" : {
 				"name" : "More Upgrade Options",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"hover" : "res://modules/remi/assets/graphics/up_choice_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_choice_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_choice_pressed.svg",
+				"tooltip" : "Increases the number of upgrades to chose from after each fight by one (max. 6)",
 				"weight" : 0.5,
 				"type" : "OPTIONS",
 				"tier" : 2,
@@ -114,13 +176,35 @@ var upgrades : Dictionary = {
 			},
 	"BETTER1" : {
 				"name" : "Better Upgrade Options",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
-				"weight" : 3,
+				"hover" : "res://modules/remi/assets/graphics/up_update_1_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_update_1_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_update_1_pressed.svg",
+				"tooltip" : "Improves the quality of the upgrades by a small amount",
+				"weight" : 2,
 				"type" : "BETTER",
 				"tier" : 1,
-				"upgrade_level" : 0.3,
+				"upgrade_level" : 0.2,
 			},
-			
+	"BETTER2" : {
+				"name" : "Better Upgrade Options",
+				"hover" : "res://modules/remi/assets/graphics/up_update_2_hover.svg",
+				"normal" : "res://modules/remi/assets/graphics/up_update_2_normal.svg",
+				"pressed" : "res://modules/remi/assets/graphics/up_update_2_pressed.svg",
+				"tooltip" : "Improves the quality of the upgrades by a large amount",
+				"weight" : 2,
+				"type" : "BETTER",
+				"tier" : 2,
+				"upgrade_level" : 0.5,
+			},
+#	"EXTRA1" : {
+#				"name" : "Add Companion",
+#				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+#				"tooltip" : "Adds a new pointer helping you periodically",
+#				"weight" : 100,
+#				"type" : "EXTRA",
+#				"tier" : 1,
+#				"add_pointer" : 1,
+#			},
 }
 
 signal finished_upgrade
@@ -132,7 +216,10 @@ func _apply_up(upgrade : Dictionary):
 			"max_life_points" : 
 				max_life_points += upgrade["max_life_points"]
 				_set_hpbar_max(max_life_points)
-				heal(upgrade["max_life_points"])
+				if upgrade["max_life_points"]>= 0:
+					heal(upgrade["max_life_points"])
+				else:
+					hit(upgrade["max_life_points"])
 				
 			"damage_per_attack" :
 				damage_per_attack += upgrade["damage_per_attack"]
@@ -141,21 +228,32 @@ func _apply_up(upgrade : Dictionary):
 				heal(upgrade["life_points"])
 				
 			"upgrade_options" :
-				upgrade_options += upgrade["upgrade_options"]
+				if upgrade_options < 6:
+					upgrade_options += upgrade["upgrade_options"]
 				
 			"upgrade_level":
 				upgrade_level += upgrade["upgrade_level"]
 			
 			"hp_regen" : 
 				hp_regen += upgrade["hp_regen"]
-
+				
+			"add_pointer":
+				_add_pointer()
 	
 	$CanvasLayer/UpgradeMenu.hide()
 	for upgrade_button in $CanvasLayer/UpgradeMenu/HBoxContainer.get_children():
 		upgrade_button.queue_free()
 	
+	$Pointers.show()
 	finished_upgrade.emit()
 	
+@export var POINTER_NODE : PackedScene
+@export var MAX_POINTERS : int = 3
+var npointers : int = 0
+func _add_pointer():
+	if npointers < MAX_POINTERS:
+		var new_pointer = POINTER_NODE.instantiate()
+		$Pointers.add_child(new_pointer)
 
 var upgrade_level : float = 0
 var upgrade_options : int = 3
@@ -166,6 +264,7 @@ func _loot(lootbuff : float):
 	
 	_generate_upgrades(lootbuff)
 	$CanvasLayer/UpgradeMenu.show()
+	$Pointers.hide()
 	
 
 
@@ -195,17 +294,23 @@ func _generate_upgrades(lootbuff : float):
 		var upgrade_button = TextureButton.new()
 		upgrade_button.name = selected_up["name"]
 		upgrade_button.pressed.connect(_apply_up.bind(selected_up))
-		upgrade_button.texture_normal = load(selected_up["icon"])
+		upgrade_button.texture_normal = load(selected_up["normal"])
+		upgrade_button.texture_pressed = load(selected_up["pressed"])
+		upgrade_button.texture_hover = load(selected_up["hover"])
 		upgrade_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		
-		var upgrade_label = Label.new()
-		upgrade_label.text = selected_up["name"]
-		upgrade_label.name = "Label"
+		upgrade_button.tooltip_text = selected_up["tooltip"]
+		upgrade_button.ignore_texture_size = true
+		upgrade_button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT
+		upgrade_button.custom_minimum_size = Vector2(200,200)
 		$CanvasLayer/UpgradeMenu/HBoxContainer.add_child(upgrade_button)
-		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]).add_child(upgrade_label)
-		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").anchors_preset = Control.PRESET_FULL_RECT
-		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+#		var upgrade_label = Label.new()
+#		upgrade_label.text = selected_up["name"]
+#		upgrade_label.name = "Label"
+
+#		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]).add_child(upgrade_label)
+#		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").anchors_preset = Control.PRESET_FULL_RECT
+#		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+#		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 
 
 @export var TIER_SELECTIVITY : float = 0.4
@@ -332,7 +437,7 @@ func _heal_label_animation(heal_points : float):
 	tween_label_hit.parallel().tween_property(label_heal, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 	tween_label_hit.tween_callback(label_heal.hide)
 
-@onready var color_rect_heal : ColorRect = $CanvasLayer/ColorRectHit
+@onready var color_rect_heal : ColorRect = $CanvasLayer/ColorRectHeal
 var tween_color_rect_heal : Tween
 
 func _heal_color_rect_animation():
