@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://modules/remi/mob_handy_man/mob_handy_man.gd" id="1_euu82"]
 [ext_resource type="Texture2D" uid="uid://bg8r1e26ohqqj" path="res://modules/remi/assets/graphics/hand_man__body_normal.svg" id="2_o0lea"]
-[ext_resource type="PackedScene" uid="uid://dobsvo2y5yduy" path="res://modules/remi/mob_handy_man/hand.tscn" id="3_bmm0s"]
+[ext_resource type="PackedScene" uid="uid://rtumgep8pkad" path="res://modules/remi/mob_handy_man/hand.tscn" id="3_bmm0s"]
 [ext_resource type="Texture2D" uid="uid://cxqgypsuxwr8l" path="res://modules/remi/assets/graphics/hand_man__body_attacking.svg" id="3_igv32"]
 
 [node name="MobHandyMan" type="Node2D"]
