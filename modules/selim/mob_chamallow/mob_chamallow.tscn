@@ -1,0 +1,94 @@
+[gd_scene load_steps=10 format=3 uid="uid://75etcwgcek82"]
+
+[ext_resource type="Script" path="res://modules/selim/mob_chamallow/mob_chamallow.gd" id="1_ck7tl"]
+[ext_resource type="Texture2D" uid="uid://dnsmnj01rqb7r" path="res://modules/aurelie/assets/graphics/chamallow_corps_normal.svg" id="2_acbid"]
+[ext_resource type="Texture2D" uid="uid://b2f51nbcr22y2" path="res://modules/aurelie/assets/graphics/chamallow_corps_attaqueparlejoueur.svg" id="3_u4olg"]
+[ext_resource type="Texture2D" uid="uid://1y3kytics0dd" path="res://modules/aurelie/assets/graphics/chamallow_corps_attaquereussie.svg" id="4_q2rr5"]
+[ext_resource type="Texture2D" uid="uid://ddxi6ni63h0fq" path="res://modules/aurelie/assets/graphics/chamallow_corps_bloque.svg" id="5_r4ct6"]
+[ext_resource type="Texture2D" uid="uid://dsdgroxyix25b" path="res://modules/aurelie/assets/graphics/chamallow_corps_entraindattaque.svg" id="6_rok5n"]
+[ext_resource type="Texture2D" uid="uid://dud7dwgqpjukd" path="res://modules/aurelie/assets/graphics/chamallow_attaque_entraindattaquer_normal.svg" id="7_6eoxk"]
+[ext_resource type="Texture2D" uid="uid://46xc0lj33g20" path="res://modules/aurelie/assets/graphics/chamallow_attaque_entraindattaquer_hover.svg" id="8_54yys"]
+[ext_resource type="Texture2D" uid="uid://dhmhnn4t01sb7" path="res://modules/aurelie/assets/graphics/chamallow_attaque_normale_hover.svg" id="9_4cbv6"]
+
+[node name="MobChamallow" type="Node2D"]
+script = ExtResource("1_ck7tl")
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Sprite2DPhase1" type="Sprite2D" parent="Body"]
+visible = false
+texture = ExtResource("2_acbid")
+
+[node name="Sprite2DPhase2" type="Sprite2D" parent="Body"]
+visible = false
+texture = ExtResource("3_u4olg")
+
+[node name="Sprite2DDefeat" type="Sprite2D" parent="Body"]
+visible = false
+texture = ExtResource("4_q2rr5")
+
+[node name="Sprite2DAttacked" type="Sprite2D" parent="Body"]
+visible = false
+texture = ExtResource("5_r4ct6")
+
+[node name="Sprite2DAtttackingP1" type="Sprite2D" parent="Body"]
+visible = false
+texture = ExtResource("6_rok5n")
+
+[node name="TextureButtonP1" type="TextureButton" parent="Body"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -197.0
+offset_top = -179.5
+offset_right = 197.0
+offset_bottom = 179.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_acbid")
+texture_pressed = ExtResource("5_r4ct6")
+
+[node name="TextureButtonP2" type="TextureButton" parent="Body"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -197.0
+offset_top = -179.5
+offset_right = 197.0
+offset_bottom = 179.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_r4ct6")
+texture_pressed = ExtResource("5_r4ct6")
+
+[node name="AttackP1" type="Node2D" parent="."]
+
+[node name="Sprite2DAttackedP1" type="Sprite2D" parent="AttackP1"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_4cbv6")
+
+[node name="Sprite2DBlockedP1" type="Sprite2D" parent="AttackP1"]
+visible = false
+
+[node name="TextureButtonAttackP1" type="TextureButton" parent="AttackP1"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.0
+offset_top = -31.0
+offset_right = 380.0
+offset_bottom = 317.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+texture_normal = ExtResource("7_6eoxk")
+texture_hover = ExtResource("8_54yys")
