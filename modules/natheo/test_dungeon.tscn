@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmm44q5cegmx7"]
+[gd_scene load_steps=5 format=3 uid="uid://bmm44q5cegmx7"]
 
 [ext_resource type="Script" path="res://modules/natheo/test_dungeon.gd" id="1_u6x6c"]
+[ext_resource type="PackedScene" uid="uid://jsbtpbjcy8rj" path="res://modules/natheo/mob_furuboule/mob_furuboule.tscn" id="2_b5twi"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_vycib"]
 [ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_pje8f"]
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_u6x6c")
-MOB_SCENES = Array[PackedScene]([null])
+MOB_SCENES = Array[PackedScene]([ExtResource("2_b5twi")])
 
 [node name="Background" type="Node2D" parent="."]
 
