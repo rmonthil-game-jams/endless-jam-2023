@@ -10,11 +10,14 @@ var DIFFICULTY : float = 0.0
 # MOB SUB PARAMETERS
 ## WAITING
 var HAND_MOVE_DURATION : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF MOVEMENT SPEED
-var HAND_MOVE_RADIUS : float = min(400.0, 50.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
-const IDLE_LOOP_NUMBER : int = 4
+var HAND_MOVE_RADIUS : float = min(500.0, 100.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
+const WAITING_LOOP_NUMBER : int = 4
+const MAX_NB_OF_HITS_PER_HAND : int = 4
 ## ATTACKING
 var HAND_ATTACK_DURATION_FACTOR : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF ATTACK SPEED
 var HAND_DAMAGE_PER_ATTACK : float = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
+var HAND_ATTACK_INTERVAL : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF ATTACK SPEED
+const KISS_DURATION : float = 2.0
 ## TODO: NUMBER OF HANDS DEPENDANT OF DIFFICULTY ?
 
 # MOB STATE
@@ -36,7 +39,9 @@ func _ready():
 		# setup state
 		hands_state[hand] = {
 			"initial_position":hand.position,
+			"number_of_hits":0,
 			"state":"open",
+			"attack_tween":null
 		} # careful here, position is in local coordinate use global_position for global coordinates
 		# setup signals
 		hand.get_node("TextureButtonOpen").pressed.connect(_hand_open_pressed.bind(hand))
@@ -50,30 +55,58 @@ func _play_appearing_animation():
 	# init
 	state = "appearing"
 	modulate.a = 0.0
+	for hand in hands:
+		hand.modulate.a = 0.0
 	# animation
 	main_tween = create_tween()
 	main_tween.tween_property(self, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property(self, "scale:y", 1.1, 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property(self, "scale:y", 1.0, 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property(self, "scale:x", 1.1, 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property(self, "scale:x", 1.0, 0.125).set_trans(Tween.TRANS_CUBIC)
+	for hand in hands:
+		main_tween.tween_property(hand, "modulate:a", 1.0, 0.125).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_property(hand, "scale", Vector2(1.1, 1.1), 0.125).set_trans(Tween.TRANS_CUBIC)
+		main_tween.tween_property(hand, "scale", Vector2(1.0, 1.0), 0.125).set_trans(Tween.TRANS_ELASTIC)
+	main_tween.tween_property($Body/SpriteRoot, "modulate", Color(0.5, 0.5, 0.5), 0.5).set_trans(Tween.TRANS_CUBIC)
 	await main_tween.finished
 	_play_waiting_animation.call_deferred()
 
+@onready var sprite_2d_normal : Sprite2D = $Body/SpriteRoot/Sprite2DNormal
+@onready var sprite_2d_attacking : Sprite2D = $Body/SpriteRoot/Sprite2DAttacking
+
 func _play_waiting_animation():
 	state = "waiting"
-	$Body/Sprite2DNormal.show()
-	$Body/Sprite2DAttacking.hide()
-	for loop_index in range(IDLE_LOOP_NUMBER):
+	sprite_2d_normal.show()
+	sprite_2d_attacking.hide()
+	for loop_index in range(WAITING_LOOP_NUMBER):
 		main_tween = create_tween()
+		if ($Body.rotation <= 0.0):
+			main_tween.tween_property($Body, "rotation",  0.125, HAND_MOVE_DURATION).set_trans(Tween.TRANS_CUBIC)
+		else:
+			main_tween.tween_property($Body, "rotation", -0.125, HAND_MOVE_DURATION).set_trans(Tween.TRANS_CUBIC)
 		for hand in hands:
 			# generation of random vector whithin a disk of radius HAND_MOVE_RADIUS, the "sqrt" ensures uniform distribution.
 			var random_vector : Vector2 = Vector2(1.0, 0.0).rotated(randf_range(-PI, PI)) * sqrt(randf_range(0.0, 1.0)) * HAND_MOVE_RADIUS
 			var target_position : Vector2 = hands_state[hand]["initial_position"] + random_vector
 			main_tween.parallel().tween_property(hand, "position", target_position, HAND_MOVE_DURATION).set_trans(Tween.TRANS_CUBIC)
+			main_tween.parallel().tween_property(hand, "rotation", randf_range(-PI, PI), HAND_MOVE_DURATION).set_trans(Tween.TRANS_CUBIC)
 		await main_tween.finished
+	main_tween = create_tween()
+	main_tween.tween_property($Body, "rotation", 0.0, 0.125 * HAND_MOVE_DURATION)
+	await main_tween.finished
 	_play_attacking_animation.call_deferred()
 
 func _play_attacking_animation():
 	state = "attacking"
-	$Body/Sprite2DNormal.hide()
-	$Body/Sprite2DAttacking.show()
+	main_tween = create_tween()
+	main_tween.tween_property($Body, "scale:y", 1.1, 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body, "scale:y", 1.0, 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body, "scale:x", 1.1, 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body, "scale:x", 1.0, 0.125).set_trans(Tween.TRANS_CUBIC)
+	await main_tween.finished
+	sprite_2d_normal.hide()
+	sprite_2d_attacking.show()
 	# shuffle randomly the list of hands
 	var copy_of_hands : Array[Node] = hands.duplicate()
 	copy_of_hands.shuffle()
@@ -82,14 +115,17 @@ func _play_attacking_animation():
 		_attempt_to_close_hand(hand)
 	# attack with hands
 	for hand in copy_of_hands:
-		main_tween = create_tween()
-		main_tween.tween_property(hand, "scale", Vector2(0.8, 0.8), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.tween_callback(_attempt_to_attack.bind(hand))
-		main_tween.tween_property(hand, "scale", Vector2(2.0, 2.0), 1.0 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
-		main_tween.tween_callback(_attempt_damaging_character.bind(hand))
-		main_tween.tween_property(hand, "scale", Vector2(1.0, 1.0), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.tween_callback(_attempt_to_close_hand.bind(hand))
-		await main_tween.finished
+		$Hands.move_child(hand, hands.size() - 1)
+		if hands_state[hand]["attack_tween"]:
+			hands_state[hand]["attack_tween"].kill()
+		hands_state[hand]["attack_tween"] = create_tween()
+		hands_state[hand]["attack_tween"].tween_property(hand, "scale", Vector2(0.8, 0.8), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		hands_state[hand]["attack_tween"].tween_callback(_attempt_to_attack.bind(hand))
+		hands_state[hand]["attack_tween"].tween_property(hand, "scale", Vector2(2.0, 2.0), 0.75 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+		hands_state[hand]["attack_tween"].tween_callback(_attempt_damaging_character.bind(hand))
+		hands_state[hand]["attack_tween"].tween_property(hand, "scale", Vector2(1.0, 1.0), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
+		hands_state[hand]["attack_tween"].tween_callback(_attempt_to_close_hand.bind(hand))
+		await get_tree().create_timer(HAND_ATTACK_INTERVAL).timeout
 	# close all rands
 	for hand in copy_of_hands:
 		_attempt_to_open_hand(hand)
@@ -99,6 +135,7 @@ func _play_attacking_animation():
 func _attempt_to_open_hand(hand : Node2D):
 	if not hands_state[hand]["state"] == "open":
 		hands_state[hand]["state"] = "open"
+		hands_state[hand]["number_of_hits"] = 0
 		hand.get_node("TextureButtonOpen").show()
 		hand.get_node("TextureButtonClosed").hide()
 		hand.get_node("TextureButtonAttacking").hide()
@@ -120,9 +157,14 @@ func _attempt_to_attack(hand : Node2D):
 func _attempt_damaging_character(hand : Node2D):
 	if hands_state[hand]["state"] == "attacking":
 		character.hit(HAND_DAMAGE_PER_ATTACK)
+		_spawn_kiss.call_deferred(hand)
 
 func _hand_open_pressed(hand : Node2D):
 	_hit(character.damage_per_attack)
+	# check number of hits
+	hands_state[hand]["number_of_hits"] += 1
+	if hands_state[hand]["number_of_hits"] >= MAX_NB_OF_HITS_PER_HAND:
+		_attempt_to_close_hand(hand)
 
 func _hit(damage_points : float):
 	life_points -= damage_points
@@ -135,16 +177,32 @@ var hit_tween : Tween
 
 func _attempt_to_play_hit_animation():
 	if not hit_tween or not hit_tween.is_running():
+		$Body/SpriteRoot/Sprite2DNormal.hide()
+		$Body/SpriteRoot/Sprite2DBeingHit.show()
 		hit_tween = create_tween()
+		hit_tween.tween_callback($Body/SpriteRoot/Sprite2DNormal.hide)
+		hit_tween.tween_callback($Body/SpriteRoot/Sprite2DBeingHit.show)
 		hit_tween.tween_property($Body, "modulate", Color(1.0, 0.5, 0.5), 0.125).set_trans(Tween.TRANS_CUBIC)
+		#hit_tween.parallel().tween_property($Body, "scale", Vector2(1.1, 1.1), 0.125).set_trans(Tween.TRANS_CUBIC)
 		hit_tween.tween_property($Body, "modulate", Color(1.0, 1.0, 1.0), 0.125).set_trans(Tween.TRANS_CUBIC)
+		hit_tween.tween_callback($Body/SpriteRoot/Sprite2DNormal.show)
+		hit_tween.tween_callback($Body/SpriteRoot/Sprite2DBeingHit.hide)
 
 func _attempt_to_play_death_animation():
 	if state != "dying":
 		state = "dying"
 		if main_tween:
 			main_tween.kill()
+		if hit_tween:
+			hit_tween.kill()
+			hit_tween = create_tween()
+			hit_tween.tween_property($Body, "modulate", Color(1.0, 1.0, 1.0), 0.125).set_trans(Tween.TRANS_CUBIC)
+			await hit_tween.finished
 		main_tween = create_tween()
+		main_tween.tween_callback($Body/SpriteRoot/Sprite2DNormal.hide)
+		main_tween.tween_callback($Body/SpriteRoot/Sprite2DBeingHit.show)
+		for hand in hands:
+			main_tween.tween_property(hand, "position:y", 700.0, 0.25).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 		main_tween.tween_property(self, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
 		await main_tween.finished
 		just_died.emit()
@@ -153,8 +211,20 @@ func _hand_closed_pressed(hand : Node2D):
 	pass # TODO: MAYBE DO SOMETHING HERE
 
 func _hand_attacking_pressed(hand : Node2D):
-	# TODO: ANIMATION
+	hands_state[hand]["attack_tween"].kill()
 	_attempt_to_close_hand(hand)
+	hands_state[hand]["attack_tween"] = create_tween()
+	hands_state[hand]["attack_tween"].tween_property(hand, "scale", Vector2(1.0, 1.0), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	hands_state[hand]["attack_tween"].tween_callback(_attempt_to_close_hand.bind(hand))
+
+func _spawn_kiss(hand : Node2D):
+	var new_kiss : Node2D = preload("res://modules/remi/mob_handy_man/kiss.tscn").instantiate()
+	new_kiss.transform = hand.transform
+	$Kisses.add_child(new_kiss)
+	# tween
+	var kiss_tween : Tween = create_tween()
+	kiss_tween.tween_property(new_kiss, "modulate:a", 0.0, KISS_DURATION).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	kiss_tween.tween_callback(new_kiss.queue_free)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float):

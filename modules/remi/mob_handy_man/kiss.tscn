@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://5f0yk8n8ygtn"]
+
+[ext_resource type="Texture2D" uid="uid://bkbsnn2a2sx28" path="res://modules/remi/assets/graphics/hand_man__kiss.svg" id="1_88um6"]
+
+[node name="Hand" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_88um6")

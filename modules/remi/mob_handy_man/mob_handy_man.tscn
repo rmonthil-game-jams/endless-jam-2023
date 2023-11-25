@@ -1,21 +1,28 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3clduo33km57"]
+[gd_scene load_steps=6 format=3 uid="uid://d3clduo33km57"]
 
 [ext_resource type="Script" path="res://modules/remi/mob_handy_man/mob_handy_man.gd" id="1_euu82"]
 [ext_resource type="Texture2D" uid="uid://bg8r1e26ohqqj" path="res://modules/remi/assets/graphics/hand_man__body_normal.svg" id="2_o0lea"]
 [ext_resource type="PackedScene" uid="uid://dobsvo2y5yduy" path="res://modules/remi/mob_handy_man/hand.tscn" id="3_bmm0s"]
 [ext_resource type="Texture2D" uid="uid://cxqgypsuxwr8l" path="res://modules/remi/assets/graphics/hand_man__body_attacking.svg" id="3_igv32"]
+[ext_resource type="Texture2D" uid="uid://deb26l7c3odsu" path="res://modules/remi/assets/graphics/hand_man__body_being_hit.svg" id="4_kbvrv"]
 
 [node name="MobHandyMan" type="Node2D"]
 script = ExtResource("1_euu82")
 
 [node name="Body" type="Node2D" parent="."]
 
-[node name="Sprite2DNormal" type="Sprite2D" parent="Body"]
+[node name="SpriteRoot" type="Node2D" parent="Body"]
+
+[node name="Sprite2DNormal" type="Sprite2D" parent="Body/SpriteRoot"]
 texture = ExtResource("2_o0lea")
 
-[node name="Sprite2DAttacking" type="Sprite2D" parent="Body"]
+[node name="Sprite2DAttacking" type="Sprite2D" parent="Body/SpriteRoot"]
 visible = false
 texture = ExtResource("3_igv32")
+
+[node name="Sprite2DBeingHit" type="Sprite2D" parent="Body/SpriteRoot"]
+visible = false
+texture = ExtResource("4_kbvrv")
 
 [node name="Hands" type="Node2D" parent="."]
 
@@ -30,3 +37,5 @@ position = Vector2(-238, 140)
 
 [node name="Hand4" parent="Hands" instance=ExtResource("3_bmm0s")]
 position = Vector2(-338, -99)
+
+[node name="Kisses" type="Node2D" parent="."]
