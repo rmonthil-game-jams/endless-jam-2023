@@ -5,7 +5,8 @@ signal just_died
 # MOB PARAMETERS
 var DIFFICULTY : float = 0.0
 
-
+var gang_size : int = 0
+var duplication_number : int = 0
 
 var speaches : Array[String]
 
@@ -84,6 +85,16 @@ func _get_a_speach():
 		speaches = speaches_template.duplicate()
 		speaches.shuffle()
 	return speaches.pop_back()
+
+func _register_spawning(n : int):
+	if n > 0 :
+		duplication_number += n
+		gang_size += n
+	else :
+		gang_size -= n
+		
+		if gang_size <= 0 :
+			just_died.emit()
 	
 
 #	var new_sliminou : Node2D = preload("res://modules/nathan/sliminou_gang/sliminou.tscn").instantiate()
