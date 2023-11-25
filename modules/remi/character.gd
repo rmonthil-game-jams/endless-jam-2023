@@ -32,6 +32,30 @@ var upgrades : Dictionary = {
 				"tier" : 3,
 				"max_life_points" : 20,
 			},
+	"HPR1" : {
+				"name" : "Health Regen Bonus",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 1,
+				"type" : "HP R UP",
+				"tier" : 1,
+				"hp_regen" : 1,
+			},
+	"HPR2" : {
+				"name" : "Health Regen Bonus +",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 1,
+				"type" : "HP R UP",
+				"tier" : 2,
+				"hp_regen" : 2,
+			},
+	"HPR3" : {
+				"name" : "Health Regen Bonus ++",
+				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"weight" : 1,
+				"type" : "HP R UP",
+				"tier" : 3,
+				"hp_regen" : 4,
+			},
 	"DMG1" : {
 				"name" : "Damage per Click",
 				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
@@ -65,7 +89,7 @@ var upgrades : Dictionary = {
 				"life_points" : 50,
 			},
 	"HEAL2" : {
-				"name" : "Healing potion+",
+				"name" : "Healing potion +",
 				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
 				"weight" : 1,
 				"type" : "HEAL",
@@ -96,6 +120,7 @@ var upgrades : Dictionary = {
 				"tier" : 1,
 				"upgrade_level" : 0.3,
 			},
+			
 }
 
 signal finished_upgrade
@@ -120,7 +145,9 @@ func _apply_up(upgrade : Dictionary):
 				
 			"upgrade_level":
 				upgrade_level += upgrade["upgrade_level"]
-				
+			
+			"hp_regen" : 
+				hp_regen += upgrade["hp_regen"]
 
 	
 	$CanvasLayer/UpgradeMenu.hide()
@@ -130,20 +157,22 @@ func _apply_up(upgrade : Dictionary):
 	finished_upgrade.emit()
 	
 
-var upgrade_level : float = 1.6
+var upgrade_level : float = 0
 var upgrade_options : int = 3
 
-func _loot(room : float):
+func _loot(lootbuff : float):
 	
-	_generate_upgrades(room)
+	heal(hp_regen)
+	
+	_generate_upgrades(lootbuff)
 	$CanvasLayer/UpgradeMenu.show()
 	
 
 
-func _generate_upgrades(room : float):
+func _generate_upgrades(lootbuff : float):
 	var all_unused_upgrades = upgrades.duplicate(true)
 	for up_option in range(upgrade_options):
-		var upgrade_tier = _chose_upgrade_tier(room)
+		var upgrade_tier = _chose_upgrade_tier(lootbuff)
 		var available_upgrades : Array
 		
 		var cum_prob : Array[float]
@@ -171,21 +200,22 @@ func _generate_upgrades(room : float):
 		
 		var upgrade_label = Label.new()
 		upgrade_label.text = selected_up["name"]
-		upgrade_label.anchors_preset = Control.PRESET_FULL_RECT
-		upgrade_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		upgrade_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		upgrade_label.name = "Label"
 		$CanvasLayer/UpgradeMenu/HBoxContainer.add_child(upgrade_button)
 		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]).add_child(upgrade_label)
+		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").anchors_preset = Control.PRESET_FULL_RECT
+		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 
 
-@export var TIER_SELECTIVITY : float = 0.6
+@export var TIER_SELECTIVITY : float = 0.4
 @export var MAXTIER : int = 3
 
-func _chose_upgrade_tier(room : float):
+func _chose_upgrade_tier(lootbuff : float):
 	var tiers_prob : Array
 	var prob_tot : float = 0.0
 	for tier in range(MAXTIER):
-		tiers_prob.append(1/(TIER_SELECTIVITY*sqrt(2*PI))*exp(-1.0/2.0*pow((upgrade_level-tier)/TIER_SELECTIVITY,2.0)))
+		tiers_prob.append(1/(TIER_SELECTIVITY*sqrt(2*PI))*exp(-1.0/2.0*pow((upgrade_level+lootbuff-tier)/TIER_SELECTIVITY,2.0)))
 		prob_tot += tiers_prob[tier]
 		
 	for tier in range(MAXTIER):
@@ -222,6 +252,7 @@ func heal(heal_points : float):
 ## state
 var max_life_points : float = 10.0
 var life_points : float = 10.0
+var hp_regen : float = 1.0
 var damage_per_attack : float = 1.0
 
 signal set_maxhp (max_hp : float)

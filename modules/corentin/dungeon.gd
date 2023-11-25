@@ -10,7 +10,7 @@ func _ready():
 	# instance a random mob scene
 	_advance()
 
-@export var BOSS_ROOM_PERIOD : int = 5
+@export var BOSS_ROOM_PERIOD : int = 3
 func _advance():
 	room += 1
 	$Background/Sprite2D2.show()
@@ -36,12 +36,13 @@ func _advance():
 
 	# then instance mob
 	var new_mob : Node2D
-	if room % 5:
-		new_mob = BOSS_SCENES[randi_range(0, BOSS_SCENES.size() - 1)].instantiate()
-		new_mob.DIFFICULTY = _new_mob_difficulty() * KBOSSDIFF
-	else:
+	if room % BOSS_ROOM_PERIOD:
 		new_mob = MOB_SCENES[randi_range(0, MOB_SCENES.size() - 1)].instantiate()
 		new_mob.DIFFICULTY = _new_mob_difficulty()
+	else:
+		new_mob = BOSS_SCENES[randi_range(0, BOSS_SCENES.size() - 1)].instantiate()
+		new_mob.DIFFICULTY = _new_mob_difficulty() * KBOSSDIFF
+
 	$RoomContent.add_child(new_mob)
 	new_mob.just_died.connect(_on_current_mob_just_died)
 
@@ -50,6 +51,8 @@ func _advance():
 @export var KEXPDIFF : float = 0.1
 @export var KSTARTDIFF : float = 1.0
 @export var KBOSSDIFF : float = 1.5
+@export var BOSS_LOOT_BUFF : float = 1
+
 var difficulty : int = 1
 var room : int = 0
 
@@ -61,7 +64,12 @@ func _on_current_mob_just_died():
 		# clean
 	for child in $RoomContent.get_children():
 		child.queue_free()
-	$Character._loot(room)
+	var lootbuff
+	if room % BOSS_ROOM_PERIOD:
+		lootbuff = 0
+	else:
+		lootbuff = BOSS_LOOT_BUFF
+	$Character._loot(lootbuff)
 	
 
 signal _game_over

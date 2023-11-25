@@ -8,6 +8,7 @@
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_7npxm")
 MOB_SCENES = Array[PackedScene]([ExtResource("2_p6nb8")])
+BOSS_SCENES = Array[PackedScene]([ExtResource("2_p6nb8")])
 
 [node name="Background" type="Node2D" parent="."]
 
