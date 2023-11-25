@@ -11,12 +11,12 @@ var HAND_MOVE_DURATION : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE O
 var HAND_MOVE_RADIUS : float = 100.0
 ## IDLE
 const IDLE_LOOP_NUMBER : int = 3
-var DUPLICATE_LOOP_NUMBER : int = round(6.0 - DIFFICULTY)
+var DUPLICATE_LOOP_NUMBER : int = round(8.0 - DIFFICULTY) #NUMBER OF IDLE PHASES
 var DANCE_MOVE_DURATION : float = 2.0 / (1.0 + log(1.0 + DIFFICULTY/4)) # INVERSE OF MOVEMENT SPEED
 var DANCE_MOVE_RADIUS : float = 100.0
 ## JUMPING
-var JUMP_DURATION : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF MOVEMENT SPEED
-var JUMP_HEIGHT : float = min(800.0, 100.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
+var JUMP_DURATION : float = 3.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF MOVEMENT SPEED
+var JUMP_HEIGHT : float = min(1000.0, 300.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
 ## ATTACKING
 var SPEACH_ATTACK_DURATION_FACTOR : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF ATTACK SPEED
 var SPEACH_DAMAGE_PER_ATTACK : float = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
@@ -117,9 +117,10 @@ func _ready():
 	
 
 	
-func _play_waiting_animation(loop_num : int):
+func _play_waiting_animation(loop_num : int, next_is_jump : bool):
 	state = STATE.idle
-	print("idling")
+	duplicate_countdown -= 1 
+	
 	tween = create_tween()
 	for loop_index in range(loop_num):
 		# generation of random vector whithin a disk of radius HAND_MOVE_RADIUS, the "sqrt" ensures uniform distribution.
@@ -128,7 +129,14 @@ func _play_waiting_animation(loop_num : int):
 		tween.tween_property($Body, "position", target_position, DANCE_MOVE_DURATION).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property($Body, "position", Vector2(0.0, 0.0), DANCE_MOVE_DURATION/1.5).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
-	_play_attacking_animation.call_deferred()
+	
+	if duplicate_countdown == 0 :
+		duplicate_countdown = DUPLICATE_LOOP_NUMBER
+	elif next_is_jump :
+		_play_jump_animation.call_deferred()
+	else :
+		_play_attacking_animation.call_deferred()
+	
 
 func _play_attacking_animation():
 	
@@ -153,11 +161,26 @@ func _play_attacking_animation():
 	tween.tween_property($Speach/SpeachBubble, "scale", Vector2(0.0, 0.0), 0.125 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_callback(_clean_attack.bind($Speach/SpeachBubble))
 
+func _play_jump_animation():
+	state = STATE.loading_jump
+	
+	var bouncing_value : float = 0.5
+	var offset_value : float = (1- bouncing_value) * $Body/Sprite2DNormal.texture.get_height()
+	print(offset_value)
+	tween = create_tween()
+	tween.tween_property($Body, "position", Vector2(0.0,offset_value), JUMP_DURATION/3).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property($Body, "scale", Vector2(1.0, bouncing_value), JUMP_DURATION/3).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property($Body, "position", Vector2(0.0, -JUMP_HEIGHT), JUMP_DURATION).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property($Body, "scale", Vector2(1.0,1.0), JUMP_DURATION/3).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Body, "position", Vector2(0.0,0.0), JUMP_DURATION).set_trans(Tween.TRANS_LINEAR)
+	await tween.finished
+	_play_waiting_animation.call_deferred(IDLE_LOOP_NUMBER, false)
+
 func _clean_attack(bubble : Node2D):
 	bubble.get_node("SpeachText").visible_ratio = 0.0
 	bubble.get_node("SpeachButton").hide()
 	bubble.rotation = 0.0
-	_play_waiting_animation.call_deferred(IDLE_LOOP_NUMBER)
+	_play_waiting_animation.call_deferred(IDLE_LOOP_NUMBER, true)
 
 func _attempt_to_attack(speach : Node2D):
 	state = STATE.loading_attack
