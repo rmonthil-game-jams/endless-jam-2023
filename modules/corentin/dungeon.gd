@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var MOB_SCENES : Array[PackedScene]
+@export var BOSS_SCENES : Array[PackedScene]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# set random state
@@ -9,6 +10,7 @@ func _ready():
 	# instance a random mob scene
 	_advance()
 
+@export var BOSS_ROOM_PERIOD : int = 5
 func _advance():
 	room += 1
 	$Background/Sprite2D2.show()
@@ -33,8 +35,13 @@ func _advance():
 	$Background/Sprite2D2.hide()
 
 	# then instance mob
-	var new_mob : Node2D = MOB_SCENES[randi_range(0, MOB_SCENES.size() - 1)].instantiate()
-	new_mob.DIFFICULTY = _new_mob_difficulty()
+	var new_mob : Node2D
+	if room % 5:
+		new_mob = BOSS_SCENES[randi_range(0, BOSS_SCENES.size() - 1)].instantiate()
+		new_mob.DIFFICULTY = _new_mob_difficulty() * KBOSSDIFF
+	else:
+		new_mob = MOB_SCENES[randi_range(0, MOB_SCENES.size() - 1)].instantiate()
+		new_mob.DIFFICULTY = _new_mob_difficulty()
 	$RoomContent.add_child(new_mob)
 	new_mob.just_died.connect(_on_current_mob_just_died)
 
@@ -42,7 +49,7 @@ func _advance():
 @export var KDIFF : float = 1.0
 @export var KEXPDIFF : float = 0.1
 @export var KSTARTDIFF : float = 1.0
-
+@export var KBOSSDIFF : float = 1.5
 var difficulty : int = 1
 var room : int = 0
 
