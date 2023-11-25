@@ -18,8 +18,8 @@ var HAND_DAMAGE_PER_ATTACK : float = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 ## TODO: NUMBER OF HANDS DEPENDANT OF DIFFICULTY ?
 
 # MOB STATE
-var max_life_points : float = 10.0 + 5*DIFFICULTY
-var life_points : float = 10.0 + 5*DIFFICULTY
+var max_life_points : float = 1#10.0 + 5*DIFFICULTY
+var life_points : float = 1#10.0 + 5*DIFFICULTY
 var state : String # useles at the moment but who knows in the future?
 
 # private

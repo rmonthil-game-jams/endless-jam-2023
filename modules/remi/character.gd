@@ -138,7 +138,7 @@ var upgrades : Dictionary = {
 	"MORE" : {
 				"name" : "More Upgrade Options",
 				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
-				"tooltip" : "Increases the number of upgrades to chose from after each fight by one",
+				"tooltip" : "Increases the number of upgrades to chose from after each fight by one (max. 6)",
 				"weight" : 0.5,
 				"type" : "OPTIONS",
 				"tier" : 2,
@@ -148,7 +148,7 @@ var upgrades : Dictionary = {
 				"name" : "Better Upgrade Options",
 				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
 				"tooltip" : "Improves the quality of the upgrades by a small amount",
-				"weight" : 3,
+				"weight" : 2,
 				"type" : "BETTER",
 				"tier" : 1,
 				"upgrade_level" : 0.2,
@@ -157,11 +157,20 @@ var upgrades : Dictionary = {
 				"name" : "Better Upgrade Options",
 				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
 				"tooltip" : "Improves the quality of the upgrades by a large amount",
-				"weight" : 3,
+				"weight" : 2,
 				"type" : "BETTER",
 				"tier" : 2,
 				"upgrade_level" : 0.5,
 			},
+#	"EXTRA1" : {
+#				"name" : "Add Companion",
+#				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+#				"tooltip" : "Adds a new pointer helping you periodically",
+#				"weight" : 100,
+#				"type" : "EXTRA",
+#				"tier" : 1,
+#				"add_pointer" : 1,
+#			},
 }
 
 signal finished_upgrade
@@ -192,14 +201,24 @@ func _apply_up(upgrade : Dictionary):
 			
 			"hp_regen" : 
 				hp_regen += upgrade["hp_regen"]
-
+				
+			"add_pointer":
+				_add_pointer()
 	
 	$CanvasLayer/UpgradeMenu.hide()
 	for upgrade_button in $CanvasLayer/UpgradeMenu/HBoxContainer.get_children():
 		upgrade_button.queue_free()
 	
+	$Pointers.show()
 	finished_upgrade.emit()
 	
+@export var POINTER_NODE : PackedScene
+@export var MAX_POINTERS : int = 3
+var npointers : int = 0
+func _add_pointer():
+	if npointers < MAX_POINTERS:
+		var new_pointer = POINTER_NODE.instantiate()
+		$Pointers.add_child(new_pointer)
 
 var upgrade_level : float = 0
 var upgrade_options : int = 3
@@ -210,6 +229,7 @@ func _loot(lootbuff : float):
 	
 	_generate_upgrades(lootbuff)
 	$CanvasLayer/UpgradeMenu.show()
+	$Pointers.hide()
 	
 
 
