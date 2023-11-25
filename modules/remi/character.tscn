@@ -131,7 +131,7 @@ custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 text = "You survived ! Chose your reward."
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UpgradeMenu"]
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/UpgradeMenu"]
 layout_mode = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]

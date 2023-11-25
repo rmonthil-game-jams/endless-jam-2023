@@ -6,35 +6,38 @@ signal just_died
 
 
 
-
 var upgrades : Dictionary = {
 	"HP1" : {
 				"name" : "Health Bonus",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Increases total health by a small amount",
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 1,
-				"max_life_points" : 5,
+				"max_life_points" : 4,
 			},
 	"HP2" : {
 				"name" : "Health Bonus +",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Increases total health by a significant amount",
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 2,
-				"max_life_points" : 10,
+				"max_life_points" : 9,
 			},
 	"HP3" : {
 				"name" : "Health Bonus ++",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Increases total health by a large amount",
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 3,
-				"max_life_points" : 20,
+				"max_life_points" : 15,
 			},
 	"HPR1" : {
 				"name" : "Health Regen Bonus",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Increases health generation after each fight by a small amount",
 				"weight" : 1,
 				"type" : "HP R UP",
 				"tier" : 1,
@@ -42,7 +45,8 @@ var upgrades : Dictionary = {
 			},
 	"HPR2" : {
 				"name" : "Health Regen Bonus +",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Increases health generation after each fight by a significant amount",
 				"weight" : 1,
 				"type" : "HP R UP",
 				"tier" : 2,
@@ -50,7 +54,8 @@ var upgrades : Dictionary = {
 			},
 	"HPR3" : {
 				"name" : "Health Regen Bonus ++",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Increases health generation after each fight by a large amount",
 				"weight" : 1,
 				"type" : "HP R UP",
 				"tier" : 3,
@@ -58,7 +63,8 @@ var upgrades : Dictionary = {
 			},
 	"DMG1" : {
 				"name" : "Damage per Click",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Increases damage inflicted by a small amount",
 				"weight" : 1,
 				"type" : "DMG UP",
 				"tier" : 1,
@@ -66,7 +72,8 @@ var upgrades : Dictionary = {
 			},
 	"DMG2" : {
 				"name" : "Damage per Click +",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Increases damage inflicted by a significant amount",
 				"weight" : 1,
 				"type" : "DMG UP",
 				"tier" : 2,
@@ -74,7 +81,8 @@ var upgrades : Dictionary = {
 			},
 	"DMG3" : {
 				"name" : "Damage per Click ++",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Increases damage inflicted by a large amount",
 				"weight" : 1,
 				"type" : "DMG UP",
 				"tier" : 3,
@@ -82,7 +90,8 @@ var upgrades : Dictionary = {
 			},
 	"HEAL1" : {
 				"name" : "Healing potion",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Regenerates your health by a small amount",
 				"weight" : 1,
 				"type" : "HEAL",
 				"tier" : 1,
@@ -90,7 +99,8 @@ var upgrades : Dictionary = {
 			},
 	"HEAL2" : {
 				"name" : "Healing potion +",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Regenerates your health by a significant amount",
 				"weight" : 1,
 				"type" : "HEAL",
 				"tier" : 2,
@@ -98,15 +108,37 @@ var upgrades : Dictionary = {
 			},
 	"HEAL3" : {
 				"name" : "Healing potion ++",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Regenerates your health by a large amount",
 				"weight" : 1,
 				"type" : "HEAL",
 				"tier" : 3,
 				"life_points" : 200,
 			},
+	"BSK2" : {
+				"name" : "Berserk +",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Increases damage at the cost of maximum health by a significant amount",
+				"weight" : 100,
+				"type" : "BSK",
+				"tier" : 1,
+				"max_life_points" : -5,
+				"damage_per_attack" : 1.5,
+			},
+	"BSK3" : {
+				"name" : "Berserk ++",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Increases damage at the cost of maximum health by a large amount",
+				"weight" : 1,
+				"type" : "BSK",
+				"tier" : 3,
+				"max_life_points" : -15,
+				"damage_per_attack" : 3,
+			},
 	"MORE" : {
 				"name" : "More Upgrade Options",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Increases the number of upgrades to chose from after each fight by one",
 				"weight" : 0.5,
 				"type" : "OPTIONS",
 				"tier" : 2,
@@ -114,13 +146,22 @@ var upgrades : Dictionary = {
 			},
 	"BETTER1" : {
 				"name" : "Better Upgrade Options",
-				"icon" : "res://modules/remi/assets/graphics/hand_man__hand.svg",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Improves the quality of the upgrades by a small amount",
 				"weight" : 3,
 				"type" : "BETTER",
 				"tier" : 1,
-				"upgrade_level" : 0.3,
+				"upgrade_level" : 0.2,
 			},
-			
+	"BETTER2" : {
+				"name" : "Better Upgrade Options",
+				"icon" : "res://modules/remi/assets/graphics/hud_life_bar_progress.svg",
+				"tooltip" : "Improves the quality of the upgrades by a large amount",
+				"weight" : 3,
+				"type" : "BETTER",
+				"tier" : 2,
+				"upgrade_level" : 0.5,
+			},
 }
 
 signal finished_upgrade
@@ -132,7 +173,10 @@ func _apply_up(upgrade : Dictionary):
 			"max_life_points" : 
 				max_life_points += upgrade["max_life_points"]
 				_set_hpbar_max(max_life_points)
-				heal(upgrade["max_life_points"])
+				if upgrade["max_life_points"]>= 0:
+					heal(upgrade["max_life_points"])
+				else:
+					hit(upgrade["max_life_points"])
 				
 			"damage_per_attack" :
 				damage_per_attack += upgrade["damage_per_attack"]
@@ -197,6 +241,7 @@ func _generate_upgrades(lootbuff : float):
 		upgrade_button.pressed.connect(_apply_up.bind(selected_up))
 		upgrade_button.texture_normal = load(selected_up["icon"])
 		upgrade_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		upgrade_button.tooltip_text = selected_up["tooltip"]
 		
 		var upgrade_label = Label.new()
 		upgrade_label.text = selected_up["name"]
@@ -332,7 +377,7 @@ func _heal_label_animation(heal_points : float):
 	tween_label_hit.parallel().tween_property(label_heal, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 	tween_label_hit.tween_callback(label_heal.hide)
 
-@onready var color_rect_heal : ColorRect = $CanvasLayer/ColorRectHit
+@onready var color_rect_heal : ColorRect = $CanvasLayer/ColorRectHeal
 var tween_color_rect_heal : Tween
 
 func _heal_color_rect_animation():
