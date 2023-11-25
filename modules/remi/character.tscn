@@ -138,6 +138,29 @@ layout_mode = 2
 size_flags_vertical = 3
 columns = 3
 
+[node name="StatsPanel" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -162.0
+offset_bottom = 192.0
+grow_horizontal = 0
+
+[node name="StatsContainer" type="VBoxContainer" parent="CanvasLayer/StatsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/StatsPanel/StatsContainer"]
+layout_mode = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer/StatsPanel/StatsContainer"]
+layout_mode = 2
+
 [node name="Camera2D" type="Camera2D" parent="."]
 visible = false
 zoom = Vector2(0.5, 0.5)
