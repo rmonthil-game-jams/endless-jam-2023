@@ -233,6 +233,7 @@ func _apply_up(upgrade : Dictionary):
 				
 			"upgrade_level":
 				upgrade_level += upgrade["upgrade_level"]
+				$CanvasLayer/StatsPanel/StatsContainer/UpdateProgressBar.value = upgrade_level
 			
 			"hp_regen" : 
 				hp_regen += upgrade["hp_regen"]
@@ -364,11 +365,13 @@ var damage_per_attack : float = 1.0
 
 signal set_maxhp (max_hp : float)
 func _ready():
+	#INIT UI
 	_set_hpbar_max(max_life_points)
 	_set_hpbar_level(max_life_points)
+	
 	$CanvasLayer/StatsPanel/StatsContainer/RegenProgressBar.value = hp_regen
 	$CanvasLayer/StatsPanel/StatsContainer/DamageProgressBar.value = damage_per_attack
-	
+	$CanvasLayer/StatsPanel/StatsContainer/UpdateProgressBar.value = upgrade_level
 	# TODO: WHEN CURSOR SHAPES ARE DONE
 	# Input.set_custom_mouse_cursor(preload("res://path/to/cursor.(svg|png|etc...)"))
 	# Input.set_custom_mouse_cursor(preload("res://path/to/cursor.(svg|png|etc...)"))
