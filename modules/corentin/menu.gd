@@ -51,15 +51,15 @@ func _on_texture_button_button_up():
 	state = "game"
 	var new_dungeon = dungeon.instantiate()
 	new_dungeon.difficulty = difficulty
-	new_dungeon.name = "dungeon"
+	new_dungeon.name = "Dungeon"
 	new_dungeon.process_mode=Node.PROCESS_MODE_PAUSABLE
 	add_child(new_dungeon)
-	$dungeon._game_over.connect(_on_game_over)
-	$dungeon.z_index = -1
-	$dungeon.position = get_viewport_rect().size / 2
+	$Dungeon._game_over.connect(_on_game_over)
+	$Dungeon.z_index = -1
+	$Dungeon.position = get_viewport_rect().size / 2
 
 func _on_game_over():
-	$dungeon.queue_free()
+	$Dungeon.queue_free()
 	state = "main menu"
 	$StartButton.show()
 	$Settings.show()

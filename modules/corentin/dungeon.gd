@@ -21,12 +21,6 @@ func _advance():
 		1.0
 	).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property(
-		$Background,
-		"position", 
-		Vector2(0, 53.0),
-		1.0
-	).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property(
 		$Background/Sprite2D2, 
 		"modulate:a", 
 		1.0,

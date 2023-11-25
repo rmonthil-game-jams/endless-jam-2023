@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3clduo33km57"]
+[gd_scene load_steps=7 format=3 uid="uid://d3clduo33km57"]
 
 [ext_resource type="Script" path="res://modules/remi/mob_handy_man/mob_handy_man.gd" id="1_euu82"]
 [ext_resource type="Texture2D" uid="uid://bg8r1e26ohqqj" path="res://modules/remi/assets/graphics/hand_man__body_normal.svg" id="2_o0lea"]
 [ext_resource type="PackedScene" uid="uid://dobsvo2y5yduy" path="res://modules/remi/mob_handy_man/hand.tscn" id="3_bmm0s"]
 [ext_resource type="Texture2D" uid="uid://cxqgypsuxwr8l" path="res://modules/remi/assets/graphics/hand_man__body_attacking.svg" id="3_igv32"]
 [ext_resource type="Texture2D" uid="uid://deb26l7c3odsu" path="res://modules/remi/assets/graphics/hand_man__body_being_hit.svg" id="4_kbvrv"]
+[ext_resource type="PackedScene" uid="uid://c8kc54alm42iy" path="res://modules/remi/fx/mob_hp_bar.tscn" id="6_gu1sx"]
 
 [node name="MobHandyMan" type="Node2D"]
 script = ExtResource("1_euu82")
@@ -39,3 +40,6 @@ position = Vector2(-238, 140)
 position = Vector2(-338, -99)
 
 [node name="Kisses" type="Node2D" parent="."]
+
+[node name="MobHPBar" parent="." instance=ExtResource("6_gu1sx")]
+position = Vector2(-2, -418)

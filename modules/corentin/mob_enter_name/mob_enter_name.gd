@@ -44,7 +44,7 @@ func _ready():
 		hand.get_node("TextureButtonClosed").pressed.connect(_hand_closed_pressed.bind(hand))
 		hand.get_node("TextureButtonAttacking").pressed.connect(_hand_attacking_pressed.bind(hand))
 	character = get_tree().get_nodes_in_group("character").front()
-	$MobHPBar.max_value=max_life_points
+	$MobHPBar.max_value = max_life_points
 	# avoid using await in the _ready function
 	_play_appearing_animation.call_deferred()
 	
@@ -144,13 +144,14 @@ func _attempt_to_play_hit_animation():
 		hit_tween.tween_property($Body, "modulate", Color(1.0, 1.0, 1.0), 0.125).set_trans(Tween.TRANS_CUBIC)
 
 
-@export var healthTransTime : float
+const HEALTH_TRANS_TIME : float = 0.25
 var hp_bar_tween : Tween
+
 func _set_hp_bar(hp):
 	if hp_bar_tween:
 		hp_bar_tween.kill()
 	hp_bar_tween = get_tree().create_tween()
-	hp_bar_tween.tween_property($MobHPBar,"value",life_points,healthTransTime)
+	hp_bar_tween.tween_property($MobHPBar, "value", life_points, HEALTH_TRANS_TIME)
 
 func _attempt_to_play_death_animation():
 	if state != "dying":

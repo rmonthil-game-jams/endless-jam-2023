@@ -3,7 +3,7 @@ extends Node2D
 # public
 
 signal just_died
-@export var healthTransTime : float
+
 func hit(damage_points : float):
 	life_points -= damage_points
 	_set_hpbar_level(life_points)
@@ -24,7 +24,7 @@ var max_life_points : float = 10.0
 var life_points : float = 10.0
 var damage_per_attack : float = 1.0
 
-signal set_maxhp (maxhp : float)
+signal set_maxhp (max_hp : float)
 func _ready():
 	_set_hpbar_max(max_life_points)
 	_set_hpbar_level(max_life_points)
@@ -48,8 +48,8 @@ func _hit_label_animation(damage_points : float):
 	if tween_label_hit != null:
 		tween_label_hit.kill()
 	tween_label_hit = create_tween()
-	tween_label_hit.tween_property(label_hit, "position:y", label_hit_initial_position_y - 20.0, 1.0).set_trans(Tween.TRANS_CUBIC)
-	tween_label_hit.parallel().tween_property(label_hit, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
+	tween_label_hit.tween_property(label_hit, "position:y", label_hit_initial_position_y - 20.0, 1.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween_label_hit.parallel().tween_property(label_hit, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	tween_label_hit.tween_callback(label_hit.hide)
 
 @onready var color_rect_hit : ColorRect = $CanvasLayer/ColorRectHit
@@ -118,20 +118,26 @@ func _heal_color_rect_animation():
 	tween_color_rect_heal.tween_callback(color_rect_heal.hide)
 	tween_color_rect_heal.tween_callback(_attempt_dying)
 
-@export var pxPerHp : int = 5
-var maxhptween : Tween
-func _set_hpbar_max(maxhp):
-	$HP_hud/HPBar/CharacterHPBar.custom_minimum_size = Vector2(maxhp*pxPerHp,$HP_hud/HPBar/CharacterHPBar.custom_minimum_size.y)
-	if maxhptween:
-		maxhptween.kill()
-	maxhptween = get_tree().create_tween()
-	maxhptween.tween_property($HP_hud/HPBar/CharacterHPBar,"max_value",maxhp,healthTransTime)
+const PX_PER_HP : int = 50
+const HEALTH_TRANS_TIME : float = 0.25
 
-var hptween : Tween
+var max_hp_tween : Tween
+
+@onready var character_hp_bar : TextureProgressBar = $CanvasLayer/HP_hud/HPBar/CharacterHPBar
+
+func _set_hpbar_max(max_hp : int):
+	character_hp_bar.custom_minimum_size = Vector2(max_hp * PX_PER_HP, character_hp_bar.custom_minimum_size.y)
+	if max_hp_tween:
+		max_hp_tween.kill()
+	max_hp_tween = get_tree().create_tween()
+	max_hp_tween.tween_property(character_hp_bar, "max_value", max_hp, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+var hp_tween : Tween
+
 func _set_hpbar_level(hp):
-	if hptween:
-		hptween.kill()
-	hptween = get_tree().create_tween()
-	hptween.tween_property($HP_hud/HPBar/CharacterHPBar,"value",hp,healthTransTime)
+	if hp_tween:
+		hp_tween.kill()
+	hp_tween = get_tree().create_tween()
+	hp_tween.tween_property(character_hp_bar, "value", hp, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	# TODO: SLIGHT CAMERA SHAKE
 	

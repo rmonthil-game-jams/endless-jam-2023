@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://da0knsa3x3m8s"]
+[gd_scene load_steps=10 format=3 uid="uid://da0knsa3x3m8s"]
 
 [ext_resource type="Script" path="res://modules/remi/character.gd" id="1_80owj"]
 [ext_resource type="Texture2D" uid="uid://butxrv0bo4kk3" path="res://modules/remi/assets/graphics/hud_misc.svg" id="2_4n2mt"]
@@ -8,12 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://coyqq37vgsfmg" path="res://modules/remi/assets/graphics/hud_life_bar_progress.svg" id="4_jwpv6"]
 [ext_resource type="Texture2D" uid="uid://dgx137dfls3lv" path="res://modules/remi/assets/graphics/hud_symbol.svg" id="7_bb6mb"]
 [ext_resource type="Texture2D" uid="uid://bmf21cahl3c0w" path="res://modules/remi/assets/graphics/hud_astronaut.svg" id="8_37epb"]
+[ext_resource type="Texture2D" uid="uid://cyd4fllsiutm1" path="res://modules/remi/assets/graphics/overlay.svg" id="9_a02gy"]
 
 [node name="Character" type="Node2D" groups=["character"]]
-position = Vector2(98, 31)
 script = ExtResource("1_80owj")
-healthTransTime = 0.5
-pxPerHp = 40
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -69,23 +67,36 @@ theme_override_colors/font_color = Color(0, 1, 0, 1)
 text = "- 1"
 horizontal_alignment = 1
 
-[node name="HP_hud" type="Sprite2D" parent="."]
-position = Vector2(-333, -201)
+[node name="Overlay" type="TextureRect" parent="CanvasLayer"]
+offset_left = -33.0
+offset_top = -73.0
+offset_right = 2424.0
+offset_bottom = 1511.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+texture = ExtResource("9_a02gy")
+
+[node name="HP_hud" type="TextureRect" parent="CanvasLayer"]
+offset_left = 38.0
+offset_top = 38.0
+offset_right = 953.0
+offset_bottom = 521.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
 texture = ExtResource("2_4n2mt")
 
-[node name="HPBar" type="HBoxContainer" parent="HP_hud"]
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = -365.0
-offset_top = -460.5
-offset_right = 1150.0
-offset_bottom = -433.5
-grow_vertical = 2
+[node name="HPBar" type="HBoxContainer" parent="CanvasLayer/HP_hud"]
+layout_mode = 1
+offset_left = 94.0
+offset_top = 34.0
+offset_right = 1609.0
+offset_bottom = 61.0
+mouse_filter = 2
 
-[node name="CharacterHPBar" type="TextureProgressBar" parent="HP_hud/HPBar"]
+[node name="CharacterHPBar" type="TextureProgressBar" parent="CanvasLayer/HP_hud/HPBar"]
 custom_minimum_size = Vector2(500, 27)
 layout_mode = 2
+mouse_filter = 2
 step = 0.0
 nine_patch_stretch = true
 texture_under = ExtResource("2_pvr1i")
@@ -93,17 +104,23 @@ texture_over = ExtResource("3_0yr67")
 texture_progress = ExtResource("4_jwpv6")
 script = ExtResource("2_o6s42")
 
-[node name="TextureRect" type="TextureRect" parent="HP_hud/HPBar"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HP_hud/HPBar"]
 layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 0
+mouse_filter = 2
 texture = ExtResource("7_bb6mb")
 expand_mode = 3
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-200, 0)
-zoom = Vector2(0.707, 0.707)
-
-[node name="HudAstronaut" type="Sprite2D" parent="."]
-position = Vector2(-598, -226)
+[node name="HudAstronaut" type="TextureRect" parent="CanvasLayer/HP_hud"]
+layout_mode = 1
+offset_left = 158.0
+offset_top = 117.0
+offset_right = 236.0
+offset_bottom = 310.0
+mouse_filter = 2
 texture = ExtResource("8_37epb")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+visible = false
+zoom = Vector2(0.5, 0.5)

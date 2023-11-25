@@ -20,6 +20,9 @@ var HAND_ATTACK_INTERVAL : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE
 const KISS_DURATION : float = 2.0
 ## TODO: NUMBER OF HANDS DEPENDANT OF DIFFICULTY ?
 
+# MOB HP BAR
+@onready var mob_hp_progress_bar : TextureProgressBar = $MobHPBar/HBoxContainer/MobHpBar
+
 # MOB STATE
 var life_points : float = 40.0
 var state : String # useles at the moment but who knows in the future?
@@ -40,7 +43,7 @@ func _ready():
 		hands_state[hand] = {
 			"initial_position":hand.position,
 			"number_of_hits":0,
-			"state":"open",
+			"state":"closed",
 			"attack_tween":null
 		} # careful here, position is in local coordinate use global_position for global coordinates
 		# setup signals
@@ -48,6 +51,7 @@ func _ready():
 		hand.get_node("TextureButtonClosed").pressed.connect(_hand_closed_pressed.bind(hand))
 		hand.get_node("TextureButtonAttacking").pressed.connect(_hand_attacking_pressed.bind(hand))
 	character = get_tree().get_nodes_in_group("character").front()
+	mob_hp_progress_bar.max_value = life_points
 	# avoid using await in the _ready function
 	_play_appearing_animation.call_deferred()
 
@@ -70,6 +74,10 @@ func _play_appearing_animation():
 		main_tween.tween_property(hand, "scale", Vector2(1.0, 1.0), 0.125).set_trans(Tween.TRANS_ELASTIC)
 	main_tween.tween_property($Body/SpriteRoot, "modulate", Color(0.5, 0.5, 0.5), 0.5).set_trans(Tween.TRANS_CUBIC)
 	await main_tween.finished
+	# open back all hands
+	for hand in hands:
+		_attempt_to_open_hand(hand)
+	# play waiting animation
 	_play_waiting_animation.call_deferred()
 
 @onready var sprite_2d_normal : Sprite2D = $Body/SpriteRoot/Sprite2DNormal
@@ -126,7 +134,7 @@ func _play_attacking_animation():
 		hands_state[hand]["attack_tween"].tween_property(hand, "scale", Vector2(1.0, 1.0), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
 		hands_state[hand]["attack_tween"].tween_callback(_attempt_to_close_hand.bind(hand))
 		await get_tree().create_timer(HAND_ATTACK_INTERVAL).timeout
-	# close all rands
+	# open back all hands
 	for hand in copy_of_hands:
 		_attempt_to_open_hand(hand)
 	# change state
@@ -168,10 +176,19 @@ func _hand_open_pressed(hand : Node2D):
 
 func _hit(damage_points : float):
 	life_points -= damage_points
+	_set_hp_bar(max(life_points,0))
 	_attempt_to_play_hit_animation()
 	# TODO: DEATH ANIMATION
 	if life_points <= 0.0:
 		_attempt_to_play_death_animation()
+
+var hp_bar_tween : Tween
+
+func _set_hp_bar(hp):
+	if hp_bar_tween:
+		hp_bar_tween.kill()
+	hp_bar_tween = get_tree().create_tween()
+	hp_bar_tween.tween_property(mob_hp_progress_bar, "value", life_points, 0.25)
 
 var hit_tween : Tween
 
@@ -202,7 +219,7 @@ func _attempt_to_play_death_animation():
 		main_tween.tween_callback($Body/SpriteRoot/Sprite2DNormal.hide)
 		main_tween.tween_callback($Body/SpriteRoot/Sprite2DBeingHit.show)
 		for hand in hands:
-			main_tween.tween_property(hand, "position:y", 700.0, 0.25).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+			main_tween.tween_property(hand, "position:y", 800.0, 0.25).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 		main_tween.tween_property(self, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
 		await main_tween.finished
 		just_died.emit()
