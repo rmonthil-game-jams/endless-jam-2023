@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="15.651883mm"
+   height="27.081669mm"
+   viewBox="0 0 15.651883 27.081672"
+   version="1.1"
+   id="svg1"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="superlechouille_queue.svg">
+  <metadata
+     id="metadata16">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="-44.642921"
+     inkscape:cy="107.56362"
+     inkscape:window-width="1853"
+     inkscape:window-height="1025"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g2183"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(160.5516,-59.990851)">
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot853"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:0.5;font-family:'1960s Hippie';-inkscape-font-specification:'1960s Hippie';letter-spacing:0px;word-spacing:0px"
+       transform="matrix(0.26458333,0,0,0.26458333,-112.97709,-29.104172)"><flowRegion
+         id="flowRegion855"><rect
+           id="rect857"
+           width="274.57068"
+           height="200.12721"
+           x="33.837936"
+           y="87.649185" /></flowRegion><flowPara
+         id="flowPara859" /></flowRoot>    <path
+       style="fill:#e3f4d7;fill-opacity:1;stroke:none;stroke-width:4.10177708;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d=""
+       id="path1204"
+       inkscape:connector-curvature="0"
+       transform="matrix(0.26458333,0,0,0.26458333,-107.70597,-25.086133)" />
+    <g
+       id="g1942">
+      <g
+         transform="translate(-2.9785649,2.3633233)"
+         id="g1857" />
+      <g
+         id="g2183">
+        <path
+           transform="translate(-42.121734,-0.67743083)"
+           sodipodi:nodetypes="ccc"
+           inkscape:connector-curvature="0"
+           id="path1073"
+           d="m -117.62502,84.452283 c 11.36384,2.222171 10.43323,-13.011544 11.60854,-21.189527 4.14599,8.151765 3.68437,24.716133 -6.74189,23.645927"
+           style="fill:#ccffaa;fill-opacity:1;stroke:#000000;stroke-width:1.58749998;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      </g>
+    </g>
+  </g>
+</svg>
