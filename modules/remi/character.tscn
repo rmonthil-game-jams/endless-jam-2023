@@ -101,7 +101,7 @@ texture = ExtResource("7_bb6mb")
 expand_mode = 3
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(3, 0)
+position = Vector2(-200, 0)
 zoom = Vector2(0.707, 0.707)
 
 [node name="HudAstronaut" type="Sprite2D" parent="."]

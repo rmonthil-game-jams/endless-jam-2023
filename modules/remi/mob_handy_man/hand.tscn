@@ -32,6 +32,7 @@ offset_bottom = 57.0
 texture_normal = ExtResource("5_jbati")
 
 [node name="TextureButtonAttacking" type="TextureButton" parent="."]
+visible = false
 offset_left = -102.0
 offset_top = -71.0
 offset_right = 105.0

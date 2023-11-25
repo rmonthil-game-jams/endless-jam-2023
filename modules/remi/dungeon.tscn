@@ -21,8 +21,6 @@ texture = ExtResource("3_i2w1n")
 
 [node name="RoomContent" type="Node2D" parent="."]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
 [node name="Character" parent="." instance=ExtResource("3_4l76g")]
 
 [connection signal="just_died" from="Character" to="." method="_on_character_just_died"]
