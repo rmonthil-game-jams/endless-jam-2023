@@ -27,7 +27,7 @@ func _advance():
 		1.0
 	).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property(
-		$Background/Sprite2D2, 
+		$Background/Sprite2D2,
 		"modulate:a", 
 		1.0,
 		1.0

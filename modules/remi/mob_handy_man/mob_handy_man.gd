@@ -131,8 +131,8 @@ func _play_attacking_animation():
 		hands_state[hand]["attack_tween"].tween_callback(_attempt_to_attack.bind(hand))
 		hands_state[hand]["attack_tween"].tween_property(hand, "scale", Vector2(2.0, 2.0), 0.75 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 		hands_state[hand]["attack_tween"].tween_callback(_attempt_damaging_character.bind(hand))
-		hands_state[hand]["attack_tween"].tween_property(hand, "scale", Vector2(1.0, 1.0), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
 		hands_state[hand]["attack_tween"].tween_callback(_attempt_to_close_hand.bind(hand))
+		hands_state[hand]["attack_tween"].tween_property(hand, "scale", Vector2(1.0, 1.0), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
 		await get_tree().create_timer(HAND_ATTACK_INTERVAL).timeout
 	# open back all hands
 	for hand in copy_of_hands:
@@ -147,6 +147,12 @@ func _attempt_to_open_hand(hand : Node2D):
 		hand.get_node("TextureButtonOpen").show()
 		hand.get_node("TextureButtonClosed").hide()
 		hand.get_node("TextureButtonAttacking").hide()
+		# add target fx
+		var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
+		target_fx.w = 273.0
+		target_fx.h = 227.0
+		target_fx.position = hand.position # carefull these are local coordinates
+		add_child(target_fx)
 
 func _attempt_to_close_hand(hand : Node2D):
 	if not hands_state[hand]["state"] == "close":
@@ -228,6 +234,11 @@ func _hand_closed_pressed(hand : Node2D):
 	pass # TODO: MAYBE DO SOMETHING HERE
 
 func _hand_attacking_pressed(hand : Node2D):
+	# add blocked fx
+	var blocked_fx = preload("res://modules/remi/fx/blocked.tscn").instantiate()
+	blocked_fx.position = hand.position # carefull these are local coordinates
+	add_child(blocked_fx)
+	# deal with hand anim
 	hands_state[hand]["attack_tween"].kill()
 	_attempt_to_close_hand(hand)
 	hands_state[hand]["attack_tween"] = create_tween()
