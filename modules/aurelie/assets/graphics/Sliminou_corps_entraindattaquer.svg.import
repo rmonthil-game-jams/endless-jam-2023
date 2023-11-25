@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ipv37erik53j"
-path="res://.godot/imported/Sliminou_corps_entraindattaquer.svg-adc5ebffea5253d98b1af4873ffb91e9.ctex"
+uid="uid://du6tn46ybfoel"
+path="res://.godot/imported/sliminou_corps_entraindattaquer.svg-762e54a6863829b8ef5be620265d63b7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/aurelie/assets/graphics/Sliminou_corps_entraindattaquer.svg"
-dest_files=["res://.godot/imported/Sliminou_corps_entraindattaquer.svg-adc5ebffea5253d98b1af4873ffb91e9.ctex"]
+source_file="res://modules/aurelie/assets/graphics/sliminou_corps_entraindattaquer.svg"
+dest_files=["res://.godot/imported/sliminou_corps_entraindattaquer.svg-762e54a6863829b8ef5be620265d63b7.ctex"]
 
 [params]
 

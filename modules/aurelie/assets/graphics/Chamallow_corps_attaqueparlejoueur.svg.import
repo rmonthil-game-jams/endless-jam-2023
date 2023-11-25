@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnctuwoicjb0e"
-path="res://.godot/imported/Chamallow_corps_attaqueparlejoueur.svg-2f1bf70177ba51952afe3dae44edc2f8.ctex"
+uid="uid://b2f51nbcr22y2"
+path="res://.godot/imported/chamallow_corps_attaqueparlejoueur.svg-6418c5969a2edeefe08749316385b608.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/aurelie/assets/graphics/Chamallow_corps_attaqueparlejoueur.svg"
-dest_files=["res://.godot/imported/Chamallow_corps_attaqueparlejoueur.svg-2f1bf70177ba51952afe3dae44edc2f8.ctex"]
+source_file="res://modules/aurelie/assets/graphics/chamallow_corps_attaqueparlejoueur.svg"
+dest_files=["res://.godot/imported/chamallow_corps_attaqueparlejoueur.svg-6418c5969a2edeefe08749316385b608.ctex"]
 
 [params]
 
