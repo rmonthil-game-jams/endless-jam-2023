@@ -5,6 +5,8 @@
 
 [node name="SliminouGang" type="Node2D"]
 y_sort_enabled = true
+position = Vector2(0, 150)
+scale = Vector2(0.4, 0.4)
 script = ExtResource("1_v1m8y")
 
 [node name="Sliminou" parent="." instance=ExtResource("2_6sk22")]
