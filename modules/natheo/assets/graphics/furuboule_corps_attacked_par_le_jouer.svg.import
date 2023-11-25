@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpiuwnfsdtibn"
-path="res://.godot/imported/superlechouille_langue.svg-cb6e295cd9350d0f5aad988470c9543d.ctex"
+uid="uid://bwkky3rdw6sn0"
+path="res://.godot/imported/furuboule_corps_attacked_par_le_jouer.svg-d5bfb89a665af08209630ffcdd65b57a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/aurelie/assets/graphics/superlechouille_langue.svg"
-dest_files=["res://.godot/imported/superlechouille_langue.svg-cb6e295cd9350d0f5aad988470c9543d.ctex"]
+source_file="res://modules/natheo/assets/graphics/furuboule_corps_attacked_par_le_jouer.svg"
+dest_files=["res://.godot/imported/furuboule_corps_attacked_par_le_jouer.svg-d5bfb89a665af08209630ffcdd65b57a.ctex"]
 
 [params]
 

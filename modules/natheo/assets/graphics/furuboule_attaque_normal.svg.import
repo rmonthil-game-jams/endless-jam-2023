@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpiuwnfsdtibn"
-path="res://.godot/imported/superlechouille_langue.svg-cb6e295cd9350d0f5aad988470c9543d.ctex"
+uid="uid://e1alslabfvy5"
+path="res://.godot/imported/furuboule_attaque_normal.svg-e9e0d60304fda455fdd9f0c39b5ee606.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/aurelie/assets/graphics/superlechouille_langue.svg"
-dest_files=["res://.godot/imported/superlechouille_langue.svg-cb6e295cd9350d0f5aad988470c9543d.ctex"]
+source_file="res://modules/natheo/assets/graphics/furuboule_attaque_normal.svg"
+dest_files=["res://.godot/imported/furuboule_attaque_normal.svg-e9e0d60304fda455fdd9f0c39b5ee606.ctex"]
 
 [params]
 
