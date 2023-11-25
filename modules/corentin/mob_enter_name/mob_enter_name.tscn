@@ -31,9 +31,6 @@ position = Vector2(-228, 131)
 [node name="Hand4" parent="Hands" instance=ExtResource("4_xwoke")]
 position = Vector2(-321, -117)
 
-[node name="Hand5" parent="Hands" instance=ExtResource("4_xwoke")]
-position = Vector2(2, 26)
-
 [node name="MobHPBar" type="TextureProgressBar" parent="."]
 offset_left = -343.0
 offset_top = -468.0

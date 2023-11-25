@@ -1,12 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://da0knsa3x3m8s"]
+[gd_scene load_steps=8 format=3 uid="uid://da0knsa3x3m8s"]
 
 [ext_resource type="Script" path="res://modules/remi/character.gd" id="1_80owj"]
+[ext_resource type="Texture2D" uid="uid://butxrv0bo4kk3" path="res://modules/remi/assets/graphics/hud_misc.svg" id="2_4n2mt"]
 [ext_resource type="Script" path="res://modules/corentin/CharacterHPBar.gd" id="2_o6s42"]
+[ext_resource type="Texture2D" uid="uid://e8bbqf57kb6s" path="res://modules/remi/assets/graphics/hud_life_bar_under.svg" id="2_pvr1i"]
+[ext_resource type="Texture2D" uid="uid://dbteomwcevbjf" path="res://modules/remi/assets/graphics/hud_life_bar_over.svg" id="3_0yr67"]
+[ext_resource type="Texture2D" uid="uid://coyqq37vgsfmg" path="res://modules/remi/assets/graphics/hud_life_bar_progress.svg" id="4_jwpv6"]
+[ext_resource type="Texture2D" uid="uid://dgx137dfls3lv" path="res://modules/remi/assets/graphics/hud_symbol.svg" id="7_bb6mb"]
 
 [node name="Character" type="Node2D" groups=["character"]]
+position = Vector2(98, 31)
 script = ExtResource("1_80owj")
-
-[node name="Camera2D" type="Camera2D" parent="."]
+healthTransTime = 0.5
+pxPerHp = 40
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -62,10 +68,37 @@ theme_override_colors/font_color = Color(0, 1, 0, 1)
 text = "- 1"
 horizontal_alignment = 1
 
-[node name="CharacterHPBar" type="TextureProgressBar" parent="."]
-offset_left = 183.0
-offset_top = 268.0
-offset_right = 561.0
-offset_bottom = 308.0
+[node name="HP_hud" type="Sprite2D" parent="."]
+position = Vector2(-333, -201)
+texture = ExtResource("2_4n2mt")
+
+[node name="HPBar" type="HBoxContainer" parent="HP_hud"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -365.0
+offset_top = -460.5
+offset_right = 1150.0
+offset_bottom = -433.5
+grow_vertical = 2
+
+[node name="CharacterHPBar" type="TextureProgressBar" parent="HP_hud/HPBar"]
+custom_minimum_size = Vector2(500, 27)
+layout_mode = 2
 step = 0.0
+nine_patch_stretch = true
+texture_under = ExtResource("2_pvr1i")
+texture_over = ExtResource("3_0yr67")
+texture_progress = ExtResource("4_jwpv6")
 script = ExtResource("2_o6s42")
+
+[node name="TextureRect" type="TextureRect" parent="HP_hud/HPBar"]
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("7_bb6mb")
+expand_mode = 3
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(3, 0)
+zoom = Vector2(0.707, 0.707)

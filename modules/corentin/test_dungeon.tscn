@@ -21,8 +21,6 @@ texture = ExtResource("2_e6tvr")
 
 [node name="RoomContent" type="Node2D" parent="."]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
 [node name="Character" parent="." instance=ExtResource("3_wdgi3")]
 
 [node name="UI" type="Control" parent="."]

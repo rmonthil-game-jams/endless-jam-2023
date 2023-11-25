@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var MOB_SCENES : Array[PackedScene]
-
+var difficulty : int = 1
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# set random state
@@ -46,9 +46,11 @@ func _advance():
 
 func _on_current_mob_just_died():
 	_advance()
+	
 
+signal _game_over
 func _on_character_just_died():
-	get_tree().reload_current_scene()
+	_game_over.emit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float):

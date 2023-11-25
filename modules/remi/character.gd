@@ -27,6 +27,7 @@ var damage_per_attack : float = 1.0
 signal set_maxhp (maxhp : float)
 func _ready():
 	_set_hpbar_max(max_life_points)
+	_set_hpbar_level(max_life_points)
 
 	# TODO: WHEN CURSOR SHAPES ARE DONE
 	# Input.set_custom_mouse_cursor(preload("res://path/to/cursor.(svg|png|etc...)"))
@@ -117,18 +118,20 @@ func _heal_color_rect_animation():
 	tween_color_rect_heal.tween_callback(color_rect_heal.hide)
 	tween_color_rect_heal.tween_callback(_attempt_dying)
 
+@export var pxPerHp : int = 5
 var maxhptween : Tween
 func _set_hpbar_max(maxhp):
+	$HP_hud/HPBar/CharacterHPBar.custom_minimum_size = Vector2(maxhp*pxPerHp,$HP_hud/HPBar/CharacterHPBar.custom_minimum_size.y)
 	if maxhptween:
 		maxhptween.kill()
 	maxhptween = get_tree().create_tween()
-	maxhptween.tween_property($CharacterHPBar,"max_value",maxhp,healthTransTime)
+	maxhptween.tween_property($HP_hud/HPBar/CharacterHPBar,"max_value",maxhp,healthTransTime)
 
 var hptween : Tween
 func _set_hpbar_level(hp):
 	if hptween:
 		hptween.kill()
 	hptween = get_tree().create_tween()
-	hptween.tween_property($CharacterHPBar,"value",hp,healthTransTime)
+	hptween.tween_property($HP_hud/HPBar/CharacterHPBar,"value",hp,healthTransTime)
 	# TODO: SLIGHT CAMERA SHAKE
 	
