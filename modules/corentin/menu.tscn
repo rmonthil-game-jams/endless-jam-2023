@@ -1,13 +1,14 @@
 [gd_scene load_steps=9 format=3 uid="uid://bryybme68tf54"]
 
 [ext_resource type="Script" path="res://modules/corentin/menu.gd" id="1_hhpha"]
-[ext_resource type="PackedScene" uid="uid://buwh6h4m35fa" path="res://modules/corentin/dungeon.tscn" id="2_t6ukj"]
+[ext_resource type="PackedScene" path="res://modules/corentin/dungeon.tscn" id="2_t6ukj"]
 [ext_resource type="Texture2D" uid="uid://5s4k8x2h2vun" path="res://modules/remi/assets/graphics/door.svg" id="3_epsqc"]
 [ext_resource type="Script" path="res://modules/corentin/SoundBar.gd" id="4_ed80u"]
 [ext_resource type="Texture2D" uid="uid://b2mi6jw0rr32n" path="res://modules/remi/assets/graphics/hand_man__mouth_closed.svg" id="5_m2vuy"]
 [ext_resource type="Texture2D" uid="uid://cf1x0ddug2wd3" path="res://modules/remi/assets/graphics/hand_man__mouth_kissed_hover.svg" id="6_2o44k"]
 [ext_resource type="Texture2D" uid="uid://3ioykabejrdg" path="res://modules/remi/assets/graphics/hand_man__mouth_open_hover.svg" id="7_rs2iq"]
 [ext_resource type="Texture2D" uid="uid://dip4ghhw23a64" path="res://modules/remi/assets/graphics/hand_man__hand.svg" id="8_fqppv"]
+
 
 [node name="Menu" type="Control"]
 layout_direction = 2
