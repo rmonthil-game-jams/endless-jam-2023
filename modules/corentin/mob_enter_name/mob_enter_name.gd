@@ -5,7 +5,7 @@ signal just_died
 # TODO: SPAWN KISS WHEN KISSED
 
 # MOB PARAMETERS
-var DIFFICULTY : float = 0.0
+var DIFFICULTY : float = 1
 
 # MOB SUB PARAMETERS
 ## WAITING
@@ -18,8 +18,8 @@ var HAND_DAMAGE_PER_ATTACK : float = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 ## TODO: NUMBER OF HANDS DEPENDANT OF DIFFICULTY ?
 
 # MOB STATE
-var max_life_points : float = 40.0
-var life_points : float = 40.0
+var max_life_points : float = 0.0 + DIFFICULTY
+var life_points : float = 0.0 + DIFFICULTY
 var state : String # useles at the moment but who knows in the future?
 
 # private

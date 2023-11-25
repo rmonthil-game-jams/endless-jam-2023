@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://da0knsa3x3m8s"]
+[gd_scene load_steps=9 format=3 uid="uid://da0knsa3x3m8s"]
 
 [ext_resource type="Script" path="res://modules/remi/character.gd" id="1_80owj"]
 [ext_resource type="Texture2D" uid="uid://butxrv0bo4kk3" path="res://modules/remi/assets/graphics/hud_misc.svg" id="2_4n2mt"]
-[ext_resource type="Script" path="res://modules/corentin/CharacterHPBar.gd" id="2_o6s42"]
 [ext_resource type="Texture2D" uid="uid://e8bbqf57kb6s" path="res://modules/remi/assets/graphics/hud_life_bar_under.svg" id="2_pvr1i"]
 [ext_resource type="Texture2D" uid="uid://dbteomwcevbjf" path="res://modules/remi/assets/graphics/hud_life_bar_over.svg" id="3_0yr67"]
 [ext_resource type="Texture2D" uid="uid://coyqq37vgsfmg" path="res://modules/remi/assets/graphics/hud_life_bar_progress.svg" id="4_jwpv6"]
@@ -102,7 +101,6 @@ nine_patch_stretch = true
 texture_under = ExtResource("2_pvr1i")
 texture_over = ExtResource("3_0yr67")
 texture_progress = ExtResource("4_jwpv6")
-script = ExtResource("2_o6s42")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/HP_hud/HPBar"]
 layout_direction = 2
@@ -120,6 +118,21 @@ offset_right = 236.0
 offset_bottom = 310.0
 mouse_filter = 2
 texture = ExtResource("8_37epb")
+
+[node name="UpgradeMenu" type="VBoxContainer" parent="CanvasLayer"]
+visible = false
+offset_left = 295.0
+offset_top = 118.0
+offset_right = 867.0
+offset_bottom = 494.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/UpgradeMenu"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "You survived ! Chose your reward."
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UpgradeMenu"]
+layout_mode = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 visible = false

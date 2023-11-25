@@ -1,13 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://buwh6h4m35fa"]
+[gd_scene load_steps=5 format=3 uid="uid://bebm1sx3rjxnt"]
 
 [ext_resource type="Script" path="res://modules/corentin/dungeon.gd" id="1_7npxm"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_e6tvr"]
-[ext_resource type="PackedScene" uid="uid://d3clduo33km57" path="res://modules/remi/mob_handy_man/mob_handy_man.tscn" id="2_korwo"]
+[ext_resource type="PackedScene" uid="uid://cxiulyfkfcfd4" path="res://modules/corentin/mob_enter_name/mob_enter_name.tscn" id="2_p6nb8"]
 [ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_wdgi3"]
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_7npxm")
-MOB_SCENES = Array[PackedScene]([ExtResource("2_korwo")])
+MOB_SCENES = Array[PackedScene]([ExtResource("2_p6nb8")])
 
 [node name="Background" type="Node2D" parent="."]
 
