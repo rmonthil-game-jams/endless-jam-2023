@@ -283,9 +283,44 @@ texture_hover = ExtResource("16_ecdlm")
 texture_disabled = ExtResource("15_j2xpy")
 stretch_mode = 5
 
+[node name="GO" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="CanvasLayer/GO"]
+layout_mode = 0
+offset_left = 393.0
+offset_top = 181.0
+offset_right = 770.0
+offset_bottom = 337.0
+text = "Game over!
+
+Tips:
+        Click on vulnerable areas to do damage
+        Click on damaging areas to defend yourself
+        Chose the right upgrades to become stonger"
+
+[node name="roomLabel" type="Label" parent="CanvasLayer/GO"]
+offset_left = 395.0
+offset_top = 341.0
+offset_right = 772.0
+offset_bottom = 497.0
+
+[node name="Retry" type="Button" parent="CanvasLayer/GO"]
+layout_mode = 0
+offset_left = 549.0
+offset_top = 424.0
+offset_right = 605.0
+offset_bottom = 455.0
+text = "RETRY"
+
 [connection signal="button_up" from="CanvasLayer/Start/StartButton" to="." method="_on_texture_button_button_up"]
 [connection signal="value_changed" from="CanvasLayer/Settings/VBoxContainer/HBoxContainer/Sound/CenterContainer/SoundBar" to="CanvasLayer/Settings/VBoxContainer/HBoxContainer/Sound/CenterContainer/SoundBar" method="_on_value_changed"]
 [connection signal="button_up" from="CanvasLayer/Settings/VBoxContainer/HBoxContainer/Exit" to="." method="_on_exit_button_up"]
 [connection signal="button_down" from="CanvasLayer/Settings/VBoxContainer/Difficulty/HBoxContainer/Easy" to="." method="_on_easy_button_down"]
 [connection signal="button_down" from="CanvasLayer/Settings/VBoxContainer/Difficulty/HBoxContainer/Medium" to="." method="_on_medium_button_down"]
 [connection signal="button_down" from="CanvasLayer/Settings/VBoxContainer/Difficulty/HBoxContainer/Hard" to="." method="_on_hard_button_down"]
+[connection signal="button_up" from="CanvasLayer/GO/Retry" to="." method="_on_retry_button_up"]

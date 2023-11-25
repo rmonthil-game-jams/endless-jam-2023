@@ -223,7 +223,7 @@ func _apply_up(upgrade : Dictionary):
 				
 			"damage_per_attack" :
 				damage_per_attack += upgrade["damage_per_attack"]
-				
+				$CanvasLayer/StatsPanel/StatsContainer/DamageProgressBar.value = damage_per_attack
 			"life_points" :
 				heal(upgrade["life_points"])
 				
@@ -236,6 +236,7 @@ func _apply_up(upgrade : Dictionary):
 			
 			"hp_regen" : 
 				hp_regen += upgrade["hp_regen"]
+				$CanvasLayer/StatsPanel/StatsContainer/RegenProgressBar.value = hp_regen
 				
 			"add_pointer":
 				_add_pointer()
@@ -244,7 +245,8 @@ func _apply_up(upgrade : Dictionary):
 	for upgrade_button in $CanvasLayer/UpgradeMenu/HBoxContainer.get_children():
 		upgrade_button.queue_free()
 	
-	$Pointers.show()
+#	$Pointers.show()
+	$CanvasLayer/StatsPanel/StatsContainer/RoomN.text = str(cur_room)
 	finished_upgrade.emit()
 	
 @export var POINTER_NODE : PackedScene
@@ -257,14 +259,14 @@ func _add_pointer():
 
 var upgrade_level : float = 0
 var upgrade_options : int = 3
-
-func _loot(lootbuff : float):
-	
+var cur_room : int = 1
+func _loot(lootbuff : float, room : float):
+	cur_room = room
 	heal(hp_regen)
 	
 	_generate_upgrades(lootbuff)
 	$CanvasLayer/UpgradeMenu.show()
-	$Pointers.hide()
+#	$Pointers.hide()
 	
 
 
@@ -364,7 +366,9 @@ signal set_maxhp (max_hp : float)
 func _ready():
 	_set_hpbar_max(max_life_points)
 	_set_hpbar_level(max_life_points)
-
+	$CanvasLayer/StatsPanel/StatsContainer/RegenProgressBar.value = hp_regen
+	$CanvasLayer/StatsPanel/StatsContainer/DamageProgressBar.value = damage_per_attack
+	
 	# TODO: WHEN CURSOR SHAPES ARE DONE
 	# Input.set_custom_mouse_cursor(preload("res://path/to/cursor.(svg|png|etc...)"))
 	# Input.set_custom_mouse_cursor(preload("res://path/to/cursor.(svg|png|etc...)"))

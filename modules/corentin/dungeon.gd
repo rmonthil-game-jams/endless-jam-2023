@@ -51,9 +51,9 @@ func _advance():
 	new_mob.just_died.connect(_on_current_mob_just_died)
 
 
-@export var KDIFF : float = 1.0
+@export var KDIFF : float = 0.4
 @export var KEXPDIFF : float = 0.1
-@export var KSTARTDIFF : float = 1.0
+@export var KSTARTDIFF : float = 0.3
 @export var KBOSSDIFF : float = 1.5
 @export var BOSS_LOOT_BUFF : float = 1
 
@@ -61,7 +61,7 @@ var difficulty : int = 1
 var room : int = 0
 
 func _new_mob_difficulty():
-	return KDIFF*pow(difficulty+room,1.0+KEXPDIFF*difficulty)
+	return KDIFF*pow(KSTARTDIFF*difficulty+room,1.0+KEXPDIFF*difficulty)
 
 
 func _on_current_mob_just_died():
@@ -73,7 +73,7 @@ func _on_current_mob_just_died():
 		lootbuff = 0
 	else:
 		lootbuff = BOSS_LOOT_BUFF
-	$Character._loot(lootbuff)
+	$Character._loot(lootbuff, room)
 	
 
 signal _game_over

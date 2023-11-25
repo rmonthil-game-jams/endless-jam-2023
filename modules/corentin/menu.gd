@@ -89,6 +89,8 @@ func _on_texture_button_button_up():
 
 func _on_game_over():
 	var tween : Tween = create_tween()
+	$CanvasLayer/GO/roomLabel.text = "Rooms cleared: " + str(max(0,node_dungeon.room-1))
+	state = "game over"
 	# free dungeon
 	node_dungeon.queue_free()
 	# show settings
@@ -101,9 +103,14 @@ func _on_game_over():
 	tween.parallel().tween_property(node_start, "modulate:a", 1.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 	# test
 	await tween.finished
-	$CanvasLayer/Start/StartButton.disabled = false
-	# state
-	state = "main menu"
+	
+	$CanvasLayer/GO.show()
 
 func _on_exit_button_up():
 	get_tree().free()
+
+
+func _on_retry_button_up():
+	state = "main menu"
+	$CanvasLayer/GO.hide()
+	$CanvasLayer/Start/StartButton.disabled = false

@@ -139,7 +139,6 @@ size_flags_vertical = 3
 columns = 3
 
 [node name="StatsPanel" type="Panel" parent="CanvasLayer"]
-visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -155,14 +154,41 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Room" type="Label" parent="CanvasLayer/StatsPanel/StatsContainer"]
+layout_mode = 2
+text = "Room :"
+
+[node name="RoomN" type="Label" parent="CanvasLayer/StatsPanel/StatsContainer"]
+layout_mode = 2
+text = "1"
+
 [node name="Label" type="Label" parent="CanvasLayer/StatsPanel/StatsContainer"]
 layout_mode = 2
+text = "Regeneration"
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer/StatsPanel/StatsContainer"]
+[node name="RegenProgressBar" type="TextureProgressBar" parent="CanvasLayer/StatsPanel/StatsContainer"]
+custom_minimum_size = Vector2(30, 10)
 layout_mode = 2
+max_value = 30.0
+nine_patch_stretch = true
+texture_under = ExtResource("2_pvr1i")
+texture_over = ExtResource("3_0yr67")
+texture_progress = ExtResource("4_jwpv6")
+
+[node name="Label2" type="Label" parent="CanvasLayer/StatsPanel/StatsContainer"]
+layout_mode = 2
+text = "Damage"
+
+[node name="DamageProgressBar" type="TextureProgressBar" parent="CanvasLayer/StatsPanel/StatsContainer"]
+custom_minimum_size = Vector2(30, 10)
+layout_mode = 2
+max_value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("2_pvr1i")
+texture_over = ExtResource("3_0yr67")
+texture_progress = ExtResource("4_jwpv6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-visible = false
 zoom = Vector2(0.5, 0.5)
 
 [node name="Pointers" type="Node2D" parent="."]
