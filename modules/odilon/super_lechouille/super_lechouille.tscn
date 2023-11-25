@@ -1,11 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bttiwps2jwhi7"]
+[gd_scene load_steps=10 format=3 uid="uid://bttiwps2jwhi7"]
 
 [ext_resource type="Script" path="res://modules/odilon/super_lechouille/super_lechouille.gd" id="1_nuls4"]
 [ext_resource type="Texture2D" uid="uid://doc4v203pfsbs" path="res://modules/odilon/super_lechouille/mob_assets/graphics/body.png" id="2_p5215"]
 [ext_resource type="PackedScene" uid="uid://bap04bpap4jjg" path="res://modules/odilon/super_lechouille/lechouille_head.tscn" id="3_2queh"]
 [ext_resource type="Texture2D" uid="uid://xvrusaji7ikj" path="res://modules/odilon/super_lechouille/mob_assets/graphics/tail.png" id="3_ly3pv"]
 [ext_resource type="Texture2D" uid="uid://c57gujpiuakvu" path="res://modules/odilon/super_lechouille/mob_assets/graphics/lick.png" id="5_7skqk"]
-[ext_resource type="Script" path="res://modules/odilon/super_lechouille/Tongue.gd" id="6_lnh0j"]
+[ext_resource type="PackedScene" uid="uid://c8kc54alm42iy" path="res://modules/remi/fx/mob_hp_bar.tscn" id="5_w0fak"]
 
 [sub_resource type="Animation" id="Animation_qmooj"]
 resource_name = "Move"
@@ -28,6 +28,12 @@ _data = {
 "Move": SubResource("Animation_qmooj")
 }
 
+[sub_resource type="Curve2D" id="Curve2D_om8kl"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, -154.856, 0.707107, 154.856, -0.707107, 151, -115, 0, 0, 0, 0, 300, 0)
+}
+point_count = 3
+
 [node name="SuperLechouille" type="Node2D"]
 script = ExtResource("1_nuls4")
 
@@ -40,6 +46,7 @@ scale = Vector2(1.5, 1.5)
 texture = ExtResource("3_ly3pv")
 
 [node name="TailAnim" type="AnimationPlayer" parent="AnimatedBody/Tail"]
+speed_scale = 2.0
 libraries = {
 "": SubResource("AnimationLibrary_unxpi")
 }
@@ -54,24 +61,24 @@ texture = ExtResource("2_p5215")
 [node name="Head" parent="AnimatedBody" instance=ExtResource("3_2queh")]
 position = Vector2(-36, -25)
 
-[node name="MobHPBar" type="TextureProgressBar" parent="."]
-offset_left = -343.0
-offset_top = -468.0
-offset_right = 306.0
-offset_bottom = -428.0
+[node name="UnitJumpPath" type="Path2D" parent="AnimatedBody"]
+position = Vector2(124, -46)
+curve = SubResource("Curve2D_om8kl")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="AnimatedBody/UnitJumpPath"]
+rotation = -0.650877
+loop = false
+
+[node name="MobHPBar" parent="AnimatedBody" instance=ExtResource("5_w0fak")]
+position = Vector2(13, -203)
+scale = Vector2(0.639997, 0.639997)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
 
-[node name="Tongue" type="TextureButton" parent="CanvasLayer"]
+[node name="Tongue" type="TextureButton" parent="."]
 visible = false
-offset_left = 256.0
-offset_top = 15.0
-offset_right = 380.0
-offset_bottom = 143.0
+offset_right = 124.0
+offset_bottom = 128.0
 texture_normal = ExtResource("5_7skqk")
-script = ExtResource("6_lnh0j")
 
-[connection signal="hidden" from="CanvasLayer/Tongue" to="CanvasLayer/Tongue" method="_on_hidden"]
-[connection signal="pressed" from="CanvasLayer/Tongue" to="." method="_on_tongue_pressed"]
-[connection signal="pressed" from="CanvasLayer/Tongue" to="CanvasLayer/Tongue" method="_on_pressed"]
+[connection signal="pressed" from="Tongue" to="." method="_on_tongue_pressed"]
