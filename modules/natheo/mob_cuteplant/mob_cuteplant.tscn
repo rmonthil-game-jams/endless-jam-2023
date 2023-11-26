@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://jsbtpbjcy8rj"]
+[gd_scene load_steps=10 format=3 uid="uid://jsbtpbjcy8rj"]
 
 [ext_resource type="Script" path="res://modules/natheo/mob_cuteplant/mob_cuteplant.gd" id="1_dcm0i"]
 [ext_resource type="Texture2D" uid="uid://cjkb66se270ki" path="res://modules/natheo/assets/graphics/cuteplant_body_normal.svg" id="2_2duj4"]
@@ -8,12 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://dqb78uwbtpsyt" path="res://modules/natheo/mob_cuteplant/plant.tscn" id="6_548d4"]
 [ext_resource type="PackedScene" uid="uid://c8kc54alm42iy" path="res://modules/remi/fx/mob_hp_bar.tscn" id="8_jolff"]
 [ext_resource type="Texture2D" uid="uid://d35cniu6djb3t" path="res://modules/natheo/assets/graphics/cuteplant_fx_attack.svg" id="8_qm7tq"]
+[ext_resource type="PackedScene" uid="uid://d3k0tbryal6hb" path="res://modules/natheo/mob_cuteplant/flower_deco.tscn" id="9_24glu"]
 
 [node name="Cuteplant" type="Node2D"]
 script = ExtResource("1_dcm0i")
 
 [node name="MobHPBar" parent="." instance=ExtResource("8_jolff")]
-position = Vector2(100, -370)
+position = Vector2(150, -450)
 
 [node name="Cuteplant" type="Node2D" parent="."]
 
@@ -45,5 +46,8 @@ texture = ExtResource("5_pr3ko")
 [node name="Beam" type="Node2D" parent="."]
 visible = false
 
-[node name="Sprite2D" type="Sprite2D" parent="Beam"]
+[node name="Sprite2DBeam" type="Sprite2D" parent="Beam"]
 texture = ExtResource("8_qm7tq")
+
+[node name="FlowerDeco" parent="." instance=ExtResource("9_24glu")]
+visible = false

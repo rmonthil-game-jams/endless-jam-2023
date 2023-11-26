@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3k0tbryal6hb"]
+
+[ext_resource type="Texture2D" uid="uid://88brsjkevb4l" path="res://modules/natheo/assets/graphics/cuteplant_leaf_body_disabled.svg" id="1_qu7c4"]
+[ext_resource type="Texture2D" uid="uid://ck8jnl7nqo5b1" path="res://modules/natheo/assets/graphics/cuteplant_sun_disabled.svg" id="2_otk0a"]
+[ext_resource type="Texture2D" uid="uid://ce2np5hn5a2fl" path="res://modules/natheo/assets/graphics/cuteplant_leaf_leaf.svg" id="3_astd4"]
+
+[node name="FlowerDeco" type="Node2D"]
+
+[node name="Sprite2DBody" type="Sprite2D" parent="."]
+texture = ExtResource("1_qu7c4")
+
+[node name="Sprite2DHead" type="Sprite2D" parent="."]
+texture = ExtResource("2_otk0a")
+offset = Vector2(0, -100)
+
+[node name="Sprite2DLeafL" type="Sprite2D" parent="."]
+texture = ExtResource("3_astd4")
+offset = Vector2(-150, 0)
+
+[node name="Sprite2DLeafR" type="Sprite2D" parent="."]
+texture = ExtResource("3_astd4")
+offset = Vector2(150, 0)
+flip_h = true
