@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://da0knsa3x3m8s"]
+[gd_scene load_steps=13 format=3 uid="uid://da0knsa3x3m8s"]
 
 [ext_resource type="Script" path="res://modules/remi/character.gd" id="1_80owj"]
 [ext_resource type="Texture2D" uid="uid://butxrv0bo4kk3" path="res://modules/remi/assets/graphics/hud_misc.svg" id="2_4n2mt"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cyd4fllsiutm1" path="res://modules/remi/assets/graphics/overlay.svg" id="9_a02gy"]
 [ext_resource type="Material" uid="uid://ckabik00r1583" path="res://modules/corentin/Shaders/hudAstronaut_mat.tres" id="9_hppl6"]
 [ext_resource type="Script" path="res://modules/remi/Camera2D.gd" id="11_dulko"]
+[ext_resource type="AudioStream" uid="uid://dpwl0guolqmvs" path="res://modules/remi/assets/audio/tween_0.wav" id="12_ak6ma"]
 
 [node name="Character" type="Node2D" groups=["character"]]
 script = ExtResource("1_80owj")
@@ -209,3 +210,9 @@ zoom = Vector2(0.5, 0.5)
 script = ExtResource("11_dulko")
 
 [node name="Pointers" type="Node2D" parent="."]
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("12_ak6ma")
+attenuation = 2.0
