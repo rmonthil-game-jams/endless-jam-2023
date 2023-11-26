@@ -1,11 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://bttiwps2jwhi7"]
+[gd_scene load_steps=13 format=3 uid="uid://bttiwps2jwhi7"]
 
 [ext_resource type="Script" path="res://modules/odilon/super_lechouille/super_lechouille.gd" id="1_nuls4"]
-[ext_resource type="Texture2D" uid="uid://doc4v203pfsbs" path="res://modules/odilon/super_lechouille/mob_assets/graphics/body.png" id="2_p5215"]
+[ext_resource type="Texture2D" uid="uid://bkix7la26gdt" path="res://modules/aurelie/assets/graphics/superlechouille_queue.svg" id="2_lg6ta"]
 [ext_resource type="PackedScene" uid="uid://bap04bpap4jjg" path="res://modules/odilon/super_lechouille/lechouille_head.tscn" id="3_2queh"]
-[ext_resource type="Texture2D" uid="uid://xvrusaji7ikj" path="res://modules/odilon/super_lechouille/mob_assets/graphics/tail.png" id="3_ly3pv"]
+[ext_resource type="Texture2D" uid="uid://tfk12bkjic5c" path="res://modules/aurelie/assets/graphics/superlechouille_corpsgauche_normal.svg" id="5_0lgl2"]
 [ext_resource type="Texture2D" uid="uid://c57gujpiuakvu" path="res://modules/odilon/super_lechouille/mob_assets/graphics/lick.png" id="5_7skqk"]
 [ext_resource type="PackedScene" uid="uid://c8kc54alm42iy" path="res://modules/remi/fx/mob_hp_bar.tscn" id="5_w0fak"]
+[ext_resource type="Texture2D" uid="uid://b35oi0i0247fy" path="res://modules/aurelie/assets/graphics/superlechouille_corpsdroite_normal.svg" id="6_i51o3"]
+[ext_resource type="Texture2D" uid="uid://0mh1b4nv2yhk" path="res://modules/aurelie/assets/graphics/superlechouille_corpssansteteniqueue.svg" id="7_fjab2"]
+[ext_resource type="Texture2D" uid="uid://dwgpcac7n6hv6" path="res://modules/aurelie/assets/graphics/superlechouille_corps_saut_normal.svg" id="8_0cd4j"]
 
 [sub_resource type="Animation" id="Animation_qmooj"]
 resource_name = "Move"
@@ -14,13 +17,13 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 2
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 0.63728, 3.36359),
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [-0.349066, 0.349066, -0.349066]
+"values": [0.0, -0.349066]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_unxpi"]
@@ -39,11 +42,9 @@ script = ExtResource("1_nuls4")
 
 [node name="AnimatedBody" type="Node2D" parent="."]
 
-[node name="Tail" type="Sprite2D" parent="AnimatedBody"]
-position = Vector2(72, -87)
-rotation = -0.349066
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("3_ly3pv")
+[node name="Tail" type="Node2D" parent="AnimatedBody"]
+position = Vector2(114, 113)
+rotation = -0.286802
 
 [node name="TailAnim" type="AnimationPlayer" parent="AnimatedBody/Tail"]
 speed_scale = 2.0
@@ -51,15 +52,39 @@ libraries = {
 "": SubResource("AnimationLibrary_unxpi")
 }
 
-[node name="Sprite2DNormal" type="Sprite2D" parent="AnimatedBody"]
-texture = ExtResource("2_p5215")
+[node name="Sprite2DTail" type="Sprite2D" parent="AnimatedBody/Tail"]
+position = Vector2(-6, -44)
+rotation = -0.361283
+texture = ExtResource("2_lg6ta")
 
-[node name="Sprite2DAttacking" type="Sprite2D" parent="AnimatedBody"]
+[node name="Body" type="Node2D" parent="AnimatedBody"]
+position = Vector2(-30, 0)
+
+[node name="Sprite2DLeft" type="Sprite2D" parent="AnimatedBody/Body"]
 visible = false
-texture = ExtResource("2_p5215")
+position = Vector2(-78, 2)
+texture = ExtResource("5_0lgl2")
+
+[node name="Sprite2DRight" type="Sprite2D" parent="AnimatedBody/Body"]
+visible = false
+texture = ExtResource("6_i51o3")
+
+[node name="Sprite2DNormal" type="Sprite2D" parent="AnimatedBody/Body"]
+position = Vector2(73, 151)
+texture = ExtResource("7_fjab2")
+
+[node name="Sprite2DAttacking" type="Sprite2D" parent="AnimatedBody/Body"]
+visible = false
+position = Vector2(73, 151)
+texture = ExtResource("7_fjab2")
+
+[node name="Sprite2DJump" type="Sprite2D" parent="AnimatedBody/Body"]
+visible = false
+position = Vector2(40, 22)
+texture = ExtResource("8_0cd4j")
 
 [node name="Head" parent="AnimatedBody" instance=ExtResource("3_2queh")]
-position = Vector2(-36, -25)
+position = Vector2(0, -18)
 
 [node name="UnitJumpPath" type="Path2D" parent="AnimatedBody"]
 position = Vector2(124, -46)
@@ -70,15 +95,16 @@ rotation = -0.650877
 loop = false
 
 [node name="MobHPBar" parent="AnimatedBody" instance=ExtResource("5_w0fak")]
-position = Vector2(13, -203)
+z_index = 2
+position = Vector2(21, -210)
 scale = Vector2(0.639997, 0.639997)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Tongue" type="TextureButton" parent="."]
 visible = false
-offset_right = 124.0
-offset_bottom = 128.0
+visibility_layer = 2
+offset_right = 167.0
+offset_bottom = 200.0
+scale = Vector2(2, 2)
 texture_normal = ExtResource("5_7skqk")
 
 [connection signal="pressed" from="Tongue" to="." method="_on_tongue_pressed"]

@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< Updated upstream
 uid="uid://df0f3pyhjo6lx"
+=======
+uid="uid://bbfn87fwq3s5q"
+>>>>>>> Stashed changes
 path="res://.godot/imported/superlechouille_tete_hover.svg-8bd15f3cb869201c275d0a44aedb7856.ctex"
 metadata={
 "vram_texture": false

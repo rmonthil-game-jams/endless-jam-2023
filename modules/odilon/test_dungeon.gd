@@ -1,15 +1,18 @@
 extends Node2D
 
 @export var MOB_SCENES : Array[PackedScene]
-
+@export var BOSS_SCENES : Array[PackedScene]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# set random state
 	randomize()
+	$Character.finished_upgrade.connect(_advance)
 	# instance a random mob scene
 	_advance()
 
+@export var BOSS_ROOM_PERIOD : int = 3
 func _advance():
+	room += 1
 	$Background/Sprite2D2.show()
 	$Background/Sprite2D2.modulate.a = 0.0
 	# animation
@@ -18,12 +21,6 @@ func _advance():
 		$Background, 
 		"scale",
 		Vector2(1.0/$Background/Sprite2D2.scale.x, 1.0/$Background/Sprite2D2.scale.y),
-		1.0
-	).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property(
-		$Background,
-		"position", 
-		Vector2(0, 53.0),
 		1.0
 	).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property(
@@ -36,19 +33,53 @@ func _advance():
 	$Background.position = Vector2.ZERO
 	$Background.scale = Vector2.ONE
 	$Background/Sprite2D2.hide()
-	# clean
-	for child in $RoomContent.get_children():
-		child.queue_free()
+
 	# then instance mob
-	var new_mob : Node2D = MOB_SCENES[randi_range(0, MOB_SCENES.size() - 1)].instantiate()
+	var new_mob : Node2D
+	if room % BOSS_ROOM_PERIOD:
+		new_mob = MOB_SCENES[randi_range(0, MOB_SCENES.size() - 1)].instantiate()
+		new_mob.DIFFICULTY = _new_mob_difficulty()
+	else:
+		new_mob = BOSS_SCENES[randi_range(0, BOSS_SCENES.size() - 1)].instantiate()
+		new_mob.DIFFICULTY = _new_mob_difficulty() * KBOSSDIFF
+	
+	print(new_mob.DIFFICULTY)
+
 	$RoomContent.add_child(new_mob)
 	new_mob.just_died.connect(_on_current_mob_just_died)
 
-func _on_current_mob_just_died():
-	_advance()
 
+@export var KDIFF : float = 1.0
+@export var KEXPDIFF : float = 0.1
+@export var KSTARTDIFF : float = 1.0
+@export var KBOSSDIFF : float = 1.5
+@export var BOSS_LOOT_BUFF : float = 1
+
+var difficulty : int = 1
+var room : int = 0
+
+var difficulties : Array[float] = [0, 0.5, 0.9, 1, 1.2, 2]
+
+func _new_mob_difficulty():
+	return difficulties[min(room, difficulties.size()-1)]
+	#return KDIFF*pow(difficulty+room,1+KEXPDIFF*difficulty)
+
+
+func _on_current_mob_just_died():
+		# clean
+	for child in $RoomContent.get_children():
+		child.queue_free()
+	var lootbuff
+	if room % BOSS_ROOM_PERIOD:
+		lootbuff = 0
+	else:
+		lootbuff = BOSS_LOOT_BUFF
+	$Character._loot(lootbuff)
+	
+
+signal _game_over
 func _on_character_just_died():
-	get_tree().reload_current_scene()
+	_game_over.emit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float):

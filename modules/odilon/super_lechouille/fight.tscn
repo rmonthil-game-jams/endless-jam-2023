@@ -6,6 +6,5 @@
 [node name="FightScript" type="Node2D"]
 script = ExtResource("1_m2pim")
 mob_scene = ExtResource("2_qitma")
-DIFFICULTY = 1.5
 
 [node name="Mobs" type="Node" parent="."]

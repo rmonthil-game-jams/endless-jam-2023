@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://bap04bpap4jjg"]
 
-[ext_resource type="Texture2D" uid="uid://c7soj2r3xcajx" path="res://modules/odilon/super_lechouille/mob_assets/graphics/head__normal.png" id="1_b4cxg"]
-[ext_resource type="Texture2D" uid="uid://cunxlicsviwck" path="res://modules/odilon/super_lechouille/mob_assets/graphics/head__pressed.png" id="2_60bkc"]
-[ext_resource type="Texture2D" uid="uid://qok2gxs0cgnd" path="res://modules/odilon/super_lechouille/mob_assets/graphics/head__hover.png" id="3_yd2sr"]
+[ext_resource type="Texture2D" uid="uid://ctjsfeuvfkcx4" path="res://modules/aurelie/assets/graphics/superlechouille_tete_normal.svg" id="1_odfpx"]
+[ext_resource type="Texture2D" uid="uid://bbfn87fwq3s5q" path="res://modules/aurelie/assets/graphics/superlechouille_tete_hover.svg" id="2_gtu5m"]
 [ext_resource type="Texture2D" uid="uid://ciejs73w7imqk" path="res://modules/odilon/super_lechouille/mob_assets/graphics/head__attacking.png" id="4_m04s2"]
+[ext_resource type="Texture2D" uid="uid://io7ppbmcrvsa" path="res://modules/aurelie/assets/graphics/superlechouille_corpsdroite_hover.svg" id="4_pit7e"]
 
 [sub_resource type="Animation" id="Animation_hahgq"]
 resource_name = "move"
@@ -11,14 +11,14 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("RotationCenter:rotation")
+tracks/0/path = NodePath(".:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [-0.174533, 0.174533, -0.174533]
+"values": [-0.296706, 0.296706, -0.296706]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ugvv6"]
@@ -28,29 +28,35 @@ _data = {
 
 [node name="LechouilleHead" type="Node2D"]
 
-[node name="RotationCenter" type="Node2D" parent="."]
-position = Vector2(0, -72)
-rotation = -0.174533
+[node name="TextureButtonOpen" type="TextureButton" parent="."]
+offset_left = -209.0
+offset_top = -183.0
+offset_right = 213.0
+offset_bottom = 176.0
+texture_normal = ExtResource("1_odfpx")
+texture_pressed = ExtResource("1_odfpx")
+texture_hover = ExtResource("2_gtu5m")
 
-[node name="TextureButtonOpen" type="TextureButton" parent="RotationCenter"]
-offset_left = -103.0
-offset_top = -70.0
-offset_right = 116.0
-offset_bottom = 156.0
-texture_normal = ExtResource("1_b4cxg")
-texture_pressed = ExtResource("2_60bkc")
-texture_hover = ExtResource("3_yd2sr")
-
-[node name="TextureButtonAttacking" type="TextureButton" parent="RotationCenter"]
+[node name="TextureButtonAttacking" type="TextureButton" parent="."]
 visible = false
-offset_left = -102.0
-offset_top = -71.0
-offset_right = 105.0
-offset_bottom = 83.0
+offset_left = -89.0
+offset_top = -118.0
+offset_right = 118.0
+offset_bottom = 36.0
 texture_normal = ExtResource("4_m04s2")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="RotationCenter"]
-root_node = NodePath("../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ugvv6")
 }
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Model" type="TextureRect" parent="CanvasLayer"]
+visible = false
+offset_left = -139.0
+offset_top = -312.0
+offset_right = 281.0
+offset_bottom = 178.0
+texture = ExtResource("4_pit7e")

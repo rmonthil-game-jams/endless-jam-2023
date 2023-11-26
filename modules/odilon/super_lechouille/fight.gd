@@ -17,8 +17,8 @@ var total_health : float
 
 func set_difficulty(d : float):
 	DIFFICULTY = d
-	NB_MOBS = 1 + DIFFICULTY
-	PER_MOB_DIFFICULTY = fmod(DIFFICULTY, 1) # This sets the mobs difficulty in [0,1[
+	NB_MOBS = 1 + DIFFICULTY/2
+	PER_MOB_DIFFICULTY = fmod(DIFFICULTY, 2) / 2 # This sets the mobs difficulty in [0,1[
 
 var SpawnSlots : Array[Vector2]
 
@@ -28,23 +28,27 @@ func _ready():
 	# Max spawn slots is : 4
 	for i in [0, 0.33, 0.66, 1]:
 		# Add a small scramble to this spot
-		var Spot : Vector2 = _get_spot(i) + Vector2(randf_range(-50, 50), randf_range(-20, 100))
+		var Spot : Vector2 = _get_spot(i) + Vector2(randf_range(-100, 100), randf_range(-40, 200))
 		SpawnSlots.append(Spot)
 	
 	SpawnSlots.shuffle()
 	_spawn_mobs()
 
 func _get_hud_min_offset():
-	return Vector2(80, 30)
+	return Vector2(160, 60)
 	
 func _get_hud_max_offset():
-	return Vector2(40, 30)
+	return Vector2(80, 60)
+
+# Scale factor induced by camera
+func get_viewport_size():
+	return get_viewport().get_visible_rect().size * 2
 
 func _get_spot(i : float):
-	var screen_size = get_viewport().get_visible_rect().size
+	var screen_size = get_viewport_size()
 	
 	var pmin : Vector2 = -screen_size / 2 + _get_hud_min_offset() + Vector2(150, 200)
-	var pmax : Vector2 = screen_size / 2 - _get_hud_max_offset() - Vector2(300, 0)
+	var pmax : Vector2 = screen_size / 2 - _get_hud_max_offset() - Vector2(500, 0) # Not too close from border (HP bar should be visible at start)
 	var size : Vector2 = pmax - pmin
 	
 	return pmin + Vector2(i * size.x, 0.5 * size.y)

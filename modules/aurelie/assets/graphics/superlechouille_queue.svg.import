@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< Updated upstream
 uid="uid://s3cea1scjr0l"
+=======
+uid="uid://bkix7la26gdt"
+>>>>>>> Stashed changes
 path="res://.godot/imported/superlechouille_queue.svg-0f7112a2d160b5351cf944680c74ef86.ctex"
 metadata={
 "vram_texture": false
