@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3 uid="uid://bshbl2fbnuny8"]
+
+[ext_resource type="Script" path="res://modules/nathan/sliminou_gang/Hands.gd" id="1_n0api"]
+[ext_resource type="Texture2D" uid="uid://6ilbq2e17hll" path="res://modules/aurelie/assets/graphics/sliminou_maindroite_fermee.svg" id="2_lqpu3"]
+[ext_resource type="Texture2D" uid="uid://b82n54mk7h2o8" path="res://modules/aurelie/assets/graphics/sliminou_maindroite_appuisol.svg" id="3_hcl5u"]
+[ext_resource type="Texture2D" uid="uid://cvrcjag41528m" path="res://modules/aurelie/assets/graphics/sliminou_maindroite_ouverte.svg" id="4_m0r2n"]
+[ext_resource type="Texture2D" uid="uid://bixrqwrtuxxqb" path="res://modules/aurelie/assets/graphics/sliminou_mainsaut.svg" id="5_71hvo"]
+[ext_resource type="Texture2D" uid="uid://cs6jjaxp6p6qr" path="res://modules/aurelie/assets/graphics/sliminou_maingauche_fermee.svg" id="5_ypxcg"]
+[ext_resource type="Texture2D" uid="uid://cct4g686bylgd" path="res://modules/aurelie/assets/graphics/sliminou_maingauche_appuisol.svg" id="6_2jc10"]
+[ext_resource type="Texture2D" uid="uid://8a2dkg3qt4fp" path="res://modules/aurelie/assets/graphics/sliminou_maingauche_ouverte.svg" id="7_gyb5n"]
+
+[node name="Hands" type="Node2D"]
+script = ExtResource("1_n0api")
+
+[node name="Right" type="Node2D" parent="."]
+position = Vector2(-75, -75)
+
+[node name="NormalHand" type="Sprite2D" parent="Right"]
+texture = ExtResource("2_lqpu3")
+
+[node name="GroundHand" type="Sprite2D" parent="Right"]
+visible = false
+texture = ExtResource("3_hcl5u")
+
+[node name="OpenHand" type="Sprite2D" parent="Right"]
+visible = false
+texture = ExtResource("4_m0r2n")
+
+[node name="FlyHand" type="Sprite2D" parent="Right"]
+visible = false
+texture = ExtResource("5_71hvo")
+
+[node name="Left" type="Node2D" parent="."]
+position = Vector2(75, -75)
+
+[node name="NormalHand" type="Sprite2D" parent="Left"]
+texture = ExtResource("5_ypxcg")
+
+[node name="GroundHand" type="Sprite2D" parent="Left"]
+visible = false
+texture = ExtResource("6_2jc10")
+
+[node name="OpenHand" type="Sprite2D" parent="Left"]
+visible = false
+texture = ExtResource("7_gyb5n")
+
+[node name="FlyHand" type="Sprite2D" parent="Left"]
+visible = false
+texture = ExtResource("5_71hvo")
