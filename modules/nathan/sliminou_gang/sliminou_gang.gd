@@ -3,13 +3,19 @@ extends Node2D
 signal just_died
 
 # MOB PARAMETERS
-var DIFFICULTY : float = 0.0
+var DIFFICULTY : float = 0.0: set = _set_difficulty # REMI: _set_difficulty
+
+# REMI: _set_difficulty
+func _set_difficulty(value : float):
+	DIFFICULTY = value
+	$SliminouHolder/Sliminou.DIFFICULTY = DIFFICULTY
 
 var gang_size : int = 0
 var duplication_number : int = 0
 
 var speaches : Array[String]
 
+# REMI: WE HAVE AN INTERNATIONAL PUBLIC, TODO: TRANSLATE EVERYTHING IN ENGLISH
 const speaches_template : Array[String] = [
 		"Tu es unique et exceptionnel",
 		"Ton sourire illumine chaque jour",
@@ -77,6 +83,7 @@ const speaches_template : Array[String] = [
 
 ## called when the node enters the scene tree for the first time.
 func _ready():
+	_set_difficulty(DIFFICULTY) # REMI: _set_difficulty
 	speaches = speaches_template.duplicate()
 	speaches.shuffle()
 	

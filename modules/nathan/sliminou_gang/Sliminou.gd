@@ -1,35 +1,45 @@
-extends "res://modules/nathan/sliminou_gang/sliminou_gang.gd"
+extends Node2D # REMI: REMOVED STRANGE INHERITANC, MAYBE WE CAN DISCUSS ABOUT IT
 
 signal just_died_individual
 signal just_spawned
 
+# MOB PARAMETERS
+var DIFFICULTY : float = 0.0: set = _set_difficulty # REMI: _set_difficulty
+
 # MOB SUB PARAMETERS
-## HANDS
-var HAND_MOVE_DURATION : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF MOVEMENT SPEED
-var HAND_MOVE_RADIUS : float = 100.0
 ## DUPLICATE
-var DUPLICATE_LOOP_NUMBER : int = 2 #round(8.0 - DIFFICULTY) #NUMBER OF IDLE PHASES
+var DUPLICATE_LOOP_NUMBER : int
 const SCREEN_WIDTH : float = 1000.0
-const MIN_DUPLICATE_DISTANCE = 400.0
-var DISTANCE_SIZE_RATIO : float = 1.0
+const DUPLICATE_DISTANCE_X = 400.0
+const DUPLICATE_DISTANCE_Y = 100.0
+const DISTANCE_SIZE_RATIO : float = 1e-3
 ## IDLE
 const IDLE_LOOP_NUMBER : int = 3
-var DANCE_MOVE_DURATION : float = 2.0 / (1.0 + log(1.0 + DIFFICULTY/4)) # INVERSE OF MOVEMENT SPEED
-var DANCE_MOVE_RADIUS : float = 100.0
+var DANCE_MOVE_DURATION : float
+const DANCE_MOVE_RADIUS : float = 400.0
 
 ## JUMPING
-var JUMP_DURATION : float = 2.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF MOVEMENT SPEED
-var JUMP_HEIGHT : float = min(1500.0, 500.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
+var JUMP_DURATION : float
+var JUMP_HEIGHT : float
 ## ATTACKING
-var SPEACH_ATTACK_DURATION_FACTOR : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF ATTACK SPEED
-var SPEACH_DAMAGE_PER_ATTACK : float = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
+var SPEACH_ATTACK_DURATION_FACTOR : float
+var SPEACH_DAMAGE_PER_ATTACK : float
 ## TODO: NUMBER OF HANDS DEPENDANT OF DIFFICULTY ?
+
+# REMI: _set_difficulty
+func _set_difficulty(value : float):
+	DIFFICULTY = value
+	DUPLICATE_LOOP_NUMBER = 2 #round(8.0 - DIFFICULTY) #NUMBER OF IDLE PHASES
+	DANCE_MOVE_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY/4))
+	JUMP_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
+	JUMP_HEIGHT = min(1500.0, 500.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
+	SPEACH_ATTACK_DURATION_FACTOR = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
+	SPEACH_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 
 # MOB STATE
 var life_points : float = 5.0
 enum STATE {loading_attack, attacking, canceled, idle, loading_jump, jumping, doubling}
 var state : STATE # useles at the moment but who knows in the future?
-
 
 # private
 
@@ -37,95 +47,74 @@ var state : STATE # useles at the moment but who knows in the future?
 var tween : Tween = null
 var tween_bis : Tween = null
 var hands : Array[Node] = []
-var hands_state : Dictionary = {}
+# var hands_state : Dictionary = {}
 var character : Node = null
 var duplicate_countdown : int = DUPLICATE_LOOP_NUMBER
 
-
 ## called when the node enters the scene tree for the first time.
 func _ready():
-	hands = $Hands.get_children()
-	for hand in hands:
-		# setup state
-		hands_state[hand] = {
-			"initial_position":hand.position,
-			"state":"open",
-		} # careful here, position is in local coordinate use global_position for global coordinates
-		# setup signals
-		
-		
-		hand.get_node("TextureButtonOpened").pressed.connect(_hand_open_pressed.bind(hand))
-		hand.get_node("TextureButtonClosed").pressed.connect(_hand_closed_pressed.bind(hand))
+	# set difficulty
+	_set_difficulty(DIFFICULTY)
+#	# other
 	character = get_tree().get_nodes_in_group("character").front()
 	# avoid using await in the _ready function
-	
 	$Body/Mouth/TextureButton.pressed.connect(_mouth_attacking_pressed.bind($Body/Mouth))
-	
 	_clean_attack.call_deferred($Speach/SpeachBubble)
-	
-func _play_dedoubling():
-	var new_sliminou : Node2D = load("res://modules/nathan/sliminou_gang/sliminou.tscn").instantiate()
-	
-	new_sliminou.position = position + Vector2(0.0, -10.0) 
-	
-	var target_x : float = pow(randf_range(-1.0,1.0),3)
-	var target_y : float = pow(randf_range(-1.0,1.0),3)
 
-	if target_x == 0 :
-		target_x = 1.0
+# REMI: QUITE A FEW TWEAKS
+func _play_dedoubling():
+	var new_sliminou_holder : Node2D = load("res://modules/nathan/sliminou_gang/sliminou_holder.tscn").instantiate()
 	
-	if target_y == 0 :
-		target_x = -1.0
+	var position_target : Vector2
+	if get_parent().position.x > 2.0 * DUPLICATE_DISTANCE_X:
+		position_target.x = -DUPLICATE_DISTANCE_X
+	elif get_parent().position.x < 2.0 * DUPLICATE_DISTANCE_X:
+		position_target.x = DUPLICATE_DISTANCE_X
+	elif (randf_range(0.0, 1.0) <= 0.5):
+		position_target.x = DUPLICATE_DISTANCE_X
+	else:
+		position_target.x = -DUPLICATE_DISTANCE_X
+	if get_parent().position.y > 2.0 * DUPLICATE_DISTANCE_Y:
+		position_target.y = -DUPLICATE_DISTANCE_Y
+	elif get_parent().position.y < 2.0 * DUPLICATE_DISTANCE_Y:
+		position_target.y = DUPLICATE_DISTANCE_Y
+	elif (randf_range(0.0, 1.0) <= 0.5):
+		position_target.y = DUPLICATE_DISTANCE_Y
+	else:
+		position_target.y = -DUPLICATE_DISTANCE_Y
 	
-	target_y = target_y * (2* MIN_DUPLICATE_DISTANCE - sign(target_y)* position.y) - 10.0
+	position_target += Vector2(randf_range(-20.0, -20.0), randf_range(-10.0, -10.0))
 	
-	var size_ratio = 1.0 + DISTANCE_SIZE_RATIO * ( (position.y + target_y)/SCREEN_WIDTH )
-	var relative_ratio = size_ratio/scale.x
+	new_sliminou_holder.position = get_parent().transform.basis_xform_inv(position_target) + get_parent().position
+	var new_size_ratio = 1.0 + DISTANCE_SIZE_RATIO * new_sliminou_holder.position.y
+	new_sliminou_holder.scale = Vector2(new_size_ratio, new_size_ratio)
 	
-	target_x = sign(target_x)* MIN_DUPLICATE_DISTANCE + target_x * (SCREEN_WIDTH - sign(target_x)* position.x - MIN_DUPLICATE_DISTANCE)
-	
-	new_sliminou.position = position + Vector2(target_x, target_y)
-	new_sliminou.scale = Vector2(size_ratio, size_ratio)
-	
-	get_parent()._register_spawning(1)
+	get_parent().get_parent()._register_spawning(1)
 
 	$Duplicate.scale = Vector2(0.5,0.2)
 	
 	tween = create_tween()
-#	tween_bis = create_tween()
-	
-	
 	tween.tween_callback($Body/Sprite2DDuplication.show)
-	tween.parallel().tween_callback($Body/Sprite2DNormal.hide)
-	tween.tween_property($Body, "rotation", -PI/8, JUMP_DURATION/6).set_trans(Tween.TRANS_ELASTIC)
-	tween.tween_property($Body, "rotation", PI/6, JUMP_DURATION/6).set_trans(Tween.TRANS_ELASTIC)
-	tween.tween_property($Body, "rotation", -PI/5, JUMP_DURATION/6).set_trans(Tween.TRANS_ELASTIC)
-	tween.parallel().tween_callback($Duplicate.show)	
+	tween.tween_callback($Body/Sprite2DNormal.hide)
+	tween.tween_property($Body, "rotation", -PI/8, 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Body, "rotation", PI/6, 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Body, "rotation", -PI/5, 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_callback($Duplicate.show)
+	tween.tween_property($Body, "scale", Vector2(1.1,1.1), 0.125).set_trans(Tween.TRANS_CUBIC)
 	
-	tween.parallel().tween_property($Body, "scale", Vector2(1.5,1.5), JUMP_DURATION/8.0).set_trans(Tween.TRANS_ELASTIC)
-	
-#	tween_bis.tween_interval(3*JUMP_DURATION/6.0)
-#	tween_bis.parallel().tween_property($Duplicate, "position:x", target_x, 2*JUMP_DURATION).set_trans(Tween.TRANS_CUBIC)
-	
-	tween.tween_property($Body, "rotation", 0, JUMP_DURATION/6).set_trans(Tween.TRANS_ELASTIC)
-	tween.parallel().tween_property($Duplicate, "scale", Vector2(1.0, 1.0), JUMP_DURATION/6.0).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property($Body, "scale", Vector2(1,1), JUMP_DURATION/6.0).set_trans(Tween.TRANS_ELASTIC)
-	tween.parallel().tween_callback($Body/Sprite2DDuplication.hide)
-	tween.parallel().tween_callback($Body/Sprite2DNormal.show)
-	tween.parallel().tween_property($Duplicate, "position:y", -JUMP_HEIGHT, JUMP_DURATION).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Duplicate, "position:y", target_y, 2*JUMP_DURATION/3).set_trans(Tween.TRANS_LINEAR)
-	tween.parallel().tween_property($Duplicate, "position:x", target_x, 2.0*JUMP_DURATION/3.0).set_trans(Tween.TRANS_LINEAR)
-	tween.parallel().tween_property($Duplicate, "scale", Vector2(relative_ratio, relative_ratio), 2.0*JUMP_DURATION/3.0).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Body, "rotation", 0, 0.25).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property($Duplicate, "scale", Vector2(1.0, 1.0), 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Body, "scale", Vector2(1,1), 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_callback($Body/Sprite2DDuplication.hide)
+	tween.tween_callback($Body/Sprite2DNormal.show)
+	tween.tween_property($Duplicate, "position", position_target, 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property($Duplicate, "scale", Vector2(new_size_ratio/get_parent().scale.x, new_size_ratio/get_parent().scale.y),0.25).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_callback($Duplicate.hide)
-#	tween.tween_callback(get_parent().add_child.bind(new_sliminou)
+	tween.tween_callback(get_parent().get_parent().add_child.bind(new_sliminou_holder))
 	
 	await tween.finished
-#	await tween_bis.finished
-	
-	get_parent().add_child(new_sliminou)
 	
 	$Duplicate.position = Vector2(0.0,0.0)
-	
 	_play_waiting_animation.call_deferred(1,false)
 	
 func _play_waiting_animation(loop_num : int, next_is_jump : bool):
@@ -134,7 +123,6 @@ func _play_waiting_animation(loop_num : int, next_is_jump : bool):
 	
 	tween = create_tween()
 	for loop_index in range(loop_num):
-		# generation of random vector whithin a disk of radius HAND_MOVE_RADIUS, the "sqrt" ensures uniform distribution.
 		var random_vector : Vector2 = Vector2(1.0, 0.0) * (randf_range(-1.0, 1.0)) * DANCE_MOVE_RADIUS
 		var target_position : Vector2 = random_vector
 		tween.tween_property($Body, "position", target_position, DANCE_MOVE_DURATION).set_trans(Tween.TRANS_CUBIC)
@@ -153,7 +141,7 @@ func _play_waiting_animation(loop_num : int, next_is_jump : bool):
 func _play_attacking_animation():
 	
 	#Preping the speach
-	$Speach/SpeachBubble/SpeachText.text=get_parent()._get_a_speach()
+	$Speach/SpeachBubble/SpeachText.text=get_parent().get_parent()._get_a_speach()
 	
 	#animation
 	
@@ -226,32 +214,5 @@ func _hit(damage_points : float):
 	life_points -= damage_points
 	# TODO: DEATH ANIMATION
 	if life_points <= 0.0:
-		get_parent()._register_spawning(-1)
+		get_parent().get_parent()._register_spawning(-1)
 		queue_free()
-
-
-
-func _hand_closed_pressed(hand : Node2D):
-	pass # TODO: MAYBE DO SOMETHING HERE
-
-func _attempt_to_open_hand(hand : Node2D):
-	if not hands_state[hand]["state"] == "close":
-		hands_state[hand]["state"] = "closed"
-		hand.get_node("TextureButtonOpen").show()
-		hand.get_node("TextureButtonClosed").hide()
-		hand.get_node("TextureButtonAttacking").hide()
-
-func _attempt_to_close_hand(hand : Node2D):
-	if not hands_state[hand]["state"] == "open":
-		hands_state[hand]["state"] = "open"
-		hand.get_node("TextureButtonOpen").hide()
-		hand.get_node("TextureButtonClosed").show()
-		hand.get_node("TextureButtonAttacking").hide()
-
-func _hand_open_pressed(hand : Node2D):
-	_hit(character.damage_per_attack)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta : float):
-	pass
