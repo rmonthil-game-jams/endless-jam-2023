@@ -9,7 +9,7 @@ var DIFFICULTY : float = 0.0: set = _set_difficulty
 # MOB SUB PARAMETERS
 
 ## HANDS GEOMETRY
-const PLANTS_REL_DISTANCE = 300.0
+const PLANTS_REL_DISTANCE = 400.0
 const PLANTS_POSSIBLE_ANGLES : Array[float] = [PI, -3.0*PI/4.0, -PI/2.0, -PI/4.0, 0.0]
 
 ## CREATING
@@ -25,7 +25,7 @@ var SUN_REDUCING_SCALE : float
 ## ABSORBING
 const SUN_ABSORBING_DURATION : float = 0.3
 const SUN_ABSORBED_DURATION : float = 0.3
-const GATHER_POSITION = Vector2(0.0, 200.0)
+const GATHER_POSITION = Vector2(0.0, 140.0)
 
 ## DAMAGE
 var DMG_MAX_PER_SUN : float
@@ -80,11 +80,6 @@ func _ready():
 		plant.get_node("Body/TextureButtonWait").pressed.connect(_plant_wait_pressed.bind(plant))
 		plant.get_node("Sun/TextureButtonAbsorb").pressed.connect(_sun_absorb_pressed.bind(plant))
 		plant.get_node("Sun/TextureButtonWait").pressed.connect(_sun_wait_pressed.bind(plant))
-		
-	# setup signals for beam
-#	$SunBeam.hide()
-#	$SunBeam.get_node("TextureButtonInvicible").pressed.connect(_sunbeam_invicible_pressed.bind())
-#	$SunBeam.get_node("TextureButtonReducing").pressed.connect(_sunbeam_reducing_pressed.bind())
 	
 	character = get_tree().get_nodes_in_group("character").front()
 	# avoid using await in the _ready function
@@ -158,16 +153,10 @@ func _play_waiting_animation():
 	_init_plants()
 	_init_sunbeam()
 
-#	main_tween = create_tween()
-#	main_tween.tween_callback($Furuboule/Body/Sprite2DNormal.hide)
-#	main_tween.tween_callback($Furuboule/Body/Sprite2DAttacking.show)
-
 	main_tween = create_tween()
 	for plant in plants:
 			main_tween.parallel().tween_property(plant, "scale", 
 				Vector2.ONE, 2.0).set_trans(Tween.TRANS_ELASTIC)
-#	main_tween.tween_callback($Furuboule/Body/Sprite2DNormal.show)
-#	main_tween.tween_callback($Furuboule/Body/Sprite2DAttacking.hide)
 	await main_tween.finished
 	
 
@@ -197,11 +186,6 @@ func _play_preparing_animation():
 	for plant in plants:
 		_attempt_to_invicible_plant(plant)
 
-#	var n_pi : float = $Furuboule.rotation / 2*PI
-#	print(n_pi)
-#	var rel_rotation : float = (round(abs(n_pi)) - abs(n_pi)) * sign(n_pi) * 2*PI
-#	print(rel_rotation)
-
 	main_tween = create_tween()
 	main_tween.tween_property($Cuteplant, "rotation", 0.0, 0.25 * WAITING_ROTATION_DURATION)
 	await main_tween.finished
@@ -226,7 +210,6 @@ func _play_gathering_animation():
 		# Firstly, sun is shaking and player can shrink its energy
 		_attempt_to_absorb_sun(plant)
 
-
 		var shake_move_time : float = SUN_SHAKING_DURATION / (SUN_SHAKING_N*2) #because return trip
 		for i in range(SUN_SHAKING_N):
 			# Get random position around
@@ -250,13 +233,14 @@ func _play_gathering_animation():
 
 		_attempt_to_wait_sun(plant)
 
-
-		# Secondly, sun is coming towards the hands and is absorbed, increasing the final beam
+		# Secondly, sun is coming towards the mouse and is absorbed, increasing the final beam
 		# Only if the sun has not been totally skrunk
 		if (plants_state[plant]["rel_energy"] > 0.0):
 			# Sun go to absorbing zone
 			main_tween = create_tween()
-			main_tween.tween_property(plant.get_node("Sun"), "position", GATHER_POSITION, SUN_ABSORBING_DURATION).set_trans(Tween.TRANS_EXPO)
+			main_tween.tween_property(plant.get_node("Sun"), "position", 
+				GATHER_POSITION - plant.position, 
+				SUN_ABSORBING_DURATION).set_trans(Tween.TRANS_EXPO)
 			await main_tween.finished
 
 			# Remove Sun
@@ -266,14 +250,7 @@ func _play_gathering_animation():
 			# Increase sunbeam
 			sunbeam_energy_rel += plants_state[plant]["rel_energy"]
 			sunbeam_n_suns += 1
-#			var final_scale = Vector2(hands_state[hand]["rel_energy"], hands_state[hand]["rel_energy"])
-#			if first:
-#				$SunBeam.scale = final_scale
-#				first = false
-#			else:
-#				main_tween = create_tween()
-#				main_tween.tween_property($SunBeam, "scale", final_scale, SUN_ABSORBED_DURATION).as_relative().from_current().set_trans(Tween.TRANS_EXPO)
-#				await main_tween.finished
+
 
 	_play_releasing_animation.call_deferred()
 
@@ -286,23 +263,13 @@ func _play_releasing_animation():
 	$Cuteplant/Body/Sprite2DAttack.hide()
 	if sunbeam_energy_rel > SUN_REDUCING_SCALE:
 		$Cuteplant/Body/Sprite2DBeam.show()
-		
-		# Sunbeam go to final position, player can reduce damage by clicking
-#		main_tween = create_tween()
-#		main_tween.tween_property($SunBeam, "position", SUNBEAM_LAUNCHING_POSITION, SUNBEAM_LAUNCHING_DURATION).set_trans(Tween.TRANS_LINEAR)
-#		await main_tween.finished
-
-#		_attempt_to_block_sunbeam()
-
-		# Launching beam only if it has not been totally shrinked
-#		if sunbeam_state["rel_energy"] > SUN_REDUCING_SCALE:
 
 		# Final sun is launched
 		$Beam.scale = Vector2.ZERO
 		$Beam.show()
 		main_tween = create_tween()
 #		main_tween.tween_property($SunBeam, "scale", Vector2(0.0, 0.0), 0.5).set_trans(Tween.TRANS_ELASTIC)
-		main_tween.tween_property($Beam, "scale", Vector2(2.0, 2.0), 0.5).set_trans(Tween.TRANS_EXPO)
+		main_tween.tween_property($Beam, "scale", Vector2(2.0, 2.0), 1).set_trans(Tween.TRANS_EXPO)
 		await main_tween.finished
 		$Beam.hide()
 		$Beam.scale = Vector2.ZERO
@@ -310,10 +277,7 @@ func _play_releasing_animation():
 		# Set dmg proportionnaly to the number of gathered suns and the shrinkage from player
 		_damage_character()
 		$Cuteplant/Body/Sprite2DBeam.hide()
-		
-#		else:
-#			$Furuboule/Body/Sprite2DBeam.hide()
-#			$Furuboule/Body/Sprite2DBlocked.show()
+
 
 	# Change state
 	$Cuteplant/Body/Sprite2DNormal.show()
@@ -361,23 +325,6 @@ func _attempt_to_wait_sun(plant : Node2D):
 		plant.get_node("Sun/TextureButtonWait").show()
 
 
-#func _attempt_to_reduce_sunbeam():
-#	if not sunbeam_state["state"] == "reducing":
-#		sunbeam_state["state"] = "reducing"
-#		$SunBeam.get_node("TextureButtonInvicible").show()
-#		$SunBeam.get_node("TextureButtonReducing").hide()
-#
-#func _attempt_to_invicible_sunbeam():
-#	if not sunbeam_state["state"] == "invicible":
-#		sunbeam_state["state"] = "invicible"
-#		$SunBeam.get_node("TextureButtonInvicible").hide()
-#		$SunBeam.get_node("TextureButtonReducing").show()
-#
-#func _attempt_to_attack_sunbeam():
-#	if not sunbeam_state["state"] == "attacking":
-#		sunbeam_state["state"] = "attacking"
-
-
 func _plant_growth_pressed(plant : Node2D):
 	_hit(character.damage_per_attack)
 
@@ -390,11 +337,6 @@ func _sun_absorb_pressed(plant : Node2D):
 func _sun_wait_pressed(plant : Node2D):
 	pass # TODO: MAYBE DO SOMETHING HERE
 	
-#func _sunbeam_reducing_pressed():
-#	_reduce_sunbeam()
-#
-#func _sunbeam_invicible_pressed():
-#	pass # TODO: MAYBE DO SOMETHING HERE
 
 func _hit(damage_points : float):
 	life_points -= damage_points
@@ -421,15 +363,6 @@ func _reduce_sun(plant : Node2D):
 		plant.get_node("Sun").scale = Vector2(0.0, 0.0)
 		plants_state[plant]["rel_energy"] = 0.0
 		plant.get_node("Sun").hide()
-
-#func _reduce_sunbeam():
-#	sunbeam_state["rel_energy"] -= SUN_REDUCING_SCALE
-#	$SunBeam.scale = Vector2(sunbeam_state["rel_energy"], sunbeam_state["rel_energy"])	
-#
-#	if sunbeam_state["rel_energy"] < SUN_REDUCING_SCALE:
-#		$SunBeam.scale = Vector2(0.0, 0.0)
-#		sunbeam_state["rel_energy"] = 0.0
-#		$SunBeam.hide()
 
 
 func _damage_character():
