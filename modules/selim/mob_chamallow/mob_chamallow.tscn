@@ -76,6 +76,10 @@ texture_pressed = ExtResource("5_r4ct6")
 visible = false
 texture = ExtResource("5_r4ct6")
 
+[node name="Sprite2DAttacked2" type="Sprite2D" parent="Body"]
+visible = false
+texture = ExtResource("5_r4ct6")
+
 [node name="AttackP1" type="Node2D" parent="."]
 
 [node name="Sprite2DAttackedP1" type="Sprite2D" parent="AttackP1"]
