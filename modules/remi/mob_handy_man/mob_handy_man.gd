@@ -5,20 +5,28 @@ signal just_died
 # TODO: SPAWN KISS WHEN KISSED
 
 # MOB PARAMETERS
-var DIFFICULTY : float = 0.0
+var DIFFICULTY : float = 0.0: set = _set_difficulty
 
 # MOB SUB PARAMETERS
 ## WAITING
-var HAND_MOVE_DURATION : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF MOVEMENT SPEED
-var HAND_MOVE_RADIUS : float = min(500.0, 100.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
+var HAND_MOVE_DURATION : float
+var HAND_MOVE_RADIUS : float
 const WAITING_LOOP_NUMBER : int = 4
 const MAX_NB_OF_HITS_PER_HAND : int = 4
 ## ATTACKING
-var HAND_ATTACK_DURATION_FACTOR : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF ATTACK SPEED
-var HAND_DAMAGE_PER_ATTACK : float = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-var HAND_ATTACK_INTERVAL : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF ATTACK SPEED
+var HAND_ATTACK_DURATION_FACTOR : float 
+var HAND_DAMAGE_PER_ATTACK : float 
+var HAND_ATTACK_INTERVAL : float 
 const KISS_DURATION : float = 2.0
 ## TODO: NUMBER OF HANDS DEPENDANT OF DIFFICULTY ?
+
+func _set_difficulty(value : float):
+	DIFFICULTY = value
+	HAND_MOVE_DURATION = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
+	HAND_MOVE_RADIUS = min(500.0, 100.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
+	HAND_ATTACK_DURATION_FACTOR = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
+	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
+	HAND_ATTACK_INTERVAL = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
 
 # MOB HP BAR
 @onready var mob_hp_progress_bar : TextureProgressBar = $MobHPBar/HBoxContainer/MobHpBar
