@@ -15,7 +15,7 @@
    version="1.1"
    id="svg1123"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="sliminou_bouche_contente_hover.svg">
+   sodipodi:docname="sliminou_bouche_quiparle_hover.svg">
   <defs
      id="defs1117" />
   <sodipodi:namedview
@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="-79.573619"
+     inkscape:cx="-165.94166"
      inkscape:cy="-1.5881311"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -65,7 +65,7 @@
        sodipodi:end="3.1415927"
        d="m 120.73664,103.49271 a 11.590122,11.590122 0 0 1 -5.79506,10.03734 11.590122,11.590122 0 0 1 -11.59012,0 11.590122,11.590122 0 0 1 -5.79506,-10.03734 l 11.59012,0 z" />
     <path
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.58749998;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:#ffaaaa;fill-opacity:1;stroke:#000000;stroke-width:1.58749998;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="path9"
        sodipodi:type="arc"
        sodipodi:cx="109.14652"

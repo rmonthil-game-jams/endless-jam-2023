@@ -23,5 +23,3 @@ texture = ExtResource("2_g134o")
 position = Vector2(0, 100)
 
 [node name="Character" parent="." instance=ExtResource("3_7rv2b")]
-
-[connection signal="just_died" from="Character" to="." method="_on_character_just_died"]
