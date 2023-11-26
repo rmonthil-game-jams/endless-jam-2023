@@ -346,7 +346,7 @@ func _chose_upgrade_tier(lootbuff : float):
 func hit(damage_points : float):
 	life_points -= damage_points
 	_set_hpbar_level(life_points)
-	$Audio/Hit.play()
+	$Audio/Hit.play.call_deferred()
 	_hit_label_animation.call_deferred(damage_points)
 	$Camera2D.shake.call_deferred(0.2, 15, 8)
 	_hit_color_rect_animation.call_deferred() # also checks for character death
@@ -355,6 +355,7 @@ func hit(damage_points : float):
 func heal(heal_points : float):
 	life_points = min(life_points + heal_points, max_life_points)
 	_set_hpbar_level(life_points)
+	$Audio/Heal.play.call_deferred()
 	_heal_label_animation.call_deferred(heal_points)
 	_heal_color_rect_animation.call_deferred()
 
