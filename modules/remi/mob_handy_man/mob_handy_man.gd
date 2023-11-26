@@ -25,7 +25,7 @@ func _set_difficulty(value : float):
 	HAND_MOVE_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
 	HAND_MOVE_RADIUS = min(500.0, 100.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
 	HAND_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
-	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
+	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + 0.8*log(1.0 + DIFFICULTY))
 	HAND_ATTACK_INTERVAL = 2.0 / (1.0 + 0.8*log(1.0 + DIFFICULTY))
 	life_points = 18 + (5 * (1.0 + DIFFICULTY))
 
