@@ -17,8 +17,8 @@ var total_health : float
 
 func set_difficulty(d : float):
 	DIFFICULTY = d
-	NB_MOBS = 1 + DIFFICULTY/2
-	PER_MOB_DIFFICULTY = fmod(DIFFICULTY, 2) / 2 # This sets the mobs difficulty in [0,1[. Probably better to just do DIFFICULTY/nb_mobs
+	NB_MOBS = 1 + DIFFICULTY/3
+	PER_MOB_DIFFICULTY = DIFFICULTY / NB_MOBS
 
 var SpawnSlots : Array[Vector2]
 

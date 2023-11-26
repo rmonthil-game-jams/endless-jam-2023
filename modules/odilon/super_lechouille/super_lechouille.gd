@@ -14,20 +14,36 @@ var DIFFICULTY : float = 0.0: set = set_difficulty
 
 # MOB SUB PARAMETERS
 ## Animation probabilities (integer easier to manipulate : in %)
-var WAIT_PROBABILITY : int #= 20
-var ATTACK_PROBABILITY : float #= 30
+var WAIT_PROBABILITY : int = 20
+var ATTACK_PROBABILITY : float = 30
 var JUMP_PROBABILITY : float = 50
 
 ## ATTACKING
-
 var SLURP_LATENCY : float = 0.2
 
 # MOB STATE
-var max_life_points : float = 30.0
 var life_points : float = 30.0
 var state : String # useles at the moment but who knows in the future?
 
 # private
+var MAX_LIFE_POINTS : float = 30.0
+var MAX_IDLE_DURATION : float
+var MAX_JUMP_DURATION : float
+var SLURP_TIME : float
+var SLURP_LIFE : float
+var MAX_SLURP_DAMAGE_PER_ATTACK : float
+
+## THIS IS THE PER-DOG DIFFICULTY. SEE "FIGHT" TO MODULATE THIS WITH THE GLOBAL DIFFICULTY !
+func set_difficulty(d : float):
+	DIFFICULTY = d
+	MAX_IDLE_DURATION = 0.7 / (1.0 + log(1.0 + DIFFICULTY)) # The more difficult, shorter it will be
+	MAX_JUMP_DURATION = 1.1 / (1.0 + log(1.0 + DIFFICULTY)) # The more difficult, shorter it will be
+	SLURP_TIME = 1.5 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF ATTACK SPEED
+	SLURP_LIFE = 3.0 * (1.0 + log(1.0 + DIFFICULTY))
+	MAX_SLURP_DAMAGE_PER_ATTACK = 2.0 * (1 + log(1.0 + DIFFICULTY))
+	MAX_LIFE_POINTS = 25 + 5 * log(1 + DIFFICULTY)
+	life_points = MAX_LIFE_POINTS
+
 
 ## initialization is unecessary because they are already initialized to these values
 var clickable_tween : Tween
@@ -55,26 +71,11 @@ func _ready():
 	# Force difficulty update if you only launch this scene
 	set_difficulty(DIFFICULTY)
 
-	mob_hp_progress_bar.max_value=max_life_points
+	mob_hp_progress_bar.max_value=MAX_LIFE_POINTS
 
 	# avoid using await in the _ready function
 	_play_appearing_animation.call_deferred()
 
-
-var MAX_IDLE_DURATION : float
-var MAX_JUMP_DURATION : float
-var SLURP_TIME : float
-var SLURP_LIFE : float
-var MAX_SLURP_DAMAGE_PER_ATTACK : float
-
-
-func set_difficulty(d : float):
-	DIFFICULTY = d
-	MAX_IDLE_DURATION = 0.7 / (1.0 + log(1.0 + DIFFICULTY)) # The more difficult, shorter it will be
-	MAX_JUMP_DURATION = 1.1 / (1.0 + log(1.0 + DIFFICULTY)) # The more difficult, shorter it will be
-	SLURP_TIME = 1.5 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF ATTACK SPEED
-	SLURP_LIFE = 3.0 * (1.0 + log(1.0 + DIFFICULTY))
-	MAX_SLURP_DAMAGE_PER_ATTACK = 2.0 * (1 + log(1.0 + DIFFICULTY))
 
 
 func _play_appear_fx():

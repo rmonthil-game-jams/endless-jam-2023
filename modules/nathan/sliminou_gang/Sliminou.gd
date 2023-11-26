@@ -4,7 +4,7 @@ signal just_died_individual
 signal just_spawned
 
 #CONST
-const STANDARD_PLAYER_DAMAGE : float = 2.0
+const STANDARD_PLAYER_DAMAGE : float = 2.1
 
 # MOB PARAMETERS
 var DIFFICULTY : float = 0.0: set = _set_difficulty # REMI: _set_difficulty
@@ -27,17 +27,25 @@ var JUMP_HEIGHT : float
 ## ATTACKING
 var SPEACH_ATTACK_DURATION_FACTOR : float
 var SPEACH_DAMAGE_PER_ATTACK : float
+var LIFE : float
 ## TODO: NUMBER OF HANDS DEPENDANT OF DIFFICULTY ?
 
 # REMI: _set_difficulty
 func _set_difficulty(value : float):
 	DIFFICULTY = value
-	DUPLICATE_LOOP_NUMBER = max(round(8.0 - DIFFICULTY),4.0) #NUMBER OF IDLE PHASES
-	DANCE_MOVE_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY/4))
-	JUMP_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
-	JUMP_HEIGHT = min(1500.0, 500.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
-	SPEACH_ATTACK_DURATION_FACTOR = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
+	
+	DUPLICATE_LOOP_NUMBER = max(round(8.0 - DIFFICULTY/2.0),2.0) #NUMBER OF IDLE PHASES BEFORE DUPLICATION
+	#ATTENTION : DUPLICATE_LOOP_NUMBER / 2 > LIFE / STANDARD_PLAYER_DAMAGE  (sinon pas le temps de tuer avant la duplication)
+	
+	
+	DANCE_MOVE_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY/4.0)) #THE SMALLER, THE QUICKER THE IDLE PHASE : MOB LOOKS ANGRIER AND ATTACK/VULNERABILITY PHASE COMES MORE OFTEN
+	JUMP_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY)) #THE SMALLER THE QUICKER IT GETS AND THE HARDER IT GETS (VULNERABILITY PHASE)
+	JUMP_HEIGHT = 700.0 #min(1500.0, 500.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY))) #THE HIGHER THE EASIER (VULNERABILITY PHASE)
+	SPEACH_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + log(1.0 + DIFFICULTY)) #THE SHORTER, THE HARDER TO COUNTER THE ATTACK
 	SPEACH_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
+	LIFE = 4.0 + log(0.5 + DIFFICULTY)
+
+	print(DUPLICATE_LOOP_NUMBER/2, " > ", LIFE, " / ", STANDARD_PLAYER_DAMAGE, " = ", LIFE/STANDARD_PLAYER_DAMAGE)
 
 # MOB STATE
 var life_points : float = 5.0
@@ -59,7 +67,7 @@ func _ready():
 	# set difficulty
 	_set_difficulty(DIFFICULTY)
 	duplicate_countdown = DUPLICATE_LOOP_NUMBER
-	
+	life_points = LIFE
 	print("difficulty indiv ", DIFFICULTY)
 	
 #	# other
@@ -72,6 +80,7 @@ func _ready():
 # REMI: QUITE A FEW TWEAKS
 func _play_dedoubling():
 	var new_sliminou_holder : Node2D = load("res://modules/nathan/sliminou_gang/sliminou_holder.tscn").instantiate()
+	new_sliminou_holder.get_node("Sliminou").DIFFICULTY = DIFFICULTY
 	
 	var position_target : Vector2
 	if get_parent().position.x > 2.0 * DUPLICATE_DISTANCE_X:
