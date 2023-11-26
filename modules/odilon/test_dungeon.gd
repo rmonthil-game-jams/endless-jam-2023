@@ -39,29 +39,29 @@ func _advance():
 	if room % BOSS_ROOM_PERIOD:
 		new_mob = MOB_SCENES[randi_range(0, MOB_SCENES.size() - 1)].instantiate()
 		new_mob.DIFFICULTY = _new_mob_difficulty()
+		print("room: ", room)
+		print("difficulty: ", new_mob.DIFFICULTY)
 	else:
 		new_mob = BOSS_SCENES[randi_range(0, BOSS_SCENES.size() - 1)].instantiate()
 		new_mob.DIFFICULTY = _new_mob_difficulty() * KBOSSDIFF
-
+		print("room: ", room)
+		print("difficulty: ", new_mob.DIFFICULTY)
 
 	$RoomContent.add_child(new_mob)
 	new_mob.just_died.connect(_on_current_mob_just_died)
 
 
-@export var KDIFF : float = 1.0
+@export var KDIFF : float = 0.4
 @export var KEXPDIFF : float = 0.1
-@export var KSTARTDIFF : float = 1.0
+@export var KSTARTDIFF : float = 0.3
 @export var KBOSSDIFF : float = 1.5
 @export var BOSS_LOOT_BUFF : float = 1
 
 var difficulty : int = 1
 var room : int = 0
 
-var difficulties : Array[float] = [0.5, 0.9, 2, 4, 6, 10]
-
 func _new_mob_difficulty():
-	return difficulties[min(room, difficulties.size()-1)]
-	#return KDIFF*pow(difficulty+room,1+KEXPDIFF*difficulty)
+	return KDIFF*pow(KSTARTDIFF*difficulty+room,1.0+KEXPDIFF*difficulty)
 
 
 func _on_current_mob_just_died():
