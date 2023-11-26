@@ -23,6 +23,7 @@ const DANCE_MOVE_RADIUS : float = 400.0
 
 ## JUMPING
 var JUMP_DURATION : float
+var FALL_DURATION : float
 var JUMP_HEIGHT : float
 ## ATTACKING
 var SPEACH_ATTACK_DURATION_FACTOR : float
@@ -40,6 +41,7 @@ func _set_difficulty(value : float):
 	
 	DANCE_MOVE_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY/4.0)) #THE SMALLER, THE QUICKER THE IDLE PHASE : MOB LOOKS ANGRIER AND ATTACK/VULNERABILITY PHASE COMES MORE OFTEN
 	JUMP_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY)) #THE SMALLER THE QUICKER IT GETS AND THE HARDER IT GETS (VULNERABILITY PHASE)
+	FALL_DURATION = 2.0*JUMP_DURATION/3.0
 	JUMP_HEIGHT = 700.0 #min(1500.0, 500.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY))) #THE HIGHER THE EASIER (VULNERABILITY PHASE)
 	SPEACH_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + log(1.0 + DIFFICULTY)) #THE SHORTER, THE HARDER TO COUNTER THE ATTACK
 	SPEACH_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
@@ -75,7 +77,8 @@ func _ready():
 	# avoid using await in the _ready function
 	$Body/Mouth/MouthButton.pressed.connect(_mouth_attacking_pressed.bind($Body/Mouth))
 	$Body/WeakSpot/WeakSpotButton.pressed.connect(_hit.bind(STANDARD_PLAYER_DAMAGE))
-	_clean_attack.call_deferred($Speach/SpeachBubble)
+	$Speach/SpeachBubble.get_node("SpeachText").visible_ratio = 0.0
+	_play_waiting_animation.call_deferred(1,false)
 
 # REMI: QUITE A FEW TWEAKS
 func _play_dedoubling():
@@ -137,12 +140,16 @@ func _play_dedoubling():
 func _play_waiting_animation(loop_num : int, next_is_jump : bool):
 	state = STATE.idle
 	duplicate_countdown -= 1 
+	var random_vector : Vector2
+	var target_position : Vector2
+	var random_time_variation : float 
 	
 	tween = create_tween()
 	for loop_index in range(loop_num):
-		var random_vector : Vector2 = Vector2(1.0, 0.0) * (randf_range(-1.0, 1.0)) * DANCE_MOVE_RADIUS
-		var target_position : Vector2 = random_vector
-		tween.tween_property($Body, "position", target_position, DANCE_MOVE_DURATION).set_trans(Tween.TRANS_CUBIC)
+		random_vector = Vector2(1.0, 0.0) * (randf_range(-1.0, 1.0)) * DANCE_MOVE_RADIUS
+		target_position = random_vector
+		random_time_variation = randf_range(-DANCE_MOVE_DURATION/4.0, DANCE_MOVE_DURATION/4.0)
+		tween.tween_property($Body, "position", target_position, DANCE_MOVE_DURATION + random_time_variation).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property($Body, "position", Vector2(0.0, 0.0), DANCE_MOVE_DURATION/1.5).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
 	
@@ -187,20 +194,20 @@ func _play_jump_animation():
 	tween.tween_callback($Body/WeakSpot.show)
 	tween.tween_property($Body, "position", Vector2(0.0, -JUMP_HEIGHT), JUMP_DURATION).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property($Body, "scale", Vector2(1.0,1.0), JUMP_DURATION/2.5).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Body, "position", Vector2(0.0,0.0), 2.0*JUMP_DURATION/3.0).set_trans(Tween.TRANS_LINEAR)
+	tween.tween_property($Body, "position", Vector2(0.0,0.0), FALL_DURATION).set_trans(Tween.TRANS_LINEAR)
 	tween.tween_callback($Body/WeakSpot.hide)
 	await tween.finished
 	_play_waiting_animation.call_deferred(IDLE_LOOP_NUMBER, false)
 
 func _clean_attack(bubble : Node2D):
 	bubble.get_node("SpeachText").visible_ratio = 0.0
-	bubble.get_node("SpeachButton").hide()
+	bubble.hide()
 	bubble.rotation = 0.0
 	_play_waiting_animation.call_deferred(IDLE_LOOP_NUMBER, true)
 
 func _attempt_to_attack(speach : Node2D):
 	state = STATE.loading_attack
-	speach.get_node("SpeachButton").show()
+	speach.show()
 
 func _attacking(speach : Node2D):
 	if not state == STATE.canceled :
@@ -212,15 +219,18 @@ func _attempt_damaging_character():
 
 func _attempt_to_cancel(speach : Node2D):
 	if state == STATE.loading_attack : 
-		
-		
+				
 		state = STATE.canceled
+		
+		var angle : float = 0.0
+		while abs(angle) < PI/10 :
+			angle = randf_range(-PI/4, PI/4)
 		
 		tween.kill()
 		
 		tween = create_tween()
 	
-		tween.tween_property($Speach/SpeachBubble, "rotation", 2*randf_range(-PI/8, PI/8), 0.250 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
+		tween.tween_property($Speach/SpeachBubble, "rotation", angle, 0.250 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
 		tween.tween_interval(0.125*SPEACH_ATTACK_DURATION_FACTOR)
 		tween.tween_property($Speach/SpeachBubble, "scale", Vector2(0.25, 0.25), 0.125 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 		tween.tween_callback(_clean_attack.bind($Speach/SpeachBubble))
@@ -230,9 +240,34 @@ func _mouth_attacking_pressed(mouth : Node2D):
 	_attempt_to_cancel(mouth.get_parent())	
 
 func _hit(damage_points : float):
+	
+	var refall_duration : float = (-$Body.position.y/JUMP_HEIGHT)* JUMP_DURATION
+	var shaken_angle : float = 0.0
+	while abs(shaken_angle) < PI/8 :
+		shaken_angle = randf_range(-PI/3, PI/3)
+	
 	life_points -= damage_points
-	$Body/WeakSpot.hide()
-	# TODO: DEATH ANIMATION
+	
+	tween.kill()
+	tween = create_tween()
+	
+	if life_points <= 0.0 :
+		tween.parallel().tween_callback($Body/WeakSpot.hide)
+	
+	tween.tween_property($Body, "scale", Vector2(0.7,0.7),0.125).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property($Body, "scale", Vector2(1.0,1.0),0.25).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property($Body, "position", Vector2(0.0,0.0),refall_duration).set_trans(Tween.TRANS_ELASTIC)
+	tween.parallel().tween_property($Body, "position", Vector2(0.0,0.0),refall_duration).set_trans(Tween.TRANS_ELASTIC)
+	
 	if life_points <= 0.0:
+		tween.parallel().tween_property($Body, "rotation", shaken_angle*2,refall_duration).set_trans(Tween.TRANS_LINEAR)
+		tween.tween_interval(0.5)
+		await tween.finished
 		get_parent().get_parent()._register_spawning(-1)
 		queue_free()
+	else :
+		tween.parallel().tween_property($Body, "rotation", shaken_angle,refall_duration).set_trans(Tween.TRANS_LINEAR)
+		tween.tween_interval(JUMP_DURATION)
+		tween.parallel().tween_callback($Body/WeakSpot.hide)
+		tween.tween_property($Body, "rotation", 0.0,FALL_DURATION).set_trans(Tween.TRANS_QUAD)
+		tween.tween_callback(_play_waiting_animation.bind(IDLE_LOOP_NUMBER, false))

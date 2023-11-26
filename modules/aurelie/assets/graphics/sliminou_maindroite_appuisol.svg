@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24.666658mm"
+   height="11.709538mm"
+   viewBox="0 0 24.666658 11.709538"
+   version="1.1"
+   id="svg1123"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="sliminou_maindroite_appuisol.svg">
+  <defs
+     id="defs1117" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.6"
+     inkscape:cx="51.588448"
+     inkscape:cy="11.18083"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1853"
+     inkscape:window-height="1025"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="-68.916971,0.79382933"
+       orientation="0,1"
+       id="guide938"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata1120">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-147.8202,-139.53801)">
+    <g
+       transform="translate(99.923018,0.76377178)"
+       id="g906-8">
+      <g
+         transform="matrix(-1,0,0,1,148.62026,-6.4255952)"
+         id="g899-8">
+        <path
+           style="fill:#ffb380;fill-opacity:1;stroke:#000000;stroke-width:1.58749998;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="path872-9"
+           sodipodi:type="arc"
+           sodipodi:cx="-88.38974"
+           sodipodi:cy="-155.73015"
+           sodipodi:rx="11.244792"
+           sodipodi:ry="9.7328863"
+           sodipodi:start="0"
+           sodipodi:end="3.1415927"
+           sodipodi:open="true"
+           d="m -77.144948,-155.73015 a 11.244792,9.7328863 0 0 1 -5.622396,8.42893 11.244792,9.7328863 0 0 1 -11.244792,0 11.244792,9.7328863 0 0 1 -5.622396,-8.42893"
+           transform="scale(-1)" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:1.58749998;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="M 76.86147,156.11554 H 99.918018"
+           id="path874-3"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <path
+       style="fill:none;stroke:#ffe6d5;stroke-width:1.58749998;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 167.98637,146.43841 c 0,0 2.03163,2.55134 -1.08668,1.79539"
+       id="path862"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

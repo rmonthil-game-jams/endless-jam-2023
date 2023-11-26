@@ -12,6 +12,8 @@ signal just_died
 # MOB PARAMETERS
 var DIFFICULTY : float = 0.0: set = set_difficulty
 
+var RANDOM_WAF_PITCH_MODIFIER : float = randf_range(-0.4, 0.4)
+
 # MOB SUB PARAMETERS
 ## Animation probabilities (integer easier to manipulate : in %)
 var WAIT_PROBABILITY : int = 20
@@ -38,11 +40,13 @@ func set_difficulty(d : float):
 	DIFFICULTY = d
 	MAX_IDLE_DURATION = 0.7 / (1.0 + log(1.0 + DIFFICULTY)) # The more difficult, shorter it will be
 	MAX_JUMP_DURATION = 1.1 / (1.0 + log(1.0 + DIFFICULTY)) # The more difficult, shorter it will be
-	SLURP_TIME = 1.5 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF ATTACK SPEED
-	SLURP_LIFE = 3.0 * (1.0 + log(1.0 + DIFFICULTY))
+	SLURP_TIME = 3.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF ATTACK SPEED
+	SLURP_LIFE = 3.0 #* (1.0 + log(1.0 + DIFFICULTY))
 	MAX_SLURP_DAMAGE_PER_ATTACK = 2.0 * (1 + log(1.0 + DIFFICULTY))
-	MAX_LIFE_POINTS = 25 + 5 * log(1 + DIFFICULTY)
+	MAX_LIFE_POINTS = 10 + 10 * log(1 + DIFFICULTY)
 	life_points = MAX_LIFE_POINTS
+	ATTACK_PROBABILITY = 10 + 3*log(1 + DIFFICULTY)
+	
 
 
 ## initialization is unecessary because they are already initialized to these values
@@ -68,6 +72,8 @@ func _ready():
 	$AnimatedBody/Head/AnimationPlayer.advance.call_deferred(anim_delta)
 	$AnimatedBody/Tail/TailAnim.advance.call_deferred(anim_delta)
 	
+	$AnimatedBody/Waf.pitch_scale += RANDOM_WAF_PITCH_MODIFIER
+	
 	# Force difficulty update if you only launch this scene
 	set_difficulty(DIFFICULTY)
 
@@ -83,9 +89,11 @@ func _play_appear_fx():
 	target_fx.w = 400
 	target_fx.h = 350
 	target_fx.position = Vector2.UP * 50 # carefull these are local coordinates
+	target_fx.play_sound = false
+	$AnimatedBody/Waf.play()
 	$AnimatedBody/Head.add_child(target_fx)
-	
-	
+
+
 
 func _play_appearing_animation():
 	state = "appearing"
@@ -208,6 +216,7 @@ func _play_attacking_animation():
 	var tween : Tween = create_tween()
 	tween.tween_property($AnimatedBody, "global_position", Vector2(pos_before_attack.x, get_viewport_size().y+500), 0.5).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property($AnimatedBody, "scale", Vector2(CLOSE_SCALE, CLOSE_SCALE), 0.5).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_callback($AnimatedBody/AggressiveWaf.play)
 	tween.tween_callback($AnimatedBody.hide)
 	await tween.finished
 
@@ -280,6 +289,7 @@ func _play_comeback_from_attack_animation():
 	t2.tween_property($AnimatedBody, "global_position", pos_before_attack, 0.5).set_trans(Tween.TRANS_CUBIC)
 	t2.parallel().tween_property($AnimatedBody, "scale", Vector2(1, 1), 0.5).set_trans(Tween.TRANS_CUBIC)
 	t2.chain().tween_interval(0.2)
+	t2.tween_callback($AnimatedBody/Waf.play)
 	await t2.finished
 
 	$AnimatedBody/Body/Sprite2DAttacking.hide()

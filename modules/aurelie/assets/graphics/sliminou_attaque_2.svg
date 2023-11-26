@@ -10,8 +10,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="106.01968mm"
-   height="58.009926mm"
-   viewBox="0 0 106.01968 58.009926"
+   height="59.079002mm"
+   viewBox="0 0 106.01968 59.079003"
    version="1.1"
    id="svg854"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="158.02291"
-     inkscape:cy="39.775306"
+     inkscape:cx="67.361714"
+     inkscape:cy="39.775307"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -52,7 +52,7 @@
      inkscape:label="Calque 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-18.083858,-38.677776)">
+     transform="translate(-19.420207,-37.608699)">
     <path
        d="m -61.904424,-139.09351 a 0.59805208,0.51449341 0 0 1 -0.594041,0.51449 0.59805208,0.51449341 0 0 1 -0.602009,-0.50759 0.59805208,0.51449341 0 0 1 0.585966,-0.52129 0.59805208,0.51449341 0 0 1 0.609869,0.50059 l -0.597837,0.0138 z"
        sodipodi:end="6.2563591"

@@ -234,18 +234,15 @@ func _apply_up(upgrade : Dictionary):
 			"upgrade_level":
 				upgrade_level += upgrade["upgrade_level"]
 				$CanvasLayer/Update/CenterContainer/UpdateProgressBar.value = upgrade_level
-			
 			"hp_regen" : 
 				hp_regen += upgrade["hp_regen"]
 				$CanvasLayer/Vitality/CenterContainer/RegenProgressBar.value = hp_regen
-				
 			"add_pointer":
 				_add_pointer()
 	
 	$CanvasLayer/UpgradeMenu.hide()
 	for upgrade_button in $CanvasLayer/UpgradeMenu/HBoxContainer.get_children():
 		upgrade_button.queue_free()
-
 	$CanvasLayer/Room/Number.text = str(cur_room + 1)
 	finished_upgrade.emit()
 	
@@ -259,9 +256,9 @@ func _add_pointer():
 
 var upgrade_level : float = 0
 var upgrade_options : int = 3
-var cur_room : int = 1
-func _loot(lootbuff : float, room : float):
-	cur_room = room
+
+func _loot(lootbuff : float):
+	
 	heal(hp_regen)
 	
 	# start anim
@@ -379,10 +376,8 @@ var damage_per_attack : float = 1.0
 
 signal set_maxhp (max_hp : float)
 func _ready():
-	#INIT UI
 	_set_hpbar_max(max_life_points)
 	_set_hpbar_level(max_life_points)
-	
 	$CanvasLayer/Vitality/CenterContainer/RegenProgressBar.value = hp_regen
 	$CanvasLayer/Damage/CenterContainer/DamageProgressBar.value = damage_per_attack
 	$CanvasLayer/Update/CenterContainer/UpdateProgressBar.value = upgrade_level

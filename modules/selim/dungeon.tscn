@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://q5qbh2u6e3xa"]
+
+[ext_resource type="Script" path="res://modules/selim/dungeon.gd" id="1_t252s"]
+[ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_e6tvr"]
+[ext_resource type="PackedScene" uid="uid://75etcwgcek82" path="res://modules/selim/mob_chamallow/mob_chamallow.tscn" id="2_n7hgw"]
+[ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_wdgi3"]
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource("1_t252s")
+MOB_SCENES = Array[PackedScene]([ExtResource("2_n7hgw")])
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+texture = ExtResource("2_e6tvr")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background"]
+scale = Vector2(0.444278, 0.463389)
+texture = ExtResource("2_e6tvr")
+
+[node name="RoomContent" type="Node2D" parent="."]
+position = Vector2(0, 100)
+
+[node name="Character" parent="." instance=ExtResource("3_wdgi3")]
+
+[connection signal="just_died" from="Character" to="." method="_on_character_just_died"]

@@ -53,7 +53,7 @@ func _advance():
 
 @export var KDIFF : float = 0.4
 @export var KEXPDIFF : float = 0.1
-@export var KSTARTDIFF : float = 0.3
+@export var KSTARTDIFF : float = 0.1
 @export var KBOSSDIFF : float = 1.5
 @export var BOSS_LOOT_BUFF : float = 1
 

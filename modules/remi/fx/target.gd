@@ -13,7 +13,7 @@ const INITIAL_DISTANCE : float = 200.0
 var w : float
 var h : float
 
-var target_sound : Resource;
+var play_sound : bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -55,9 +55,6 @@ func _play_animation():
 	queue_free()
 
 func _play_sound():
-	# Launch sound
-	if target_sound == null:
-		target_sound = preload("res://modules/remi/assets/audio/i_0.wav") # Find a better sound for this ? (not reserved for now)
-	var sound_fx = preload("res://modules/odilon/fx/sound.tscn").instantiate()
-	sound_fx.res = target_sound
-	add_child(sound_fx)
+	# If we want to launch another custom sound, specify to not play sound
+	if play_sound:
+		$DefaultAudioStreamPlayer2D.play()
