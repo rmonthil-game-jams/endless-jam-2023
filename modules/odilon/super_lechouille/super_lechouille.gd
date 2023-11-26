@@ -99,25 +99,41 @@ func _play_appearing_animation():
 	# Always first start with a random idle duration
 	_play_waiting_animation.call_deferred()
 
+func _sum_2d_array(array):
+	var sum : float = 0.0
+	for element in array:
+		sum += element[0]
+	return sum
+
 
 func _choose_animation():
-	## TODO: Refactor state machine to ensure only one state function executed at once
 	var prev_state = state
 	
-	state = "thinking"
-	# Randomly chose something to do (prefer jumps)
-	var prob_sum = WAIT_PROBABILITY + JUMP_PROBABILITY + ATTACK_PROBABILITY
-	var rd = randi_range(0, prob_sum)
-	if rd >= 0 && rd < WAIT_PROBABILITY:
-		_play_waiting_animation.call_deferred()
-	# REMI: TODO: maybe avoid being attacked just after appearing
-	# REMI: swapped || and && to "or" and "and" :-P, more info here: https://docs.godotengine.org/fr/4.x/tutorials/scripting/gdscript/gdscript_styleguide.html#boolean-operators
-	# REMI: logical operators are "lazy" by default
-	elif prev_state == "comeback" or (rd >= WAIT_PROBABILITY and rd < (WAIT_PROBABILITY + JUMP_PROBABILITY)):
-		# Dont attack right after attack. Prefer jump
-		_play_jumping_animation.call_deferred()
+	# print(prev_state)
+	var possible_next_states
+	if (prev_state == "comeback"): # Avoid attacks after appearing or attack
+		possible_next_states = [[JUMP_PROBABILITY, _play_jumping_animation]]
+	elif (prev_state == "appearing"):
+		# Avoid attacks after appearing or attack
+		possible_next_states = [[WAIT_PROBABILITY, _play_waiting_animation], [JUMP_PROBABILITY, _play_jumping_animation]]
 	else:
-		_play_attacking_animation.call_deferred()
+		possible_next_states = [[WAIT_PROBABILITY, _play_waiting_animation], [JUMP_PROBABILITY, _play_jumping_animation], [ATTACK_PROBABILITY, _play_attacking_animation]]
+	
+	state = "thinking"
+	# Randomly chose something to do (prefers jumps)
+	var prob_sum = _sum_2d_array(possible_next_states)
+	var rd = randi_range(0, prob_sum-1)
+	
+	var curr_prob : float = 0
+	for next_state in possible_next_states:
+		curr_prob += next_state[0]
+		if (rd < curr_prob):
+			# print(rd, " ", curr_prob, " ", next_state[0], " ", next_state[1])
+			next_state[1].call_deferred()
+			return
+	
+	# If error in the loop, call something
+	possible_next_states[0][1].call_deferred()
 
 
 func _play_waiting_animation():
@@ -152,11 +168,14 @@ func _play_jumping_animation():
 	current_jump_strength = Vector2(randf_range(-1, 1), randf_range(0.5, 1))
 
 	# Adjust jump target st. it stays in bounds of the screen
-	var target_x = $AnimatedBody.position.x + ($AnimatedBody/UnitJumpPath.curve.get_point_position(2).x - $AnimatedBody/UnitJumpPath.curve.get_point_position(0).x) * current_jump_strength.x
+	# Note: Use global_position to make sure we refer to the screen
+	var target_x = $AnimatedBody.global_position.x + ($AnimatedBody/UnitJumpPath.curve.get_point_position(2).x - $AnimatedBody/UnitJumpPath.curve.get_point_position(0).x) * current_jump_strength.x
 	
 	var screen_size = get_viewport_size().x
-	var pmin = -screen_size / 2 + _get_hud_min_offset().x + 100
-	var pmax = screen_size / 2 - _get_hud_max_offset().x - 200
+	var pmin = -screen_size / 2 + _get_hud_min_offset().x + 200
+	var pmax = screen_size / 2 - _get_hud_max_offset().x - 400
+	
+	# print(target_x, " ", pmin, " ", pmax)
 	
 	if target_x <= pmin || target_x >= pmax: 
 		current_jump_strength.x = -current_jump_strength.x
@@ -164,6 +183,7 @@ func _play_jumping_animation():
 	pos_before_jump = $AnimatedBody.position
 	current_jump_duration = randf_range(MAX_JUMP_DURATION/2, MAX_JUMP_DURATION)
 	# Script will continue in "_process"
+
 
 var pos_before_attack
 func _play_attacking_animation():
@@ -364,9 +384,8 @@ func _on_tongue_pressed():
 	tongue_clicks += 1
 	if (_tongue_remaining_life() <= 0) && tongue_alive:
 		tongue_alive = false
-		_on_tongue_blocked()
+		await _on_tongue_blocked()
 		if (state == "licking"):
-			await create_tween().tween_interval(1).finished # Come back after 1s
 			_play_comeback_from_attack_animation.call_deferred() # We killed a tween, we have to relaunch an animation from here
 	else:
 		var tongue_hit_tween : Tween = create_tween()
