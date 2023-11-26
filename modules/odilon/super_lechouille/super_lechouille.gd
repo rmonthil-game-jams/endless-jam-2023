@@ -14,8 +14,8 @@ var DIFFICULTY : float = 0.0: set = set_difficulty
 
 # MOB SUB PARAMETERS
 ## Animation probabilities (integer easier to manipulate : in %)
-var WAIT_PROBABILITY : int = 20
-var ATTACK_PROBABILITY : float = 30
+var WAIT_PROBABILITY : int #= 20
+var ATTACK_PROBABILITY : float #= 30
 var JUMP_PROBABILITY : float = 50
 
 ## ATTACKING
@@ -169,16 +169,22 @@ func _play_jumping_animation():
 
 	# Adjust jump target st. it stays in bounds of the screen
 	# Note: Use global_position to make sure we refer to the screen
-	var target_x = $AnimatedBody.global_position.x + ($AnimatedBody/UnitJumpPath.curve.get_point_position(2).x - $AnimatedBody/UnitJumpPath.curve.get_point_position(0).x) * current_jump_strength.x
-	
 	var screen_size = get_viewport_size().x
 	var pmin = -screen_size / 2 + _get_hud_min_offset().x + 200
-	var pmax = screen_size / 2 - _get_hud_max_offset().x - 400
+	var pmax = screen_size / 2 - _get_hud_max_offset().x - 300
 	
-	# print(target_x, " ", pmin, " ", pmax)
 	
-	if target_x <= pmin || target_x >= pmax: 
-		current_jump_strength.x = -current_jump_strength.x
+	# Body was outside of screen already, go back inside
+	if $AnimatedBody.global_position.x <= pmin:
+		current_jump_strength.x = abs(current_jump_strength.x)
+	elif $AnimatedBody.global_position.x >= pmax:
+		current_jump_strength.x = -abs(current_jump_strength.x)
+	else:
+		# If body want's to go outside, try the opposite direction
+		var target_x = $AnimatedBody.global_position.x + ($AnimatedBody/UnitJumpPath.curve.get_point_position(2).x - $AnimatedBody/UnitJumpPath.curve.get_point_position(0).x) * current_jump_strength.x
+		# print(target_x, " ", pmin, " ", pmax, " ", $AnimatedBody.global_position.x)
+		if (target_x <= pmin) or (target_x >= pmax):
+			current_jump_strength.x = -current_jump_strength.x
 
 	pos_before_jump = $AnimatedBody.position
 	current_jump_duration = randf_range(MAX_JUMP_DURATION/2, MAX_JUMP_DURATION)
@@ -351,7 +357,6 @@ func _on_tongue_blocked():
 	blocked_fx.position = Vector2.ZERO # REMI: changed that
 	$Tongue.add_child(blocked_fx)
 	
-	#print("killed") REMI: REMOVED PRINT
 	slurp_tween.kill()
 	
 	$Tongue.modulate = Color(0.5, 0.5, 0.5)

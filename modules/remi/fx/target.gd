@@ -13,6 +13,8 @@ const INITIAL_DISTANCE : float = 200.0
 var w : float
 var h : float
 
+var target_sound : Resource;
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_play_animation.call_deferred()
@@ -24,6 +26,10 @@ func _play_animation():
 	$UpRight.position = Vector2(0.5*w, -0.5*h) + Vector2(0.5*w, -0.5*h).normalized() * INITIAL_DISTANCE
 	$DownLeft.position = Vector2(-0.5*w, 0.5*h) + Vector2(-0.5*w, 0.5*h).normalized() * INITIAL_DISTANCE
 	$DownRight.position = Vector2(0.5*w, 0.5*h) + Vector2(0.5*w, 0.5*h).normalized() * INITIAL_DISTANCE
+	
+	# Play sound at that moment for now
+	_play_sound()
+	
 	# animation
 	var tween_up_left : Tween = create_tween()
 	tween_up_left.tween_property($UpLeft, "position", Vector2(-0.5*w, -0.5*h), 0.5).set_trans(Tween.TRANS_CUBIC)
@@ -47,3 +53,11 @@ func _play_animation():
 	# free
 	await tween_up_left.finished
 	queue_free()
+
+func _play_sound():
+	# Launch sound
+	if target_sound == null:
+		target_sound = preload("res://modules/remi/assets/audio/i_0.wav") # Find a better sound for this ? (not reserved for now)
+	var sound_fx = preload("res://modules/odilon/fx/sound.tscn").instantiate()
+	sound_fx.res = target_sound
+	add_child(sound_fx)

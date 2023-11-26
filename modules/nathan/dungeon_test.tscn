@@ -1,18 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://dy1qgwfun61yr"]
+[gd_scene load_steps=5 format=3 uid="uid://dy1qgwfun61yr"]
 
-[ext_resource type="Script" path="res://modules/nathan/dungeon_test.gd" id="1_rgx0v"]
-[ext_resource type="PackedScene" uid="uid://bvo61s1yid5cv" path="res://modules/nathan/sliminou_gang/sliminou_gang.tscn" id="2_438aw"]
-[ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_051rh"]
+[ext_resource type="Script" path="res://modules/nathan/dungeon_test.gd" id="1_s8aiw"]
+[ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_g134o"]
+[ext_resource type="PackedScene" uid="uid://bvo61s1yid5cv" path="res://modules/nathan/sliminou_gang/sliminou_gang.tscn" id="2_ph0fi"]
+[ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_7rv2b"]
 
 [node name="Dungeon" type="Node2D"]
-script = ExtResource("1_rgx0v")
+script = ExtResource("1_s8aiw")
+MOB_SCENES = Array[PackedScene]([ExtResource("2_ph0fi")])
+BOSS_SCENES = Array[PackedScene]([ExtResource("2_ph0fi")])
 
 [node name="Background" type="Node2D" parent="."]
 
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+texture = ExtResource("2_g134o")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background"]
+scale = Vector2(0.444278, 0.463389)
+texture = ExtResource("2_g134o")
+
 [node name="RoomContent" type="Node2D" parent="."]
+position = Vector2(0, 100)
 
-[node name="SliminouGang" parent="RoomContent" instance=ExtResource("2_438aw")]
+[node name="Character" parent="." instance=ExtResource("3_7rv2b")]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="Character" parent="." instance=ExtResource("3_051rh")]
+[connection signal="just_died" from="Character" to="." method="_on_character_just_died"]

@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://so6jo25adcnv"]
+[gd_scene load_steps=4 format=3 uid="uid://so6jo25adcnv"]
 
 [ext_resource type="Script" path="res://modules/nathan/sliminou_gang/Sliminou.gd" id="1_bnk5t"]
 [ext_resource type="Texture2D" uid="uid://chgojwke0pt1i" path="res://modules/aurelie/assets/graphics/sliminou_corps_normal.svg" id="2_u6mt1"]
 [ext_resource type="Texture2D" uid="uid://bt5o13u734vf4" path="res://modules/aurelie/assets/graphics/sliminou_corps_duplication.svg" id="3_dca41"]
-[ext_resource type="Texture2D" uid="uid://dgcb2p11kfbww" path="res://modules/aurelie/assets/graphics/sliminou_corps_sautphase2_normal.svg" id="3_jqgmh"]
 
 [node name="Sliminou" type="Node2D"]
 y_sort_enabled = true
@@ -116,6 +115,5 @@ autowrap_mode = 2
 visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Duplicate"]
-z_index = -1
-position = Vector2(-2, -54)
-texture = ExtResource("3_jqgmh")
+position = Vector2(0, -118)
+texture = ExtResource("2_u6mt1")
