@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bap04bpap4jjg"]
+[gd_scene load_steps=9 format=3 uid="uid://bap04bpap4jjg"]
 
 [ext_resource type="Texture2D" uid="uid://b3dthej4512r3" path="res://modules/aurelie/assets/graphics/superlechouille_tete_boucheouverte_normal.svg" id="1_1nl2v"]
 [ext_resource type="Texture2D" uid="uid://cpsguh2omdsoq" path="res://modules/aurelie/assets/graphics/superlechouille_tete_normal.svg" id="1_odfpx"]
 [ext_resource type="Texture2D" uid="uid://bse8f57tk5dna" path="res://modules/aurelie/assets/graphics/superlechouille_tete_hover.svg" id="2_gtu5m"]
+[ext_resource type="Texture2D" uid="uid://f3kjnpm0ewe5" path="res://modules/aurelie/assets/graphics/superlechouille_tete_pressed.svg" id="2_u47m4"]
 [ext_resource type="Texture2D" uid="uid://bgrydsuaokfxc" path="res://modules/aurelie/assets/graphics/superlechouille_tete_boucheouverte_hover.svg" id="3_slewu"]
 [ext_resource type="Texture2D" uid="uid://gwc5anrua5oi" path="res://modules/aurelie/assets/graphics/superlechouille_corpsdroite_hover.svg" id="4_pit7e"]
 
@@ -42,7 +43,7 @@ offset_bottom = 197.0
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("1_1nl2v")
-texture_pressed = ExtResource("1_odfpx")
+texture_pressed = ExtResource("2_u47m4")
 texture_hover = ExtResource("3_slewu")
 
 [node name="TextureButtonAttacking" type="TextureButton" parent="."]
