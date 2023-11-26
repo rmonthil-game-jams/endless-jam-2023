@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bttiwps2jwhi7"]
+[gd_scene load_steps=18 format=3 uid="uid://bttiwps2jwhi7"]
 
 [ext_resource type="Script" path="res://modules/odilon/super_lechouille/super_lechouille.gd" id="1_nuls4"]
 [ext_resource type="Texture2D" uid="uid://5pp0yyevgs8x" path="res://modules/aurelie/assets/graphics/superlechouille_queue.svg" id="2_lg6ta"]
@@ -8,8 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://q4iabqk3avkq" path="res://modules/aurelie/assets/graphics/superlechouille_corpsdroite_normal.svg" id="6_i51o3"]
 [ext_resource type="Texture2D" uid="uid://bqkh81rmunyw6" path="res://modules/aurelie/assets/graphics/superlechouille_corpssansteteniqueue.svg" id="7_fjab2"]
 [ext_resource type="Texture2D" uid="uid://bqcv527k1bc6i" path="res://modules/aurelie/assets/graphics/superlechouille_corps_saut_normal.svg" id="8_0cd4j"]
+[ext_resource type="AudioStream" uid="uid://cojr1tirxp3qi" path="res://modules/remi/assets/audio/used/waf_0.wav" id="9_bbx3v"]
 [ext_resource type="Texture2D" uid="uid://b2xjbqn7o3n2d" path="res://modules/remi/assets/graphics/superlechouille_langue_overlay_normal.svg" id="9_obh41"]
 [ext_resource type="Texture2D" uid="uid://vdhm07b8pmmj" path="res://modules/remi/assets/graphics/superlechouille_tete_overlay_overlay.svg" id="9_xkb21"]
+[ext_resource type="AudioStream" uid="uid://qad8syeyvl8f" path="res://modules/remi/assets/audio/used/waf_1.wav" id="10_1keid"]
 [ext_resource type="Texture2D" uid="uid://datm272vd47hw" path="res://modules/remi/assets/graphics/superlechouille_langue_overlay_pressed.svg" id="10_6bo2m"]
 [ext_resource type="Texture2D" uid="uid://bgc34qw4o38vb" path="res://modules/remi/assets/graphics/superlechouille_langue_overlay_hover.svg" id="11_ec3y7"]
 
@@ -101,6 +103,13 @@ loop = false
 z_index = 2
 position = Vector2(21, -210)
 scale = Vector2(0.639997, 0.639997)
+
+[node name="Waf" type="AudioStreamPlayer2D" parent="AnimatedBody"]
+stream = ExtResource("9_bbx3v")
+pitch_scale = 0.93
+
+[node name="AggressiveWaf" type="AudioStreamPlayer2D" parent="AnimatedBody"]
+stream = ExtResource("10_1keid")
 
 [node name="Tongue" type="Node2D" parent="."]
 visible = false

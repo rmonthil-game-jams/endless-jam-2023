@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cihmbsmc6v2fw"
-path="res://.godot/imported/cling_2.wav-28a2f14d74adcb013fc8ef8f5dc61784.sample"
+path="res://.godot/imported/cling_2.wav-0b77fdaa1021db1d065ce2479176a265.sample"
 
 [deps]
 
-source_file="res://modules/remi/assets/audio/cling_2.wav"
-dest_files=["res://.godot/imported/cling_2.wav-28a2f14d74adcb013fc8ef8f5dc61784.sample"]
+source_file="res://modules/remi/assets/audio/used/cling_2.wav"
+dest_files=["res://.godot/imported/cling_2.wav-0b77fdaa1021db1d065ce2479176a265.sample"]
 
 [params]
 

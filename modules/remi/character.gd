@@ -223,8 +223,7 @@ func _apply_up(upgrade : Dictionary):
 				
 			"damage_per_attack" :
 				damage_per_attack += upgrade["damage_per_attack"]
-				$CanvasLayer/StatsPanel/StatsContainer/DamageProgressBar.value = damage_per_attack
-				
+				$CanvasLayer/Damage/CenterContainer/DamageProgressBar.value = damage_per_attack
 			"life_points" :
 				heal(upgrade["life_points"])
 				
@@ -234,18 +233,17 @@ func _apply_up(upgrade : Dictionary):
 				
 			"upgrade_level":
 				upgrade_level += upgrade["upgrade_level"]
-			
+				$CanvasLayer/Update/CenterContainer/UpdateProgressBar.value = upgrade_level
 			"hp_regen" : 
 				hp_regen += upgrade["hp_regen"]
-				
+				$CanvasLayer/Vitality/CenterContainer/RegenProgressBar.value = hp_regen
 			"add_pointer":
 				_add_pointer()
 	
 	$CanvasLayer/UpgradeMenu.hide()
 	for upgrade_button in $CanvasLayer/UpgradeMenu/HBoxContainer.get_children():
 		upgrade_button.queue_free()
-	
-	$Pointers.show()
+	$CanvasLayer/Room/Number.text = str(cur_room + 1)
 	finished_upgrade.emit()
 	
 @export var POINTER_NODE : PackedScene
@@ -258,15 +256,21 @@ func _add_pointer():
 
 var upgrade_level : float = 0
 var upgrade_options : int = 3
-
 var cur_room : int = 1
 func _loot(lootbuff : float, room : float):
-	cur_room = room
+	
 	heal(hp_regen)
 	
-	_generate_upgrades(lootbuff)
+	# start anim
+	var tween : Tween = create_tween()
+	# init
+	$CanvasLayer/UpgradeMenu.modulate.a = 0.0
 	$CanvasLayer/UpgradeMenu.show()
-	$Pointers.hide()
+	# tween
+	tween.tween_property($CanvasLayer/UpgradeMenu, "modulate:a", 1.0, 0.25).set_trans(Tween.TRANS_CUBIC)
+	await tween.finished
+	cur_room = room
+	_generate_upgrades(lootbuff)
 	
 
 
@@ -314,6 +318,13 @@ func _generate_upgrades(lootbuff : float):
 				mat = load("res://modules/corentin/Shaders/epic_mat.tres")
 		upgrade_button.material = mat
 		$CanvasLayer/UpgradeMenu/HBoxContainer.add_child(upgrade_button)
+		# quick anim
+		var tween : Tween = create_tween()
+		# init
+		upgrade_button.modulate.a = 0.0
+		# tween
+		tween.tween_property(upgrade_button, "modulate:a", 1.0, 0.125).set_trans(Tween.TRANS_CUBIC)
+		await tween.finished
 
 
 @export var TIER_SELECTIVITY : float = 0.4
@@ -340,8 +351,6 @@ func _chose_upgrade_tier(lootbuff : float):
 			return tier+1
 	return -1
 
-
-
 func hit(damage_points : float):
 	life_points -= damage_points
 	_set_hpbar_level(life_points)
@@ -349,12 +358,11 @@ func hit(damage_points : float):
 	_hit_label_animation.call_deferred(damage_points)
 	$Camera2D.shake.call_deferred(0.2, 15, 8)
 	_hit_color_rect_animation.call_deferred() # also checks for character death
-	
 
 func heal(heal_points : float):
 	life_points = min(life_points + heal_points, max_life_points)
 	_set_hpbar_level(life_points)
-	$Audio/Heal.play.call_deferred()
+	$Audio/Heal.play.call_deferred()	
 	_heal_label_animation.call_deferred(heal_points)
 	_heal_color_rect_animation.call_deferred()
 
@@ -370,7 +378,9 @@ signal set_maxhp (max_hp : float)
 func _ready():
 	_set_hpbar_max(max_life_points)
 	_set_hpbar_level(max_life_points)
-
+	$CanvasLayer/Vitality/CenterContainer/RegenProgressBar.value = hp_regen
+	$CanvasLayer/Damage/CenterContainer/DamageProgressBar.value = damage_per_attack
+	$CanvasLayer/Update/CenterContainer/UpdateProgressBar.value = upgrade_level
 	# TODO: WHEN CURSOR SHAPES ARE DONE
 	# Input.set_custom_mouse_cursor(preload("res://path/to/cursor.(svg|png|etc...)"))
 	# Input.set_custom_mouse_cursor(preload("res://path/to/cursor.(svg|png|etc...)"))
@@ -384,17 +394,18 @@ func _hit_label_animation(damage_points : float):
 	# init
 	label_hit.position.y = label_hit_initial_position_y
 	label_hit.modulate.a = 1.0
-	label_hit.text = "- " + str(damage_points)
+	label_hit.text = "- " + str(round(damage_points*100.0)/100.0)
 	label_hit.show()
 	# anim
 	if tween_label_hit != null:
 		tween_label_hit.kill()
 	tween_label_hit = create_tween()
-	tween_label_hit.tween_property(label_hit, "position:y", label_hit_initial_position_y - 20.0, 1.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	tween_label_hit.parallel().tween_property(label_hit, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween_label_hit.tween_property(label_hit, "position:y", label_hit_initial_position_y - 20.0, 2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween_label_hit.parallel().tween_property(label_hit, "modulate:a", 0.0, 2.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	tween_label_hit.tween_callback(label_hit.hide)
 
-@onready var color_rect_hit : ShaderMaterial = $CanvasLayer/HP_hud/HudAstronaut.material
+@onready var color_rect_hit : ShaderMaterial = $CanvasLayer/HP_hud/AstronautAnchor/HudAstronaut.material
+@onready var astronaut : Node2D = $CanvasLayer/HP_hud/AstronautAnchor
 var tween_color_rect_hit : Tween
 
 func _hit_color_rect_animation():
@@ -402,22 +413,27 @@ func _hit_color_rect_animation():
 	if tween_color_rect_hit != null:
 		tween_color_rect_hit.kill()
 	tween_color_rect_hit = create_tween()
-	tween_color_rect_hit.tween_method(set_HudAstronaut_Color, Color(1, 1, 1, 1), Color(1, 0, 0, 1), .125).set_trans(Tween.TRANS_CUBIC)
-	tween_color_rect_hit.tween_method(set_HudAstronaut_Color, Color(1, 0, 0, 1), Color(1, 1, 1, 1), .5).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_hit.tween_method(set_hud_astronaut_color, Color(1, 1, 1, 1), Color(1.0, 0.6, 0.6, 1.0), 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_hit.parallel().tween_method(set_hud_astronaut_size, Vector2.ONE, Vector2.ONE * 2.0, 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_hit.tween_method(set_hud_astronaut_color, Color(1.0, 0.6, 0.6, 1.0), Color(1, 1, 1, 1), 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_hit.parallel().tween_method(set_hud_astronaut_size, Vector2.ONE * 2.0, Vector2.ONE, 0.25).set_trans(Tween.TRANS_CUBIC)
 #	tween_color_rect_hit.set_loops(4)
 	tween_color_rect_hit.tween_callback(_attempt_dying)
 
-func set_HudAstronaut_Color(value: Color):
+func set_hud_astronaut_color(value: Color):
 	# in my case i'm tweening a shader on a texture rect, but you can use anything with a material on it
-	color_rect_hit.set_shader_parameter("ColorParameter", value);
-	
+	color_rect_hit.set_shader_parameter("ColorParameter", value)
+
+func set_hud_astronaut_size(value: Vector2):
+	astronaut.scale = value
+
 func _attempt_dying():
 	if life_points <= 0:
 		# anim
 		if tween_color_rect_hit != null:
 			tween_color_rect_hit.kill()
 		tween_color_rect_hit = create_tween()
-		tween_color_rect_hit.tween_method(set_HudAstronaut_Color, Color(1, 1, 1, 1), Color(1, 0, 0, 1), .5).set_trans(Tween.TRANS_CUBIC)
+		tween_color_rect_hit.tween_method(set_hud_astronaut_color, Color(1, 1, 1, 1), Color(1, 0, 0, 1), .5).set_trans(Tween.TRANS_CUBIC)
 		await tween_color_rect_hit.finished
 		# signal
 		just_died.emit()
@@ -436,11 +452,11 @@ func _heal_label_animation(heal_points : float):
 	if tween_label_hit != null:
 		tween_label_hit.kill()
 	tween_label_hit = create_tween()
-	tween_label_hit.tween_property(label_heal, "position:y", label_heal_initial_position_y - 20.0, 1.0).set_trans(Tween.TRANS_CUBIC)
-	tween_label_hit.parallel().tween_property(label_heal, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
+	tween_label_hit.tween_property(label_heal, "position:y", label_heal_initial_position_y - 20.0, 2.0).set_trans(Tween.TRANS_CUBIC)
+	tween_label_hit.parallel().tween_property(label_heal, "modulate:a", 0.0, 2.0).set_trans(Tween.TRANS_CUBIC)
 	tween_label_hit.tween_callback(label_heal.hide)
 
-@onready var color_rect_heal : ShaderMaterial = $CanvasLayer/HP_hud/HudAstronaut.material
+@onready var color_rect_heal : ShaderMaterial = $CanvasLayer/HP_hud/AstronautAnchor/HudAstronaut.material
 var tween_color_rect_heal : Tween
 
 func _heal_color_rect_animation():
@@ -448,9 +464,10 @@ func _heal_color_rect_animation():
 	if tween_color_rect_heal != null:
 		tween_color_rect_heal.kill()
 	tween_color_rect_heal = create_tween()
-	tween_color_rect_heal.tween_method(set_HudAstronaut_Color, Color(1, 1, 1, 1), Color(0, 1, 0, 1), .125).set_trans(Tween.TRANS_CUBIC)
-	tween_color_rect_heal.tween_method(set_HudAstronaut_Color, Color(0, 1, 0, 1), Color(1, 1, 1, 1), .5).set_trans(Tween.TRANS_CUBIC)
-#	tween_color_rect_heal.set_loops(4)
+	tween_color_rect_heal.tween_method(set_hud_astronaut_color, Color(1, 1, 1, 1), Color(0.6, 1.0, 0.6, 1), 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_heal.parallel().tween_method(set_hud_astronaut_size, Vector2.ONE, Vector2.ONE * 2.0, 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_heal.tween_method(set_hud_astronaut_color, Color(0.6, 1.0, 0.6, 1), Color(1, 1, 1, 1), 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_heal.parallel().tween_method(set_hud_astronaut_size, Vector2.ONE * 2.0, Vector2.ONE, 0.25).set_trans(Tween.TRANS_CUBIC)
 	tween_color_rect_heal.tween_callback(_attempt_dying)
 
 const PX_PER_HP : int = 25

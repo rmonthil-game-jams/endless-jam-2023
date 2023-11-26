@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dgi7cvav3ali1"
-path="res://.godot/imported/splash_0.wav-7aa73f51dba2b2a907f27901f6c9acd4.sample"
+path="res://.godot/imported/splash_0.wav-909b88fbf7dc23493ea872c8a2b45935.sample"
 
 [deps]
 
-source_file="res://modules/remi/assets/audio/splash_0.wav"
-dest_files=["res://.godot/imported/splash_0.wav-7aa73f51dba2b2a907f27901f6c9acd4.sample"]
+source_file="res://modules/remi/assets/audio/used/splash_0.wav"
+dest_files=["res://.godot/imported/splash_0.wav-909b88fbf7dc23493ea872c8a2b45935.sample"]
 
 [params]
 

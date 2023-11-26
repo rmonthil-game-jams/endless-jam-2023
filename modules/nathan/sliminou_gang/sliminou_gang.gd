@@ -87,7 +87,7 @@ func _ready():
 	gang_size = 1
 	speaches = speaches_template.duplicate()
 	speaches.shuffle()
-	print("difficulty ", DIFFICULTY)
+	
 	
 func _get_a_speach():
 	if speaches.size()== 0 :
