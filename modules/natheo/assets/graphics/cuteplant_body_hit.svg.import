@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://e1alslabfvy5"
-path="res://.godot/imported/furuboule_attaque_normal.svg-e9e0d60304fda455fdd9f0c39b5ee606.ctex"
+uid="uid://c2e4lvp4wsvva"
+path="res://.godot/imported/cuteplant_body_hit.svg-21a307bff537354e87e82137771041bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/natheo/assets/graphics/furuboule_attaque_normal.svg"
-dest_files=["res://.godot/imported/furuboule_attaque_normal.svg-e9e0d60304fda455fdd9f0c39b5ee606.ctex"]
+source_file="res://modules/natheo/assets/graphics/cuteplant_body_hit.svg"
+dest_files=["res://.godot/imported/cuteplant_body_hit.svg-21a307bff537354e87e82137771041bb.ctex"]
 
 [params]
 

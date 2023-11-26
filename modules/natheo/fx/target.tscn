@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdakkephtdfjn"]
+
+[ext_resource type="Script" path="res://modules/remi/fx/target.gd" id="1_xsqr6"]
+[ext_resource type="Texture2D" uid="uid://bos46wr5521oh" path="res://modules/remi/assets/graphics/fx_corner.svg" id="2_vaciw"]
+
+[node name="Target" type="Node2D"]
+position = Vector2(322, 295)
+script = ExtResource("1_xsqr6")
+
+[node name="UpLeft" type="Sprite2D" parent="."]
+texture = ExtResource("2_vaciw")
+
+[node name="UpRight" type="Sprite2D" parent="."]
+texture = ExtResource("2_vaciw")
+flip_h = true
+
+[node name="DownLeft" type="Sprite2D" parent="."]
+texture = ExtResource("2_vaciw")
+flip_v = true
+
+[node name="DownRight" type="Sprite2D" parent="."]
+texture = ExtResource("2_vaciw")
+flip_h = true
+flip_v = true

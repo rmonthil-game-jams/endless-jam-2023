@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2qk3ocgmdu7k"
-path="res://.godot/imported/furuboule_corps_normal.svg-8a35e04880e41631f34025e6bb82cd62.ctex"
+uid="uid://67ke55wfrptn"
+path="res://.godot/imported/cuteplant_leaf_body_hover.svg-681b63035cd1ecb2df2ce78a6b4e5864.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/natheo/assets/graphics/furuboule_corps_normal.svg"
-dest_files=["res://.godot/imported/furuboule_corps_normal.svg-8a35e04880e41631f34025e6bb82cd62.ctex"]
+source_file="res://modules/natheo/assets/graphics/cuteplant_leaf_body_hover.svg"
+dest_files=["res://.godot/imported/cuteplant_leaf_body_hover.svg-681b63035cd1ecb2df2ce78a6b4e5864.ctex"]
 
 [params]
 

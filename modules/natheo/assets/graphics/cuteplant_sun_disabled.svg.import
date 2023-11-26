@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dn7h11xygl8hm"
-path="res://.godot/imported/furuboule_corps_blocked_par_le_joueur.svg-4501f7811705b287919781b0fce487d7.ctex"
+uid="uid://ck8jnl7nqo5b1"
+path="res://.godot/imported/cuteplant_sun_disabled.svg-64edae798dbebd295a9046c8782eed85.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/natheo/assets/graphics/furuboule_corps_blocked_par_le_joueur.svg"
-dest_files=["res://.godot/imported/furuboule_corps_blocked_par_le_joueur.svg-4501f7811705b287919781b0fce487d7.ctex"]
+source_file="res://modules/natheo/assets/graphics/cuteplant_sun_disabled.svg"
+dest_files=["res://.godot/imported/cuteplant_sun_disabled.svg-64edae798dbebd295a9046c8782eed85.ctex"]
 
 [params]
 
