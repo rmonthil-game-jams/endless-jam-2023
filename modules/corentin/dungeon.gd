@@ -44,7 +44,7 @@ func _advance():
 	else:
 		new_mob = BOSS_SCENES[randi_range(0, BOSS_SCENES.size() - 1)].instantiate()
 		new_mob.DIFFICULTY = _new_mob_difficulty() * KBOSSDIFF
-		print("room: ", room)
+		print("BOSS room: ", room)
 		print("difficulty: ", new_mob.DIFFICULTY)
 
 	$RoomContent.add_child(new_mob)

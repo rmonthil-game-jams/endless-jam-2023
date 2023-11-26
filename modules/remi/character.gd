@@ -145,9 +145,9 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_steroid_2_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_steroid_2_pressed.svg",
 				"tooltip" : "Increases damage at the cost of maximum health by a significant amount",
-				"weight" : 1,
+				"weight" : 0.5,
 				"type" : "BSK",
-				"tier" : 1,
+				"tier" : 2,
 				"max_life_points" : -8,
 				"damage_per_attack" : 1.2,
 			},
@@ -157,7 +157,7 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_steroid_3_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_steroid_3_pressed.svg",
 				"tooltip" : "Increases damage at the cost of maximum health by a large amount",
-				"weight" : 1,
+				"weight" : 0.5,
 				"type" : "BSK",
 				"tier" : 3,
 				"max_life_points" : -15,
@@ -327,7 +327,7 @@ func _generate_upgrades(lootbuff : float):
 		await tween.finished
 
 
-@export var TIER_SELECTIVITY : float = 0.4
+@export var TIER_SELECTIVITY : float = 0.6
 @export var MAXTIER : int = 3
 
 func _chose_upgrade_tier(lootbuff : float):

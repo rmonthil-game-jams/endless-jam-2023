@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://bebm1sx3rjxnt"]
 
 [ext_resource type="Script" path="res://modules/corentin/dungeon.gd" id="1_7npxm"]
+[ext_resource type="PackedScene" uid="uid://75etcwgcek82" path="res://modules/selim/mob_chamallow/mob_chamallow.tscn" id="2_b7trr"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_e6tvr"]
-[ext_resource type="PackedScene" uid="uid://d3clduo33km57" path="res://modules/remi/mob_handy_man/mob_handy_man.tscn" id="2_wo6eh"]
 [ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_wdgi3"]
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_7npxm")
-MOB_SCENES = Array[PackedScene]([ExtResource("2_wo6eh")])
-BOSS_SCENES = Array[PackedScene]([ExtResource("2_wo6eh")])
+MOB_SCENES = Array[PackedScene]([ExtResource("2_b7trr")])
+BOSS_SCENES = Array[PackedScene]([ExtResource("2_b7trr")])
 BOSS_ROOM_PERIOD = 5
 
 [node name="Background" type="Node2D" parent="."]

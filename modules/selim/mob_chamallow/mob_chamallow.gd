@@ -15,8 +15,8 @@ var DAMAGE_PER_ATTACK_P1 : float
 var DAMAGE_PER_ATTACK_P2 : float
 var TIME_BETWEEN_ATTACKS_P1 : float
 var TIME_BETWEEN_ATTACKS_P2 : float
-var X_MARGIN : int = 50
-var Y_MARGIN : int = 50
+var X_MARGIN : int = 150
+var Y_MARGIN : int = 150
 var ATTACK_WINDOW_RANGE : Vector2
 var ATTACK_SCALE : Vector2 = Vector2(1.0, 1.0) # REMI: TRY TO AVOID RESCALING IMAGES PERMANENTLY
 var DAMAGE_MULTIPLIER : int = 0
@@ -25,12 +25,12 @@ var DEAD : bool = false
 
 func _set_difficulty(value : float): # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE THAT BEFORE
 	DIFFICULTY = value
-	HAND_ATTACK_DURATION_FACTOR = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
-	DAMAGE_PER_ATTACK_P1 = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
+	HAND_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + 0.8*log(1.0 + DIFFICULTY))
+	DAMAGE_PER_ATTACK_P1 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 	DAMAGE_PER_ATTACK_P2 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-	TIME_BETWEEN_ATTACKS_P1 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-	TIME_BETWEEN_ATTACKS_P2 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-	life_points = 40 + (10 * log(1.0 + DIFFICULTY))
+	TIME_BETWEEN_ATTACKS_P1 = 2.5 / (1.0 + 1.3 * log(1.0 + DIFFICULTY))
+	TIME_BETWEEN_ATTACKS_P2 = 4.5 / (1.0 + log(1.0 + DIFFICULTY))
+	life_points = 18 + ( 4 * (1.0 + DIFFICULTY))
 	full_mob_hp = life_points
 
 # MOB STATE
