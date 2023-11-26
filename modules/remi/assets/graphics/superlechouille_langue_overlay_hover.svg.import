@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gwc5anrua5oi"
-path="res://.godot/imported/superlechouille_corpsdroite_hover.svg-ad5238be441d52dbb5555f83ce6c2fb7.ctex"
+uid="uid://bgc34qw4o38vb"
+path="res://.godot/imported/superlechouille_langue_overlay_hover.svg-d10c14841c6184c4f52bbdccb763f245.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/aurelie/assets/graphics/superlechouille_corpsdroite_hover.svg"
-dest_files=["res://.godot/imported/superlechouille_corpsdroite_hover.svg-ad5238be441d52dbb5555f83ce6c2fb7.ctex"]
+source_file="res://modules/remi/assets/graphics/superlechouille_langue_overlay_hover.svg"
+dest_files=["res://.godot/imported/superlechouille_langue_overlay_hover.svg-d10c14841c6184c4f52bbdccb763f245.ctex"]
 
 [params]
 

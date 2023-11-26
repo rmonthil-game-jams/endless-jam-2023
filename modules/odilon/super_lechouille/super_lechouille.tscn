@@ -1,14 +1,17 @@
-[gd_scene load_steps=13 format=3 uid="uid://bttiwps2jwhi7"]
+[gd_scene load_steps=16 format=3 uid="uid://bttiwps2jwhi7"]
 
 [ext_resource type="Script" path="res://modules/odilon/super_lechouille/super_lechouille.gd" id="1_nuls4"]
-[ext_resource type="Texture2D" uid="uid://bkix7la26gdt" path="res://modules/aurelie/assets/graphics/superlechouille_queue.svg" id="2_lg6ta"]
+[ext_resource type="Texture2D" uid="uid://5pp0yyevgs8x" path="res://modules/aurelie/assets/graphics/superlechouille_queue.svg" id="2_lg6ta"]
 [ext_resource type="PackedScene" uid="uid://bap04bpap4jjg" path="res://modules/odilon/super_lechouille/lechouille_head.tscn" id="3_2queh"]
-[ext_resource type="Texture2D" uid="uid://tfk12bkjic5c" path="res://modules/aurelie/assets/graphics/superlechouille_corpsgauche_normal.svg" id="5_0lgl2"]
-[ext_resource type="Texture2D" uid="uid://c57gujpiuakvu" path="res://modules/odilon/super_lechouille/mob_assets/graphics/lick.png" id="5_7skqk"]
+[ext_resource type="Texture2D" uid="uid://dqh1ajbjs4sri" path="res://modules/aurelie/assets/graphics/superlechouille_corpsgauche_normal.svg" id="5_0lgl2"]
 [ext_resource type="PackedScene" uid="uid://c8kc54alm42iy" path="res://modules/remi/fx/mob_hp_bar.tscn" id="5_w0fak"]
-[ext_resource type="Texture2D" uid="uid://b35oi0i0247fy" path="res://modules/aurelie/assets/graphics/superlechouille_corpsdroite_normal.svg" id="6_i51o3"]
-[ext_resource type="Texture2D" uid="uid://0mh1b4nv2yhk" path="res://modules/aurelie/assets/graphics/superlechouille_corpssansteteniqueue.svg" id="7_fjab2"]
-[ext_resource type="Texture2D" uid="uid://dwgpcac7n6hv6" path="res://modules/aurelie/assets/graphics/superlechouille_corps_saut_normal.svg" id="8_0cd4j"]
+[ext_resource type="Texture2D" uid="uid://q4iabqk3avkq" path="res://modules/aurelie/assets/graphics/superlechouille_corpsdroite_normal.svg" id="6_i51o3"]
+[ext_resource type="Texture2D" uid="uid://bqkh81rmunyw6" path="res://modules/aurelie/assets/graphics/superlechouille_corpssansteteniqueue.svg" id="7_fjab2"]
+[ext_resource type="Texture2D" uid="uid://bqcv527k1bc6i" path="res://modules/aurelie/assets/graphics/superlechouille_corps_saut_normal.svg" id="8_0cd4j"]
+[ext_resource type="Texture2D" uid="uid://b2xjbqn7o3n2d" path="res://modules/remi/assets/graphics/superlechouille_langue_overlay_normal.svg" id="9_obh41"]
+[ext_resource type="Texture2D" uid="uid://vdhm07b8pmmj" path="res://modules/remi/assets/graphics/superlechouille_tete_overlay_overlay.svg" id="9_xkb21"]
+[ext_resource type="Texture2D" uid="uid://datm272vd47hw" path="res://modules/remi/assets/graphics/superlechouille_langue_overlay_pressed.svg" id="10_6bo2m"]
+[ext_resource type="Texture2D" uid="uid://bgc34qw4o38vb" path="res://modules/remi/assets/graphics/superlechouille_langue_overlay_hover.svg" id="11_ec3y7"]
 
 [sub_resource type="Animation" id="Animation_qmooj"]
 resource_name = "Move"
@@ -99,12 +102,29 @@ z_index = 2
 position = Vector2(21, -210)
 scale = Vector2(0.639997, 0.639997)
 
-[node name="Tongue" type="TextureButton" parent="."]
+[node name="Tongue" type="Node2D" parent="."]
 visible = false
-visibility_layer = 2
-offset_right = 167.0
-offset_bottom = 200.0
-scale = Vector2(2, 2)
-texture_normal = ExtResource("5_7skqk")
 
-[connection signal="pressed" from="Tongue" to="." method="_on_tongue_pressed"]
+[node name="Head" type="Sprite2D" parent="Tongue"]
+modulate = Color(0.5, 0.5, 0.5, 1)
+position = Vector2(0, -280)
+texture = ExtResource("9_xkb21")
+
+[node name="TongueButton" type="TextureButton" parent="Tongue"]
+visibility_layer = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -242.5
+offset_top = -312.5
+offset_right = 242.5
+offset_bottom = 312.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("9_obh41")
+texture_pressed = ExtResource("10_6bo2m")
+texture_hover = ExtResource("11_ec3y7")
+
+[connection signal="pressed" from="Tongue/TongueButton" to="." method="_on_tongue_pressed"]

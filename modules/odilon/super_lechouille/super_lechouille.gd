@@ -1,5 +1,10 @@
 extends Node2D
 
+# REMI: SCENE TWEAK: ADDED NODE2D FOR TONGUE (LETS YOU ANCHOR THE BUTTON WHERE YOU WANT)
+# REMI: SCENE TWEAK: ADDED SPRITES FOR THE TONGUE BUTTON + HEAD SPRITE + HEAD SPRITES IN HEAD SCENE
+# REMI: TODO MAYBE: REDUCE PROBABILITY OF ATTACK THE MORE YOU ATTACK (AND INVERSELY)?
+# REMI: TODO MAYBE: ANIMATE SPECIFICALLY Tongue/Head SPRITE WHEN LICKED DAMAGED?
+
 signal just_died
 
 # TODO: SPAWN KISS WHEN KISSED
@@ -105,7 +110,10 @@ func _choose_animation():
 	var rd = randi_range(0, prob_sum)
 	if rd >= 0 && rd < WAIT_PROBABILITY:
 		_play_waiting_animation.call_deferred()
-	elif prev_state == "comeback" || (rd >= WAIT_PROBABILITY && rd < (WAIT_PROBABILITY + JUMP_PROBABILITY)):
+	# REMI: TODO: maybe avoid being attacked just after appearing
+	# REMI: swapped || and && to "or" and "and" :-P, more info here: https://docs.godotengine.org/fr/4.x/tutorials/scripting/gdscript/gdscript_styleguide.html#boolean-operators
+	# REMI: logical operators are "lazy" by default
+	elif prev_state == "comeback" or (rd >= WAIT_PROBABILITY and rd < (WAIT_PROBABILITY + JUMP_PROBABILITY)):
 		# Dont attack right after attack. Prefer jump
 		_play_jumping_animation.call_deferred()
 	else:
@@ -125,10 +133,10 @@ func _play_waiting_animation():
 	_choose_animation()
 
 func _get_hud_min_offset():
-	return Vector2(160, 60)
+	return Vector2(300, 200) # 160, 60 # REMI: INCREASED MARGING TO ADAPT THE FACT THAT I REMOVED THE SIZE EVERYWHERE
 	
 func _get_hud_max_offset():
-	return Vector2(160, 60)
+	return Vector2(300, 200) # 160, 60 # REMI: INCREASED MARGING TO ADAPT THE FACT THAT I REMOVED THE SIZE EVERYWHERE
 
 # Scale factor induced by camera
 func get_viewport_size():
@@ -179,18 +187,18 @@ func _play_attacking_animation():
 	_play_licking_animation.call_deferred()
 
 
-func _get_random_screen_pos(element : Control):
+func _get_random_screen_pos(): # REMI: REMOVED ELEMENT HERE (element : Control)
 	var screen_size = get_viewport_size()
 	
 	var pmin : Vector2 = -screen_size / 2 + _get_hud_min_offset()
-	var pmax : Vector2 = screen_size / 2 - _get_hud_max_offset() - element.size * 2
+	var pmax : Vector2 = screen_size / 2 - _get_hud_max_offset() # REMI: - element.size * 2
 	
 	return Vector2(randf_range(pmin.x, pmax.x), randf_range(pmin.y, pmax.y))
 	
-func _get_random_lick_top_screen_pos():
+func _get_random_lick_bottom_screen_pos():
 	var screen_size = get_viewport_size()
-	var random_pos = _get_random_screen_pos($Tongue)
-	random_pos.y = -screen_size.y / 2 + _get_hud_min_offset().y
+	var random_pos = _get_random_screen_pos() # REMI: REMOVED ARGUMENT
+	random_pos.y = screen_size.y / 2 - _get_hud_min_offset().y # SWAPPED TOP TO BOTTOM
 	return random_pos
 
 
@@ -201,9 +209,9 @@ func _tongue_remaining_life() -> float:
 
 func _play_tongue_appear_fx():
 	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
-	target_fx.w = 200
-	target_fx.h = 250
-	target_fx.position = $Tongue.size / 2 # carefull these are local coordinates
+	target_fx.w = 485
+	target_fx.h = 625
+	target_fx.position = Vector2.ZERO # REMI: MODIFIED THAT
 	$Tongue.add_child(target_fx)
 
 var slurp_tween : Tween
@@ -212,19 +220,19 @@ func _play_licking_animation():
 	state = "licking"
 	var screen_size = get_viewport_size()
 	
-	var random_top_screen_pos = _get_random_lick_top_screen_pos()
+	var random_bottom_screen_pos = _get_random_lick_bottom_screen_pos() # REMI: CHANGED TOP TO BOTTOM
 
 	# Play pre-slurp animation
 
 	# Play slurp attack
 	$Tongue.modulate = Color(1, 1, 1, 0) # Also resets color if needed
-	$Tongue.global_position = random_top_screen_pos
+	$Tongue.global_position = random_bottom_screen_pos
 	$Tongue.show()
 	tongue_alive = true
 	slurp_tween = create_tween();
 	slurp_tween.tween_property($Tongue, "modulate:a", 1,  SLURP_LATENCY).set_trans(Tween.TRANS_CUBIC)
 	slurp_tween.parallel().tween_callback(_play_tongue_appear_fx)
-	slurp_tween.chain().tween_property($Tongue, "global_position:y", screen_size.y/2-_get_hud_max_offset().y-$Tongue.size.y, SLURP_TIME).set_trans(Tween.TRANS_CUBIC)
+	slurp_tween.chain().tween_property($Tongue, "global_position:y", -screen_size.y/2 + _get_hud_max_offset().y, SLURP_TIME).set_trans(Tween.TRANS_CUBIC) # REMI: REMOVED -$Tongue.size.y
 	slurp_tween.tween_property($Tongue, "modulate:a", 0,  SLURP_LATENCY).set_trans(Tween.TRANS_CUBIC)
 	await slurp_tween.finished
 	tongue_alive = false
@@ -252,13 +260,18 @@ func _play_comeback_from_attack_animation():
 	$AnimatedBody/Body/Sprite2DNormal.show()
 	$AnimatedBody/Head/TextureButtonOpen.show()
 
-	_play_appearing_animation()
-	
-	_choose_animation()
+	# REMI: PROBLEM HERE (so i commented), YOU WHERE POTENTIALLY PLAYING TWO ANIMATION AT THE SAME TIME
+	# REMI: WHICH THEN MESSES UP WITH YOUR WHOLE STATE MACHINE
+
+#	_play_appearing_animation() # REMI: -> this plays waiting after which plays _choose_animation after
+#
+#	_choose_animation() # REMI: -> this plays jump or lick
+
+	_choose_animation.call_deferred() # REMI: I USE CALL DEFERRED TO AVOID STACKING FUNCTION CALLS
 
 
 func _attempt_damaging_character():
-	if state == "attacking":
+	if state == "licking": # REMI: replaced "attacking" by "licking"
 		var tongue_remain_life : float = _tongue_remaining_life()
 		if tongue_remain_life > 0:
 			var slurp_dammage : int = (tongue_remain_life / SLURP_LIFE) * MAX_SLURP_DAMAGE_PER_ATTACK
@@ -296,7 +309,6 @@ func _set_hp_bar(_hp):
 	hp_bar_tween = get_tree().create_tween()
 	hp_bar_tween.tween_property(mob_hp_progress_bar, "value", life_points, 0.25)
 
-
 func _attempt_to_play_death_animation():
 	if state != "dying":
 		state = "dying"
@@ -315,16 +327,36 @@ func _head_attacking_pressed():
 
 func _on_tongue_blocked():
 	var blocked_fx = preload("res://modules/remi/fx/blocked.tscn").instantiate()
-	blocked_fx.position = $Tongue.size/2 # carefull these are local coordinates
+	blocked_fx.TARGET_SCALE = Vector2(4.0, 4.0) # REMI: GOING BIG!!!
+	blocked_fx.position = Vector2.ZERO # REMI: changed that
 	$Tongue.add_child(blocked_fx)
 	
-	print("killed")
+	#print("killed") REMI: REMOVED PRINT
 	slurp_tween.kill()
 	
 	$Tongue.modulate = Color(0.5, 0.5, 0.5)
-	await create_tween().tween_interval(.3).finished
+	$Tongue/TongueButton.disabled = true # REMI: AVOID CLICKING ON IT, SPECIFIC SPRITE MAYBE IN THE FUTURE ?
+	# REMI: added an animation here
+	# animation
+	var tween : Tween
+	tween = create_tween()
+	tween.tween_property($Tongue, "scale", Vector2(0.8, 0.8), 0.125).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Tongue, "scale", Vector2(1.0, 1.0), 0.125).set_trans(Tween.TRANS_CUBIC)
+	tween.set_loops(2)
+	await tween.finished
+	tween = create_tween()
+	tween.tween_property($Tongue, "rotation", 0.125, 0.125).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Tongue, "rotation", -0.125, 0.125).set_trans(Tween.TRANS_CUBIC)
+	tween.set_loops(2)
+	await tween.finished
+	tween = create_tween()
+	tween.tween_property($Tongue, "rotation", 0.0, 0.125).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Tongue, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	await tween.finished
+	# core
 	tongue_clicks = 0
 	$Tongue.hide()
+	$Tongue/TongueButton.disabled = false # REMI: JUST BEING SURE BUTTON WILL BE READY LATER ON
 	
 
 

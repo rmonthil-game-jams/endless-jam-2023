@@ -43,7 +43,7 @@ func _advance():
 		new_mob = BOSS_SCENES[randi_range(0, BOSS_SCENES.size() - 1)].instantiate()
 		new_mob.DIFFICULTY = _new_mob_difficulty() * KBOSSDIFF
 	
-	print(new_mob.DIFFICULTY)
+	#print(new_mob.DIFFICULTY) REMI: REMOVED PRINT
 
 	$RoomContent.add_child(new_mob)
 	new_mob.just_died.connect(_on_current_mob_just_died)

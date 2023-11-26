@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bap04bpap4jjg"]
+[gd_scene load_steps=8 format=3 uid="uid://bap04bpap4jjg"]
 
-[ext_resource type="Texture2D" uid="uid://ctjsfeuvfkcx4" path="res://modules/aurelie/assets/graphics/superlechouille_tete_normal.svg" id="1_odfpx"]
-[ext_resource type="Texture2D" uid="uid://bbfn87fwq3s5q" path="res://modules/aurelie/assets/graphics/superlechouille_tete_hover.svg" id="2_gtu5m"]
-[ext_resource type="Texture2D" uid="uid://ciejs73w7imqk" path="res://modules/odilon/super_lechouille/mob_assets/graphics/head__attacking.png" id="4_m04s2"]
-[ext_resource type="Texture2D" uid="uid://io7ppbmcrvsa" path="res://modules/aurelie/assets/graphics/superlechouille_corpsdroite_hover.svg" id="4_pit7e"]
+[ext_resource type="Texture2D" uid="uid://b3dthej4512r3" path="res://modules/aurelie/assets/graphics/superlechouille_tete_boucheouverte_normal.svg" id="1_1nl2v"]
+[ext_resource type="Texture2D" uid="uid://cpsguh2omdsoq" path="res://modules/aurelie/assets/graphics/superlechouille_tete_normal.svg" id="1_odfpx"]
+[ext_resource type="Texture2D" uid="uid://bse8f57tk5dna" path="res://modules/aurelie/assets/graphics/superlechouille_tete_hover.svg" id="2_gtu5m"]
+[ext_resource type="Texture2D" uid="uid://bgrydsuaokfxc" path="res://modules/aurelie/assets/graphics/superlechouille_tete_boucheouverte_hover.svg" id="3_slewu"]
+[ext_resource type="Texture2D" uid="uid://gwc5anrua5oi" path="res://modules/aurelie/assets/graphics/superlechouille_corpsdroite_hover.svg" id="4_pit7e"]
 
 [sub_resource type="Animation" id="Animation_hahgq"]
 resource_name = "move"
@@ -29,21 +30,37 @@ _data = {
 [node name="LechouilleHead" type="Node2D"]
 
 [node name="TextureButtonOpen" type="TextureButton" parent="."]
-offset_left = -209.0
-offset_top = -183.0
-offset_right = 213.0
-offset_bottom = 176.0
-texture_normal = ExtResource("1_odfpx")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -211.0
+offset_top = -197.0
+offset_right = 211.0
+offset_bottom = 197.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_1nl2v")
 texture_pressed = ExtResource("1_odfpx")
-texture_hover = ExtResource("2_gtu5m")
+texture_hover = ExtResource("3_slewu")
 
 [node name="TextureButtonAttacking" type="TextureButton" parent="."]
 visible = false
-offset_left = -89.0
-offset_top = -118.0
-offset_right = 118.0
-offset_bottom = 36.0
-texture_normal = ExtResource("4_m04s2")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -211.0
+offset_top = -179.5
+offset_right = 211.0
+offset_bottom = 179.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_odfpx")
+texture_pressed = ExtResource("1_odfpx")
+texture_hover = ExtResource("2_gtu5m")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
