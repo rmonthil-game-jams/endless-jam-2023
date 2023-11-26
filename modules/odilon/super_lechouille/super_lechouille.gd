@@ -80,9 +80,9 @@ func set_difficulty(d : float):
 func _play_appear_fx():
 	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
 	target_fx.w = 400
-	target_fx.h = 500
-	target_fx.position = Vector2.ZERO # carefull these are local coordinates
-	$AnimatedBody.add_child(target_fx)
+	target_fx.h = 350
+	target_fx.position = Vector2.UP * 50 # carefull these are local coordinates
+	$AnimatedBody/Head.add_child(target_fx)
 	
 	
 
