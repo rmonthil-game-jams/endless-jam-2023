@@ -256,8 +256,8 @@ func _add_pointer():
 
 var upgrade_level : float = 0
 var upgrade_options : int = 3
-
-func _loot(lootbuff : float):
+var cur_room : int = 1
+func _loot(lootbuff : float, room : float):
 	
 	heal(hp_regen)
 	
@@ -269,7 +269,7 @@ func _loot(lootbuff : float):
 	# tween
 	tween.tween_property($CanvasLayer/UpgradeMenu, "modulate:a", 1.0, 0.25).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
-	
+	cur_room = room
 	_generate_upgrades(lootbuff)
 	
 
@@ -362,7 +362,7 @@ func hit(damage_points : float):
 func heal(heal_points : float):
 	life_points = min(life_points + heal_points, max_life_points)
 	_set_hpbar_level(life_points)
-	$Audio/Heal.play.call_deferred()
+	$Audio/Heal.play.call_deferred()	
 	_heal_label_animation.call_deferred(heal_points)
 	_heal_color_rect_animation.call_deferred()
 
