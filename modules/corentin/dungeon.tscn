@@ -2,14 +2,22 @@
 
 [ext_resource type="Script" path="res://modules/corentin/dungeon.gd" id="1_7npxm"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_e6tvr"]
+<<<<<<< Updated upstream
 [ext_resource type="PackedScene" uid="uid://bvo61s1yid5cv" path="res://modules/nathan/sliminou_gang/sliminou_gang.tscn" id="2_hxwob"]
 [ext_resource type="PackedScene" uid="uid://chk831ldmfjkm" path="res://modules/odilon/super_lechouille/fight.tscn" id="2_s0bpy"]
+=======
+[ext_resource type="PackedScene" uid="uid://75etcwgcek82" path="res://modules/selim/mob_chamallow/mob_chamallow.tscn" id="2_of7wb"]
+>>>>>>> Stashed changes
 [ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_wdgi3"]
 [ext_resource type="PackedScene" uid="uid://d3clduo33km57" path="res://modules/remi/mob_handy_man/mob_handy_man.tscn" id="4_aw6mp"]
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_7npxm")
+<<<<<<< Updated upstream
 MOB_SCENES = Array[PackedScene]([ExtResource("2_s0bpy"), ExtResource("2_hxwob")])
+=======
+MOB_SCENES = Array[PackedScene]([ExtResource("2_of7wb")])
+>>>>>>> Stashed changes
 BOSS_SCENES = Array[PackedScene]([ExtResource("4_aw6mp")])
 BOSS_ROOM_PERIOD = 5
 
