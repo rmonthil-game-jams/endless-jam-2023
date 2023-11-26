@@ -47,6 +47,7 @@ func _set_difficulty(value : float):
 	SPEACH_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 	LIFE = 4.0 + log(0.5 + DIFFICULTY)
 
+
 	
 
 # MOB STATE
@@ -70,6 +71,7 @@ func _ready():
 	_set_difficulty(DIFFICULTY)
 	duplicate_countdown = DUPLICATE_LOOP_NUMBER
 	life_points = LIFE
+
 	
 	
 #	# other
@@ -177,6 +179,7 @@ func _play_attacking_animation():
 	tween.tween_property($Speach/SpeachBubble, "scale", Vector2(0.25, 0.25), 0.125 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	
 	tween.tween_callback(_attacking.bind($Speach))
+
 	tween.tween_property($Speach/SpeachBubble, "scale", Vector2(2.5, 2.5), 0.5 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_callback(_attempt_damaging_character.bind())
 	tween.tween_property($Speach/SpeachBubble, "scale", Vector2(0.0, 0.0), 0.125 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
@@ -205,8 +208,8 @@ func _clean_attack(bubble : Node2D):
 	$Body/Mouth/MouthButton.disabled = true
 	$Body/Mouth/AnimationPlayer.stop()
 	bubble.rotation = 0.0
-	
-	print(round((get_parent().get_parent().gang_size-0.5)/2.0))
+
+
 	_play_waiting_animation.call_deferred(IDLE_LOOP_NUMBER + round((get_parent().get_parent().gang_size-0.5)/2.0), true)
 
 func _attempt_to_attack(speach : Node2D):
@@ -235,6 +238,7 @@ func _attempt_to_cancel(speach : Node2D):
 		tween.kill()
 		
 		tween = create_tween()
+	
 		tween.tween_callback($Body/Mouth/AnimationPlayer.stop)
 		tween.parallel().tween_callback($Body/Hurt_Sprite.show)
 		tween.parallel().tween_callback($Body/Sprite2DNormal.hide)
