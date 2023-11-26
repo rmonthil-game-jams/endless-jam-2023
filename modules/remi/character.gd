@@ -302,15 +302,16 @@ func _generate_upgrades(lootbuff : float):
 		upgrade_button.ignore_texture_size = true
 		upgrade_button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT
 		upgrade_button.custom_minimum_size = Vector2(200,200)
+		var mat : ShaderMaterial
+		match selected_up["tier"]:
+			1: 
+				mat = load("res://modules/corentin/Shaders/normal_mat.tres")
+			2: 
+				mat = load("res://modules/corentin/Shaders/rare_mat.tres")
+			3:
+				mat = load("res://modules/corentin/Shaders/epic_mat.tres")
+		upgrade_button.material = mat
 		$CanvasLayer/UpgradeMenu/HBoxContainer.add_child(upgrade_button)
-#		var upgrade_label = Label.new()
-#		upgrade_label.text = selected_up["name"]
-#		upgrade_label.name = "Label"
-
-#		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]).add_child(upgrade_label)
-#		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").anchors_preset = Control.PRESET_FULL_RECT
-#		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-#		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 
 
 @export var TIER_SELECTIVITY : float = 0.4
@@ -342,13 +343,16 @@ func _chose_upgrade_tier(lootbuff : float):
 func hit(damage_points : float):
 	life_points -= damage_points
 	_set_hpbar_level(life_points)
+	$Audio/Hit.play.call_deferred()
 	_hit_label_animation.call_deferred(damage_points)
+	$Camera2D.shake.call_deferred(0.2, 15, 8)
 	_hit_color_rect_animation.call_deferred() # also checks for character death
 	
 
 func heal(heal_points : float):
 	life_points = min(life_points + heal_points, max_life_points)
 	_set_hpbar_level(life_points)
+	$Audio/Heal.play.call_deferred()
 	_heal_label_animation.call_deferred(heal_points)
 	_heal_color_rect_animation.call_deferred()
 
@@ -388,33 +392,30 @@ func _hit_label_animation(damage_points : float):
 	tween_label_hit.parallel().tween_property(label_hit, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	tween_label_hit.tween_callback(label_hit.hide)
 
-@onready var color_rect_hit : ColorRect = $CanvasLayer/ColorRectHit
+@onready var color_rect_hit : ShaderMaterial = $CanvasLayer/HP_hud/HudAstronaut.material
 var tween_color_rect_hit : Tween
 
 func _hit_color_rect_animation():
-	# init
-	color_rect_hit.color.a = 0.0
-	color_rect_hit.show()
 	# anim
 	if tween_color_rect_hit != null:
 		tween_color_rect_hit.kill()
 	tween_color_rect_hit = create_tween()
-	tween_color_rect_hit.tween_property(color_rect_hit, "color:a", 0.5, .125).set_trans(Tween.TRANS_CUBIC)
-	tween_color_rect_hit.tween_property(color_rect_hit, "color:a", 0.0, .125).set_trans(Tween.TRANS_CUBIC)
-	tween_color_rect_hit.set_loops(4)
-	tween_color_rect_hit.tween_callback(color_rect_hit.hide)
+	tween_color_rect_hit.tween_method(set_HudAstronaut_Color, Color(1, 1, 1, 1), Color(1, 0, 0, 1), .125).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_hit.tween_method(set_HudAstronaut_Color, Color(1, 0, 0, 1), Color(1, 1, 1, 1), .5).set_trans(Tween.TRANS_CUBIC)
+#	tween_color_rect_hit.set_loops(4)
 	tween_color_rect_hit.tween_callback(_attempt_dying)
 
+func set_HudAstronaut_Color(value: Color):
+	# in my case i'm tweening a shader on a texture rect, but you can use anything with a material on it
+	color_rect_hit.set_shader_parameter("ColorParameter", value);
+	
 func _attempt_dying():
 	if life_points <= 0:
-		# init
-		color_rect_hit.color.a = 0.0
-		color_rect_hit.show()
 		# anim
 		if tween_color_rect_hit != null:
 			tween_color_rect_hit.kill()
 		tween_color_rect_hit = create_tween()
-		tween_color_rect_hit.tween_property(color_rect_hit, "color:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+		tween_color_rect_hit.tween_method(set_HudAstronaut_Color, Color(1, 1, 1, 1), Color(1, 0, 0, 1), .5).set_trans(Tween.TRANS_CUBIC)
 		await tween_color_rect_hit.finished
 		# signal
 		just_died.emit()
@@ -437,21 +438,17 @@ func _heal_label_animation(heal_points : float):
 	tween_label_hit.parallel().tween_property(label_heal, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 	tween_label_hit.tween_callback(label_heal.hide)
 
-@onready var color_rect_heal : ColorRect = $CanvasLayer/ColorRectHeal
+@onready var color_rect_heal : ShaderMaterial = $CanvasLayer/HP_hud/HudAstronaut.material
 var tween_color_rect_heal : Tween
 
 func _heal_color_rect_animation():
-	# init
-	color_rect_heal.color.a = 0.0
-	color_rect_heal.show()
 	# anim
 	if tween_color_rect_heal != null:
 		tween_color_rect_heal.kill()
 	tween_color_rect_heal = create_tween()
-	tween_color_rect_heal.tween_property(color_rect_heal, "color:a", 0.5, .125).set_trans(Tween.TRANS_CUBIC)
-	tween_color_rect_heal.tween_property(color_rect_heal, "color:a", 0.0, .125).set_trans(Tween.TRANS_CUBIC)
-	tween_color_rect_heal.set_loops(4)
-	tween_color_rect_heal.tween_callback(color_rect_heal.hide)
+	tween_color_rect_heal.tween_method(set_HudAstronaut_Color, Color(1, 1, 1, 1), Color(0, 1, 0, 1), .125).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_heal.tween_method(set_HudAstronaut_Color, Color(0, 1, 0, 1), Color(1, 1, 1, 1), .5).set_trans(Tween.TRANS_CUBIC)
+#	tween_color_rect_heal.set_loops(4)
 	tween_color_rect_heal.tween_callback(_attempt_dying)
 
 const PX_PER_HP : int = 25
@@ -475,5 +472,5 @@ func _set_hpbar_level(hp):
 		hp_tween.kill()
 	hp_tween = get_tree().create_tween()
 	hp_tween.tween_property(character_hp_bar, "value", hp, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	# TODO: SLIGHT CAMERA SHAKE
-	
+
+

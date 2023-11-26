@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0qyq5pvjdmrg"]
+
+[ext_resource type="Script" path="res://modules/remi/fx/blocked.gd" id="1_8n1xc"]
+[ext_resource type="Texture2D" uid="uid://o3pcjfddy172" path="res://modules/remi/assets/graphics/fx_shield.svg" id="2_fqdce"]
+
+[node name="Blocked" type="Node2D"]
+script = ExtResource("1_8n1xc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_fqdce")

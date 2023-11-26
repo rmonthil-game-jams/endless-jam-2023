@@ -3,13 +3,19 @@ extends Node2D
 signal just_died
 
 # MOB PARAMETERS
-var DIFFICULTY : float = 0.0
+var DIFFICULTY : float = 0.0: set = _set_difficulty # REMI: _set_difficulty
 
-var gang_size : int = 0
+# REMI: _set_difficulty
+func _set_difficulty(value : float):
+	DIFFICULTY = value
+	$SliminouHolder/Sliminou.DIFFICULTY = DIFFICULTY
+
+var gang_size : int
 var duplication_number : int = 0
 
 var speaches : Array[String]
 
+# REMI: WE HAVE AN INTERNATIONAL PUBLIC, TODO: TRANSLATE EVERYTHING IN ENGLISH
 const speaches_template : Array[String] = [
 		"Tu es unique et exceptionnel",
 		"Ton sourire illumine chaque jour",
@@ -77,8 +83,11 @@ const speaches_template : Array[String] = [
 
 ## called when the node enters the scene tree for the first time.
 func _ready():
+	_set_difficulty(DIFFICULTY) # REMI: _set_difficulty
+	gang_size = 1
 	speaches = speaches_template.duplicate()
 	speaches.shuffle()
+	print("difficulty ", DIFFICULTY)
 	
 func _get_a_speach():
 	if speaches.size()== 0 :
@@ -87,14 +96,15 @@ func _get_a_speach():
 	return speaches.pop_back()
 
 func _register_spawning(n : int):
+	
+	gang_size += n
+	
 	if n > 0 :
 		duplication_number += n
-		gang_size += n
-	else :
-		gang_size -= n
-		
-		if gang_size <= 0 :
+	elif gang_size <= 0 :
+			print("DIED")
 			just_died.emit()
+	print(gang_size)
 	
 
 #	var new_sliminou : Node2D = preload("res://modules/nathan/sliminou_gang/sliminou.tscn").instantiate()

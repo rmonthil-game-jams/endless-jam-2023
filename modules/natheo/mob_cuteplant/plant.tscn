@@ -1,0 +1,83 @@
+[gd_scene load_steps=9 format=3 uid="uid://dqb78uwbtpsyt"]
+
+[ext_resource type="Texture2D" uid="uid://xjtwb8w40r42" path="res://modules/natheo/assets/graphics/cuteplant_leaf_body_normal.svg" id="1_y6tv4"]
+[ext_resource type="Texture2D" uid="uid://dcotv7pfeiisj" path="res://modules/natheo/assets/graphics/cuteplant_leaf_body_pressed.svg" id="2_s4sb3"]
+[ext_resource type="Texture2D" uid="uid://67ke55wfrptn" path="res://modules/natheo/assets/graphics/cuteplant_leaf_body_hover.svg" id="3_iea1j"]
+[ext_resource type="Texture2D" uid="uid://88brsjkevb4l" path="res://modules/natheo/assets/graphics/cuteplant_leaf_body_disabled.svg" id="4_j58qt"]
+[ext_resource type="Texture2D" uid="uid://brt2pvibaju45" path="res://modules/natheo/assets/graphics/cuteplant_sun_normal.svg" id="5_lggvt"]
+[ext_resource type="Texture2D" uid="uid://bha53iu87cjwq" path="res://modules/natheo/assets/graphics/cuteplant_sun_pressed.svg" id="6_2c0xb"]
+[ext_resource type="Texture2D" uid="uid://ccouqnpqa1wa3" path="res://modules/natheo/assets/graphics/cuteplant_sun_hover.svg" id="7_820gd"]
+[ext_resource type="Texture2D" uid="uid://ck8jnl7nqo5b1" path="res://modules/natheo/assets/graphics/cuteplant_sun_disabled.svg" id="8_wm34k"]
+
+[node name="Plant" type="Node2D"]
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Body"]
+visible = false
+
+[node name="TextureButtonGrowth" type="TextureButton" parent="Body"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.5
+offset_top = -151.5
+offset_right = 88.5
+offset_bottom = 151.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("1_y6tv4")
+texture_pressed = ExtResource("2_s4sb3")
+texture_hover = ExtResource("3_iea1j")
+
+[node name="TextureButtonWait" type="TextureButton" parent="Body"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.5
+offset_top = -151.5
+offset_right = 88.5
+offset_bottom = 151.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("4_j58qt")
+
+[node name="Sun" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Sun"]
+visible = false
+offset = Vector2(0, -100)
+
+[node name="TextureButtonAbsorb" type="TextureButton" parent="Sun"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.5
+offset_top = -126.0
+offset_right = 129.5
+offset_bottom = 126.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_lggvt")
+texture_pressed = ExtResource("6_2c0xb")
+texture_hover = ExtResource("7_820gd")
+
+[node name="TextureButtonWait" type="TextureButton" parent="Sun"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("8_wm34k")

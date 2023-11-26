@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://so6jo25adcnv"]
+[gd_scene load_steps=9 format=3 uid="uid://so6jo25adcnv"]
 
 [ext_resource type="Script" path="res://modules/nathan/sliminou_gang/Sliminou.gd" id="1_bnk5t"]
 [ext_resource type="Texture2D" uid="uid://chgojwke0pt1i" path="res://modules/aurelie/assets/graphics/sliminou_corps_normal.svg" id="2_u6mt1"]
+[ext_resource type="Texture2D" uid="uid://dvqitrxmsldan" path="res://modules/aurelie/assets/graphics/chamallow_attaque_attaqueparlejoueur_normal.svg" id="3_6q8pi"]
 [ext_resource type="Texture2D" uid="uid://bt5o13u734vf4" path="res://modules/aurelie/assets/graphics/sliminou_corps_duplication.svg" id="3_dca41"]
-[ext_resource type="Texture2D" uid="uid://dgcb2p11kfbww" path="res://modules/aurelie/assets/graphics/sliminou_corps_sautphase2_normal.svg" id="3_jqgmh"]
+[ext_resource type="Texture2D" uid="uid://46xc0lj33g20" path="res://modules/aurelie/assets/graphics/chamallow_attaque_entraindattaquer_hover.svg" id="4_l7cvl"]
+[ext_resource type="Texture2D" uid="uid://ds2gui22yccw8" path="res://modules/aurelie/assets/graphics/chamallow_attaque_attaqueparlejoueur_hover.svg" id="5_vldo8"]
+[ext_resource type="Texture2D" uid="uid://cpiuwnfsdtibn" path="res://modules/aurelie/assets/graphics/superlechouille_langue.svg" id="6_0js5c"]
+[ext_resource type="Texture2D" uid="uid://dykde2hfkqfpv" path="res://modules/aurelie/assets/graphics/sliminou_attaque_2.svg" id="8_b6jwv"]
 
 [node name="Sliminou" type="Node2D"]
 y_sort_enabled = true
@@ -15,23 +19,33 @@ script = ExtResource("1_bnk5t")
 position = Vector2(0, -118)
 texture = ExtResource("2_u6mt1")
 
-[node name="WeakSpotButton" type="TextureButton" parent="Body"]
-offset_right = 40.0
-offset_bottom = 40.0
-metadata/_edit_use_anchors_ = true
-
 [node name="Mouth" type="Node2D" parent="Body"]
 
-[node name="TextureButton" type="TextureButton" parent="Body/Mouth"]
-offset_left = -44.0
-offset_top = -48.0
-offset_right = 46.0
-offset_bottom = 3.0
+[node name="MouthButton" type="TextureButton" parent="Body/Mouth"]
+offset_left = -57.0
+offset_top = -180.0
+offset_right = 62.0
+offset_bottom = -27.0
+texture_normal = ExtResource("6_0js5c")
 
 [node name="Sprite2DDuplication" type="Sprite2D" parent="Body"]
 visible = false
 position = Vector2(16, -135)
 texture = ExtResource("3_dca41")
+
+[node name="WeakSpot" type="Node2D" parent="Body"]
+visible = false
+
+[node name="WeakSpotButton" type="TextureButton" parent="Body/WeakSpot"]
+offset_left = -16.0
+offset_top = -112.0
+offset_right = 405.0
+offset_bottom = 236.0
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("3_6q8pi")
+texture_pressed = ExtResource("4_l7cvl")
+texture_hover = ExtResource("5_vldo8")
+metadata/_edit_use_anchors_ = true
 
 [node name="Hands" type="Node2D" parent="."]
 
@@ -83,30 +97,19 @@ polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
 position = Vector2(100, -250)
 
 [node name="SpeachButton" type="TextureButton" parent="Speach/SpeachBubble"]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Polygon2D" type="Polygon2D" parent="Speach/SpeachBubble/SpeachButton"]
-position = Vector2(26, 23)
-color = Color(0.964706, 0.921569, 0.992157, 1)
-polygon = PackedVector2Array(-13, 38, -29, 29, -58, 67, -42, 17, -45, -14, -28, -31, 13, -39, 62, -42, 143, -41, 203, -31, 233, -11, 245, 16, 236, 37, 192, 49, 99, 51, 36, 49, 6, 44)
-
-[node name="TextureButtonOpened" type="TextureButton" parent="Speach/SpeachBubble"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Polygon2D" type="Polygon2D" parent="Speach/SpeachBubble/TextureButtonOpened"]
-position = Vector2(26, 23)
-polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
+offset_left = -65.0
+offset_top = -170.0
+offset_right = 336.0
+offset_bottom = 49.0
+texture_normal = ExtResource("8_b6jwv")
 
 [node name="SpeachText" type="Label" parent="Speach/SpeachBubble"]
-offset_left = 1.0
-offset_top = -18.0
-offset_right = 247.0
-offset_bottom = 68.0
+offset_left = -33.0
+offset_top = -168.0
+offset_right = 303.0
+offset_bottom = 9.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 40
 text = "test"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -116,6 +119,5 @@ autowrap_mode = 2
 visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Duplicate"]
-z_index = -1
-position = Vector2(-2, -54)
-texture = ExtResource("3_jqgmh")
+position = Vector2(0, -118)
+texture = ExtResource("2_u6mt1")

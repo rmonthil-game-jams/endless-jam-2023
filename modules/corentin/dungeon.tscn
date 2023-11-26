@@ -1,15 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://bebm1sx3rjxnt"]
+[gd_scene load_steps=6 format=3 uid="uid://bebm1sx3rjxnt"]
 
 [ext_resource type="Script" path="res://modules/corentin/dungeon.gd" id="1_7npxm"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_e6tvr"]
-[ext_resource type="PackedScene" uid="uid://chk831ldmfjkm" path="res://modules/odilon/super_lechouille/fight.tscn" id="2_s0bpy"]
+[ext_resource type="PackedScene" uid="uid://dl37003wsb2n1" path="res://modules/corentin/mob_trash/mob_trash.tscn" id="2_u3b1b"]
 [ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_wdgi3"]
 [ext_resource type="PackedScene" uid="uid://d3clduo33km57" path="res://modules/remi/mob_handy_man/mob_handy_man.tscn" id="4_aw6mp"]
-[ext_resource type="PackedScene" uid="uid://75etcwgcek82" path="res://modules/selim/mob_chamallow/mob_chamallow.tscn" id="5_rbcnf"]
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_7npxm")
-MOB_SCENES = Array[PackedScene]([ExtResource("2_s0bpy"), ExtResource("5_rbcnf"), ExtResource("4_aw6mp")])
+MOB_SCENES = Array[PackedScene]([ExtResource("2_u3b1b")])
 BOSS_SCENES = Array[PackedScene]([ExtResource("4_aw6mp")])
 
 [node name="Background" type="Node2D" parent="."]

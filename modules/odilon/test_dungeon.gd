@@ -42,8 +42,7 @@ func _advance():
 	else:
 		new_mob = BOSS_SCENES[randi_range(0, BOSS_SCENES.size() - 1)].instantiate()
 		new_mob.DIFFICULTY = _new_mob_difficulty() * KBOSSDIFF
-	
-	#print(new_mob.DIFFICULTY) REMI: REMOVED PRINT
+
 
 	$RoomContent.add_child(new_mob)
 	new_mob.just_died.connect(_on_current_mob_just_died)
@@ -58,7 +57,7 @@ func _advance():
 var difficulty : int = 1
 var room : int = 0
 
-var difficulties : Array[float] = [0, 0.5, 0.9, 1, 1.2, 2]
+var difficulties : Array[float] = [0.5, 0.9, 2, 4, 6, 10]
 
 func _new_mob_difficulty():
 	return difficulties[min(room, difficulties.size()-1)]
@@ -74,7 +73,7 @@ func _on_current_mob_just_died():
 		lootbuff = 0
 	else:
 		lootbuff = BOSS_LOOT_BUFF
-	$Character._loot(lootbuff)
+	$Character._loot(lootbuff, room)
 	
 
 signal _game_over

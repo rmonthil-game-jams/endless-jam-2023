@@ -1,12 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://bvo61s1yid5cv"]
 
 [ext_resource type="Script" path="res://modules/nathan/sliminou_gang/sliminou_gang.gd" id="1_v1m8y"]
-[ext_resource type="PackedScene" uid="uid://so6jo25adcnv" path="res://modules/nathan/sliminou_gang/sliminou.tscn" id="2_6sk22"]
+[ext_resource type="PackedScene" uid="uid://b857n5b2ftsl4" path="res://modules/nathan/sliminou_gang/sliminou_holder.tscn" id="2_8p8xl"]
 
 [node name="SliminouGang" type="Node2D"]
 y_sort_enabled = true
-position = Vector2(0, 150)
-scale = Vector2(0.4, 0.4)
 script = ExtResource("1_v1m8y")
 
-[node name="Sliminou" parent="." instance=ExtResource("2_6sk22")]
+[node name="SliminouHolder" parent="." instance=ExtResource("2_8p8xl")]

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b857n5b2ftsl4"]
+
+[ext_resource type="PackedScene" uid="uid://so6jo25adcnv" path="res://modules/nathan/sliminou_gang/sliminou.tscn" id="1_0fj01"]
+
+[node name="SliminouHolder" type="Node2D"]
+
+[node name="Sliminou" parent="." instance=ExtResource("1_0fj01")]
