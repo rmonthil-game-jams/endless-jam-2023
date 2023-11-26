@@ -1,18 +1,105 @@
 [gd_scene load_steps=5 format=3 uid="uid://bmm44q5cegmx7"]
 
-[ext_resource type="Script" path="res://modules/natheo/test_dungeon.gd" id="1_u6x6c"]
 [ext_resource type="PackedScene" uid="uid://jsbtpbjcy8rj" path="res://modules/natheo/mob_furuboule/mob_furuboule.tscn" id="2_b5twi"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_vycib"]
 [ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_pje8f"]
 
+[sub_resource type="GDScript" id="GDScript_epko4"]
+script/source = "extends Node2D
+
+@export var MOB_SCENES : Array[PackedScene]
+@export var BOSS_SCENES : Array[PackedScene]
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	# set random state
+	randomize()
+	$Character.finished_upgrade.connect(_advance)
+	# instance a random mob scene
+	_advance()
+
+@export var BOSS_ROOM_PERIOD : int = 3
+func _advance():
+	room += 1
+	$Background/Sprite2D2.show()
+	$Background/Sprite2D2.modulate.a = 0.0
+	# animation
+	var tween : Tween = create_tween()
+	tween.tween_property(
+		$Background, 
+		\"scale\",
+		Vector2(1.0/$Background/Sprite2D2.scale.x, 1.0/$Background/Sprite2D2.scale.y),
+		1.0
+	).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property(
+		$Background/Sprite2D2, 
+		\"modulate:a\", 
+		1.0,
+		1.0
+	).set_trans(Tween.TRANS_CUBIC)
+	await tween.finished
+	$Background.position = Vector2.ZERO
+	$Background.scale = Vector2.ONE
+	$Background/Sprite2D2.hide()
+
+	# then instance mob
+	var new_mob : Node2D
+	if room % BOSS_ROOM_PERIOD:
+		new_mob = MOB_SCENES[randi_range(0, MOB_SCENES.size() - 1)].instantiate()
+		new_mob.DIFFICULTY = _new_mob_difficulty()
+		print(\"room: \", room)
+		print(\"difficulty: \", new_mob.DIFFICULTY)
+	else:
+		new_mob = BOSS_SCENES[randi_range(0, BOSS_SCENES.size() - 1)].instantiate()
+		new_mob.DIFFICULTY = _new_mob_difficulty() * KBOSSDIFF
+		print(\"room: \", room)
+		print(\"difficulty: \", new_mob.DIFFICULTY)
+
+	$RoomContent.add_child(new_mob)
+	new_mob.just_died.connect(_on_current_mob_just_died)
+
+
+@export var KDIFF : float = 0.4
+@export var KEXPDIFF : float = 0.1
+@export var KSTARTDIFF : float = 0.3
+@export var KBOSSDIFF : float = 1.5
+@export var BOSS_LOOT_BUFF : float = 1
+
+var difficulty : int = 1
+var room : int = 0
+
+func _new_mob_difficulty():
+	return KDIFF*pow(KSTARTDIFF*difficulty+room,1.0+KEXPDIFF*difficulty)
+
+
+func _on_current_mob_just_died():
+		# clean
+	for child in $RoomContent.get_children():
+		child.queue_free()
+	var lootbuff
+	if room % BOSS_ROOM_PERIOD:
+		lootbuff = 0
+	else:
+		lootbuff = BOSS_LOOT_BUFF
+	$Character._loot(lootbuff, room)
+	
+
+signal _game_over
+func _on_character_just_died():
+	_game_over.emit()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta : float):
+	pass
+"
+
 [node name="Dungeon" type="Node2D"]
-script = ExtResource("1_u6x6c")
+script = SubResource("GDScript_epko4")
 MOB_SCENES = Array[PackedScene]([ExtResource("2_b5twi")])
+BOSS_SCENES = Array[PackedScene]([ExtResource("2_b5twi")])
 
 [node name="Background" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Background"]
-position = Vector2(0, 53)
 texture = ExtResource("2_vycib")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Background"]
@@ -20,8 +107,7 @@ scale = Vector2(0.444278, 0.463389)
 texture = ExtResource("2_vycib")
 
 [node name="RoomContent" type="Node2D" parent="."]
-
-[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 100)
 
 [node name="Character" parent="." instance=ExtResource("3_pje8f")]
 
