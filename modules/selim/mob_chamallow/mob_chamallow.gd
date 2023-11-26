@@ -8,33 +8,34 @@ signal just_died
 var DIFFICULTY : float = 0.0: set = _set_difficulty
 
 # MOB SUB PARAMETERS
-## WAITING
-"""
-var HAND_MOVE_DURATION : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF MOVEMENT SPEED
-var HAND_MOVE_RADIUS : float = min(400.0, 50.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
-const IDLE_LOOP_NUMBER : int = 4
-"""
 ## ATTACKING
 
 var HAND_ATTACK_DURATION_FACTOR : float
 var DAMAGE_PER_ATTACK_P1 : float
 var DAMAGE_PER_ATTACK_P2 : float
 var TIME_BETWEEN_ATTACKS_P1 : float
+var TIME_BETWEEN_ATTACKS_P2 : float
 var X_MARGIN : int = 50
 var Y_MARGIN : int = 50
 var ATTACK_WINDOW_RANGE : Vector2
 var ATTACK_SCALE : Vector2 = Vector2(1.0, 1.0) # REMI: TRY TO AVOID RESCALING IMAGES PERMANENTLY
+var DAMAGE_MULTIPLIER : int = 0
+var TRAN : bool = false
+var DEAD : bool = false
 
 func _set_difficulty(value : float): # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE THAT BEFORE
 	DIFFICULTY = value
 	HAND_ATTACK_DURATION_FACTOR = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
 	DAMAGE_PER_ATTACK_P1 = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
 	DAMAGE_PER_ATTACK_P2 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-	TIME_BETWEEN_ATTACKS_P1 = 2.0 * (1.0 + log(1.0 + DIFFICULTY))
-	life_points = 10 + (10 * log(1.0 + DIFFICULTY))
+	TIME_BETWEEN_ATTACKS_P1 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
+	TIME_BETWEEN_ATTACKS_P2 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
+	life_points = 40 + (10 * log(1.0 + DIFFICULTY))
+	full_mob_hp = life_points
 
 # MOB STATE
-var life_points : float = 20.0
+var full_mob_hp : float
+var life_points
 var state : String # useles at the moment but who knows in the future?
 
 # private
@@ -46,20 +47,22 @@ var state : String # useles at the moment but who knows in the future?
 var main_tween : Tween = null
 var bodies : Array[Node] = []
 var attacks : Array[Node] = []
+var attacks2 : Array[Node] = []
 var hands_state : Dictionary = {}
 var character : Node = null
 var rng = RandomNumberGenerator.new()
+var blocked_tween_p2 : Tween = null
 
 ## called when the node enters the scene tree for the first time.
 func _ready():
 	# set difficulty
 	_set_difficulty(DIFFICULTY) # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE THAT BEFORE
 	
-	character = get_tree().get_nodes_in_group("character").front()
+	character = get_tree().get_nodes_in_group("character").front() 
 	# other
-	character = get_tree().get_nodes_in_group("character").front()
-	ATTACK_WINDOW_RANGE = (get_viewport_rect().size - 2*Vector2(X_MARGIN,Y_MARGIN))/2
-	$Body.get_node("TextureButtonP1").pressed.connect(_body_attacks.bind(DAMAGE_PER_ATTACK_P1))
+	ATTACK_WINDOW_RANGE = (2*get_viewport_rect().size - 2*Vector2(X_MARGIN,Y_MARGIN))/2
+	$Body.get_node("TextureButtonP1").pressed.connect(_body_attacks.bind(character.damage_per_attack))
+	$Body.get_node("TextureButtonP2").pressed.connect(_body_attacks.bind(character.damage_per_attack))
 	$AttackP1.get_node("TextureButtonAttackP1").pressed.connect(_block_attack.bind())
 	bodies = $Body.get_children()
 	for body in bodies:
@@ -75,19 +78,6 @@ func _ready():
 	# REMI: hp bar
 	mob_hp_progress_bar.max_value = life_points
 	_set_hp_bar(life_points)
-#	hands = $Hands.get_children()
-#	for hand in hands:
-#		# setup state
-#		hands_state[hand] = {
-#			"initial_position":hand.position,
-#			"state":"open",
-#		} # careful here, position is in local coordinate use global_position for global coordinates
-#		# setup signals
-#		hand.get_node("TextureButtonOpen").pressed.connect(_hand_open_pressed.bind(hand))
-#		hand.get_node("TextureButtonClosed").pressed.connect(_hand_closed_pressed.bind(hand))
-#		hand.get_node("TextureButtonAttacking").pressed.connect(_hand_attacking_pressed.bind(hand))
-#	character = get_tree().get_nodes_in_group("character").front()
-	# avoid using await in the _ready function
 	_play_appearing_animation.call_deferred()
 	
 
@@ -116,7 +106,10 @@ func _phase_1():
 	add_child(target_fx)
 	
 	await get_tree().create_timer(TIME_BETWEEN_ATTACKS_P1).timeout
-	_phase_1_attack()
+	if TRAN:
+		pass
+	else:
+		_phase_1_attack()
 	
 
 func _phase_1_attack():
@@ -139,17 +132,21 @@ func _phase_1_attack():
 	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	# REMI: MODIFIED THE FOLLOWING
 	main_tween.tween_callback(_end_phase_1_attack)
+	# REMI: MODIFIED THE FOLLOWING
 
 func _end_phase_1_attack():
 	$AttackP1/TextureButtonAttackP1.hide()
 	$AttackP1/TextureButtonAttackP1.scale = ATTACK_SCALE
 	character.hit(DAMAGE_PER_ATTACK_P1)
-	_phase_1()
+	if TRAN:
+		pass
+	else:
+		_phase_1()
 
 
 func _phase_2_attack():
+	state = "phase_2"
 	$Body/Sprite2DPhase2.show()
 	$Body/TextureButtonP2.hide()
 	for i in range(4):
@@ -220,20 +217,36 @@ func _phase_2_attack():
 	await main_tween.finished
 	
 	_phase_2()
+	
+func _phase_2():
+	state = "phase_2"
+	for body in bodies:
+		body.hide()
+	$Body/TextureButtonP2.show()
+	
+	# add target fx
+	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
+	target_fx.w = 394.0
+	target_fx.h = 359.0
+	target_fx.position = $Body.position # carefull these are local coordinates
+	add_child(target_fx)
+	
+	await get_tree().create_timer(TIME_BETWEEN_ATTACKS_P2).timeout
+	if DEAD:
+		pass
+	else:
+		_phase_2_attack()
 		
-	
-	
 	
 func _end_phase_2_attack_1():
 	for attack2 in attacks2:
 		if attack2.get_node("TextureButtonAttackP2").visible:
 			attack2.get_node("TextureButtonAttackP2").hide()
 			DAMAGE_MULTIPLIER += 1
-		attack2.get_node("TextureButtonAttackP2").scale = ATTACK_SCALE
-	print(DAMAGE_MULTIPLIER)	
+		attack2.get_node("TextureButtonAttackP2").scale = ATTACK_SCALE	
 	
 	if DAMAGE_MULTIPLIER != 0:
-		character.hit(DAMAGE_PER_ATTACK_P1*DAMAGE_MULTIPLIER)
+		character.hit(DAMAGE_PER_ATTACK_P2*DAMAGE_MULTIPLIER)
 		
 	DAMAGE_MULTIPLIER = 0
 
@@ -242,15 +255,39 @@ func _body_attacks(damage : float):
 	life_points -= damage
 	_set_hp_bar(max(life_points,0))
 	if life_points <= 0.0:
+		DEAD = true
 		_death_animation()
-#	elif life_points <= 20 && state == "phase_1":
-#		_transition_to_phase_2()
+	elif life_points <= full_mob_hp/2 && state == "phase_1":
+		TRAN = true
+		_transition_to_phase_2()
+	elif state == "phase_2":
+		$Body/TextureButtonP2.modulate += Color(0.01, -0.01, -0.01, 0.0)
+		$Body/Sprite2DPhase2.modulate += Color(0.01, -0.01, -0.01, 0.0)
+		$Body/Sprite2DAttacked.modulate += Color(0.01, -0.01, -0.01, 0.0)
+		
 		
 func _transition_to_phase_2():
 	state = "transitioning_phase_2"
 	for body in bodies:
 		body.hide()
-	$AttackP1/Sprite2DAttacked.show()
+	$Body/Sprite2DTrans.show()
+	main_tween = create_tween()
+	main_tween.tween_property($Body/Sprite2DTrans, "scale", Vector2(1.6, 1.6), 1.0).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "modulate:r", 1.0, 1.0).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "modulate:g", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "modulate:b", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	await main_tween.finished
+	
+	$Body/Sprite2DPhase2.show()
+	_phase_2_attack.call_deferred()
+	
+	
+	
 		
 func _block_attack():
 	$Body/Sprite2DAtttackingP1.hide()
@@ -267,17 +304,55 @@ func _block_attack():
 	main_tween = create_tween()
 	main_tween.tween_property($AttackP1/Sprite2DAttackedP1, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 	main_tween.tween_callback($AttackP1/Sprite2DAttackedP1.hide)
-	main_tween.tween_callback(_end_animation)
+	main_tween.tween_callback(_end_animation.bind($AttackP1/Sprite2DAttackedP1))
 	
 	_phase_1()
-		
-func _end_animation():
-	$AttackP1/Sprite2DAttackedP1.modulate.a = 1.0
+
+func _block_attack_2(attack : Node2D):
+	attack.get_node("TextureButtonAttackP2").hide()
+	attack.scale = ATTACK_SCALE
+	attack.get_node("Sprite2DAttackedP2").show()
+	
+	var blocked_fx = preload("res://modules/remi/fx/blocked.tscn").instantiate()
+	blocked_fx.TARGET_SCALE = Vector2.ONE
+	blocked_fx.position = attack.position # carefull these are local coordinates
+	add_child(blocked_fx)
+	
+	blocked_tween_p2 = create_tween()
+	blocked_tween_p2.tween_property(attack.get_node("Sprite2DAttackedP2"), "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
+	blocked_tween_p2.tween_callback(attack.get_node("Sprite2DAttackedP2").hide)
+	blocked_tween_p2.tween_callback(_end_animation.bind(attack.get_node("Sprite2DAttackedP2")))
+	
+	
+func _is_false(val):
+	return val==false
+	
+func _end_animation(attack_sprite):
+	attack_sprite.modulate.a = 1.0
+	
 	
 func _death_animation():
 	main_tween.kill()
 	for body in bodies:
 		body.hide()
+	$Body/Sprite2DAttacked.show()
+	
+	main_tween = create_tween()
+	main_tween.tween_property($Body/Sprite2DAttacked, "modulate", $Body/Sprite2DAttacked2.modulate, 1.0).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DAttacked, "position", Vector2(0.0, -100), 1.0).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -100), 1.0).set_trans(Tween.TRANS_CUBIC)
+	await main_tween.finished	
+	$Body/Sprite2DDefeat.show()
+	$Body/Sprite2DAttacked.hide()
+	main_tween = create_tween()	
+	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -150), 0.2).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -100), 0.25).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -150), 0.25).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -100), 0.25).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -150), 0.25).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -100), 0.25).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "scale", Vector2(0.0, 0.0), 0.5).set_trans(Tween.TRANS_CUBIC)
+	await main_tween.finished
 		
 	just_died.emit()
 	
