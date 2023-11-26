@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctysm4rp8w6l7"]
+
+[ext_resource type="Texture2D" uid="uid://bs8vfmc544j8l" path="res://modules/aurelie/assets/graphics/chamallow_attaque_attaqueparlejoueur_normal.svg" id="1_y1bjp"]
+
+[node name="Hand" type="Node2D"]
+
+[node name="TextureButtonAttacking" type="TextureButton" parent="."]
+offset_left = -213.0
+offset_top = -154.0
+offset_right = 208.0
+offset_bottom = 194.0
+texture_normal = ExtResource("1_y1bjp")

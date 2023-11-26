@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3 uid="uid://jsbtpbjcy8rj"]
+
+[ext_resource type="Script" path="res://modules/natheo/mob_cuteplant/mob_cuteplant.gd" id="1_dcm0i"]
+[ext_resource type="Texture2D" uid="uid://cjkb66se270ki" path="res://modules/natheo/assets/graphics/cuteplant_body_normal.svg" id="2_2duj4"]
+[ext_resource type="Texture2D" uid="uid://13rpxxooohuy" path="res://modules/natheo/assets/graphics/cuteplant_body_attack.svg" id="3_osll8"]
+[ext_resource type="Texture2D" uid="uid://c2e4lvp4wsvva" path="res://modules/natheo/assets/graphics/cuteplant_body_hit.svg" id="4_puduo"]
+[ext_resource type="Texture2D" uid="uid://srpw4qvm2bnd" path="res://modules/natheo/assets/graphics/cuteplant_body_absorption.svg" id="5_pr3ko"]
+[ext_resource type="PackedScene" uid="uid://dqb78uwbtpsyt" path="res://modules/natheo/mob_cuteplant/plant.tscn" id="6_548d4"]
+[ext_resource type="PackedScene" uid="uid://c8kc54alm42iy" path="res://modules/remi/fx/mob_hp_bar.tscn" id="8_jolff"]
+[ext_resource type="Texture2D" uid="uid://d35cniu6djb3t" path="res://modules/natheo/assets/graphics/cuteplant_fx_attack.svg" id="8_qm7tq"]
+
+[node name="Cuteplant" type="Node2D"]
+script = ExtResource("1_dcm0i")
+
+[node name="MobHPBar" parent="." instance=ExtResource("8_jolff")]
+position = Vector2(100, -370)
+
+[node name="Cuteplant" type="Node2D" parent="."]
+
+[node name="Body" type="Node2D" parent="Cuteplant"]
+
+[node name="Sprite2DNormal" type="Sprite2D" parent="Cuteplant/Body"]
+texture = ExtResource("2_2duj4")
+
+[node name="Sprite2DAttack" type="Sprite2D" parent="Cuteplant/Body"]
+visible = false
+texture = ExtResource("3_osll8")
+
+[node name="Sprite2DHit" type="Sprite2D" parent="Cuteplant/Body"]
+visible = false
+texture = ExtResource("4_puduo")
+
+[node name="Sprite2DBeam" type="Sprite2D" parent="Cuteplant/Body"]
+visible = false
+texture = ExtResource("5_pr3ko")
+
+[node name="Plants" type="Node2D" parent="Cuteplant"]
+
+[node name="Plant1" parent="Cuteplant/Plants" instance=ExtResource("6_548d4")]
+
+[node name="Plant2" parent="Cuteplant/Plants" instance=ExtResource("6_548d4")]
+
+[node name="Plant3" parent="Cuteplant/Plants" instance=ExtResource("6_548d4")]
+
+[node name="Beam" type="Node2D" parent="."]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Beam"]
+texture = ExtResource("8_qm7tq")
