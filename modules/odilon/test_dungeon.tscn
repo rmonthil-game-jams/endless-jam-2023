@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dkbnb4s854wy7"]
+[gd_scene load_steps=7 format=3 uid="uid://dkbnb4s854wy7"]
 
 [ext_resource type="Script" path="res://modules/odilon/test_dungeon.gd" id="1_3kg2l"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_6walf"]
 [ext_resource type="PackedScene" uid="uid://chk831ldmfjkm" path="res://modules/odilon/super_lechouille/fight.tscn" id="2_72p7d"]
 [ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_ygred"]
+[ext_resource type="AudioStream" uid="uid://df3x6om4q2d1e" path="res://modules/remi/assets/audio/used/tttt_1.wav" id="6_8ptop"]
+[ext_resource type="Script" path="res://modules/odilon/GeneralClickHandler.gd" id="6_y5iws"]
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_3kg2l")
@@ -23,5 +25,9 @@ texture = ExtResource("2_6walf")
 position = Vector2(0, 100)
 
 [node name="Character" parent="." instance=ExtResource("3_ygred")]
+
+[node name="GeneralClickHandler" type="AudioStreamPlayer2D" parent="Character"]
+stream = ExtResource("6_8ptop")
+script = ExtResource("6_y5iws")
 
 [connection signal="just_died" from="Character" to="." method="_on_character_just_died"]
