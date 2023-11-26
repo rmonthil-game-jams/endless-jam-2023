@@ -74,7 +74,7 @@ func _on_current_mob_just_died():
 		lootbuff = 0
 	else:
 		lootbuff = BOSS_LOOT_BUFF
-	$Character._loot(lootbuff)
+	$Character._loot(lootbuff, room)
 	
 
 signal _game_over
