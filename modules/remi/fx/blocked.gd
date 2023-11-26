@@ -20,7 +20,7 @@ func _play_animation():
 	# animation
 	var tween : Tween = create_tween()
 	tween.tween_property($Sprite2D, "scale", TARGET_SCALE, 0.125).set_trans(Tween.TRANS_ELASTIC)
-	tween.tween_property($Sprite2D, "modulate:a", 0.0, 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Sprite2D, "modulate:a", 0.0, 0.175).set_trans(Tween.TRANS_CUBIC)
 	# free
 	await tween.finished
 	queue_free()

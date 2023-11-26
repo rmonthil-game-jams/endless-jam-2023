@@ -45,6 +45,9 @@ var character : Node = null
 
 ## called when the node enters the scene tree for the first time.
 func _ready():
+	# set difficulty
+	_set_difficulty(DIFFICULTY) # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE THAT BEFORE
+	# other
 	hands = $Hands.get_children()
 	for hand in hands:
 		# setup state
@@ -60,6 +63,7 @@ func _ready():
 		hand.get_node("TextureButtonAttacking").pressed.connect(_hand_attacking_pressed.bind(hand))
 	character = get_tree().get_nodes_in_group("character").front()
 	mob_hp_progress_bar.max_value = life_points
+	_set_hp_bar(life_points)
 	# avoid using await in the _ready function
 	_play_appearing_animation.call_deferred()
 

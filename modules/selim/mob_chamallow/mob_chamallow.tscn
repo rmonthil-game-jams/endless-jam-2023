@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://75etcwgcek82"]
+[gd_scene load_steps=11 format=3 uid="uid://75etcwgcek82"]
 
 [ext_resource type="Script" path="res://modules/selim/mob_chamallow/mob_chamallow.gd" id="1_ck7tl"]
 [ext_resource type="Texture2D" uid="uid://dnsmnj01rqb7r" path="res://modules/aurelie/assets/graphics/chamallow_corps_normal.svg" id="2_acbid"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dud7dwgqpjukd" path="res://modules/aurelie/assets/graphics/chamallow_attaque_entraindattaquer_normal.svg" id="7_6eoxk"]
 [ext_resource type="Texture2D" uid="uid://46xc0lj33g20" path="res://modules/aurelie/assets/graphics/chamallow_attaque_entraindattaquer_hover.svg" id="8_54yys"]
 [ext_resource type="Texture2D" uid="uid://dhmhnn4t01sb7" path="res://modules/aurelie/assets/graphics/chamallow_attaque_normale_hover.svg" id="9_4cbv6"]
+[ext_resource type="PackedScene" uid="uid://c8kc54alm42iy" path="res://modules/remi/fx/mob_hp_bar.tscn" id="10_1xthe"]
 
 [node name="MobChamallow" type="Node2D"]
 script = ExtResource("1_ck7tl")
@@ -70,7 +71,7 @@ texture_pressed = ExtResource("5_r4ct6")
 [node name="AttackP1" type="Node2D" parent="."]
 
 [node name="Sprite2DAttackedP1" type="Sprite2D" parent="AttackP1"]
-scale = Vector2(0.2, 0.2)
+visible = false
 texture = ExtResource("9_4cbv6")
 
 [node name="Sprite2DBlockedP1" type="Sprite2D" parent="AttackP1"]
@@ -83,12 +84,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -41.0
-offset_top = -31.0
-offset_right = 380.0
-offset_bottom = 317.0
+offset_left = -210.5
+offset_top = -174.0
+offset_right = 210.5
+offset_bottom = 174.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.2, 0.2)
 texture_normal = ExtResource("7_6eoxk")
 texture_hover = ExtResource("8_54yys")
+
+[node name="MobHPBar" parent="." instance=ExtResource("10_1xthe")]
+position = Vector2(-1, -197)

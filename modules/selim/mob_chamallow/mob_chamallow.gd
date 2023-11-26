@@ -5,7 +5,7 @@ signal just_died
 # TODO: SPAWN KISS WHEN KISSED
 
 # MOB PARAMETERS
-var DIFFICULTY : float = 0.0
+var DIFFICULTY : float = 0.0: set = _set_difficulty
 
 # MOB SUB PARAMETERS
 ## WAITING
@@ -16,22 +16,30 @@ const IDLE_LOOP_NUMBER : int = 4
 """
 ## ATTACKING
 
-var HAND_ATTACK_DURATION_FACTOR : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF ATTACK SPEED
-var DAMAGE_PER_ATTACK_P1 : float = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-var DAMAGE_PER_ATTACK_P2 : float = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-var TIME_BETWEEN_ATTACKS_P1 : float = 2.0 * (1.0 + log(1.0 + DIFFICULTY))
+var HAND_ATTACK_DURATION_FACTOR : float
+var DAMAGE_PER_ATTACK_P1 : float
+var DAMAGE_PER_ATTACK_P2 : float
+var TIME_BETWEEN_ATTACKS_P1 : float
 var X_MARGIN : int = 50
 var Y_MARGIN : int = 50
 var ATTACK_WINDOW_RANGE : Vector2
-var ATTACK_SCALE : Vector2 = Vector2(0.2, 0.2)
+var ATTACK_SCALE : Vector2 = Vector2(1.0, 1.0) # REMI: TRY TO AVOID RESCALING IMAGES PERMANENTLY
 
-## TODO: NUMBER OF HANDS DEPENDANT OF DIFFICULTY ?
+func _set_difficulty(value : float): # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE THAT BEFORE
+	DIFFICULTY = value
+	HAND_ATTACK_DURATION_FACTOR = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
+	DAMAGE_PER_ATTACK_P1 = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
+	DAMAGE_PER_ATTACK_P2 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
+	TIME_BETWEEN_ATTACKS_P1 = 2.0 * (1.0 + log(1.0 + DIFFICULTY))
 
 # MOB STATE
-var life_points : float = 40.0
+var life_points : float = 20.0
 var state : String # useles at the moment but who knows in the future?
 
 # private
+
+# REMI: MOB HP BAR
+@onready var mob_hp_progress_bar : TextureProgressBar = $MobHPBar/HBoxContainer/MobHpBar
 
 ## initialization is unecessary because they are already initialized to these values
 var main_tween : Tween = null
@@ -43,6 +51,9 @@ var rng = RandomNumberGenerator.new()
 
 ## called when the node enters the scene tree for the first time.
 func _ready():
+	# set difficulty
+	_set_difficulty(DIFFICULTY) # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE THAT BEFORE
+	# other
 	ATTACK_WINDOW_RANGE = (get_viewport_rect().size - 2*Vector2(X_MARGIN,Y_MARGIN))/2
 	$Body.get_node("TextureButtonP1").pressed.connect(_body_attacks.bind(DAMAGE_PER_ATTACK_P1))
 	$AttackP1.get_node("TextureButtonAttackP1").pressed.connect(_block_attack.bind())
@@ -52,6 +63,9 @@ func _ready():
 	attacks = $AttackP1.get_children()
 	for attack in attacks:
 		attack.hide()
+	# REMI: hp bar
+	mob_hp_progress_bar.max_value = life_points
+	_set_hp_bar(life_points)
 #	hands = $Hands.get_children()
 #	for hand in hands:
 #		# setup state
@@ -85,6 +99,13 @@ func _phase_1():
 	$Body/TextureButtonP1.show()
 	$Body/Sprite2DPhase1.hide()
 	
+	# add target fx
+	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
+	target_fx.w = 394.0
+	target_fx.h = 359.0
+	target_fx.position = $Body.position # carefull these are local coordinates
+	add_child(target_fx)
+	
 	await get_tree().create_timer(TIME_BETWEEN_ATTACKS_P1).timeout
 	_phase_1_attack()
 	
@@ -95,19 +116,29 @@ func _phase_1_attack():
 	$AttackP1.position = Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
 	$AttackP1/TextureButtonAttackP1.show()
 	
-	main_tween = create_tween()
-	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", Vector2(0.3, 0.3), 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", Vector2(0.3, 0.3), 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", Vector2(0.4, 0.4), 1.0 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	await main_tween.finished
+	# REMI: target fx
+	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
+	target_fx.w = 421.0
+	target_fx.h = 348.0
+	target_fx.position = $AttackP1.position # carefull these are local coordinates
+	add_child(target_fx)
 	
+	# REMI: change values to make it more dynamic
+	main_tween = create_tween()
+	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	# REMI: MODIFIED THE FOLLOWING
+	main_tween.tween_callback(_end_phase_1_attack)
+
+func _end_phase_1_attack():
 	$AttackP1/TextureButtonAttackP1.hide()
 	$AttackP1/TextureButtonAttackP1.scale = ATTACK_SCALE
-	
+	character.hit(DAMAGE_PER_ATTACK_P1)
 	_phase_1()
-	
+
 #
 #func _play_waiting_animation():
 #	state = "waiting"
@@ -208,11 +239,10 @@ func _phase_1_attack():
 #func _hand_attacking_pressed(hand : Node2D):
 #	# TODO: ANIMATION
 #	_attempt_to_close_hand(hand)
-#
-
 
 func _body_attacks(damage : float):
 	life_points -= damage
+	_set_hp_bar(max(life_points,0))
 	if life_points <= 0.0:
 		_death_animation()
 #	elif life_points <= 20 && state == "phase_1":
@@ -231,8 +261,13 @@ func _block_attack():
 	main_tween.kill()
 	$AttackP1/Sprite2DAttackedP1.show()
 	
+	var blocked_fx = preload("res://modules/remi/fx/blocked.tscn").instantiate()
+	blocked_fx.TARGET_SCALE = Vector2.ONE
+	blocked_fx.position = $AttackP1.position # carefull these are local coordinates
+	add_child(blocked_fx)
+	
 	main_tween = create_tween()
-	main_tween.tween_property($AttackP1/Sprite2DAttackedP1, "modulate:a", 0.0, 1.0 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttackP1/Sprite2DAttackedP1, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 	main_tween.tween_callback($AttackP1/Sprite2DAttackedP1.hide)
 	main_tween.tween_callback(_end_animation)
 	
@@ -248,7 +283,15 @@ func _death_animation():
 		
 	just_died.emit()
 	
-	
+# REMI: HP BAR
+
+var hp_bar_tween : Tween
+
+func _set_hp_bar(hp):
+	if hp_bar_tween:
+		hp_bar_tween.kill()
+	hp_bar_tween = get_tree().create_tween()
+	hp_bar_tween.tween_property(mob_hp_progress_bar, "value", life_points, 0.25)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float):
