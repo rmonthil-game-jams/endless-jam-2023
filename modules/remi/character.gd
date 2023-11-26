@@ -223,7 +223,6 @@ func _apply_up(upgrade : Dictionary):
 				
 			"damage_per_attack" :
 				damage_per_attack += upgrade["damage_per_attack"]
-				$CanvasLayer/StatsPanel/StatsContainer/DamageProgressBar.value = damage_per_attack
 				
 			"life_points" :
 				heal(upgrade["life_points"])
@@ -259,9 +258,8 @@ func _add_pointer():
 var upgrade_level : float = 0
 var upgrade_options : int = 3
 
-var cur_room : int = 1
-func _loot(lootbuff : float, room : float):
-	cur_room = room
+func _loot(lootbuff : float):
+	
 	heal(hp_regen)
 	
 	_generate_upgrades(lootbuff)

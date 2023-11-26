@@ -22,11 +22,11 @@ const KISS_DURATION : float = 2.0
 
 func _set_difficulty(value : float):
 	DIFFICULTY = value
-	HAND_MOVE_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
+	HAND_MOVE_DURATION = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
 	HAND_MOVE_RADIUS = min(500.0, 100.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
-	HAND_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
+	HAND_ATTACK_DURATION_FACTOR = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
 	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-	HAND_ATTACK_INTERVAL = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
+	HAND_ATTACK_INTERVAL = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
 	life_points = 20 + (10 * log(1.0 + DIFFICULTY))
 
 # MOB HP BAR
