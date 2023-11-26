@@ -250,7 +250,7 @@ layout_mode = 2
 [node name="RegenProgressBar" type="TextureProgressBar" parent="CanvasLayer/Vitality/CenterContainer"]
 custom_minimum_size = Vector2(100, 10)
 layout_mode = 2
-max_value = 30.0
+max_value = 20.0
 nine_patch_stretch = true
 texture_under = ExtResource("2_pvr1i")
 texture_over = ExtResource("3_0yr67")
@@ -280,7 +280,7 @@ layout_mode = 2
 [node name="DamageProgressBar" type="TextureProgressBar" parent="CanvasLayer/Damage/CenterContainer"]
 custom_minimum_size = Vector2(82, 10)
 layout_mode = 2
-max_value = 50.0
+max_value = 20.0
 nine_patch_stretch = true
 texture_under = ExtResource("2_pvr1i")
 texture_over = ExtResource("3_0yr67")

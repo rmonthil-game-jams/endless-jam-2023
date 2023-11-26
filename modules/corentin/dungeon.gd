@@ -51,8 +51,8 @@ func _advance():
 	new_mob.just_died.connect(_on_current_mob_just_died)
 
 
-@export var KDIFF : float = 0.4
-@export var KEXPDIFF : float = 0.1
+@export var KDIFF : float = 0.5
+@export var KEXPDIFF : float = 0.15
 @export var KSTARTDIFF : float = 0.1
 @export var KBOSSDIFF : float = 1.5
 @export var BOSS_LOOT_BUFF : float = 1

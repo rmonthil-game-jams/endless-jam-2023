@@ -27,7 +27,7 @@ var upgrades : Dictionary = {
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 2,
-				"max_life_points" : 9,
+				"max_life_points" : 8,
 			},
 	"HP3" : {
 				"name" : "Health Bonus ++",
@@ -38,7 +38,7 @@ var upgrades : Dictionary = {
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 3,
-				"max_life_points" : 15,
+				"max_life_points" : 12,
 			},
 	"HPR1" : {
 				"name" : "Health Regen Bonus",
@@ -93,7 +93,7 @@ var upgrades : Dictionary = {
 				"weight" : 1,
 				"type" : "DMG UP",
 				"tier" : 2,
-				"damage_per_attack" : 1,
+				"damage_per_attack" : 0.8,
 			},
 	"DMG3" : {
 				"name" : "Damage per Click ++",
@@ -104,7 +104,7 @@ var upgrades : Dictionary = {
 				"weight" : 1,
 				"type" : "DMG UP",
 				"tier" : 3,
-				"damage_per_attack" : 2,
+				"damage_per_attack" : 1.8,
 			},
 	"HEAL1" : {
 				"name" : "Healing potion",
@@ -148,8 +148,8 @@ var upgrades : Dictionary = {
 				"weight" : 1,
 				"type" : "BSK",
 				"tier" : 1,
-				"max_life_points" : -5,
-				"damage_per_attack" : 1.5,
+				"max_life_points" : -8,
+				"damage_per_attack" : 1.2,
 			},
 	"BSK3" : {
 				"name" : "Berserk ++",
@@ -161,7 +161,7 @@ var upgrades : Dictionary = {
 				"type" : "BSK",
 				"tier" : 3,
 				"max_life_points" : -15,
-				"damage_per_attack" : 3,
+				"damage_per_attack" : 2,
 			},
 	"MORE" : {
 				"name" : "More Upgrade Options",

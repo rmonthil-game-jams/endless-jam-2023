@@ -44,7 +44,7 @@ func set_difficulty(d : float):
 	SLURP_LIFE = 3.0 #* (1.0 + log(1.0 + DIFFICULTY))
 	SLURP_LATENCY = 0.2 / (1.0 + 1*log(1.0 + DIFFICULTY))
 	MAX_SLURP_DAMAGE_PER_ATTACK = 2.0 * (1 + log(1.0 + DIFFICULTY))
-	MAX_LIFE_POINTS = 10 + 20 * log(1 + DIFFICULTY)
+	MAX_LIFE_POINTS = 10 + 2 * (1 + DIFFICULTY)
 	life_points = MAX_LIFE_POINTS
 	ATTACK_PROBABILITY = 10 + 3*log(1 + DIFFICULTY)
 	

@@ -46,7 +46,7 @@ func _set_difficulty(value : float):
 	WAITING_ROTATION_DURATION = 5.0 / (1.0 + log(1.0 + DIFFICULTY))
 	
 	# Time of sun shaking during which we can hit the sun to reduce its energy
-	SUN_SHAKING_DURATION = 3.0 / (1.0 + log(1.0 + DIFFICULTY))
+	SUN_SHAKING_DURATION = 6.0 / (1.0 + 1.5*log(1.0 + DIFFICULTY))
 	
 	# Decrease of sun relative energy (1 is max, and at SUN_REDUCING_MINIMUM, the sun is destroyed)
 	SUN_REDUCING_SCALE = 0.1 # NEED TO DEPEND ON ATTACK
@@ -57,6 +57,9 @@ func _set_difficulty(value : float):
 	# TIMES THE SUM RELATIVE ENERGY THAT LEFT ON THE UNDESTROYED SUNS
 	# Thus, as we reduce the suns energy, it reduces the final dmgs
 	DMG_MAX_PER_SUN = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
+	
+	life_points = 18 + 3*(1.0 + DIFFICULTY) 
+	print(life_points)
 
 
 
