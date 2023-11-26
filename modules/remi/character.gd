@@ -223,6 +223,7 @@ func _apply_up(upgrade : Dictionary):
 				
 			"damage_per_attack" :
 				damage_per_attack += upgrade["damage_per_attack"]
+				$CanvasLayer/StatsPanel/StatsContainer/DamageProgressBar.value += damage_per_attack
 				
 			"life_points" :
 				heal(upgrade["life_points"])
@@ -258,11 +259,12 @@ func _add_pointer():
 var upgrade_level : float = 0
 var upgrade_options : int = 3
 
-func _loot(lootbuff : float):
+func _loot(lootbuff : float, room : float):
 	
 	heal(hp_regen)
-	
+	$CanvasLayer/StatsPanel/StatsContainer/RoomN.text = str(room)
 	_generate_upgrades(lootbuff)
+	await get_tree().create_timer(1.0).timeout
 	$CanvasLayer/UpgradeMenu.show()
 	$Pointers.hide()
 	
@@ -468,6 +470,7 @@ func _set_hpbar_max(max_hp : int):
 var hp_tween : Tween
 
 func _set_hpbar_level(hp):
+	print("set hpbar level to" + str(hp))
 	if hp_tween:
 		hp_tween.kill()
 	hp_tween = get_tree().create_tween()
