@@ -18,7 +18,7 @@ var total_health : float
 func set_difficulty(d : float):
 	DIFFICULTY = d
 	NB_MOBS = 1 + DIFFICULTY/2
-	PER_MOB_DIFFICULTY = fmod(DIFFICULTY, 2) / 2 # This sets the mobs difficulty in [0,1[
+	PER_MOB_DIFFICULTY = fmod(DIFFICULTY, 2) / 2 # This sets the mobs difficulty in [0,1[. Probably better to just do DIFFICULTY/nb_mobs
 
 var SpawnSlots : Array[Vector2]
 
@@ -35,10 +35,10 @@ func _ready():
 	_spawn_mobs()
 
 func _get_hud_min_offset():
-	return Vector2(160, 60)
+	return Vector2(300, 200)
 	
 func _get_hud_max_offset():
-	return Vector2(80, 60)
+	return Vector2(300, 200)
 
 # Scale factor induced by camera
 func get_viewport_size():
@@ -48,7 +48,7 @@ func _get_spot(i : float):
 	var screen_size = get_viewport_size()
 	
 	var pmin : Vector2 = -screen_size / 2 + _get_hud_min_offset() + Vector2(150, 200)
-	var pmax : Vector2 = screen_size / 2 - _get_hud_max_offset() - Vector2(500, 0) # Not too close from border (HP bar should be visible at start)
+	var pmax : Vector2 = screen_size / 2 - _get_hud_max_offset() - Vector2(100, 0) # Not too close from border (HP bar should be visible at start)
 	var size : Vector2 = pmax - pmin
 	
 	return pmin + Vector2(i * size.x, 0.5 * size.y)
