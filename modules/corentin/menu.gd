@@ -36,9 +36,9 @@ func _process(delta):
 	
 	state = next_state
 
-@onready var easy_button : TextureButton = $CanvasLayer/Settings/VBoxContainer/Difficulty/HBoxContainer/Easy
-@onready var medium_button : TextureButton = $CanvasLayer/Settings/VBoxContainer/Difficulty/HBoxContainer/Medium
-@onready var hard_button : TextureButton = $CanvasLayer/Settings/VBoxContainer/Difficulty/HBoxContainer/Hard
+@onready var easy_button : TextureButton = $CanvasLayer/Settings/Difficulty/HBoxContainer/Easy
+@onready var medium_button : TextureButton = $CanvasLayer/Settings/Difficulty/HBoxContainer/Medium
+@onready var hard_button : TextureButton = $CanvasLayer/Settings/Difficulty/HBoxContainer/Hard
 
 func _on_easy_button_down():
 	difficulty = 1
@@ -66,10 +66,10 @@ func _on_texture_button_button_up():
 	var tween : Tween = create_tween()
 	# hide settings
 	tween.tween_property(node_settings, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
-	tween.tween_callback(node_settings.hide)
 	# zoom in
-	tween.tween_property(node_start, "scale", Vector2(1.0, 1.0), 1.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
-	tween.parallel().tween_property(node_start, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(node_start, "scale", Vector2(1.0, 1.0), 1.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.parallel().tween_property(node_start, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.tween_callback(node_settings.hide)
 	tween.tween_callback(node_start.hide)
 	await  tween.finished
 	node_settings.modulate.a = 1.0
@@ -89,13 +89,13 @@ func _on_texture_button_button_up():
 
 func _on_game_over():
 	var tween : Tween = create_tween()
-	$CanvasLayer/GO/roomLabel.text = "Rooms cleared: " + str(max(0,node_dungeon.room-1))
+	$CanvasLayer/Go/RoomReached.text = "ROOM REACHED: " + str(max(0,node_dungeon.room))
 	state = "game over"
 	# free dungeon
 	node_dungeon.queue_free()
 	# show settings
 	node_settings.modulate.a = 0.0
-	# node_settings.show() # TODO: UNCOMENT IF YOU WANT THE SETTINGS
+	node_settings.show()
 	tween.tween_property(node_settings, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
 	# zoom in
 	node_start.show()
@@ -104,15 +104,14 @@ func _on_game_over():
 	# test
 	await tween.finished
 	
-	$CanvasLayer/GO.show()
+	$CanvasLayer/Go.show()
 
 func _on_exit_button_up():
 	get_tree().free()
 
-
 func _on_retry_button_up():
 	state = "main menu"
-	$CanvasLayer/GO.hide()
+	$CanvasLayer/Go.hide()
 	$CanvasLayer/Start/StartButton.disabled = false
 
 func _input(event):
