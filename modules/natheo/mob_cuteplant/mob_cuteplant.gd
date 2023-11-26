@@ -11,20 +11,21 @@ var DIFFICULTY : float = 0.0: set = _set_difficulty
 ## HANDS GEOMETRY
 const PLANTS_REL_DISTANCE = 400.0
 const PLANTS_POSSIBLE_ANGLES : Array[float] = [PI, -3.0*PI/4.0, -PI/2.0, -PI/4.0, 0.0]
+const PLANTS_ROTATIONS : Array[float] = [-PI/4.0, -PI/8.0, 0.0, PI/8.0, PI/4.0]
 
 ## CREATING
 var WAITING_ROTATION_DURATION : float
-const WAITING_LOOP_NUMBER : int = 2
+const WAITING_MOVE_DISTANCE : float = 500.0
 
 ## REDUCING
-const SUN_SHAKING_N : int = 5
+const SUN_SHAKING_N : int = 10
 var SUN_SHAKING_DURATION : float
-const SUN_SHAKING_DISTANCE : float = 5.0
+const SUN_SHAKING_DISTANCE : float = 10.0
 var SUN_REDUCING_SCALE : float
+const SUN_REDUCING_MINIMUM : float = 0.3
 
 ## ABSORBING
 const SUN_ABSORBING_DURATION : float = 0.3
-const SUN_ABSORBED_DURATION : float = 0.3
 const GATHER_POSITION = Vector2(0.0, 140.0)
 
 ## DAMAGE
@@ -45,10 +46,9 @@ func _set_difficulty(value : float):
 	WAITING_ROTATION_DURATION = 5.0 / (1.0 + log(1.0 + DIFFICULTY))
 	
 	# Time of sun shaking during which we can hit the sun to reduce its energy
-	SUN_SHAKING_DURATION = 5.0 / (1.0 + log(1.0 + DIFFICULTY))
+	SUN_SHAKING_DURATION = 3.0 / (1.0 + log(1.0 + DIFFICULTY))
 	
-	# Decrease of sun relative energy (1 is max, and at 0, the sun is destroyed)
-	# 0.1 ==> need 10 hits to destroy the sun
+	# Decrease of sun relative energy (1 is max, and at SUN_REDUCING_MINIMUM, the sun is destroyed)
 	SUN_REDUCING_SCALE = 0.1 # NEED TO DEPEND ON ATTACK
 	
 	# MAXIMUM DMG OF ONE SUN
@@ -93,17 +93,20 @@ func _init_plants():
 
 	# Initialize the suns
 	var plants_posible_angles_left : Array[float] = PLANTS_POSSIBLE_ANGLES.duplicate()
+	var plants_rotations_left : Array[float] = PLANTS_ROTATIONS.duplicate()
 	for plant in plants:
 		
 		# setup state and randomize position
 		var random_plant_angle_id : int =  randi() % len(plants_posible_angles_left)
 
 		plants_state[plant] = {
-			"angle":plants_posible_angles_left[random_plant_angle_id],
+			"angle": plants_posible_angles_left[random_plant_angle_id],
+			"rotation": plants_rotations_left[random_plant_angle_id],
 			"rel_energy": 1.0,
 			"state":"init"
 		}
 		plants_posible_angles_left.pop_at(random_plant_angle_id)
+		plants_rotations_left.pop_at(random_plant_angle_id)
 		
 		# setup sun and plant geometry
 		plant.position = Vector2(
@@ -112,6 +115,8 @@ func _init_plants():
 		)
 		plant.get_node("Sun").position = Vector2(0.0, -125.0) # Relative position
 		
+		plant.rotation = 0.0
+		
 		plant.scale = Vector2.ZERO
 		plant.get_node("Sun").scale = Vector2.ZERO
 		
@@ -119,7 +124,7 @@ func _init_plants():
 		plant.get_node("Sun").show()
 		
 		# Set as can be hit
-		_attempt_to_growth_plant(plant)
+		_attempt_to_spawn_plant(plant)
 		
 
 
@@ -127,6 +132,7 @@ func _init_sunbeam():
 	# Initialize sunbeam at no energy
 	$Beam.scale = Vector2.ZERO
 	$Beam.position = GATHER_POSITION
+	$FlowerDeco.position = GATHER_POSITION
 	$Beam.hide()
 	sunbeam_energy_rel = 0.0
 	sunbeam_n_suns = 0
@@ -156,25 +162,52 @@ func _play_waiting_animation():
 	main_tween = create_tween()
 	for plant in plants:
 			main_tween.parallel().tween_property(plant, "scale", 
-				Vector2.ONE, 2.0).set_trans(Tween.TRANS_ELASTIC)
+				Vector2.ONE, 2.0).set_trans(Tween.TRANS_EXPO)
 	await main_tween.finished
 	
-
-	for loop_index in range(WAITING_LOOP_NUMBER):
-		main_tween = create_tween()
+	$Cuteplant/Body/Sprite2DNormal.show()
+	$Cuteplant/Body/Sprite2DAttack.hide()
+	$Cuteplant/Body/Sprite2DBeam.hide()
+	$Cuteplant/Body/Sprite2DHit.hide()
 	
-		# Furuboule is turning randomly around the same center
+	main_tween = create_tween()
+	for plant in plants:
+			main_tween.parallel().tween_property(plant, "rotation", 
+				plants_state[plant]["rotation"], 
+				0.3).as_relative().from_current().set_trans(Tween.TRANS_CUBIC)
+	await main_tween.finished
+
+	# shuffle randomly the list of suns
+	var copy_of_plants : Array[Node] = plants.duplicate()
+	copy_of_plants.shuffle()
+
+	# gather suns towards the hands
+	for plant in copy_of_plants:
+
+		_attempt_to_growth_plant(plant)
+
+		main_tween = create_tween()
+		# Turning randomly around the same center
 		# With the associated hands
 		var random_rotation = [-1.0, 1.0][randi() % 2] * randf_range(PI, 2*PI)
-		main_tween.tween_property($Cuteplant, "rotation", random_rotation, WAITING_ROTATION_DURATION).as_relative().from_current().set_trans(Tween.TRANS_SINE)
+		main_tween.parallel().tween_property($Cuteplant, "rotation", random_rotation, WAITING_ROTATION_DURATION).as_relative().from_current().set_trans(Tween.TRANS_SINE)
 		
-		# Animation of the hands
-		for plant in plants:
-			main_tween.parallel().tween_property(plant.get_node("Sun"), "scale", 
-				Vector2(1.0/(WAITING_LOOP_NUMBER - loop_index), 1.0/(WAITING_LOOP_NUMBER - loop_index)),
-				WAITING_ROTATION_DURATION).set_trans(Tween.TRANS_LINEAR)
+		# And moving from left to right while body changing size
+		if $Cuteplant.position[0] == 0.0:
+			var random_position : float = [-1.0, 1.0][randi() % 2]* WAITING_MOVE_DISTANCE * randf_range(0.8, 1.0)
+			main_tween.parallel().tween_property($Cuteplant, "position", Vector2(random_position, 0.0), WAITING_ROTATION_DURATION).set_trans(Tween.TRANS_CUBIC)
+			main_tween.parallel().tween_property($Cuteplant/Body, "scale", Vector2(0.8, 0.8), WAITING_ROTATION_DURATION).set_trans(Tween.TRANS_CUBIC)
+		else:
+			main_tween.parallel().tween_property($Cuteplant, "position", Vector2.ZERO, WAITING_ROTATION_DURATION).set_trans(Tween.TRANS_CUBIC)
+			main_tween.parallel().tween_property($Cuteplant/Body, "scale", Vector2.ONE, WAITING_ROTATION_DURATION).set_trans(Tween.TRANS_CUBIC)
+		
+		# Animation of the plant
+		main_tween.parallel().tween_property(plant.get_node("Sun"), "scale", 
+			Vector2.ONE, WAITING_ROTATION_DURATION).set_trans(Tween.TRANS_LINEAR)
 
 		await main_tween.finished
+		
+		_attempt_to_invicible_plant(plant)
 	
 	_play_preparing_animation.call_deferred()
 
@@ -187,7 +220,9 @@ func _play_preparing_animation():
 		_attempt_to_invicible_plant(plant)
 
 	main_tween = create_tween()
-	main_tween.tween_property($Cuteplant, "rotation", 0.0, 0.25 * WAITING_ROTATION_DURATION)
+	main_tween.parallel().tween_property($Cuteplant, "rotation", 0.0, 0.25 * WAITING_ROTATION_DURATION)
+	main_tween.parallel().tween_property($Cuteplant/Body, "scale", Vector2.ONE, 0.25 * WAITING_ROTATION_DURATION)
+	main_tween.parallel().tween_property($Cuteplant, "position", Vector2.ZERO, 0.25 * WAITING_ROTATION_DURATION)
 	await main_tween.finished
 
 	_play_gathering_animation.call_deferred()
@@ -225,8 +260,9 @@ func _play_gathering_animation():
 			main_tween.tween_property(plant.get_node("Sun"), "position", random_vect_add, shake_move_time).as_relative().from_current().set_trans(Tween.TRANS_LINEAR)
 			main_tween.tween_property(plant.get_node("Sun"), "position", initial_pos, shake_move_time).set_trans(Tween.TRANS_LINEAR)
 			await main_tween.finished
-			if (plants_state[plant]["rel_energy"] < SUN_REDUCING_SCALE):
+			if (plants_state[plant]["rel_energy"] < SUN_REDUCING_MINIMUM):
 				main_tween = create_tween()
+				_attempt_to_destroy_sun(plant)
 				main_tween.tween_property(plant, "position:y", 800.0, 0.3).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 				await main_tween.finished
 				break
@@ -238,6 +274,10 @@ func _play_gathering_animation():
 		if (plants_state[plant]["rel_energy"] > 0.0):
 			# Sun go to absorbing zone
 			main_tween = create_tween()
+			
+			if plants_state[plant]["rotation"] != 0.0 :
+				main_tween.tween_property(plant, "rotation", 0.0, 0.2).set_trans(Tween.TRANS_EXPO)
+			
 			main_tween.tween_property(plant.get_node("Sun"), "position", 
 				GATHER_POSITION - plant.position, 
 				SUN_ABSORBING_DURATION).set_trans(Tween.TRANS_EXPO)
@@ -266,29 +306,63 @@ func _play_releasing_animation():
 
 		# Final sun is launched
 		$Beam.scale = Vector2.ZERO
+		$Beam.modulate.a = 0.0
 		$Beam.show()
+		$FlowerDeco.scale = Vector2.ZERO
+		$FlowerDeco.modulate.a = 0.0
+		$FlowerDeco.show()
+		
+		# Sun and lower are arriving
 		main_tween = create_tween()
-#		main_tween.tween_property($SunBeam, "scale", Vector2(0.0, 0.0), 0.5).set_trans(Tween.TRANS_ELASTIC)
-		main_tween.tween_property($Beam, "scale", Vector2(2.0, 2.0), 1).set_trans(Tween.TRANS_EXPO)
+		main_tween.parallel().tween_property($Beam, "modulate:a", 1.0, 1).set_trans(Tween.TRANS_EXPO)
+		main_tween.parallel().tween_property($Beam, "scale", Vector2(2.0, 2.0), 1).set_trans(Tween.TRANS_EXPO)
+		main_tween.parallel().tween_property($FlowerDeco, "modulate:a", 1.0, 1).set_trans(Tween.TRANS_ELASTIC)
+		main_tween.parallel().tween_property($FlowerDeco, "scale", Vector2.ONE, 1).set_trans(Tween.TRANS_ELASTIC)
 		await main_tween.finished
-		$Beam.hide()
-		$Beam.scale = Vector2.ZERO
-
+		
+		# Flower is dancing
+		main_tween = create_tween()
+		main_tween.tween_property($FlowerDeco, "rotation",  PI/4.0, 0.08).as_relative().from_current().set_trans(Tween.TRANS_CUBIC)
+		await main_tween.finished
+		for i in range(6):
+			main_tween = create_tween()
+			if ($FlowerDeco.rotation <= 0.0):
+				main_tween.tween_property($FlowerDeco, "rotation",  PI/2.0, 0.08).as_relative().from_current().set_trans(Tween.TRANS_CUBIC)
+			else:
+				main_tween.tween_property($FlowerDeco, "rotation", -PI/2.0, 0.08).as_relative().from_current().set_trans(Tween.TRANS_CUBIC)
+			await main_tween.finished
+		main_tween = create_tween()
+		main_tween.tween_property($FlowerDeco, "rotation",  0.0, 0.08).set_trans(Tween.TRANS_CUBIC)
+		await main_tween.finished
+		
 		# Set dmg proportionnaly to the number of gathered suns and the shrinkage from player
 		_damage_character()
+		
+		# Sun and flower are removed
+		main_tween = create_tween()
+		main_tween.parallel().tween_property($Beam, "modulate:a", 0.0, 1).set_trans(Tween.TRANS_EXPO)
+		main_tween.parallel().tween_property($Beam, "scale", Vector2.ZERO, 1).set_trans(Tween.TRANS_EXPO)
+		main_tween.parallel().tween_property($FlowerDeco, "modulate:a", 0.0, 1).set_trans(Tween.TRANS_ELASTIC)
+		main_tween.parallel().tween_property($FlowerDeco, "scale", Vector2.ZERO, 1).set_trans(Tween.TRANS_ELASTIC)
+		await main_tween.finished
+		
+		$Beam.hide()
+		$FlowerDeco.hide()
 		$Cuteplant/Body/Sprite2DBeam.hide()
-
+		$Cuteplant/Body/Sprite2DAttack.show()
+		
+	else:
+		$Cuteplant/Body/Sprite2DHit.show()
 
 	# Change state
-	$Cuteplant/Body/Sprite2DNormal.show()
 	_play_waiting_animation.call_deferred()
 
 
-func _attempt_to_growth_plant(plant : Node2D):
-	if not plants_state[plant]["state"] == "growth":
-		plants_state[plant]["state"] = "growth"
-		plant.get_node("Body/TextureButtonGrowth").show()
-		plant.get_node("Body/TextureButtonWait").hide()
+func _attempt_to_spawn_plant(plant : Node2D):
+	if not plants_state[plant]["state"] == "spawning":
+		plants_state[plant]["state"] = "spawning"
+		plant.get_node("Body/TextureButtonGrowth").hide()
+		plant.get_node("Body/TextureButtonWait").show()
 		plant.get_node("Sun/TextureButtonAbsorb").hide()
 		plant.get_node("Sun/TextureButtonWait").show()
 		# add target fx
@@ -297,6 +371,15 @@ func _attempt_to_growth_plant(plant : Node2D):
 		target_fx.h = 200.0
 		target_fx.position = plant.position # carefull these are local coordinates
 		add_child(target_fx)
+
+func _attempt_to_growth_plant(plant : Node2D):
+	if not plants_state[plant]["state"] == "growth":
+		plants_state[plant]["state"] = "growth"
+		plant.get_node("Body/TextureButtonGrowth").show()
+		plant.get_node("Body/TextureButtonWait").hide()
+		plant.get_node("Sun/TextureButtonAbsorb").hide()
+		plant.get_node("Sun/TextureButtonWait").show()
+		
 
 func _attempt_to_invicible_plant(plant : Node2D):
 	if not plants_state[plant]["state"] == "invicible":
@@ -314,6 +397,18 @@ func _attempt_to_absorb_sun(plant : Node2D):
 		plant.get_node("Body/TextureButtonWait").show()
 		plant.get_node("Sun/TextureButtonAbsorb").show()
 		plant.get_node("Sun/TextureButtonWait").hide()
+
+func _attempt_to_destroy_sun(plant : Node2D):
+	if not plants_state[plant]["state"] == "destroyed":
+		plants_state[plant]["state"] = "destroyed"
+		plant.get_node("Body/TextureButtonGrowth").hide()
+		plant.get_node("Body/TextureButtonWait").show()
+		plant.get_node("Sun/TextureButtonAbsorb").hide()
+		plant.get_node("Sun/TextureButtonWait").show()
+		# add blocked fx
+		var blocked_fx = preload("res://modules/remi/fx/blocked.tscn").instantiate()
+		blocked_fx.position = plant.position # carefull these are local coordinates
+		add_child(blocked_fx)
 
 
 func _attempt_to_wait_sun(plant : Node2D):
@@ -359,7 +454,7 @@ func _reduce_sun(plant : Node2D):
 	plants_state[plant]["rel_energy"] -= SUN_REDUCING_SCALE
 	plant.get_node("Sun").scale = Vector2(plants_state[plant]["rel_energy"], plants_state[plant]["rel_energy"])	
 
-	if plants_state[plant]["rel_energy"] < SUN_REDUCING_SCALE:
+	if plants_state[plant]["rel_energy"] < SUN_REDUCING_MINIMUM:
 		plant.get_node("Sun").scale = Vector2(0.0, 0.0)
 		plants_state[plant]["rel_energy"] = 0.0
 		plant.get_node("Sun").hide()
