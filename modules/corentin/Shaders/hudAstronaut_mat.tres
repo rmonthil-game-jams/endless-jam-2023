@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ckabik00r1583"]
+
+[ext_resource type="Shader" uid="uid://bua1i2etbg5nj" path="res://modules/corentin/Shaders/hudAstronaut.tres" id="1_lv8tr"]
+
+[resource]
+shader = ExtResource("1_lv8tr")

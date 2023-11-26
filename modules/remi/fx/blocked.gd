@@ -14,6 +14,12 @@ func _ready():
 	_play_animation.call_deferred()
 
 func _play_animation():
+	# Launch sound at spawn time
+	var sound_res = preload("res://modules/remi/assets/audio/aok_4.wav") # Find a better sound for this ? (not reserved for now)
+	var sound_fx = preload("res://modules/odilon/fx/sound.tscn").instantiate()
+	sound_fx.res = sound_res
+	add_child(sound_fx)
+	
 	# init
 	$Sprite2D.scale = Vector2.ZERO
 	$Sprite2D.modulate.a = 1.0

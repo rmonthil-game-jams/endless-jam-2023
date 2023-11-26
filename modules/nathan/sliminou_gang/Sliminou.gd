@@ -3,6 +3,9 @@ extends Node2D # REMI: REMOVED STRANGE INHERITANC, MAYBE WE CAN DISCUSS ABOUT IT
 signal just_died_individual
 signal just_spawned
 
+#CONST
+const STANDARD_PLAYER_DAMAGE : float = 2.0
+
 # MOB PARAMETERS
 var DIFFICULTY : float = 0.0: set = _set_difficulty # REMI: _set_difficulty
 
@@ -29,7 +32,7 @@ var SPEACH_DAMAGE_PER_ATTACK : float
 # REMI: _set_difficulty
 func _set_difficulty(value : float):
 	DIFFICULTY = value
-	DUPLICATE_LOOP_NUMBER = 2 #round(8.0 - DIFFICULTY) #NUMBER OF IDLE PHASES
+	DUPLICATE_LOOP_NUMBER = max(round(8.0 - DIFFICULTY),4.0) #NUMBER OF IDLE PHASES
 	DANCE_MOVE_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY/4))
 	JUMP_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
 	JUMP_HEIGHT = min(1500.0, 500.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
@@ -49,16 +52,21 @@ var tween_bis : Tween = null
 var hands : Array[Node] = []
 # var hands_state : Dictionary = {}
 var character : Node = null
-var duplicate_countdown : int = DUPLICATE_LOOP_NUMBER
+var duplicate_countdown : int 
 
 ## called when the node enters the scene tree for the first time.
 func _ready():
 	# set difficulty
 	_set_difficulty(DIFFICULTY)
+	duplicate_countdown = DUPLICATE_LOOP_NUMBER
+	
+	print("difficulty indiv ", DIFFICULTY)
+	
 #	# other
 	character = get_tree().get_nodes_in_group("character").front()
 	# avoid using await in the _ready function
-	$Body/Mouth/TextureButton.pressed.connect(_mouth_attacking_pressed.bind($Body/Mouth))
+	$Body/Mouth/MouthButton.pressed.connect(_mouth_attacking_pressed.bind($Body/Mouth))
+	$Body/WeakSpot/WeakSpotButton.pressed.connect(_hit.bind(STANDARD_PLAYER_DAMAGE))
 	_clean_attack.call_deferred($Speach/SpeachBubble)
 
 # REMI: QUITE A FEW TWEAKS
@@ -167,9 +175,11 @@ func _play_jump_animation():
 	tween = create_tween()
 	tween.tween_property($Body, "position", Vector2(0.0,0.0), JUMP_DURATION/3).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property($Body, "scale", Vector2(1.0, bouncing_value), JUMP_DURATION/3).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_callback($Body/WeakSpot.show)
 	tween.tween_property($Body, "position", Vector2(0.0, -JUMP_HEIGHT), JUMP_DURATION).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property($Body, "scale", Vector2(1.0,1.0), JUMP_DURATION/2.5).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property($Body, "position", Vector2(0.0,0.0), 2.0*JUMP_DURATION/3.0).set_trans(Tween.TRANS_LINEAR)
+	tween.tween_callback($Body/WeakSpot.hide)
 	await tween.finished
 	_play_waiting_animation.call_deferred(IDLE_LOOP_NUMBER, false)
 
@@ -212,6 +222,7 @@ func _mouth_attacking_pressed(mouth : Node2D):
 
 func _hit(damage_points : float):
 	life_points -= damage_points
+	$Body/WeakSpot.hide()
 	# TODO: DEATH ANIMATION
 	if life_points <= 0.0:
 		get_parent().get_parent()._register_spawning(-1)

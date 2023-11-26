@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c8d26pspayqki"]
+
+[ext_resource type="Shader" uid="uid://m1irtpmvb00b" path="res://modules/corentin/Shaders/normal.tres" id="1_m3eh6"]
+
+[resource]
+shader = ExtResource("1_m3eh6")
