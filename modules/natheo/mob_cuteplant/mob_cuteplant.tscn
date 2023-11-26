@@ -12,6 +12,9 @@
 [node name="Cuteplant" type="Node2D"]
 script = ExtResource("1_dcm0i")
 
+[node name="MobHPBar" parent="." instance=ExtResource("8_jolff")]
+position = Vector2(100, -370)
+
 [node name="Cuteplant" type="Node2D" parent="."]
 
 [node name="Body" type="Node2D" parent="Cuteplant"]
@@ -39,11 +42,8 @@ texture = ExtResource("5_pr3ko")
 
 [node name="Plant3" parent="Cuteplant/Plants" instance=ExtResource("6_548d4")]
 
-[node name="MobHPBar" parent="." instance=ExtResource("8_jolff")]
-position = Vector2(100, -350)
-
 [node name="Beam" type="Node2D" parent="."]
+visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Beam"]
-visible = false
 texture = ExtResource("8_qm7tq")
