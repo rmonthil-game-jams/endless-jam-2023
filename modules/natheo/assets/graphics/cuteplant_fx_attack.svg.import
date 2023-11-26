@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvlisc1j5v213"
-path="res://.godot/imported/cuteplant_light_particle.svg-dc1f0935e9ad5000e519e6b2c1457074.ctex"
+uid="uid://d35cniu6djb3t"
+path="res://.godot/imported/cuteplant_fx_attack.svg-e11111946bafbb03a2e4372f5024ff4e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/remi/assets/graphics/cuteplant_light_particle.svg"
-dest_files=["res://.godot/imported/cuteplant_light_particle.svg-dc1f0935e9ad5000e519e6b2c1457074.ctex"]
+source_file="res://modules/natheo/assets/graphics/cuteplant_fx_attack.svg"
+dest_files=["res://.godot/imported/cuteplant_fx_attack.svg-e11111946bafbb03a2e4372f5024ff4e.ctex"]
 
 [params]
 

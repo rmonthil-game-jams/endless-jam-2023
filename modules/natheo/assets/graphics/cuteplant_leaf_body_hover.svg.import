@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvlisc1j5v213"
-path="res://.godot/imported/cuteplant_light_particle.svg-dc1f0935e9ad5000e519e6b2c1457074.ctex"
+uid="uid://67ke55wfrptn"
+path="res://.godot/imported/cuteplant_leaf_body_hover.svg-681b63035cd1ecb2df2ce78a6b4e5864.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/remi/assets/graphics/cuteplant_light_particle.svg"
-dest_files=["res://.godot/imported/cuteplant_light_particle.svg-dc1f0935e9ad5000e519e6b2c1457074.ctex"]
+source_file="res://modules/natheo/assets/graphics/cuteplant_leaf_body_hover.svg"
+dest_files=["res://.godot/imported/cuteplant_leaf_body_hover.svg-681b63035cd1ecb2df2ce78a6b4e5864.ctex"]
 
 [params]
 
