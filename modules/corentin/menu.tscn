@@ -214,6 +214,7 @@ theme_override_font_sizes/font_size = 80
 text = "GAME OVER"
 
 [node name="RoomReached" type="Label" parent="CanvasLayer/Go"]
+layout_mode = 0
 offset_left = 477.0
 offset_top = 266.0
 offset_right = 711.0
@@ -225,6 +226,7 @@ text = "ROOM REACHED: 1"
 horizontal_alignment = 1
 
 [node name="Tip" type="Label" parent="CanvasLayer/Go"]
+layout_mode = 0
 offset_left = 463.0
 offset_top = 386.0
 offset_right = 697.0
