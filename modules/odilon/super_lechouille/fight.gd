@@ -25,8 +25,8 @@ var SpawnSlots : Array[Vector2]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_difficulty(DIFFICULTY) # Force call of set_difficulty
-	# Max spawn slots is : 4
-	for i in [0, 0.33, 0.66, 1]:
+	# Max spawn slots is : 5
+	for i in [0, 0.25, 0.5, 0.75, 1]:
 		# Add a small scramble to this spot
 		var Spot : Vector2 = _get_spot(i) + Vector2(randf_range(-100, 100), randf_range(-40, 200))
 		SpawnSlots.append(Spot)
@@ -58,7 +58,9 @@ func _get_spot(i : float):
 func _spawn_mobs():
 	total_health = 0;
 	
-	for i in range(min(NB_MOBS, SpawnSlots.size())):
+	var mobs_to_spawn = min(NB_MOBS, SpawnSlots.size())
+	
+	for i in range(mobs_to_spawn):
 		var new_mob : Node2D = mob_scene.instantiate()
 		new_mob.set_difficulty(PER_MOB_DIFFICULTY)
 		new_mob.position = SpawnSlots[i]
@@ -68,7 +70,7 @@ func _spawn_mobs():
 		
 		$Mobs.add_child(new_mob)
 	
-	alive_mobs = NB_MOBS
+	alive_mobs = mobs_to_spawn
 
 
 func _on_mob_take_damage():
