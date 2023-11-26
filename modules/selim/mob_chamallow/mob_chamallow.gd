@@ -8,32 +8,29 @@ signal just_died
 var DIFFICULTY : float = 0.0: set = _set_difficulty
 
 # MOB SUB PARAMETERS
-## WAITING
-"""
-var HAND_MOVE_DURATION : float = 1.0 / (1.0 + log(1.0 + DIFFICULTY)) # INVERSE OF MOVEMENT SPEED
-var HAND_MOVE_RADIUS : float = min(400.0, 50.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
-const IDLE_LOOP_NUMBER : int = 4
-"""
 ## ATTACKING
 
 var HAND_ATTACK_DURATION_FACTOR : float
 var DAMAGE_PER_ATTACK_P1 : float
 var DAMAGE_PER_ATTACK_P2 : float
 var TIME_BETWEEN_ATTACKS_P1 : float
-var X_MARGIN : int = 50
-var Y_MARGIN : int = 50
+var X_MARGIN : int = 100
+var Y_MARGIN : int = 100
 var ATTACK_WINDOW_RANGE : Vector2
 var ATTACK_SCALE : Vector2 = Vector2(1.0, 1.0) # REMI: TRY TO AVOID RESCALING IMAGES PERMANENTLY
+var TRAN : bool = false
+var DAMAGE_MULTIPLIER : int = 0
+
 
 func _set_difficulty(value : float): # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE THAT BEFORE
 	DIFFICULTY = value
 	HAND_ATTACK_DURATION_FACTOR = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
-	DAMAGE_PER_ATTACK_P1 = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
+	DAMAGE_PER_ATTACK_P1 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 	DAMAGE_PER_ATTACK_P2 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-	TIME_BETWEEN_ATTACKS_P1 = 2.0 * (1.0 + log(1.0 + DIFFICULTY))
+	TIME_BETWEEN_ATTACKS_P1 = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
 
 # MOB STATE
-var life_points : float = 20.0
+var life_points : float = 40
 var state : String # useles at the moment but who knows in the future?
 
 # private
@@ -43,8 +40,11 @@ var state : String # useles at the moment but who knows in the future?
 
 ## initialization is unecessary because they are already initialized to these values
 var main_tween : Tween = null
+var blocked_tween_p2 : Tween = null
 var bodies : Array[Node] = []
 var attacks : Array[Node] = []
+var attacks2 : Array[Node] = []
+var button_state_p2 : Array[bool] = []
 var hands_state : Dictionary = {}
 var character : Node = null
 var rng = RandomNumberGenerator.new()
@@ -54,7 +54,7 @@ func _ready():
 	# set difficulty
 	_set_difficulty(DIFFICULTY) # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE THAT BEFORE
 	# other
-	ATTACK_WINDOW_RANGE = (get_viewport_rect().size - 2*Vector2(X_MARGIN,Y_MARGIN))/2
+	ATTACK_WINDOW_RANGE = (2*get_viewport_rect().size - 2*Vector2(X_MARGIN,Y_MARGIN))/2
 	$Body.get_node("TextureButtonP1").pressed.connect(_body_attacks.bind(DAMAGE_PER_ATTACK_P1))
 	$AttackP1.get_node("TextureButtonAttackP1").pressed.connect(_block_attack.bind())
 	bodies = $Body.get_children()
@@ -63,22 +63,14 @@ func _ready():
 	attacks = $AttackP1.get_children()
 	for attack in attacks:
 		attack.hide()
+	attacks2 = $AttacksP2.get_children()
+	for attack in attacks2:
+		attack.get_node("TextureButtonAttackP2").pressed.connect(_block_attack_2.bind(attack))
+		
+	character = get_tree().get_nodes_in_group("character").front()
 	# REMI: hp bar
 	mob_hp_progress_bar.max_value = life_points
 	_set_hp_bar(life_points)
-#	hands = $Hands.get_children()
-#	for hand in hands:
-#		# setup state
-#		hands_state[hand] = {
-#			"initial_position":hand.position,
-#			"state":"open",
-#		} # careful here, position is in local coordinate use global_position for global coordinates
-#		# setup signals
-#		hand.get_node("TextureButtonOpen").pressed.connect(_hand_open_pressed.bind(hand))
-#		hand.get_node("TextureButtonClosed").pressed.connect(_hand_closed_pressed.bind(hand))
-#		hand.get_node("TextureButtonAttacking").pressed.connect(_hand_attacking_pressed.bind(hand))
-#	character = get_tree().get_nodes_in_group("character").front()
-	# avoid using await in the _ready function
 	_play_appearing_animation.call_deferred()
 	
 
@@ -107,7 +99,11 @@ func _phase_1():
 	add_child(target_fx)
 	
 	await get_tree().create_timer(TIME_BETWEEN_ATTACKS_P1).timeout
-	_phase_1_attack()
+	
+	if TRAN:
+		pass
+	else:
+		_phase_1_attack()
 	
 
 func _phase_1_attack():
@@ -137,122 +133,152 @@ func _end_phase_1_attack():
 	$AttackP1/TextureButtonAttackP1.hide()
 	$AttackP1/TextureButtonAttackP1.scale = ATTACK_SCALE
 	character.hit(DAMAGE_PER_ATTACK_P1)
-	_phase_1()
+	
+	if TRAN:
+		pass
+	else:
+		_phase_1()
+	
+	
+func _phase_2():
+	state = "phase_2"
+	await get_tree().create_timer(2.0).timeout
+	
+	
 
-#
-#func _play_waiting_animation():
-#	state = "waiting"
-#	$Body/Sprite2DNormal.show()
-#	$Body/Sprite2DAttacking.hide()
-#	for loop_index in range(IDLE_LOOP_NUMBER):
-#		main_tween = create_tween()
-#		for hand in hands:
-#			# generation of random vector whithin a disk of radius HAND_MOVE_RADIUS, the "sqrt" ensures uniform distribution.
-#			var random_vector : Vector2 = Vector2(1.0, 0.0).rotated(randf_range(-PI, PI)) * sqrt(randf_range(0.0, 1.0)) * HAND_MOVE_RADIUS
-#			var target_position : Vector2 = hands_state[hand]["initial_position"] + random_vector
-#			main_tween.parallel().tween_property(hand, "position", target_position, HAND_MOVE_DURATION).set_trans(Tween.TRANS_CUBIC)
-#		await main_tween.finished
-#	_play_attacking_animation.call_deferred()
-#
-#func _play_attacking_animation():
-#	state = "attacking"
-#	$Body/Sprite2DNormal.hide()
-#	$Body/Sprite2DAttacking.show()
-#	# shuffle randomly the list of hands
-#	var copy_of_hands : Array[Node] = hands.duplicate()
-#	copy_of_hands.shuffle()
-#	# close all rands
-#	for hand in copy_of_hands:
-#		_attempt_to_close_hand(hand)
-#	# attack with hands
-#	for hand in copy_of_hands:
-#		main_tween = create_tween()
-#		main_tween.tween_property(hand, "scale", Vector2(0.8, 0.8), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-#		main_tween.tween_callback(_attempt_to_attack.bind(hand))
-#		main_tween.tween_property(hand, "scale", Vector2(2.0, 2.0), 1.0 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
-#		main_tween.tween_callback(_attempt_damaging_character.bind(hand))
-#		main_tween.tween_property(hand, "scale", Vector2(1.0, 1.0), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-#		main_tween.tween_callback(_attempt_to_close_hand.bind(hand))
-#		await main_tween.finished
-#	# close all rands
-#	for hand in copy_of_hands:
-#		_attempt_to_open_hand(hand)
-#	# change state
-#	_play_waiting_animation.call_deferred()
-#
-#func _attempt_to_open_hand(hand : Node2D):
-#	if not hands_state[hand]["state"] == "open":
-#		hands_state[hand]["state"] = "open"
-#		hand.get_node("TextureButtonOpen").show()
-#		hand.get_node("TextureButtonClosed").hide()
-#		hand.get_node("TextureButtonAttacking").hide()
-#
-#func _attempt_to_close_hand(hand : Node2D):
-#	if not hands_state[hand]["state"] == "close":
-#		hands_state[hand]["state"] = "closed"
-#		hand.get_node("TextureButtonOpen").hide()
-#		hand.get_node("TextureButtonClosed").show()
-#		hand.get_node("TextureButtonAttacking").hide()
-#
-#func _attempt_to_attack(hand : Node2D):
-#	if not hands_state[hand]["state"] == "attack":
-#		hands_state[hand]["state"] = "attacking"
-#		hand.get_node("TextureButtonOpen").hide()
-#		hand.get_node("TextureButtonClosed").hide()
-#		hand.get_node("TextureButtonAttacking").show()
-#
-#func _attempt_damaging_character(hand : Node2D):
-#	if hands_state[hand]["state"] == "attacking":
-#		character.hit(HAND_DAMAGE_PER_ATTACK)
-#
-#func _hand_open_pressed(hand : Node2D):
-#	_hit(character.damage_per_attack)
-#
-#func _hit(damage_points : float):
-#	life_points -= damage_points
-#	_attempt_to_play_hit_animation()
-#	# TODO: DEATH ANIMATION
-#	if life_points <= 0.0:
-#		_attempt_to_play_death_animation()
-#
-#var hit_tween : Tween
-#
-#func _attempt_to_play_hit_animation():
-#	if not hit_tween or not hit_tween.is_running():
-#		hit_tween = create_tween()
-#		hit_tween.tween_property($Body, "modulate", Color(1.0, 0.5, 0.5), 0.125).set_trans(Tween.TRANS_CUBIC)
-#		hit_tween.tween_property($Body, "modulate", Color(1.0, 1.0, 1.0), 0.125).set_trans(Tween.TRANS_CUBIC)
-#
-#func _attempt_to_play_death_animation():
-#	if state != "dying":
-#		state = "dying"
-#		if main_tween:
-#			main_tween.kill()
-#		main_tween = create_tween()
-#		main_tween.tween_property(self, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
-#		await main_tween.finished
-#		just_died.emit()
-#
-#func _hand_closed_pressed(hand : Node2D):
-#	pass # TODO: MAYBE DO SOMETHING HERE
-#
-#func _hand_attacking_pressed(hand : Node2D):
-#	# TODO: ANIMATION
-#	_attempt_to_close_hand(hand)
+func _phase_2_attack():
+	$Body/Sprite2DPhase2.show()
+	$Body/TextureButtonP2.hide()
+	
+	for i in range(4):
+		$AttacksP2/AttackP21.position = Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], 0.0), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+		$AttacksP2/AttackP22.position = Vector2(rng.randf_range(0.0, ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+		var target_fx1 = preload("res://modules/remi/fx/target.tscn").instantiate()
+		var target_fx2 = preload("res://modules/remi/fx/target.tscn").instantiate()
+		target_fx1.w = 421.0
+		target_fx1.h = 348.0
+		target_fx2.w = 421.0
+		target_fx2.h = 348.0
+		target_fx1.position = $AttacksP2/AttackP21.position # carefull these are local coordinates
+		target_fx2.position = $AttacksP2/AttackP22.position # carefull these are local coordinates
+		add_child(target_fx1)
+		add_child(target_fx2)
 
+		main_tween = create_tween()
+		$AttacksP2/AttackP21/TextureButtonAttackP2.show()
+		$AttacksP2/AttackP22/TextureButtonAttackP2.show()
+		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.tween_callback(_end_phase_2_attack_1)
+		await main_tween.finished
+		
+#		
+	var target_fx1 = preload("res://modules/remi/fx/target.tscn").instantiate()
+	var target_fx2 = preload("res://modules/remi/fx/target.tscn").instantiate()
+	var target_fx3 = preload("res://modules/remi/fx/target.tscn").instantiate()
+	target_fx1.w = 421.0
+	target_fx1.h = 348.0
+	target_fx2.w = 421.0
+	target_fx2.h = 348.0
+	target_fx3.w = 421.0
+	target_fx3.h = 348.0
+	$AttacksP2/AttackP21.position = Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], -ATTACK_WINDOW_RANGE[0]/3), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+	$AttacksP2/AttackP22.position = Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0]/3, ATTACK_WINDOW_RANGE[0]/3), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+	$AttacksP2/AttackP23.position = Vector2(rng.randf_range( ATTACK_WINDOW_RANGE[0]/3, ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+	
+	
+	main_tween = create_tween()
+	$AttacksP2/AttackP21/TextureButtonAttackP2.show()
+	$AttacksP2/AttackP22/TextureButtonAttackP2.show()
+	$AttacksP2/AttackP23/TextureButtonAttackP2.show()
+	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_callback(_end_phase_2_attack_1)
+	await main_tween.finished
+	
+	
+		
+	$Body/Sprite2DPhase2.hide()
+	
+	
+	
+func _end_phase_2_attack_1():
+	for attack2 in attacks2:
+		if attack2.get_node("TextureButtonAttackP2").visible:
+			attack2.get_node("TextureButtonAttackP2").hide()
+			DAMAGE_MULTIPLIER += 1
+		attack2.get_node("TextureButtonAttackP2").scale = ATTACK_SCALE
+	print(DAMAGE_MULTIPLIER)	
+	
+	if DAMAGE_MULTIPLIER != 0:
+		character.hit(DAMAGE_PER_ATTACK_P1*DAMAGE_MULTIPLIER)
+		
+	DAMAGE_MULTIPLIER = 0
+
+		
+		
 func _body_attacks(damage : float):
 	life_points -= damage
 	_set_hp_bar(max(life_points,0))
 	if life_points <= 0.0:
 		_death_animation()
-#	elif life_points <= 20 && state == "phase_1":
-#		_transition_to_phase_2()
-		
+	elif life_points <= 20 && state == "phase_1":
+		TRAN = true
+		_transition_to_phase_2()
+	
 func _transition_to_phase_2():
 	state = "transitioning_phase_2"
 	for body in bodies:
 		body.hide()
-	$AttackP1/Sprite2DAttacked.show()
+	$Body/Sprite2DTrans.show()
+	
+	for i in range(4):
+		main_tween = create_tween()
+		
+		if i==0:
+			main_tween.parallel().tween_property($Body/Sprite2DTrans, "scale", Vector2(1.4, 1.4), 3.0).set_trans(Tween.TRANS_CUBIC)
+		elif i==1:
+			main_tween.parallel().tween_property($Body/Sprite2DTrans, "modulate:r", 1.0, 3.0).set_trans(Tween.TRANS_CUBIC)
+		elif i==2:
+			main_tween.parallel().tween_property($Body/Sprite2DTrans, "modulate:g", 0.0, 3.0).set_trans(Tween.TRANS_CUBIC)
+		else:
+			main_tween.parallel().tween_property($Body/Sprite2DTrans, "modulate:b", 0.0, 3.0).set_trans(Tween.TRANS_CUBIC)
+	await main_tween.finished
+	
+	main_tween = create_tween()
+	
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 0.0, 0.25).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 1.0, 0.25).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 0.0, 0.25).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 1.0, 0.25).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 0.0, 0.25).set_trans(Tween.TRANS_CUBIC)
+	await main_tween.finished
+	
+	$Body/Sprite2DAttacked.hide()
+	
+	_phase_2_attack()
+	
 		
 func _block_attack():
 	$Body/Sprite2DAtttackingP1.hide()
@@ -269,12 +295,40 @@ func _block_attack():
 	main_tween = create_tween()
 	main_tween.tween_property($AttackP1/Sprite2DAttackedP1, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 	main_tween.tween_callback($AttackP1/Sprite2DAttackedP1.hide)
-	main_tween.tween_callback(_end_animation)
+	main_tween.tween_callback(_end_animation.bind($AttackP1/Sprite2DAttackedP1))
 	
 	_phase_1()
-		
-func _end_animation():
-	$AttackP1/Sprite2DAttackedP1.modulate.a = 1.0
+	
+	
+func _block_attack_2(attack : Node2D):
+	attack.get_node("TextureButtonAttackP2").hide()
+	attack.scale = ATTACK_SCALE
+#	for attack2 in attacks2:
+#		button_state_p2.push_back(attack2.get_node("TextureButtonAttackP2").visible)
+#	print(button_state_p2)	
+#	print(button_state_p2.all(_is_false))
+#	if button_state_p2.all(_is_false):
+#		main_tween.kill() 
+#	button_state_p2 = []
+	attack.get_node("Sprite2DAttackedP2").show()
+	
+	var blocked_fx = preload("res://modules/remi/fx/blocked.tscn").instantiate()
+	blocked_fx.TARGET_SCALE = Vector2.ONE
+	blocked_fx.position = attack.position # carefull these are local coordinates
+	add_child(blocked_fx)
+	
+	blocked_tween_p2 = create_tween()
+	blocked_tween_p2.tween_property(attack.get_node("Sprite2DAttackedP2"), "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
+	blocked_tween_p2.tween_callback(attack.get_node("Sprite2DAttackedP2").hide)
+	blocked_tween_p2.tween_callback(_end_animation.bind(attack.get_node("Sprite2DAttackedP2")))
+	
+	
+func _is_false(val):
+	return val==false
+
+	
+func _end_animation(attack_sprite):
+	attack_sprite.modulate.a = 1.0
 	
 func _death_animation():
 	main_tween.kill()
@@ -295,5 +349,4 @@ func _set_hp_bar(hp):
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float):
-#	print(life_points)
 	pass
