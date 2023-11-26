@@ -366,7 +366,7 @@ func _attempt_to_spawn_plant(plant : Node2D):
 		plant.get_node("Sun/TextureButtonAbsorb").hide()
 		plant.get_node("Sun/TextureButtonWait").show()
 		# add target fx
-		var target_fx = preload("res://modules/natheo/fx/target.tscn").instantiate()
+		var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
 		target_fx.w = 200.0
 		target_fx.h = 200.0
 		target_fx.position = plant.position # carefull these are local coordinates

@@ -362,7 +362,7 @@ func hit(damage_points : float):
 func heal(heal_points : float):
 	life_points = min(life_points + heal_points, max_life_points)
 	_set_hpbar_level(life_points)
-	$Audio/Heal.play.call_deferred()
+	$Audio/Heal.play.call_deferred()	
 	_heal_label_animation.call_deferred(heal_points)
 	_heal_color_rect_animation.call_deferred()
 
