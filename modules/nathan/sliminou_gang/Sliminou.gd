@@ -17,7 +17,7 @@ const DUPLICATE_DISTANCE_X = 400.0
 const DUPLICATE_DISTANCE_Y = 100.0
 const DISTANCE_SIZE_RATIO : float = 1e-3
 ## IDLE
-const IDLE_LOOP_NUMBER : int = 3
+const IDLE_LOOP_NUMBER : int = 1
 var DANCE_MOVE_DURATION : float
 const DANCE_MOVE_RADIUS : float = 400.0
 
@@ -47,7 +47,7 @@ func _set_difficulty(value : float):
 	SPEACH_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 	LIFE = 4.0 + log(0.5 + DIFFICULTY)
 
-	print(DUPLICATE_LOOP_NUMBER/2, " > ", LIFE, " / ", STANDARD_PLAYER_DAMAGE, " = ", LIFE/STANDARD_PLAYER_DAMAGE)
+	
 
 # MOB STATE
 var life_points : float = 5.0
@@ -70,7 +70,7 @@ func _ready():
 	_set_difficulty(DIFFICULTY)
 	duplicate_countdown = DUPLICATE_LOOP_NUMBER
 	life_points = LIFE
-	print("difficulty indiv ", DIFFICULTY)
+	
 	
 #	# other
 	character = get_tree().get_nodes_in_group("character").front()
@@ -78,7 +78,7 @@ func _ready():
 	$Body/Mouth/MouthButton.pressed.connect(_mouth_attacking_pressed.bind($Body/Mouth))
 	$Body/WeakSpot/WeakSpotButton.pressed.connect(_hit.bind(STANDARD_PLAYER_DAMAGE))
 	$Speach/SpeachBubble.get_node("SpeachText").visible_ratio = 0.0
-	_play_waiting_animation.call_deferred(1,false)
+	_play_waiting_animation.call_deferred(0,false)
 
 # REMI: QUITE A FEW TWEAKS
 func _play_dedoubling():
@@ -177,7 +177,7 @@ func _play_attacking_animation():
 	tween.tween_property($Speach/SpeachBubble, "scale", Vector2(0.25, 0.25), 0.125 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	
 	tween.tween_callback(_attacking.bind($Speach))
-	tween.tween_property($Speach/SpeachBubble, "scale", Vector2(2.0, 2.0), 0.5 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property($Speach/SpeachBubble, "scale", Vector2(2.5, 2.5), 0.5 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_callback(_attempt_damaging_character.bind())
 	tween.tween_property($Speach/SpeachBubble, "scale", Vector2(0.0, 0.0), 0.125 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_callback(_clean_attack.bind($Speach/SpeachBubble))
@@ -202,11 +202,17 @@ func _play_jump_animation():
 func _clean_attack(bubble : Node2D):
 	bubble.get_node("SpeachText").visible_ratio = 0.0
 	bubble.hide()
+	$Body/Mouth/MouthButton.disabled = true
+	$Body/Mouth/AnimationPlayer.stop()
 	bubble.rotation = 0.0
-	_play_waiting_animation.call_deferred(IDLE_LOOP_NUMBER, true)
+	
+	print(round((get_parent().get_parent().gang_size-0.5)/2.0))
+	_play_waiting_animation.call_deferred(IDLE_LOOP_NUMBER + round((get_parent().get_parent().gang_size-0.5)/2.0), true)
 
 func _attempt_to_attack(speach : Node2D):
 	state = STATE.loading_attack
+	$Body/Mouth/AnimationPlayer.play("MouthBabbling")
+	$Body/Mouth/MouthButton.disabled = false
 	speach.show()
 
 func _attacking(speach : Node2D):
@@ -229,11 +235,16 @@ func _attempt_to_cancel(speach : Node2D):
 		tween.kill()
 		
 		tween = create_tween()
-	
+		tween.tween_callback($Body/Mouth/AnimationPlayer.stop)
+		tween.parallel().tween_callback($Body/Hurt_Sprite.show)
+		tween.parallel().tween_callback($Body/Sprite2DNormal.hide)
 		tween.tween_property($Speach/SpeachBubble, "rotation", angle, 0.250 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
 		tween.tween_interval(0.125*SPEACH_ATTACK_DURATION_FACTOR)
 		tween.tween_property($Speach/SpeachBubble, "scale", Vector2(0.25, 0.25), 0.125 * SPEACH_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_callback($Body/Hurt_Sprite.hide)
+		tween.parallel().tween_callback($Body/Sprite2DNormal.show)
 		tween.tween_callback(_clean_attack.bind($Speach/SpeachBubble))
+
 
 func _mouth_attacking_pressed(mouth : Node2D):
 	# TODO: ANIMATION
@@ -252,8 +263,10 @@ func _hit(damage_points : float):
 	tween = create_tween()
 	
 	if life_points <= 0.0 :
-		tween.parallel().tween_callback($Body/WeakSpot.hide)
+		tween.parallel().tween_callback($Body/WeakSpot/WeakSpotButton.set_disabled.bind(true))
 	
+	tween.tween_callback($Body/Sprite2DNormal.hide)
+	tween.parallel().tween_callback($Body/Hurt_FullSprite.show)
 	tween.tween_property($Body, "scale", Vector2(0.7,0.7),0.125).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property($Body, "scale", Vector2(1.0,1.0),0.25).set_trans(Tween.TRANS_ELASTIC)
 	tween.tween_property($Body, "position", Vector2(0.0,0.0),refall_duration).set_trans(Tween.TRANS_ELASTIC)
@@ -267,7 +280,9 @@ func _hit(damage_points : float):
 		queue_free()
 	else :
 		tween.parallel().tween_property($Body, "rotation", shaken_angle,refall_duration).set_trans(Tween.TRANS_LINEAR)
-		tween.tween_interval(JUMP_DURATION)
+		tween.tween_interval(JUMP_DURATION/2.0)
 		tween.parallel().tween_callback($Body/WeakSpot.hide)
 		tween.tween_property($Body, "rotation", 0.0,FALL_DURATION).set_trans(Tween.TRANS_QUAD)
+		tween.tween_callback($Body/Sprite2DNormal.show)
+		tween.parallel().tween_callback($Body/Hurt_FullSprite.hide)
 		tween.tween_callback(_play_waiting_animation.bind(IDLE_LOOP_NUMBER, false))

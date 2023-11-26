@@ -1,16 +1,25 @@
-[gd_scene load_steps=11 format=3 uid="uid://so6jo25adcnv"]
+[gd_scene load_steps=17 format=3 uid="uid://so6jo25adcnv"]
 
 [ext_resource type="Script" path="res://modules/nathan/sliminou_gang/Sliminou.gd" id="1_bnk5t"]
+[ext_resource type="Texture2D" uid="uid://dsr2dgifp48a4" path="res://modules/aurelie/assets/graphics/sliminou_corps_sansmainsansbouche.svg" id="2_cffvo"]
 [ext_resource type="Texture2D" uid="uid://chgojwke0pt1i" path="res://modules/aurelie/assets/graphics/sliminou_corps_normal.svg" id="2_u6mt1"]
-[ext_resource type="Texture2D" uid="uid://dvqitrxmsldan" path="res://modules/aurelie/assets/graphics/chamallow_attaque_attaqueparlejoueur_normal.svg" id="3_6q8pi"]
-[ext_resource type="Texture2D" uid="uid://bt5o13u734vf4" path="res://modules/aurelie/assets/graphics/sliminou_corps_duplication.svg" id="3_dca41"]
-[ext_resource type="Texture2D" uid="uid://46xc0lj33g20" path="res://modules/aurelie/assets/graphics/chamallow_attaque_entraindattaquer_hover.svg" id="4_l7cvl"]
-[ext_resource type="Texture2D" uid="uid://ds2gui22yccw8" path="res://modules/aurelie/assets/graphics/chamallow_attaque_attaqueparlejoueur_hover.svg" id="5_vldo8"]
-[ext_resource type="Texture2D" uid="uid://cpiuwnfsdtibn" path="res://modules/aurelie/assets/graphics/superlechouille_langue.svg" id="6_0js5c"]
+[ext_resource type="Texture2D" uid="uid://b6serkk35ft16" path="res://modules/aurelie/assets/graphics/sliminou_bouche_quiparle_normal.svg" id="3_kpx0w"]
+[ext_resource type="Texture2D" uid="uid://b7nj7ntsxtmva" path="res://modules/aurelie/assets/graphics/sliminou_coeur_normal.svg" id="4_aisgu"]
+[ext_resource type="Texture2D" uid="uid://rm5oq6clxmfu" path="res://modules/aurelie/assets/graphics/sliminou_bouche_interrompue.svg" id="4_qjm31"]
+[ext_resource type="Texture2D" uid="uid://c3creq0g0r7pi" path="res://modules/aurelie/assets/graphics/sliminou_coeur_eclate.svg" id="5_cswdc"]
+[ext_resource type="Texture2D" uid="uid://hfuxf4xcpkm5" path="res://modules/aurelie/assets/graphics/sliminou_bouche_quiparle_hover.svg" id="5_esoax"]
+[ext_resource type="Texture2D" uid="uid://l14w6m2357jh" path="res://modules/aurelie/assets/graphics/sliminou_coeur_hover.svg" id="6_bj7br"]
+[ext_resource type="Texture2D" uid="uid://jdbcivhg22q2" path="res://modules/aurelie/assets/graphics/sliminou_bouche_contente.svg" id="6_uf2vj"]
+[ext_resource type="Texture2D" uid="uid://3f48m0m7daf" path="res://modules/aurelie/assets/graphics/sliminou_corps_quiseduplique_sansmains_avecbouche.svg" id="7_ibo3m"]
 [ext_resource type="Texture2D" uid="uid://dykde2hfkqfpv" path="res://modules/aurelie/assets/graphics/sliminou_attaque_2.svg" id="8_b6jwv"]
+[ext_resource type="Texture2D" uid="uid://dsbm5dkpvkuv" path="res://modules/aurelie/assets/graphics/sliminou_corps_quiprenddesdegats_sansmainsavecbouche.svg" id="11_nnpef"]
+[ext_resource type="Texture2D" uid="uid://ds8nyip61w5q0" path="res://modules/aurelie/assets/graphics/sliminou_corps_quiprenddesdegats_sansmainssansbouche.svg" id="12_epygu"]
 
 [sub_resource type="Animation" id="Animation_qlju1"]
 resource_name = "MouthBabbling"
+length = 2.0
+loop_mode = 1
+step = 0.05
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -19,52 +28,30 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.8, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, -0.8, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.2, 0.5, 0.7, 1)
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, -0.5, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("MouthButton:position:x")
+tracks/1/path = NodePath("MouthButton:scale:x")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(),
-"points": PackedFloat32Array(),
-"times": PackedFloat32Array()
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1.2, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.5, 1, 1.5)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("MouthButton:position:y")
+tracks/2/path = NodePath("MouthButton:scale:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"handle_modes": PackedInt32Array(),
-"points": PackedFloat32Array(),
-"times": PackedFloat32Array()
-}
-tracks/3/type = "bezier"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("MouthButton:scale:x")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1.2, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0.2, 0.5, 0.7)
-}
-tracks/4/type = "bezier"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("MouthButton:scale:y")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.2, 0.5, 0.7, 1)
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, 0.5, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_crshq"]
@@ -79,47 +66,62 @@ script = ExtResource("1_bnk5t")
 [node name="Body" type="Node2D" parent="."]
 
 [node name="Sprite2DNormal" type="Sprite2D" parent="Body"]
-position = Vector2(0, -118)
-texture = ExtResource("2_u6mt1")
+position = Vector2(1, -167)
+texture = ExtResource("2_cffvo")
+
+[node name="Sprite2DDuplication" type="Sprite2D" parent="Body"]
+visible = false
+position = Vector2(61, -178)
+texture = ExtResource("7_ibo3m")
+
+[node name="Hurt_Sprite" type="Sprite2D" parent="Body"]
+visible = false
+position = Vector2(0, -166)
+texture = ExtResource("12_epygu")
 
 [node name="Mouth" type="Node2D" parent="Body"]
-position = Vector2(-56.86, -199.065)
+position = Vector2(-45.97, -176.15)
 
 [node name="MouthButton" type="TextureButton" parent="Body/Mouth"]
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_right = 120.0
-offset_bottom = 153.0
+offset_left = -9.03
+offset_top = -2.85001
+offset_right = 100.97
+offset_bottom = 63.15
 grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(57.86, 24.065)
-texture_normal = ExtResource("6_0js5c")
+pivot_offset = Vector2(54, 12)
+disabled = true
+texture_normal = ExtResource("3_kpx0w")
+texture_pressed = ExtResource("4_qjm31")
+texture_hover = ExtResource("5_esoax")
+texture_disabled = ExtResource("6_uf2vj")
+stretch_mode = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Body/Mouth"]
 libraries = {
 "": SubResource("AnimationLibrary_crshq")
 }
 
-[node name="Sprite2DDuplication" type="Sprite2D" parent="Body"]
+[node name="Hurt_FullSprite" type="Sprite2D" parent="Body"]
 visible = false
-position = Vector2(16, -135)
-texture = ExtResource("3_dca41")
+position = Vector2(0, -167)
+texture = ExtResource("11_nnpef")
 
 [node name="WeakSpot" type="Node2D" parent="Body"]
 visible = false
 
 [node name="WeakSpotButton" type="TextureButton" parent="Body/WeakSpot"]
-offset_left = -16.0
-offset_top = -112.0
-offset_right = 405.0
-offset_bottom = 236.0
-scale = Vector2(0.25, 0.25)
-texture_normal = ExtResource("3_6q8pi")
-texture_pressed = ExtResource("4_l7cvl")
-texture_hover = ExtResource("5_vldo8")
+offset_left = 36.0
+offset_top = -123.0
+offset_right = 126.0
+offset_bottom = -37.0
+keep_pressed_outside = true
+texture_normal = ExtResource("4_aisgu")
+texture_pressed = ExtResource("5_cswdc")
+texture_hover = ExtResource("6_bj7br")
+texture_disabled = ExtResource("5_cswdc")
 metadata/_edit_use_anchors_ = true
 
 [node name="Hands" type="Node2D" parent="."]
