@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=3 uid="uid://jsbtpbjcy8rj"]
+
+[ext_resource type="Script" path="res://modules/natheo/mob_furuboule/mob_furuboule.gd" id="1_dcm0i"]
+[ext_resource type="Texture2D" uid="uid://b2qk3ocgmdu7k" path="res://modules/natheo/assets/graphics/furuboule_corps_normal.svg" id="2_2duj4"]
+[ext_resource type="Texture2D" uid="uid://bpxtw4cil8uc8" path="res://modules/natheo/assets/graphics/furuboule_corps_attack_le_joueur.svg" id="3_frilc"]
+[ext_resource type="Texture2D" uid="uid://bwkky3rdw6sn0" path="res://modules/natheo/assets/graphics/furuboule_corps_attacked_par_le_jouer.svg" id="4_u0mxu"]
+[ext_resource type="PackedScene" uid="uid://bqjbomrd84ih2" path="res://modules/natheo/mob_furuboule/sunbeam.tscn" id="4_w78me"]
+[ext_resource type="Texture2D" uid="uid://dn7h11xygl8hm" path="res://modules/natheo/assets/graphics/furuboule_corps_blocked_par_le_joueur.svg" id="5_7s5p8"]
+[ext_resource type="PackedScene" uid="uid://tasteglr0cmj" path="res://modules/natheo/mob_furuboule/sun.tscn" id="6_bj2da"]
+[ext_resource type="PackedScene" uid="uid://c8kc54alm42iy" path="res://modules/remi/fx/mob_hp_bar.tscn" id="8_ltaus"]
+
+[node name="Furuboule" type="Node2D"]
+script = ExtResource("1_dcm0i")
+
+[node name="Furuboule" type="Node2D" parent="."]
+
+[node name="Body" type="Node2D" parent="Furuboule"]
+
+[node name="Sprite2DNormal" type="Sprite2D" parent="Furuboule/Body"]
+texture = ExtResource("2_2duj4")
+
+[node name="Sprite2DAttacking" type="Sprite2D" parent="Furuboule/Body"]
+visible = false
+texture = ExtResource("3_frilc")
+
+[node name="Sprite2DBlocked" type="Sprite2D" parent="Furuboule/Body"]
+visible = false
+texture = ExtResource("4_u0mxu")
+
+[node name="Sprite2DBeam" type="Sprite2D" parent="Furuboule/Body"]
+visible = false
+texture = ExtResource("5_7s5p8")
+
+[node name="Suns" type="Node2D" parent="Furuboule"]
+
+[node name="Sun1" parent="Furuboule/Suns" instance=ExtResource("6_bj2da")]
+
+[node name="Sun2" parent="Furuboule/Suns" instance=ExtResource("6_bj2da")]
+
+[node name="Sun3" parent="Furuboule/Suns" instance=ExtResource("6_bj2da")]
+
+[node name="SunBeam" parent="." instance=ExtResource("4_w78me")]
+
+[node name="MobHPBar" parent="." instance=ExtResource("8_ltaus")]
