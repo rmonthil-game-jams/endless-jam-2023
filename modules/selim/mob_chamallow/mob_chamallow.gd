@@ -57,14 +57,8 @@ func _ready():
 	
 	character = get_tree().get_nodes_in_group("character").front()
 	# other
-<<<<<<< Updated upstream
 	ATTACK_WINDOW_RANGE = (get_viewport_rect().size - 2*Vector2(X_MARGIN,Y_MARGIN))/2
 	$Body.get_node("TextureButtonP1").pressed.connect(_body_attacks.bind(DAMAGE_PER_ATTACK_P1))
-=======
-	character = get_tree().get_nodes_in_group("character").front()
-	ATTACK_WINDOW_RANGE = (2*get_viewport_rect().size - 2*Vector2(X_MARGIN,Y_MARGIN))/2
-	$Body.get_node("TextureButtonP1").pressed.connect(_body_attacks.bind(character.damage_per_attack))
->>>>>>> Stashed changes
 	$AttackP1.get_node("TextureButtonAttackP1").pressed.connect(_block_attack.bind())
 	bodies = $Body.get_children()
 	for body in bodies:
@@ -72,14 +66,6 @@ func _ready():
 	attacks = $AttackP1.get_children()
 	for attack in attacks:
 		attack.hide()
-<<<<<<< Updated upstream
-=======
-	attacks2 = $AttacksP2.get_children()
-	for attack in attacks2:
-		attack.get_node("TextureButtonAttackP2").pressed.connect(_block_attack_2.bind(attack))
-		
-	
->>>>>>> Stashed changes
 	# REMI: hp bar
 	mob_hp_progress_bar.max_value = life_points
 	_set_hp_bar(life_points)
@@ -156,7 +142,6 @@ func _end_phase_1_attack():
 	character.hit(DAMAGE_PER_ATTACK_P1)
 	_phase_1()
 
-<<<<<<< Updated upstream
 #
 #func _play_waiting_animation():
 #	state = "waiting"
@@ -258,98 +243,6 @@ func _end_phase_1_attack():
 #	# TODO: ANIMATION
 #	_attempt_to_close_hand(hand)
 
-=======
-func _phase_2_attack():
-	$Body/Sprite2DPhase2.show()
-	$Body/TextureButtonP2.hide()
-	for i in range(4):
-		$AttacksP2/AttackP21.position = Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], 0.0), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
-		$AttacksP2/AttackP22.position = Vector2(rng.randf_range(0.0, ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
-		var target_fx1 = preload("res://modules/remi/fx/target.tscn").instantiate()
-		var target_fx2 = preload("res://modules/remi/fx/target.tscn").instantiate()
-		target_fx1.w = 421.0
-		target_fx1.h = 348.0
-		target_fx2.w = 421.0
-		target_fx2.h = 348.0
-		target_fx1.position = $AttacksP2/AttackP21.position # carefull these are local coordinates
-		target_fx2.position = $AttacksP2/AttackP22.position # carefull these are local coordinates
-		add_child(target_fx1)
-		add_child(target_fx2)
-
-		main_tween = create_tween()
-		$AttacksP2/AttackP21/TextureButtonAttackP2.show()
-		$AttacksP2/AttackP22/TextureButtonAttackP2.show()
-		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.tween_callback(_end_phase_2_attack_1)
-		await main_tween.finished
-		
-#		
-	var target_fx1 = preload("res://modules/remi/fx/target.tscn").instantiate()
-	var target_fx2 = preload("res://modules/remi/fx/target.tscn").instantiate()
-	var target_fx3 = preload("res://modules/remi/fx/target.tscn").instantiate()
-	target_fx1.w = 421.0
-	target_fx1.h = 348.0
-	target_fx2.w = 421.0
-	target_fx2.h = 348.0
-	target_fx3.w = 421.0
-	target_fx3.h = 348.0
-	$AttacksP2/AttackP21.position = Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], -ATTACK_WINDOW_RANGE[0]/3), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
-	$AttacksP2/AttackP22.position = Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0]/3, ATTACK_WINDOW_RANGE[0]/3), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
-	$AttacksP2/AttackP23.position = Vector2(rng.randf_range( ATTACK_WINDOW_RANGE[0]/3, ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
-	
-	
-	main_tween = create_tween()
-	$AttacksP2/AttackP21/TextureButtonAttackP2.show()
-	$AttacksP2/AttackP22/TextureButtonAttackP2.show()
-	$AttacksP2/AttackP23/TextureButtonAttackP2.show()
-	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_callback(_end_phase_2_attack_1)
-	await main_tween.finished
-	
-	_phase_2()
-		
-	
-	
-	
-func _end_phase_2_attack_1():
-	for attack2 in attacks2:
-		if attack2.get_node("TextureButtonAttackP2").visible:
-			attack2.get_node("TextureButtonAttackP2").hide()
-			DAMAGE_MULTIPLIER += 1
-		attack2.get_node("TextureButtonAttackP2").scale = ATTACK_SCALE
-	print(DAMAGE_MULTIPLIER)	
-	
-	if DAMAGE_MULTIPLIER != 0:
-		character.hit(DAMAGE_PER_ATTACK_P1*DAMAGE_MULTIPLIER)
-		
-	DAMAGE_MULTIPLIER = 0
-
-		
-		
->>>>>>> Stashed changes
 func _body_attacks(damage : float):
 	life_points -= damage
 	_set_hp_bar(max(life_points,0))
