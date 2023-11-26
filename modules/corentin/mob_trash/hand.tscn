@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ctysm4rp8w6l7"]
 
-[ext_resource type="Texture2D" uid="uid://bs8vfmc544j8l" path="res://modules/aurelie/assets/graphics/chamallow_attaque_attaqueparlejoueur_normal.svg" id="1_y1bjp"]
+[ext_resource type="Texture2D" uid="uid://dvqitrxmsldan" path="res://modules/aurelie/assets/graphics/chamallow_attaque_attaqueparlejoueur_normal.svg" id="1_y1bjp"]
 
 [node name="Hand" type="Node2D"]
 

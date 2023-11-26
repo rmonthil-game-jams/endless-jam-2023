@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://modules/corentin/mob_trash/mob_trash.gd" id="1_k3nbm"]
 [ext_resource type="Texture2D" uid="uid://gxkpatlba54p" path="res://modules/aurelie/assets/graphics/furuboule_corps_normal_normal.svg" id="2_lwc5x"]
 [ext_resource type="Texture2D" uid="uid://1ko8jdt085kb" path="res://modules/aurelie/assets/graphics/furuboule_corps_normal_hover.svg" id="3_iurqm"]
-[ext_resource type="Texture2D" uid="uid://bpxtw4cil8uc8" path="res://modules/aurelie/assets/graphics/furuboule_corps_attack_le_joueur.svg" id="3_r56o0"]
-[ext_resource type="Texture2D" uid="uid://bwkky3rdw6sn0" path="res://modules/aurelie/assets/graphics/furuboule_corps_attacked_par_le_jouer.svg" id="4_ire30"]
+[ext_resource type="Texture2D" uid="uid://bpxtw4cil8uc8" path="res://modules/natheo/assets/graphics/furuboule_corps_attack_le_joueur.svg" id="3_r56o0"]
+[ext_resource type="Texture2D" uid="uid://bwkky3rdw6sn0" path="res://modules/natheo/assets/graphics/furuboule_corps_attacked_par_le_jouer.svg" id="4_ire30"]
 [ext_resource type="PackedScene" uid="uid://ctysm4rp8w6l7" path="res://modules/corentin/mob_trash/hand.tscn" id="5_o0hyr"]
-[ext_resource type="Texture2D" uid="uid://dn7h11xygl8hm" path="res://modules/aurelie/assets/graphics/furuboule_corps_blocked_par_le_joueur.svg" id="6_cog0n"]
+[ext_resource type="Texture2D" uid="uid://dn7h11xygl8hm" path="res://modules/natheo/assets/graphics/furuboule_corps_blocked_par_le_joueur.svg" id="6_cog0n"]
 [ext_resource type="PackedScene" uid="uid://c8kc54alm42iy" path="res://modules/remi/fx/mob_hp_bar.tscn" id="6_viy8q"]
 
 [node name="Mob_trash" type="Node2D"]

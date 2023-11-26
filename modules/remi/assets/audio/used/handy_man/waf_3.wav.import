@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://byfaqtpkngvsp"
-path="res://.godot/imported/waf_3.wav-146b230f841f5edf10746e9c38ad196c.sample"
+path="res://.godot/imported/waf_3.wav-b6781ac15b9f7b0b41d00a875b978f45.sample"
 
 [deps]
 
-source_file="res://modules/remi/assets/audio/waf_3.wav"
-dest_files=["res://.godot/imported/waf_3.wav-146b230f841f5edf10746e9c38ad196c.sample"]
+source_file="res://modules/remi/assets/audio/used/handy_man/waf_3.wav"
+dest_files=["res://.godot/imported/waf_3.wav-b6781ac15b9f7b0b41d00a875b978f45.sample"]
 
 [params]
 

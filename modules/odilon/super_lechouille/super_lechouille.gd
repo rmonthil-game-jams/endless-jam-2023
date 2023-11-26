@@ -347,6 +347,10 @@ func _set_hp_bar(_hp):
 	hp_bar_tween = get_tree().create_tween()
 	hp_bar_tween.tween_property(mob_hp_progress_bar, "value", life_points, 0.25)
 
+func _play_death_sound():
+	$AnimatedBody/DeathSound.play()
+
+
 func _attempt_to_play_death_animation():
 	if state != "dying":
 		state = "dying"
@@ -354,6 +358,7 @@ func _attempt_to_play_death_animation():
 			clickable_tween.kill()
 		clickable_tween = create_tween()
 		clickable_tween.tween_property(self, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+		clickable_tween.parallel().tween_callback(_play_death_sound)
 		await clickable_tween.finished
 		just_died.emit()
 

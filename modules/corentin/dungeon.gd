@@ -29,6 +29,7 @@ func _advance():
 		1.0,
 		1.0
 	).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_callback($ChangeRoomSound.play)
 	await tween.finished
 	$Background.position = Vector2.ZERO
 	$Background.scale = Vector2.ONE
