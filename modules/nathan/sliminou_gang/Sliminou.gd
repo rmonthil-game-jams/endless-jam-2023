@@ -72,7 +72,7 @@ func _ready():
 	duplicate_countdown = DUPLICATE_LOOP_NUMBER
 	life_points = LIFE
 
-	
+	$Body/WeakSpot/AnimationPlayer.play("HeartBeat")
 	
 #	# other
 	character = get_tree().get_nodes_in_group("character").front()
@@ -192,13 +192,19 @@ func _play_jump_animation():
 	var offset_value : float = (1- bouncing_value) * $Body/Sprite2DNormal.texture.get_height()
 
 	tween = create_tween()
+	
+	#LOADING
 	tween.tween_property($Body, "position", Vector2(0.0,0.0), JUMP_DURATION/3).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property($Body, "scale", Vector2(1.0, bouncing_value), JUMP_DURATION/3).set_trans(Tween.TRANS_ELASTIC)
+	tween.parallel().tween_callback($Body/Hands._on_jump_loading)
+	
+	#JUMPING
 	tween.tween_callback($Body/WeakSpot.show)
 	tween.tween_property($Body, "position", Vector2(0.0, -JUMP_HEIGHT), JUMP_DURATION).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property($Body, "scale", Vector2(1.0,1.0), JUMP_DURATION/2.5).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property($Body, "position", Vector2(0.0,0.0), FALL_DURATION).set_trans(Tween.TRANS_LINEAR)
 	tween.tween_callback($Body/WeakSpot.hide)
+	tween.parallel().tween_callback($Body/Hands._restart_hand_loop)
 	await tween.finished
 	_play_waiting_animation.call_deferred(IDLE_LOOP_NUMBER, false)
 
@@ -268,6 +274,8 @@ func _hit(damage_points : float):
 	
 	if life_points <= 0.0 :
 		tween.parallel().tween_callback($Body/WeakSpot/WeakSpotButton.set_disabled.bind(true))
+		$Body/WeakSpot/AnimationPlayer.stop()
+		tween.parallel().tween_callback($Body/Hands._on_death.bind(refall_duration))
 	
 	tween.tween_callback($Body/Sprite2DNormal.hide)
 	tween.parallel().tween_callback($Body/Hurt_FullSprite.show)
@@ -285,8 +293,10 @@ func _hit(damage_points : float):
 	else :
 		tween.parallel().tween_property($Body, "rotation", shaken_angle,refall_duration).set_trans(Tween.TRANS_LINEAR)
 		tween.tween_interval(JUMP_DURATION/2.0)
-		tween.parallel().tween_callback($Body/WeakSpot.hide)
+		tween.parallel().tween_callback($Body/Hands._restart_hand_loop)
+		tween.tween_callback($Body/WeakSpot.hide)
 		tween.tween_property($Body, "rotation", 0.0,FALL_DURATION).set_trans(Tween.TRANS_QUAD)
+		
 		tween.tween_callback($Body/Sprite2DNormal.show)
 		tween.parallel().tween_callback($Body/Hurt_FullSprite.hide)
 		tween.tween_callback(_play_waiting_animation.bind(IDLE_LOOP_NUMBER, false))
