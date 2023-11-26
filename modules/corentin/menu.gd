@@ -114,3 +114,7 @@ func _on_retry_button_up():
 	state = "main menu"
 	$CanvasLayer/GO.hide()
 	$CanvasLayer/Start/StartButton.disabled = false
+
+func _input(event):
+	if event is InputEventMouseButton && event.button_index == MouseButton.MOUSE_BUTTON_LEFT && event.is_pressed():
+		$Audio/Click.play.call_deferred()
