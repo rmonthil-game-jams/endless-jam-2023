@@ -31,6 +31,7 @@ func _set_difficulty(value : float): # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE
 	DAMAGE_PER_ATTACK_P1 = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
 	DAMAGE_PER_ATTACK_P2 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 	TIME_BETWEEN_ATTACKS_P1 = 2.0 * (1.0 + log(1.0 + DIFFICULTY))
+	life_points = 10 + (10 * log(1.0 + DIFFICULTY))
 
 # MOB STATE
 var life_points : float = 20.0
@@ -53,6 +54,8 @@ var rng = RandomNumberGenerator.new()
 func _ready():
 	# set difficulty
 	_set_difficulty(DIFFICULTY) # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE THAT BEFORE
+	
+	character = get_tree().get_nodes_in_group("character").front()
 	# other
 	ATTACK_WINDOW_RANGE = (get_viewport_rect().size - 2*Vector2(X_MARGIN,Y_MARGIN))/2
 	$Body.get_node("TextureButtonP1").pressed.connect(_body_attacks.bind(DAMAGE_PER_ATTACK_P1))

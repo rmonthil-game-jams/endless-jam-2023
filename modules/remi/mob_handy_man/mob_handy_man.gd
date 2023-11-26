@@ -27,6 +27,7 @@ func _set_difficulty(value : float):
 	HAND_ATTACK_DURATION_FACTOR = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
 	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 	HAND_ATTACK_INTERVAL = 1.0 / (1.0 + log(1.0 + DIFFICULTY))
+	life_points = 20 + (10 * log(1.0 + DIFFICULTY))
 
 # MOB HP BAR
 @onready var mob_hp_progress_bar : TextureProgressBar = $MobHPBar/HBoxContainer/MobHpBar
