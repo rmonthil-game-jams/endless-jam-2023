@@ -304,6 +304,7 @@ Tips:
         Chose the right upgrades to become stonger"
 
 [node name="roomLabel" type="Label" parent="CanvasLayer/GO"]
+layout_mode = 0
 offset_left = 395.0
 offset_top = 341.0
 offset_right = 772.0

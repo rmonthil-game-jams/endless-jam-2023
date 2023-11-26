@@ -258,7 +258,7 @@ func _add_pointer():
 		var new_pointer = POINTER_NODE.instantiate()
 		$Pointers.add_child(new_pointer)
 
-var upgrade_level : float = 0
+var upgrade_level : float = 1.5
 var upgrade_options : int = 3
 var cur_room : int = 1
 func _loot(lootbuff : float, room : float):
@@ -305,15 +305,16 @@ func _generate_upgrades(lootbuff : float):
 		upgrade_button.ignore_texture_size = true
 		upgrade_button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT
 		upgrade_button.custom_minimum_size = Vector2(200,200)
+		var mat : ShaderMaterial
+		match selected_up["tier"]:
+			1: 
+				mat = load("res://modules/corentin/Shaders/normal_mat.tres")
+			2: 
+				mat = load("res://modules/corentin/Shaders/rare_mat.tres")
+			3:
+				mat = load("res://modules/corentin/Shaders/epic_mat.tres")
+		upgrade_button.material = mat
 		$CanvasLayer/UpgradeMenu/HBoxContainer.add_child(upgrade_button)
-#		var upgrade_label = Label.new()
-#		upgrade_label.text = selected_up["name"]
-#		upgrade_label.name = "Label"
-
-#		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]).add_child(upgrade_label)
-#		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").anchors_preset = Control.PRESET_FULL_RECT
-#		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-#		$CanvasLayer/UpgradeMenu/HBoxContainer.get_node(selected_up["name"]+"/Label").vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 
 
 @export var TIER_SELECTIVITY : float = 0.4
@@ -483,4 +484,4 @@ func _set_hpbar_level(hp):
 	hp_tween = get_tree().create_tween()
 	hp_tween.tween_property(character_hp_bar, "value", hp, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	# TODO: SLIGHT CAMERA SHAKE
-	
+
