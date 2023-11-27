@@ -15,8 +15,9 @@ var DAMAGE_PER_ATTACK_P1 : float
 var DAMAGE_PER_ATTACK_P2 : float
 var TIME_BETWEEN_ATTACKS_P1 : float
 var TIME_BETWEEN_ATTACKS_P2 : float
-var X_MARGIN : int = 150
-var Y_MARGIN : int = 150
+var ATTACK_WINDOW_OFFSET : Vector2 = Vector2(0.0, -200.0)
+var X_MARGIN : int = 450
+var Y_MARGIN : int = 450
 var ATTACK_WINDOW_RANGE : Vector2
 var ATTACK_SCALE : Vector2 = Vector2(1.0, 1.0) # REMI: TRY TO AVOID RESCALING IMAGES PERMANENTLY
 var DAMAGE_MULTIPLIER : int = 0
@@ -115,25 +116,37 @@ func _phase_1():
 func _phase_1_attack():
 	$Body/Sprite2DAtttackingP1.show()
 	$Body/TextureButtonP1.hide()
-	$AttackP1.position = Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
 	$AttackP1/TextureButtonAttackP1.show()
 	
-	# REMI: target fx
+	# prepare anim
+	$AttackP1.modulate.a = 0.0
+	$AttackP1.scale = Vector2(0.125, 0.125)
+	$AttackP1.position = Vector2.UP * 300.0
+	var target_position : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+	
+	# appear
+	main_tween = create_tween()
+	main_tween.tween_property($AttackP1, "modulate:a", 1.0, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttackP1, "scale", ATTACK_SCALE, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttackP1, "position", target_position, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	# attack
+	await  main_tween.finished
+	# target fx
 	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
 	target_fx.w = 421.0
 	target_fx.h = 348.0
 	target_fx.position = $AttackP1.position # carefull these are local coordinates
 	add_child(target_fx)
-	
-	# REMI: change values to make it more dynamic
+	# loop
 	main_tween = create_tween()
 	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.set_loops(2)
+	await  main_tween.finished
+	# attack
+	main_tween = create_tween()
 	main_tween.tween_property($AttackP1/TextureButtonAttackP1, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	main_tween.tween_callback(_end_phase_1_attack)
-	# REMI: MODIFIED THE FOLLOWING
 
 func _end_phase_1_attack():
 	$AttackP1/TextureButtonAttackP1.hide()
@@ -149,9 +162,31 @@ func _phase_2_attack():
 	state = "phase_2"
 	$Body/Sprite2DPhase2.show()
 	$Body/TextureButtonP2.hide()
-	for i in range(4):
-		$AttacksP2/AttackP21.position = Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], 0.0), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
-		$AttacksP2/AttackP22.position = Vector2(rng.randf_range(0.0, ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+	for i in range(2): # REMI: I REDUCED THIS NUMBER
+		# prepare anim
+		$AttacksP2/AttackP21.modulate.a = 0.0
+		$AttacksP2/AttackP21.scale = Vector2(0.125, 0.125)
+		$AttacksP2/AttackP21.position = Vector2.UP * 300.0
+		var target_position_1 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+		$AttacksP2/AttackP22.modulate.a = 0.0
+		$AttacksP2/AttackP22.scale = Vector2(0.125, 0.125)
+		$AttacksP2/AttackP22.position = Vector2.UP * 300.0
+		var target_position_2 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+		
+		$AttacksP2/AttackP21/TextureButtonAttackP2.show()
+		$AttacksP2/AttackP22/TextureButtonAttackP2.show()
+		
+		# appear
+		main_tween = create_tween()
+		main_tween.tween_property($AttacksP2/AttackP21, "modulate:a", 1.0, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_property($AttacksP2/AttackP22, "modulate:a", 1.0, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.tween_property($AttacksP2/AttackP21, "scale", ATTACK_SCALE, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_property($AttacksP2/AttackP21, "position", target_position_1, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_property($AttacksP2/AttackP22, "scale", ATTACK_SCALE, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_property($AttacksP2/AttackP22, "position", target_position_2, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		await  main_tween.finished
+		# attack
+		# target fx
 		var target_fx1 = preload("res://modules/remi/fx/target.tscn").instantiate()
 		var target_fx2 = preload("res://modules/remi/fx/target.tscn").instantiate()
 		target_fx1.w = 421.0
@@ -162,24 +197,52 @@ func _phase_2_attack():
 		target_fx2.position = $AttacksP2/AttackP22.position # carefull these are local coordinates
 		add_child(target_fx1)
 		add_child(target_fx2)
-
+		# anim
 		main_tween = create_tween()
-		$AttacksP2/AttackP21/TextureButtonAttackP2.show()
-		$AttacksP2/AttackP22/TextureButtonAttackP2.show()
 		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+		main_tween.set_loops(2)
+		await  main_tween.finished
+		# attack
+		main_tween = create_tween()
 		main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 		main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 		main_tween.tween_callback(_end_phase_2_attack_1)
 		await main_tween.finished
 		
-#		
+	# prepare anim
+	$AttacksP2/AttackP21.modulate.a = 0.0
+	$AttacksP2/AttackP21.scale = Vector2(0.125, 0.125)
+	$AttacksP2/AttackP21.position = Vector2.UP * 300.0
+	var target_position_1 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+	$AttacksP2/AttackP22.modulate.a = 0.0
+	$AttacksP2/AttackP22.scale = Vector2(0.125, 0.125)
+	$AttacksP2/AttackP22.position = Vector2.UP * 300.0
+	var target_position_2 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+	$AttacksP2/AttackP23.modulate.a = 0.0
+	$AttacksP2/AttackP23.scale = Vector2(0.125, 0.125)
+	$AttacksP2/AttackP23.position = Vector2.UP * 300.0
+	var target_position_3 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+	
+	$AttacksP2/AttackP21/TextureButtonAttackP2.show()
+	$AttacksP2/AttackP22/TextureButtonAttackP2.show()
+	$AttacksP2/AttackP23/TextureButtonAttackP2.show()
+	
+	# appear
+	main_tween = create_tween()
+	main_tween.tween_property($AttacksP2/AttackP21, "modulate:a", 1.0, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP22, "modulate:a", 1.0, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP23, "modulate:a", 1.0, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttacksP2/AttackP21, "scale", ATTACK_SCALE, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP21, "position", target_position_1, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP22, "scale", ATTACK_SCALE, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP22, "position", target_position_2, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP23, "scale", ATTACK_SCALE, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttacksP2/AttackP23, "position", target_position_3, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	await  main_tween.finished
+	
 	var target_fx1 = preload("res://modules/remi/fx/target.tscn").instantiate()
 	var target_fx2 = preload("res://modules/remi/fx/target.tscn").instantiate()
 	var target_fx3 = preload("res://modules/remi/fx/target.tscn").instantiate()
@@ -189,27 +252,24 @@ func _phase_2_attack():
 	target_fx2.h = 348.0
 	target_fx3.w = 421.0
 	target_fx3.h = 348.0
-	$AttacksP2/AttackP21.position = Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], -ATTACK_WINDOW_RANGE[0]/3), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
-	$AttacksP2/AttackP22.position = Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0]/3, ATTACK_WINDOW_RANGE[0]/3), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
-	$AttacksP2/AttackP23.position = Vector2(rng.randf_range( ATTACK_WINDOW_RANGE[0]/3, ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
-	
+	target_fx1.position = $AttacksP2/AttackP21.position
+	target_fx2.position = $AttacksP2/AttackP22.position
+	target_fx3.position = $AttacksP2/AttackP22.position
+	add_child(target_fx1)
+	add_child(target_fx2)
+	add_child(target_fx3)
 	
 	main_tween = create_tween()
-	$AttacksP2/AttackP21/TextureButtonAttackP2.show()
-	$AttacksP2/AttackP22/TextureButtonAttackP2.show()
-	$AttacksP2/AttackP23/TextureButtonAttackP2.show()
 	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.1, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE, 0.5 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.set_loops(2)
+	await  main_tween.finished
+	
+	main_tween = create_tween()
 	main_tween.tween_property($AttacksP2/AttackP21/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	main_tween.parallel().tween_property($AttacksP2/AttackP22/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	main_tween.parallel().tween_property($AttacksP2/AttackP23/TextureButtonAttackP2, "scale", ATTACK_SCALE * 1.5, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
@@ -271,24 +331,33 @@ func _transition_to_phase_2():
 	for body in bodies:
 		body.hide()
 	$Body/Sprite2DTrans.show()
+	# REMI: first it gets bigger
 	main_tween = create_tween()
-	main_tween.tween_property($Body/Sprite2DTrans, "scale", Vector2(1.6, 1.6), 1.0).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($Body/Sprite2DTrans, "modulate:r", 1.0, 1.0).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($Body/Sprite2DTrans, "modulate:g", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($Body/Sprite2DTrans, "modulate:b", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DTrans, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "scale", Vector2(1.6, 1.6), 0.25).set_trans(Tween.TRANS_ELASTIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "modulate", Color(1.0, 0.0, 0.0), 0.25).set_trans(Tween.TRANS_ELASTIC)
+	await main_tween.finished
+	# REMI: then loop animation
+	main_tween = create_tween()
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(1.0, 1.0, 1.0), 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "scale", Vector2(1.65, 1.65), 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "rotation", -0.0625, 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(1.0, 0.0, 0.0), 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "scale", Vector2(1.55, 1.55), 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "rotation", 0.0625, 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.set_loops(4)
+	await main_tween.finished
+	# REMI: then go back to previous size
+	main_tween = create_tween()
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(1.0, 1.0, 1.0), 0.25).set_trans(Tween.TRANS_ELASTIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "scale", Vector2(1.0, 1.0), 0.25).set_trans(Tween.TRANS_ELASTIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "rotation", 0.0, 0.25).set_trans(Tween.TRANS_ELASTIC)
+	main_tween.tween_callback($Body/Sprite2DTrans.hide)
 	await main_tween.finished
 	
 	$Body/Sprite2DPhase2.show()
 	_phase_2_attack.call_deferred()
 	
-	
-	
-		
+
 func _block_attack():
 	$Body/Sprite2DAtttackingP1.hide()
 	$AttackP1/TextureButtonAttackP1.hide()
@@ -297,7 +366,7 @@ func _block_attack():
 	$AttackP1/Sprite2DAttackedP1.show()
 	
 	var blocked_fx = preload("res://modules/remi/fx/blocked.tscn").instantiate()
-	blocked_fx.TARGET_SCALE = Vector2.ONE
+	blocked_fx.TARGET_SCALE = Vector2.ONE * 3.0
 	blocked_fx.position = $AttackP1.position # carefull these are local coordinates
 	add_child(blocked_fx)
 	
@@ -314,7 +383,7 @@ func _block_attack_2(attack : Node2D):
 	attack.get_node("Sprite2DAttackedP2").show()
 	
 	var blocked_fx = preload("res://modules/remi/fx/blocked.tscn").instantiate()
-	blocked_fx.TARGET_SCALE = Vector2.ONE
+	blocked_fx.TARGET_SCALE = Vector2.ONE * 3.0
 	blocked_fx.position = attack.position # carefull these are local coordinates
 	add_child(blocked_fx)
 	
@@ -336,6 +405,11 @@ func _death_animation():
 	for body in bodies:
 		body.hide()
 	$Body/Sprite2DAttacked.show()
+	
+	# hide hp bar first
+	main_tween = create_tween()
+	main_tween.tween_property($MobHPBar, "modulate:a", 0.0, 0.25).set_trans(Tween.TRANS_CUBIC)
+	await main_tween.finished
 	
 	main_tween = create_tween()
 	main_tween.tween_property($Body/Sprite2DAttacked, "modulate", $Body/Sprite2DAttacked2.modulate, 1.0).set_trans(Tween.TRANS_CUBIC)

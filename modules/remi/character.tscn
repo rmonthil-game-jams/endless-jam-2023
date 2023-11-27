@@ -207,6 +207,7 @@ text = "ROOM"
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Room"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_top = 7
 theme_override_constants/margin_bottom = -7
 
@@ -239,10 +240,12 @@ text = "VITALITY"
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Vitality"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="RegenProgressBar" type="TextureProgressBar" parent="CanvasLayer/Vitality/CenterContainer"]
 custom_minimum_size = Vector2(100, 10)
 layout_mode = 2
+mouse_filter = 2
 max_value = 20.0
 nine_patch_stretch = true
 texture_under = ExtResource("2_pvr1i")
@@ -269,10 +272,12 @@ text = "STRENGTH"
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Damage"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="DamageProgressBar" type="TextureProgressBar" parent="CanvasLayer/Damage/CenterContainer"]
 custom_minimum_size = Vector2(82, 10)
 layout_mode = 2
+mouse_filter = 2
 max_value = 20.0
 nine_patch_stretch = true
 texture_under = ExtResource("2_pvr1i")
@@ -299,10 +304,12 @@ text = "UPDATE"
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Update"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="UpdateProgressBar" type="TextureProgressBar" parent="CanvasLayer/Update/CenterContainer"]
 custom_minimum_size = Vector2(105, 10)
 layout_mode = 2
+mouse_filter = 2
 max_value = 3.0
 nine_patch_stretch = true
 texture_under = ExtResource("2_pvr1i")

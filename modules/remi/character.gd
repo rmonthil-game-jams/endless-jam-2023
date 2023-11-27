@@ -356,7 +356,7 @@ func hit(damage_points : float):
 	_set_hpbar_level(life_points)
 	$Audio/Hit.play.call_deferred()
 	_hit_label_animation.call_deferred(damage_points)
-	$Camera2D.shake.call_deferred(0.2, 15, 8)
+	$Camera2D.shake.call_deferred(0.2, 15, 24)
 	_hit_color_rect_animation.call_deferred() # also checks for character death
 
 func heal(heal_points : float):
@@ -413,9 +413,9 @@ func _hit_color_rect_animation():
 	if tween_color_rect_hit != null:
 		tween_color_rect_hit.kill()
 	tween_color_rect_hit = create_tween()
-	tween_color_rect_hit.tween_method(set_hud_astronaut_color, Color(1, 1, 1, 1), Color(1.0, 0.6, 0.6, 1.0), 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_hit.tween_method(set_hud_astronaut_color, Color(1, 1, 1, 1), Color(1.0, 0.25, 0.25, 1.0), 0.25).set_trans(Tween.TRANS_CUBIC)
 	tween_color_rect_hit.parallel().tween_method(set_hud_astronaut_size, Vector2.ONE, Vector2.ONE * 2.0, 0.25).set_trans(Tween.TRANS_CUBIC)
-	tween_color_rect_hit.tween_method(set_hud_astronaut_color, Color(1.0, 0.6, 0.6, 1.0), Color(1, 1, 1, 1), 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_hit.tween_method(set_hud_astronaut_color, Color(1.0, 0.25, 0.25, 1.0), Color(1, 1, 1, 1), 0.25).set_trans(Tween.TRANS_CUBIC)
 	tween_color_rect_hit.parallel().tween_method(set_hud_astronaut_size, Vector2.ONE * 2.0, Vector2.ONE, 0.25).set_trans(Tween.TRANS_CUBIC)
 #	tween_color_rect_hit.set_loops(4)
 	tween_color_rect_hit.tween_callback(_attempt_dying)
@@ -464,9 +464,9 @@ func _heal_color_rect_animation():
 	if tween_color_rect_heal != null:
 		tween_color_rect_heal.kill()
 	tween_color_rect_heal = create_tween()
-	tween_color_rect_heal.tween_method(set_hud_astronaut_color, Color(1, 1, 1, 1), Color(0.6, 1.0, 0.6, 1), 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_heal.tween_method(set_hud_astronaut_color, Color(1, 1, 1, 1), Color(0.25, 1.0, 0.25, 1), 0.25).set_trans(Tween.TRANS_CUBIC)
 	tween_color_rect_heal.parallel().tween_method(set_hud_astronaut_size, Vector2.ONE, Vector2.ONE * 2.0, 0.25).set_trans(Tween.TRANS_CUBIC)
-	tween_color_rect_heal.tween_method(set_hud_astronaut_color, Color(0.6, 1.0, 0.6, 1), Color(1, 1, 1, 1), 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween_color_rect_heal.tween_method(set_hud_astronaut_color, Color(0.25, 1.0, 0.25, 1), Color(1, 1, 1, 1), 0.25).set_trans(Tween.TRANS_CUBIC)
 	tween_color_rect_heal.parallel().tween_method(set_hud_astronaut_size, Vector2.ONE * 2.0, Vector2.ONE, 0.25).set_trans(Tween.TRANS_CUBIC)
 	tween_color_rect_heal.tween_callback(_attempt_dying)
 
