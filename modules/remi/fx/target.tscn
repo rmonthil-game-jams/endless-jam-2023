@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dlvwfmqkkgucd" path="res://modules/odilon/fx/normalized_sound.tscn" id="4_bdk7g"]
 
 [node name="Target" type="Node2D"]
+z_index = 2
 position = Vector2(322, 295)
 script = ExtResource("1_xsqr6")
 

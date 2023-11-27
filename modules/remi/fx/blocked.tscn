@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dlvwfmqkkgucd" path="res://modules/odilon/fx/normalized_sound.tscn" id="4_13thw"]
 
 [node name="Blocked" type="Node2D"]
+z_index = 2
 script = ExtResource("1_8n1xc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

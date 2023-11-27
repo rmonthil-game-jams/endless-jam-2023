@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://d3k0tbryal6hb" path="res://modules/natheo/mob_cuteplant/flower_deco.tscn" id="9_24glu"]
 
 [node name="Cuteplant" type="Node2D"]
+position = Vector2(0, -50)
 script = ExtResource("1_dcm0i")
 
 [node name="MobHPBar" parent="." instance=ExtResource("8_jolff")]

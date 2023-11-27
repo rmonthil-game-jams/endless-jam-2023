@@ -368,12 +368,6 @@ func _attempt_to_spawn_plant(plant : Node2D):
 		plant.get_node("Body/TextureButtonWait").show()
 		plant.get_node("Sun/TextureButtonAbsorb").hide()
 		plant.get_node("Sun/TextureButtonWait").show()
-		# add target fx
-		var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
-		target_fx.w = 200.0
-		target_fx.h = 200.0
-		target_fx.position = plant.position # carefull these are local coordinates
-		add_child(target_fx)
 
 func _attempt_to_growth_plant(plant : Node2D):
 	if not plants_state[plant]["state"] == "growth":
@@ -382,6 +376,12 @@ func _attempt_to_growth_plant(plant : Node2D):
 		plant.get_node("Body/TextureButtonWait").hide()
 		plant.get_node("Sun/TextureButtonAbsorb").hide()
 		plant.get_node("Sun/TextureButtonWait").show()
+		# REMI: moved fx here
+		var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
+		target_fx.w = 200.0
+		target_fx.h = 200.0
+		target_fx.position = Vector2.ZERO # carefull these are local coordinates
+		plant.add_child(target_fx)
 		
 
 func _attempt_to_invicible_plant(plant : Node2D):
@@ -400,6 +400,12 @@ func _attempt_to_absorb_sun(plant : Node2D):
 		plant.get_node("Body/TextureButtonWait").show()
 		plant.get_node("Sun/TextureButtonAbsorb").show()
 		plant.get_node("Sun/TextureButtonWait").hide()
+		# REMI: moved fx here
+		var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
+		target_fx.w = 200.0
+		target_fx.h = 200.0
+		target_fx.position = Vector2.ZERO # carefull these are local coordinates
+		plant.get_node("Sun").add_child(target_fx)
 
 func _attempt_to_destroy_sun(plant : Node2D):
 	if not plants_state[plant]["state"] == "destroyed":
@@ -410,7 +416,8 @@ func _attempt_to_destroy_sun(plant : Node2D):
 		plant.get_node("Sun/TextureButtonWait").show()
 		# add blocked fx
 		var blocked_fx = preload("res://modules/remi/fx/blocked.tscn").instantiate()
-		blocked_fx.position = plant.position # carefull these are local coordinates
+		blocked_fx.TARGET_SCALE = Vector2(2.0, 2.0)
+		blocked_fx.position = plant.transform * plant.get_node("Sun").position
 		add_child(blocked_fx)
 
 
@@ -511,4 +518,4 @@ func _attempt_to_play_death_animation():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float):
-	pass
+	$MobHPBar.position = $Cuteplant.position + Vector2.UP * 325.0
