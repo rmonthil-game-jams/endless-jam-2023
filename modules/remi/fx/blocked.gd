@@ -14,7 +14,7 @@ func _ready():
 	_play_animation.call_deferred()
 
 func _play_animation():
-	$AudioStreamPlayer2D.play()
+	$NormalizedSound.play()
 	
 	# init
 	$Sprite2D.scale = Vector2.ZERO

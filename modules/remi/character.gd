@@ -27,7 +27,7 @@ var upgrades : Dictionary = {
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 2,
-				"max_life_points" : 9,
+				"max_life_points" : 8,
 			},
 	"HP3" : {
 				"name" : "Health Bonus ++",
@@ -38,7 +38,7 @@ var upgrades : Dictionary = {
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 3,
-				"max_life_points" : 15,
+				"max_life_points" : 12,
 			},
 	"HPR1" : {
 				"name" : "Health Regen Bonus",
@@ -93,7 +93,7 @@ var upgrades : Dictionary = {
 				"weight" : 1,
 				"type" : "DMG UP",
 				"tier" : 2,
-				"damage_per_attack" : 1,
+				"damage_per_attack" : 0.8,
 			},
 	"DMG3" : {
 				"name" : "Damage per Click ++",
@@ -104,7 +104,7 @@ var upgrades : Dictionary = {
 				"weight" : 1,
 				"type" : "DMG UP",
 				"tier" : 3,
-				"damage_per_attack" : 2,
+				"damage_per_attack" : 1.8,
 			},
 	"HEAL1" : {
 				"name" : "Healing potion",
@@ -145,11 +145,11 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_steroid_2_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_steroid_2_pressed.svg",
 				"tooltip" : "Increases damage at the cost of maximum health by a significant amount",
-				"weight" : 1,
+				"weight" : 0.5,
 				"type" : "BSK",
-				"tier" : 1,
-				"max_life_points" : -5,
-				"damage_per_attack" : 1.5,
+				"tier" : 2,
+				"max_life_points" : -8,
+				"damage_per_attack" : 1.2,
 			},
 	"BSK3" : {
 				"name" : "Berserk ++",
@@ -157,11 +157,11 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_steroid_3_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_steroid_3_pressed.svg",
 				"tooltip" : "Increases damage at the cost of maximum health by a large amount",
-				"weight" : 1,
+				"weight" : 0.5,
 				"type" : "BSK",
 				"tier" : 3,
 				"max_life_points" : -15,
-				"damage_per_attack" : 3,
+				"damage_per_attack" : 2,
 			},
 	"MORE" : {
 				"name" : "More Upgrade Options",
@@ -327,7 +327,7 @@ func _generate_upgrades(lootbuff : float):
 		await tween.finished
 
 
-@export var TIER_SELECTIVITY : float = 0.4
+@export var TIER_SELECTIVITY : float = 0.6
 @export var MAXTIER : int = 3
 
 func _chose_upgrade_tier(lootbuff : float):

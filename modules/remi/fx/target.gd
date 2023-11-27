@@ -57,4 +57,4 @@ func _play_animation():
 func _play_sound():
 	# If we want to launch another custom sound, specify to not play sound
 	if play_sound:
-		$DefaultAudioStreamPlayer2D.play()
+		$NormalizedSound.play()

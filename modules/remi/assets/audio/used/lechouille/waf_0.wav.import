@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cojr1tirxp3qi"
-path="res://.godot/imported/waf_0.wav-a2fbe992d8ff5b06d9839cd48b4fc09f.sample"
+path="res://.godot/imported/waf_0.wav-84527fd8c8f3fdcb2db3b51a8f0ef4b0.sample"
 
 [deps]
 
-source_file="res://modules/remi/assets/audio/used/waf_0.wav"
-dest_files=["res://.godot/imported/waf_0.wav-a2fbe992d8ff5b06d9839cd48b4fc09f.sample"]
+source_file="res://modules/remi/assets/audio/used/lechouille/waf_0.wav"
+dest_files=["res://.godot/imported/waf_0.wav-84527fd8c8f3fdcb2db3b51a8f0ef4b0.sample"]
 
 [params]
 

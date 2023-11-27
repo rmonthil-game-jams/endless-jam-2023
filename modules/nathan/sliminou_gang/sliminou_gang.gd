@@ -102,9 +102,9 @@ func _register_spawning(n : int):
 	if n > 0 :
 		duplication_number += n
 	elif gang_size <= 0 :
-			print("DIED")
+			#print("DIED")
 			just_died.emit()
-	print(gang_size)
+	#print(gang_size)
 	
 
 #	var new_sliminou : Node2D = preload("res://modules/nathan/sliminou_gang/sliminou.tscn").instantiate()

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlvwfmqkkgucd"]
+
+[ext_resource type="Script" path="res://modules/odilon/fx/normalized_sound.gd" id="1_jl61v"]
+
+[node name="NormalizedSound" type="AudioStreamPlayer2D"]
+script = ExtResource("1_jl61v")

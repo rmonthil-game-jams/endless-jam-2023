@@ -29,6 +29,7 @@ func _advance():
 		1.0,
 		1.0
 	).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_callback($ChangeRoomSound.play)
 	await tween.finished
 	$Background.position = Vector2.ZERO
 	$Background.scale = Vector2.ONE
@@ -39,20 +40,16 @@ func _advance():
 	if room % BOSS_ROOM_PERIOD:
 		new_mob = MOB_SCENES[randi_range(0, MOB_SCENES.size() - 1)].instantiate()
 		new_mob.DIFFICULTY = _new_mob_difficulty()
-		print("room: ", room)
-		print("difficulty: ", new_mob.DIFFICULTY)
 	else:
 		new_mob = BOSS_SCENES[randi_range(0, BOSS_SCENES.size() - 1)].instantiate()
 		new_mob.DIFFICULTY = _new_mob_difficulty() * KBOSSDIFF
-		print("room: ", room)
-		print("difficulty: ", new_mob.DIFFICULTY)
 
 	$RoomContent.add_child(new_mob)
 	new_mob.just_died.connect(_on_current_mob_just_died)
 
 
-@export var KDIFF : float = 0.4
-@export var KEXPDIFF : float = 0.1
+@export var KDIFF : float = 0.5
+@export var KEXPDIFF : float = 0.15
 @export var KSTARTDIFF : float = 0.1
 @export var KBOSSDIFF : float = 1.5
 @export var BOSS_LOOT_BUFF : float = 1

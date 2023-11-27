@@ -25,9 +25,9 @@ func _set_difficulty(value : float):
 	HAND_MOVE_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
 	HAND_MOVE_RADIUS = min(500.0, 100.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
 	HAND_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
-	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-	HAND_ATTACK_INTERVAL = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
-	life_points = 20 + (10 * log(1.0 + DIFFICULTY))
+	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + 0.8*log(1.0 + DIFFICULTY))
+	HAND_ATTACK_INTERVAL = 2.0 / (1.0 + 0.8*log(1.0 + DIFFICULTY))
+	life_points = 18 + (5 * (1.0 + DIFFICULTY))
 
 # MOB HP BAR
 @onready var mob_hp_progress_bar : TextureProgressBar = $MobHPBar/HBoxContainer/MobHpBar
@@ -68,6 +68,12 @@ func _ready():
 	# avoid using await in the _ready function
 	_play_appearing_animation.call_deferred()
 
+func _play_appearing_sound(hand):
+	var sound_res = preload("res://modules/remi/assets/audio/used/handy_man/kiss_2.wav")
+	var sound_fx = preload("res://modules/odilon/fx/one_shot_sound.tscn").instantiate()
+	sound_fx.res = sound_res
+	hand.add_child(sound_fx)
+
 func _play_appearing_animation():
 	# init
 	state = "appearing"
@@ -84,6 +90,7 @@ func _play_appearing_animation():
 	for hand in hands:
 		main_tween.tween_property(hand, "modulate:a", 1.0, 0.125).set_trans(Tween.TRANS_CUBIC)
 		main_tween.parallel().tween_property(hand, "scale", Vector2(1.1, 1.1), 0.125).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_callback(_play_appearing_sound.bind(hand))
 		main_tween.tween_property(hand, "scale", Vector2(1.0, 1.0), 0.125).set_trans(Tween.TRANS_ELASTIC)
 	main_tween.tween_property($Body/SpriteRoot, "modulate", Color(0.5, 0.5, 0.5), 0.5).set_trans(Tween.TRANS_CUBIC)
 	await main_tween.finished
@@ -118,6 +125,12 @@ func _play_waiting_animation():
 	await main_tween.finished
 	_play_attacking_animation.call_deferred()
 
+func _play_attack_hand_sound(hand):
+	var sound_res = preload("res://modules/remi/assets/audio/used/handy_man/splash_2.wav")
+	var sound_fx = preload("res://modules/odilon/fx/one_shot_sound.tscn").instantiate()
+	sound_fx.res = sound_res
+	hand.add_child(sound_fx)
+
 func _play_attacking_animation():
 	state = "attacking"
 	main_tween = create_tween()
@@ -142,6 +155,7 @@ func _play_attacking_animation():
 		hands_state[hand]["attack_tween"] = create_tween()
 		hands_state[hand]["attack_tween"].tween_property(hand, "scale", Vector2(0.8, 0.8), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 		hands_state[hand]["attack_tween"].tween_callback(_attempt_to_attack.bind(hand))
+		hands_state[hand]["attack_tween"].parallel().tween_callback(_play_attack_hand_sound.bind(hand))
 		hands_state[hand]["attack_tween"].tween_property(hand, "scale", Vector2(2.0, 2.0), 0.75 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 		hands_state[hand]["attack_tween"].tween_callback(_attempt_damaging_character.bind(hand))
 		hands_state[hand]["attack_tween"].tween_callback(_attempt_to_close_hand.bind(hand))
@@ -186,11 +200,18 @@ func _attempt_damaging_character(hand : Node2D):
 		character.hit(HAND_DAMAGE_PER_ATTACK)
 		_spawn_kiss.call_deferred(hand)
 
+func _play_close_hand_sound(hand : Node2D):
+	var sound_res = preload("res://modules/remi/assets/audio/used/handy_man/cling_3.wav")
+	var sound_fx = preload("res://modules/odilon/fx/one_shot_sound.tscn").instantiate()
+	sound_fx.res = sound_res
+	hand.add_child(sound_fx)
+
 func _hand_open_pressed(hand : Node2D):
 	_hit(character.damage_per_attack)
 	# check number of hits
 	hands_state[hand]["number_of_hits"] += 1
 	if hands_state[hand]["number_of_hits"] >= MAX_NB_OF_HITS_PER_HAND:
+		_play_close_hand_sound(hand)
 		_attempt_to_close_hand(hand)
 
 func _hit(damage_points : float):
@@ -224,6 +245,12 @@ func _attempt_to_play_hit_animation():
 		hit_tween.tween_callback($Body/SpriteRoot/Sprite2DNormal.show)
 		hit_tween.tween_callback($Body/SpriteRoot/Sprite2DBeingHit.hide)
 
+func _play_death_sound():
+	var sound_res = preload("res://modules/remi/assets/audio/used/handy_man/waf_3.wav")
+	var sound_fx = preload("res://modules/odilon/fx/one_shot_sound.tscn").instantiate()
+	sound_fx.res = sound_res
+	$Body.add_child(sound_fx)
+
 func _attempt_to_play_death_animation():
 	if state != "dying":
 		state = "dying"
@@ -240,6 +267,7 @@ func _attempt_to_play_death_animation():
 		for hand in hands:
 			main_tween.tween_property(hand, "position:y", 800.0, 0.25).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 		main_tween.tween_property(self, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_callback(_play_death_sound)
 		await main_tween.finished
 		just_died.emit()
 
@@ -262,6 +290,13 @@ func _spawn_kiss(hand : Node2D):
 	var new_kiss : Node2D = preload("res://modules/remi/mob_handy_man/kiss.tscn").instantiate()
 	new_kiss.transform = hand.transform
 	$Kisses.add_child(new_kiss)
+	
+	# kiss sound
+	var sound_res = preload("res://modules/remi/assets/audio/used/handy_man/kiss_0.wav")
+	var sound_fx = preload("res://modules/odilon/fx/one_shot_sound.tscn").instantiate()
+	sound_fx.res = sound_res
+	new_kiss.add_child(sound_fx)
+	
 	# tween
 	var kiss_tween : Tween = create_tween()
 	kiss_tween.tween_property(new_kiss, "modulate:a", 0.0, KISS_DURATION).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)

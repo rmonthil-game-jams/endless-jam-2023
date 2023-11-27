@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dxd18lyy6vvx0"
-path="res://.godot/imported/kiss_0.wav-2b2835a0fd4f76e9fab0d0b7d3026721.sample"
+path="res://.godot/imported/kiss_0.wav-597113b16c216bab6fe754afdb891f29.sample"
 
 [deps]
 
-source_file="res://modules/remi/assets/audio/kiss_0.wav"
-dest_files=["res://.godot/imported/kiss_0.wav-2b2835a0fd4f76e9fab0d0b7d3026721.sample"]
+source_file="res://modules/remi/assets/audio/used/handy_man/kiss_0.wav"
+dest_files=["res://.godot/imported/kiss_0.wav-597113b16c216bab6fe754afdb891f29.sample"]
 
 [params]
 

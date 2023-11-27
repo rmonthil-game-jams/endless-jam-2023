@@ -1,19 +1,19 @@
-[gd_scene load_steps=17 format=3 uid="uid://so6jo25adcnv"]
+[gd_scene load_steps=19 format=3 uid="uid://so6jo25adcnv"]
 
 [ext_resource type="Script" path="res://modules/nathan/sliminou_gang/Sliminou.gd" id="1_bnk5t"]
-[ext_resource type="Texture2D" uid="uid://dsr2dgifp48a4" path="res://modules/aurelie/assets/graphics/sliminou_corps_sansmainsansbouche.svg" id="2_cffvo"]
-[ext_resource type="Texture2D" uid="uid://chgojwke0pt1i" path="res://modules/aurelie/assets/graphics/sliminou_corps_normal.svg" id="2_u6mt1"]
-[ext_resource type="Texture2D" uid="uid://b6serkk35ft16" path="res://modules/aurelie/assets/graphics/sliminou_bouche_quiparle_normal.svg" id="3_kpx0w"]
-[ext_resource type="Texture2D" uid="uid://b7nj7ntsxtmva" path="res://modules/aurelie/assets/graphics/sliminou_coeur_normal.svg" id="4_aisgu"]
-[ext_resource type="Texture2D" uid="uid://rm5oq6clxmfu" path="res://modules/aurelie/assets/graphics/sliminou_bouche_interrompue.svg" id="4_qjm31"]
-[ext_resource type="Texture2D" uid="uid://c3creq0g0r7pi" path="res://modules/aurelie/assets/graphics/sliminou_coeur_eclate.svg" id="5_cswdc"]
-[ext_resource type="Texture2D" uid="uid://hfuxf4xcpkm5" path="res://modules/aurelie/assets/graphics/sliminou_bouche_quiparle_hover.svg" id="5_esoax"]
-[ext_resource type="Texture2D" uid="uid://l14w6m2357jh" path="res://modules/aurelie/assets/graphics/sliminou_coeur_hover.svg" id="6_bj7br"]
-[ext_resource type="Texture2D" uid="uid://jdbcivhg22q2" path="res://modules/aurelie/assets/graphics/sliminou_bouche_contente.svg" id="6_uf2vj"]
-[ext_resource type="Texture2D" uid="uid://3f48m0m7daf" path="res://modules/aurelie/assets/graphics/sliminou_corps_quiseduplique_sansmains_avecbouche.svg" id="7_ibo3m"]
+[ext_resource type="Texture2D" uid="uid://dmrwh8ciu01y5" path="res://modules/aurelie/assets/graphics/sliminou_corps_sansmainsansbouche.svg" id="2_cffvo"]
+[ext_resource type="Texture2D" uid="uid://bwt1u2pqto0ue" path="res://modules/aurelie/assets/graphics/sliminou_bouche_quiparle_normal.svg" id="3_kpx0w"]
+[ext_resource type="Texture2D" uid="uid://crcnyki0kterb" path="res://modules/aurelie/assets/graphics/sliminou_coeur_normal.svg" id="4_aisgu"]
+[ext_resource type="Texture2D" uid="uid://oavb0txtx538" path="res://modules/aurelie/assets/graphics/sliminou_bouche_interrompue.svg" id="4_qjm31"]
+[ext_resource type="Texture2D" uid="uid://bcmqiiium82x8" path="res://modules/aurelie/assets/graphics/sliminou_coeur_eclate.svg" id="5_cswdc"]
+[ext_resource type="Texture2D" uid="uid://d4agmg8dkx526" path="res://modules/aurelie/assets/graphics/sliminou_bouche_quiparle_hover.svg" id="5_esoax"]
+[ext_resource type="Texture2D" uid="uid://drx6smso6prbe" path="res://modules/aurelie/assets/graphics/sliminou_coeur_hover.svg" id="6_bj7br"]
+[ext_resource type="Texture2D" uid="uid://dk1kt0sq2ffkc" path="res://modules/aurelie/assets/graphics/sliminou_bouche_contente.svg" id="6_uf2vj"]
+[ext_resource type="Texture2D" uid="uid://xspygj2rqnni" path="res://modules/aurelie/assets/graphics/sliminou_corps_quiseduplique_sansmains_avecbouche.svg" id="7_ibo3m"]
 [ext_resource type="Texture2D" uid="uid://dykde2hfkqfpv" path="res://modules/aurelie/assets/graphics/sliminou_attaque_2.svg" id="8_b6jwv"]
-[ext_resource type="Texture2D" uid="uid://dsbm5dkpvkuv" path="res://modules/aurelie/assets/graphics/sliminou_corps_quiprenddesdegats_sansmainsavecbouche.svg" id="11_nnpef"]
-[ext_resource type="Texture2D" uid="uid://ds8nyip61w5q0" path="res://modules/aurelie/assets/graphics/sliminou_corps_quiprenddesdegats_sansmainssansbouche.svg" id="12_epygu"]
+[ext_resource type="Texture2D" uid="uid://jlx8bek4y26q" path="res://modules/aurelie/assets/graphics/sliminou_corps_quiprenddesdegats_sansmainsavecbouche.svg" id="11_nnpef"]
+[ext_resource type="Texture2D" uid="uid://bc5qn0q1bdky" path="res://modules/aurelie/assets/graphics/sliminou_corps_quiprenddesdegats_sansmainssansbouche.svg" id="12_epygu"]
+[ext_resource type="PackedScene" uid="uid://bshbl2fbnuny8" path="res://hands.tscn" id="13_6051p"]
 
 [sub_resource type="Animation" id="Animation_qlju1"]
 resource_name = "MouthBabbling"
@@ -57,6 +57,48 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_crshq"]
 _data = {
 "MouthBabbling": SubResource("Animation_qlju1")
+}
+
+[sub_resource type="Animation" id="Animation_nopwr"]
+resource_name = "HeartBeat"
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WeakSpotButton:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.8, -0.25, 0, 0.25, 0, 1.1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WeakSpotButton:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.8, -0.25, 0, 0.25, 0, 1.1, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.2, 0.4)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WeakSpotButton:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yfr8k"]
+_data = {
+"HeartBeat": SubResource("Animation_nopwr")
 }
 
 [node name="Sliminou" type="Node2D"]
@@ -113,10 +155,12 @@ texture = ExtResource("11_nnpef")
 visible = false
 
 [node name="WeakSpotButton" type="TextureButton" parent="Body/WeakSpot"]
-offset_left = 36.0
-offset_top = -123.0
-offset_right = 126.0
-offset_bottom = -37.0
+offset_left = 39.0
+offset_top = -127.0
+offset_right = 129.0
+offset_bottom = -41.0
+scale = Vector2(0.826982, 0.826982)
+pivot_offset = Vector2(53.75, 51.4375)
 keep_pressed_outside = true
 texture_normal = ExtResource("4_aisgu")
 texture_pressed = ExtResource("5_cswdc")
@@ -124,49 +168,12 @@ texture_hover = ExtResource("6_bj7br")
 texture_disabled = ExtResource("5_cswdc")
 metadata/_edit_use_anchors_ = true
 
-[node name="Hands" type="Node2D" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Body/WeakSpot"]
+libraries = {
+"": SubResource("AnimationLibrary_yfr8k")
+}
 
-[node name="HandRight" type="Node2D" parent="Hands"]
-position = Vector2(-55, 0)
-
-[node name="TextureButtonClosed" type="TextureButton" parent="Hands/HandRight"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Polygon2D" type="Polygon2D" parent="Hands/HandRight/TextureButtonClosed"]
-position = Vector2(26, 23)
-polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
-
-[node name="TextureButtonOpened" type="TextureButton" parent="Hands/HandRight"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Polygon2D" type="Polygon2D" parent="Hands/HandRight/TextureButtonOpened"]
-position = Vector2(26, 23)
-polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
-
-[node name="HandLeft" type="Node2D" parent="Hands"]
-position = Vector2(-55, 0)
-
-[node name="TextureButtonClosed" type="TextureButton" parent="Hands/HandLeft"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Polygon2D" type="Polygon2D" parent="Hands/HandLeft/TextureButtonClosed"]
-position = Vector2(26, 23)
-polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
-
-[node name="TextureButtonOpened" type="TextureButton" parent="Hands/HandLeft"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Polygon2D" type="Polygon2D" parent="Hands/HandLeft/TextureButtonOpened"]
-position = Vector2(26, 23)
-polygon = PackedVector2Array(7, 29, -26, 23, -48, -31, 25, -34, 25, 5)
+[node name="Hands" parent="Body" instance=ExtResource("13_6051p")]
 
 [node name="Speach" type="Node2D" parent="."]
 
@@ -187,7 +194,7 @@ offset_top = -168.0
 offset_right = 303.0
 offset_bottom = 9.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 32
 text = "test"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -197,5 +204,5 @@ autowrap_mode = 2
 visible = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Duplicate"]
-position = Vector2(0, -118)
-texture = ExtResource("2_u6mt1")
+position = Vector2(1, -167)
+texture = ExtResource("11_nnpef")

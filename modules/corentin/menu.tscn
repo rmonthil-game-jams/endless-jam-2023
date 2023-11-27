@@ -19,8 +19,8 @@
 [ext_resource type="Texture2D" uid="uid://uo6lmpwx42v7" path="res://modules/remi/assets/graphics/settings_hard_pressed.svg" id="15_j2xpy"]
 [ext_resource type="Texture2D" uid="uid://chv0uhvhq2m5f" path="res://modules/remi/assets/graphics/settings_hard_hover.svg" id="16_ecdlm"]
 [ext_resource type="FontFile" uid="uid://b0ihnar8ojegy" path="res://modules/remi/assets/fonts/Drexs-z8gB3.ttf" id="20_agosy"]
+[ext_resource type="AudioStream" uid="uid://fki1qrqiqtkj" path="res://modules/remi/assets/audio/used/general/tttt_0.wav" id="21_tqmko"]
 [ext_resource type="Texture2D" uid="uid://cyd4fllsiutm1" path="res://modules/remi/assets/graphics/overlay.svg" id="23_tg46e"]
-[ext_resource type="AudioStream" uid="uid://fki1qrqiqtkj" path="res://modules/remi/assets/audio/tttt_0.wav" id="24_6vmcx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vvdgm"]
 
@@ -423,7 +423,7 @@ stretch_mode = 3
 [node name="Audio" type="Node" parent="."]
 
 [node name="Click" type="AudioStreamPlayer2D" parent="Audio"]
-stream = ExtResource("24_6vmcx")
+stream = ExtResource("21_tqmko")
 volume_db = 4.078
 attenuation = 2.0
 
