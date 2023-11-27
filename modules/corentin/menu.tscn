@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bryybme68tf54"]
+[gd_scene load_steps=35 format=3 uid="uid://bryybme68tf54"]
 
 [ext_resource type="Script" path="res://modules/corentin/menu.gd" id="1_hhpha"]
 [ext_resource type="PackedScene" uid="uid://bebm1sx3rjxnt" path="res://modules/corentin/dungeon.tscn" id="2_t6ukj"]
@@ -16,10 +16,13 @@
 [ext_resource type="Texture2D" uid="uid://cxlhqj2es27g3" path="res://modules/remi/assets/graphics/settings_border.svg" id="12_r0aal"]
 [ext_resource type="Texture2D" uid="uid://k1fdoyuspwc0" path="res://modules/remi/assets/graphics/settings_normal_hover.svg" id="13_1f0wd"]
 [ext_resource type="Texture2D" uid="uid://doafc5ysf1olk" path="res://modules/remi/assets/graphics/settings_hard_normal.svg" id="14_raq3u"]
+[ext_resource type="Texture2D" uid="uid://yonscykufjsb" path="res://modules/remi/assets/graphics/settings_easy_disabled.svg" id="15_agw4r"]
 [ext_resource type="Texture2D" uid="uid://uo6lmpwx42v7" path="res://modules/remi/assets/graphics/settings_hard_pressed.svg" id="15_j2xpy"]
 [ext_resource type="Texture2D" uid="uid://chv0uhvhq2m5f" path="res://modules/remi/assets/graphics/settings_hard_hover.svg" id="16_ecdlm"]
+[ext_resource type="Texture2D" uid="uid://8el7j3715k14" path="res://modules/remi/assets/graphics/settings_normal_disabled.svg" id="19_n6j8r"]
 [ext_resource type="FontFile" uid="uid://b0ihnar8ojegy" path="res://modules/remi/assets/fonts/Drexs-z8gB3.ttf" id="20_agosy"]
 [ext_resource type="AudioStream" uid="uid://fki1qrqiqtkj" path="res://modules/remi/assets/audio/used/general/tttt_0.wav" id="21_tqmko"]
+[ext_resource type="Texture2D" uid="uid://dmhjc7l1gk8jx" path="res://modules/remi/assets/graphics/settings_hard_disabled.svg" id="23_nna6y"]
 [ext_resource type="Texture2D" uid="uid://cyd4fllsiutm1" path="res://modules/remi/assets/graphics/overlay.svg" id="23_tg46e"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vvdgm"]
@@ -397,7 +400,7 @@ disabled = true
 texture_normal = ExtResource("6_x55tw")
 texture_pressed = ExtResource("7_baeed")
 texture_hover = ExtResource("8_c2mcx")
-texture_disabled = ExtResource("7_baeed")
+texture_disabled = ExtResource("15_agw4r")
 stretch_mode = 3
 
 [node name="Medium" type="TextureButton" parent="CanvasLayer/Settings/Difficulty/HBoxContainer"]
@@ -407,7 +410,7 @@ size_flags_horizontal = 3
 texture_normal = ExtResource("11_4bwyv")
 texture_pressed = ExtResource("12_f3o5e")
 texture_hover = ExtResource("13_1f0wd")
-texture_disabled = ExtResource("12_f3o5e")
+texture_disabled = ExtResource("19_n6j8r")
 stretch_mode = 3
 
 [node name="Hard" type="TextureButton" parent="CanvasLayer/Settings/Difficulty/HBoxContainer"]
@@ -417,7 +420,7 @@ size_flags_horizontal = 3
 texture_normal = ExtResource("14_raq3u")
 texture_pressed = ExtResource("15_j2xpy")
 texture_hover = ExtResource("16_ecdlm")
-texture_disabled = ExtResource("15_j2xpy")
+texture_disabled = ExtResource("23_nna6y")
 stretch_mode = 3
 
 [node name="Audio" type="Node" parent="."]

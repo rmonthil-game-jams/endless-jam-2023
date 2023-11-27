@@ -4,3 +4,4 @@
 
 [resource]
 shader = ExtResource("1_lv8tr")
+shader_parameter/ColorParameter = Color(1, 1, 1, 1)

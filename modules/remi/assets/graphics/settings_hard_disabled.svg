@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="88.412109"
+   height="85.317139"
+   viewBox="0 0 23.39237 22.573493"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="settings_hard_disabled.svg"
+   xml:space="preserve"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"><defs
+     id="defs2" /><sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4.3256733"
+     inkscape:cx="5.5482692"
+     inkscape:cy="53.748857"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer2"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1916"
+     inkscape:window-height="1037"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" /><metadata
+     id="metadata5"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="hud"
+     style="display:inline"
+     transform="translate(-216.33843,-307.85522)"><path
+       id="rect309"
+       style="display:inline;color:#000000;fill:#eafaf2;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+       d="M 220.14647 307.85522 C 218.05102 307.85522 216.33791 309.56677 216.33791 311.66222 L 216.33791 326.621 C 216.33791 328.71646 218.05102 330.42749 220.14647 330.42749 L 235.9238 330.42749 C 238.01925 330.42749 239.73028 328.71646 239.73028 326.621 L 239.73028 311.66222 C 239.73028 309.56677 238.01925 307.85522 235.9238 307.85522 L 220.14647 307.85522 z M 224.53173 311.32684 L 226.78534 315.58498 L 226.27633 315.92605 L 223.24395 312.33712 L 224.53173 311.32684 z M 231.82431 311.32684 L 233.11157 312.33712 L 230.07919 315.92605 L 229.57018 315.58498 L 231.82431 311.32684 z M 222.70807 313.58614 L 225.72132 316.3038 A 2.2343891 2.2692809 0 0 1 223.5752 317.94298 A 2.2343891 2.2692809 0 0 1 221.34123 315.67386 A 2.2343891 2.2692809 0 0 1 222.70807 313.58614 z M 233.64125 313.91118 A 2.2343891 2.2692809 0 0 1 234.46807 315.67386 A 2.2343891 2.2692809 0 0 1 232.2341 317.94298 A 2.2343891 2.2692809 0 0 1 230.32104 316.83865 L 233.64125 313.91118 z M 224.30074 319.00338 A 0.79383437 0.79383437 0 0 1 224.86918 319.24419 C 224.86918 319.24419 225.33062 319.71935 225.93578 320.27513 C 226.26015 320.57305 226.63213 320.89292 226.97809 321.16552 L 227.24009 320.97432 A 0.79382936 0.79382936 0 0 1 228.02712 320.88853 A 0.79382936 0.79382936 0 0 1 228.49634 321.52725 L 228.55681 322.06417 C 229.06395 322.25428 229.67108 322.4436 230.21304 322.59179 C 231.0915 322.83199 231.81035 322.98453 231.81035 322.98453 A 0.79383437 0.79383437 0 0 1 232.18553 324.34155 C 232.18553 324.34155 231.79676 324.70253 231.28325 325.08776 C 230.7698 325.47299 230.17726 325.91561 229.42755 326.06031 C 229.29029 326.08681 229.15244 326.10631 229.01414 326.12181 L 229.03326 326.29285 A 0.79374999 0.79374999 0 0 1 228.33408 327.17187 A 0.79374999 0.79374999 0 0 1 227.45713 326.47062 L 227.41217 326.07375 C 226.61256 325.94027 225.84174 325.65292 225.16218 325.25416 C 224.96878 325.14067 224.78232 325.01076 224.60614 324.86658 L 224.38652 325.0273 A 0.79374999 0.79374999 0 0 1 223.27754 324.85367 A 0.79374999 0.79374999 0 0 1 223.44911 323.74417 L 223.59328 323.63927 C 223.50156 323.46504 223.42219 323.28275 223.35919 323.09202 C 223.10747 322.32937 223.2082 321.53734 223.3008 320.85133 C 223.39341 320.16533 223.52921 319.60954 223.52921 319.60954 A 0.79383437 0.79383437 0 0 1 224.09196 319.03128 A 0.79383437 0.79383437 0 0 1 224.30074 319.00338 z "
+       transform="translate(-4.5833326e-7)" /></g></svg>

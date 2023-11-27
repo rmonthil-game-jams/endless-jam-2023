@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bebm1sx3rjxnt"]
+[gd_scene load_steps=11 format=3 uid="uid://bebm1sx3rjxnt"]
 
 [ext_resource type="Script" path="res://modules/corentin/dungeon.gd" id="1_7npxm"]
 [ext_resource type="PackedScene" uid="uid://75etcwgcek82" path="res://modules/selim/mob_chamallow/mob_chamallow.tscn" id="2_b7trr"]
@@ -7,14 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_wdgi3"]
 [ext_resource type="PackedScene" uid="uid://bvo61s1yid5cv" path="res://modules/nathan/sliminou_gang/sliminou_gang.tscn" id="5_fgmgm"]
 [ext_resource type="PackedScene" uid="uid://dlvwfmqkkgucd" path="res://modules/odilon/fx/normalized_sound.tscn" id="5_l5h4f"]
-[ext_resource type="PackedScene" uid="uid://dl37003wsb2n1" path="res://modules/corentin/mob_trash/mob_trash.tscn" id="6_c1xnk"]
 [ext_resource type="AudioStream" uid="uid://d1q6vpxp4lj0i" path="res://modules/remi/assets/audio/used/general/woosh_2.wav" id="6_cg2yb"]
 [ext_resource type="PackedScene" uid="uid://chk831ldmfjkm" path="res://modules/odilon/super_lechouille/fight.tscn" id="6_gkld6"]
-[ext_resource type="PackedScene" uid="uid://jsbtpbjcy8rj" path="res://modules/natheo/mob_cuteplant/mob_cuteplant.tscn" id="7_bak6c"]
+[ext_resource type="PackedScene" uid="uid://jsbtpbjcy8rj" path="res://modules/natheo/mob_cuteplant/mob_cuteplant.tscn" id="6_xx2s5"]
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_7npxm")
-MOB_SCENES = Array[PackedScene]([ExtResource("6_c1xnk"), ExtResource("5_fgmgm"), ExtResource("6_gkld6"), ExtResource("2_wo6eh"), ExtResource("2_b7trr"), ExtResource("7_bak6c")])
+MOB_SCENES = Array[PackedScene]([ExtResource("5_fgmgm"), ExtResource("6_gkld6"), ExtResource("2_b7trr"), ExtResource("6_xx2s5")])
 BOSS_SCENES = Array[PackedScene]([ExtResource("2_wo6eh")])
 BOSS_ROOM_PERIOD = 5
 
@@ -28,7 +27,7 @@ scale = Vector2(0.444278, 0.463389)
 texture = ExtResource("2_e6tvr")
 
 [node name="RoomContent" type="Node2D" parent="."]
-position = Vector2(0, 100)
+position = Vector2(0, 150)
 
 [node name="Character" parent="." instance=ExtResource("3_wdgi3")]
 

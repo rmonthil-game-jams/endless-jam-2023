@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtsji046cqoml"]
+[gd_scene load_steps=3 format=3 uid="uid://c0ooppj2lsy5u"]
 
 [ext_resource type="Script" path="res://pointer.gd" id="1_lu388"]
 [ext_resource type="Texture2D" uid="uid://dgx137dfls3lv" path="res://modules/remi/assets/graphics/hud_symbol.svg" id="2_hwup0"]

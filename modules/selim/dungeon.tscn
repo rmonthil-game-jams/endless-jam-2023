@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://q5qbh2u6e3xa"]
+[gd_scene load_steps=5 format=3 uid="uid://c7fw77ovd346"]
 
 [ext_resource type="Script" path="res://modules/selim/dungeon.gd" id="1_t252s"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_e6tvr"]

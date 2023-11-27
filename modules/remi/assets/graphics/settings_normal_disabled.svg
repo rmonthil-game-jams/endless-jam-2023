@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="88.412109"
+   height="85.317139"
+   viewBox="0 0 23.39237 22.573493"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="settings_normal_disabled.svg"
+   xml:space="preserve"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"><defs
+     id="defs2" /><sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4.891705"
+     inkscape:cx="44.258597"
+     inkscape:cy="46.71173"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer2"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1916"
+     inkscape:window-height="1037"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" /><metadata
+     id="metadata5"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="hud"
+     style="display:inline"
+     transform="translate(-186.34624,-307.85522)"><path
+       id="path1"
+       style="display:inline;fill:#eafaf2;fill-opacity:1;stroke:none;stroke-width:1.58748;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="M 190.15428 307.85522 C 188.05882 307.85522 186.34572 309.56677 186.34572 311.66222 L 186.34572 326.621 C 186.34572 328.71646 188.05882 330.42749 190.15428 330.42749 L 205.93161 330.42749 C 208.02706 330.42749 209.73809 328.71646 209.73809 326.621 L 209.73809 311.66222 C 209.73809 309.56677 208.02706 307.85522 205.93161 307.85522 L 190.15428 307.85522 z M 193.58301 313.40475 A 2.2343891 2.2692809 0 0 1 195.8175 315.67386 A 2.2343891 2.2692809 0 0 1 193.58301 317.94298 A 2.2343891 2.2692809 0 0 1 191.34904 315.67386 A 2.2343891 2.2692809 0 0 1 193.58301 313.40475 z M 202.24191 313.40475 A 2.2343891 2.2692809 0 0 1 204.47588 315.67386 A 2.2343891 2.2692809 0 0 1 202.24191 317.94298 A 2.2343891 2.2692809 0 0 1 200.00742 315.67386 A 2.2343891 2.2692809 0 0 1 202.24191 313.40475 z M 194.77363 322.16597 L 201.85537 322.16597 A 0.79375499 0.79375499 0 0 1 202.6486 322.95921 A 0.79375499 0.79375499 0 0 1 201.85537 323.75399 L 194.77363 323.75399 A 0.79375499 0.79375499 0 0 1 193.97833 322.95921 A 0.79375499 0.79375499 0 0 1 194.77363 322.16597 z "
+       transform="translate(-1.0416665e-7)" /></g></svg>
