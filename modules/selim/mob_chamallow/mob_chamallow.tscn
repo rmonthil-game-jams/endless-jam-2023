@@ -44,7 +44,7 @@ texture = ExtResource("4_q2rr5")
 
 [node name="Sprite2DAttacked" type="Sprite2D" parent="Body"]
 visible = false
-texture = ExtResource("5_r4ct6")
+texture = ExtResource("4_q2rr5")
 
 [node name="Sprite2DAtttackingP1" type="Sprite2D" parent="Body"]
 visible = false

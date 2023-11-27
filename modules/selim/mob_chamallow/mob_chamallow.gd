@@ -118,6 +118,8 @@ func _phase_1_attack():
 	$Body/TextureButtonP1.hide()
 	$AttackP1/TextureButtonAttackP1.show()
 	
+	$AttackP1/TextureButtonAttackP1.disabled = true
+	
 	# prepare anim
 	$AttackP1.modulate.a = 0.0
 	$AttackP1.scale = Vector2(0.125, 0.125)
@@ -131,6 +133,8 @@ func _phase_1_attack():
 	main_tween.parallel().tween_property($AttackP1, "position", target_position, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	# attack
 	await  main_tween.finished
+	# enable button
+	$AttackP1/TextureButtonAttackP1.disabled = false
 	# target fx
 	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
 	target_fx.w = 421.0
@@ -176,6 +180,9 @@ func _phase_2_attack():
 		$AttacksP2/AttackP21/TextureButtonAttackP2.show()
 		$AttacksP2/AttackP22/TextureButtonAttackP2.show()
 		
+		$AttacksP2/AttackP21/TextureButtonAttackP2.disabled = true
+		$AttacksP2/AttackP22/TextureButtonAttackP2.disabled = true
+		
 		# appear
 		main_tween = create_tween()
 		main_tween.tween_property($AttacksP2/AttackP21, "modulate:a", 1.0, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
@@ -186,6 +193,8 @@ func _phase_2_attack():
 		main_tween.parallel().tween_property($AttacksP2/AttackP22, "position", target_position_2, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 		await  main_tween.finished
 		# attack
+		$AttacksP2/AttackP21/TextureButtonAttackP2.disabled = false
+		$AttacksP2/AttackP22/TextureButtonAttackP2.disabled = false
 		# target fx
 		var target_fx1 = preload("res://modules/remi/fx/target.tscn").instantiate()
 		var target_fx2 = preload("res://modules/remi/fx/target.tscn").instantiate()
@@ -229,6 +238,9 @@ func _phase_2_attack():
 	$AttacksP2/AttackP21/TextureButtonAttackP2.show()
 	$AttacksP2/AttackP22/TextureButtonAttackP2.show()
 	$AttacksP2/AttackP23/TextureButtonAttackP2.show()
+	$AttacksP2/AttackP21/TextureButtonAttackP2.disabled = true
+	$AttacksP2/AttackP22/TextureButtonAttackP2.disabled = true
+	$AttacksP2/AttackP23/TextureButtonAttackP2.disabled = true
 	
 	# appear
 	main_tween = create_tween()
@@ -242,6 +254,10 @@ func _phase_2_attack():
 	main_tween.parallel().tween_property($AttacksP2/AttackP23, "scale", ATTACK_SCALE, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	main_tween.parallel().tween_property($AttacksP2/AttackP23, "position", target_position_3, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
 	await  main_tween.finished
+	
+	$AttacksP2/AttackP21/TextureButtonAttackP2.disabled = false
+	$AttacksP2/AttackP22/TextureButtonAttackP2.disabled = false
+	$AttacksP2/AttackP23/TextureButtonAttackP2.disabled = false
 	
 	var target_fx1 = preload("res://modules/remi/fx/target.tscn").instantiate()
 	var target_fx2 = preload("res://modules/remi/fx/target.tscn").instantiate()
