@@ -1,0 +1,917 @@
+[gd_scene load_steps=18 format=3 uid="uid://dfs1dbah1d0n5"]
+
+[ext_resource type="Script" path="res://modules/remi/intro.gd" id="1_eknrt"]
+[ext_resource type="PackedScene" uid="uid://d1h4nkcqe1b26" path="res://modules/remi/spaceship.tscn" id="2_6748w"]
+[ext_resource type="Texture2D" uid="uid://cosjb2iy0w7bn" path="res://modules/remi/assets/graphics/planet_0.svg" id="3_i1r4j"]
+[ext_resource type="Texture2D" uid="uid://di2w1e4qplnq1" path="res://modules/remi/assets/graphics/planet_1.svg" id="4_6ljui"]
+[ext_resource type="Texture2D" uid="uid://chls4m8fbf5s5" path="res://modules/remi/assets/graphics/planet_2.svg" id="5_ejp8i"]
+[ext_resource type="Texture2D" uid="uid://busv1hnr74ggu" path="res://modules/remi/assets/graphics/planet_3.svg" id="6_wv4ph"]
+[ext_resource type="Texture2D" uid="uid://cmcfpc1hr7y1d" path="res://modules/remi/assets/graphics/star.svg" id="7_pmffe"]
+[ext_resource type="FontFile" uid="uid://cawutowfije1" path="res://modules/remi/assets/fonts/SalvarRegular-gxwoP.ttf" id="9_0rd4u"]
+
+[sub_resource type="Animation" id="Animation_t75by"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ZoomAnchor/Env:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1342, 337)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ZoomAnchor/Spaceship:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(557, 320)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ZoomAnchor/Spaceship:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ZoomAnchor:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ZoomAnchor:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ZoomAnchor:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ColorRect:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("GameTitle:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_cs5jn"]
+resource_name = "intro"
+length = 12.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ZoomAnchor/Env:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1342, 337), Vector2(-2069, 355), Vector2(-1970, 350)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ZoomAnchor/Spaceship:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.1, 1.9, 2.5, 3.5, 4, 5, 6.1, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(557, 320), Vector2(520, 468), Vector2(693, 189), Vector2(405, 507), Vector2(551, 182), Vector2(850, 414), Vector2(850, 414), Vector2(206, 310), Vector2(354, 494)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ZoomAnchor/Spaceship")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3.8, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"play_flying"
+}, {
+"args": [],
+"method": &"stop_flying"
+}, {
+"args": [],
+"method": &"play_flying"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimationPlayerQuestionMark")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(3.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["question", -1, 1.0, false],
+"method": &"play"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ZoomAnchor/Spaceship:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(5, 5.2, 5.7, 6.1, 7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(1, 1), Vector2(0.1, 0.1)]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimationPlayerParty")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(3.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["party", -1, 1.0, false],
+"method": &"play"
+}]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ZoomAnchor:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 6.6, 7.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(3.49, 3.49)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ZoomAnchor:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 6.6, 7.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(-804, -1455)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ZoomAnchor:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(6.6, 7.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("ColorRect:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(6.6, 7.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/10/type = "method"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("GameTitle")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(7.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show"
+}]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("GameTitle:modulate")
+tracks/11/interp = 2
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(7.5, 9, 10, 12),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uliyd"]
+_data = {
+"RESET": SubResource("Animation_t75by"),
+"intro": SubResource("Animation_cs5jn")
+}
+
+[sub_resource type="Animation" id="Animation_y4bu3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ZoomAnchor/Spaceship/Anchor?:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ZoomAnchor/Spaceship/Anchor?:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_r1xxv"]
+resource_name = "question"
+length = 0.5
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ZoomAnchor/Spaceship/Anchor?:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.17, 0.25, 0.35, 0.43, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(0.9, 0.9), Vector2(1, 1), Vector2(0.9, 0.9), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ZoomAnchor/Spaceship/Anchor?")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ZoomAnchor/Spaceship/Anchor?:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.17, 0.25, 0.35, 0.43),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.139626, 0.139626, -0.0698132, 0.0698132, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2mh4d"]
+_data = {
+"RESET": SubResource("Animation_y4bu3"),
+"question": SubResource("Animation_r1xxv")
+}
+
+[sub_resource type="Animation" id="Animation_h2vry"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ZoomAnchor/Env/Party:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ZoomAnchor/Env/Party/Polygon2D:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ZoomAnchor/Env/Party/Polygon2D2:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ZoomAnchor/Env/Party/Polygon2D3:scale")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ZoomAnchor/Env/Party/Polygon2D4:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ZoomAnchor/Env/Party/Polygon2D5:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ZoomAnchor/Env/Party/Polygon2D6:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ZoomAnchor/Env/Party/Polygon2D:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.175529]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ZoomAnchor/Env/Party/Polygon2D2:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.120414]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("ZoomAnchor/Env/Party/Polygon2D3:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.0611964]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("ZoomAnchor/Env/Party/Polygon2D4:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.00229986]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("ZoomAnchor/Env/Party/Polygon2D5:rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.055916]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("ZoomAnchor/Env/Party/Polygon2D6:rotation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.111397]
+}
+
+[sub_resource type="Animation" id="Animation_rqohd"]
+resource_name = "party"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ZoomAnchor/Env/Party:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ZoomAnchor/Env/Party/Polygon2D:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ZoomAnchor/Env/Party/Polygon2D2:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ZoomAnchor/Env/Party/Polygon2D3:scale")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ZoomAnchor/Env/Party/Polygon2D4:scale")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.6, 0.6), Vector2(1, 1), Vector2(0.6, 0.6), Vector2(1, 1), Vector2(1, 1), Vector2(0.6, 0.6), Vector2(1, 1), Vector2(0.6, 0.6), Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ZoomAnchor/Env/Party/Polygon2D5:scale")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ZoomAnchor/Env/Party/Polygon2D6:scale")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1), Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ZoomAnchor/Env/Party/Polygon2D:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [-0.175529, 0.174533, -0.175529, 0.174533]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ZoomAnchor/Env/Party/Polygon2D2:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.7, 1, 1.2, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-0.120414, -0.174533, 0.174533, -0.120414, -0.174533, 0.174533]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("ZoomAnchor/Env/Party/Polygon2D3:rotation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7, 1, 1.3, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-0.0611964, -0.174533, 0.174533, -0.0611964, -0.174533, 0.174533]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("ZoomAnchor/Env/Party/Polygon2D4:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1, 1.4, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-0.00229986, -0.174533, 0.174533, -0.00229986, -0.174533, 0.174533]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("ZoomAnchor/Env/Party/Polygon2D5:rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.9, 1, 1.6, 1.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.055916, -0.174533, 0.174533, 0.055916, -0.174533, 0.174533]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("ZoomAnchor/Env/Party/Polygon2D6:rotation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.7, 1, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.111397, -0.174533, 0.111397, -0.174533]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bylb8"]
+_data = {
+"RESET": SubResource("Animation_h2vry"),
+"party": SubResource("Animation_rqohd")
+}
+
+[node name="Intro" type="CanvasLayer"]
+script = ExtResource("1_eknrt")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1425, 0, 0.15, 1)
+
+[node name="ZoomAnchor" type="Node2D" parent="."]
+
+[node name="Spaceship" parent="ZoomAnchor" instance=ExtResource("2_6748w")]
+position = Vector2(557, 320)
+
+[node name="Anchor?" type="Node2D" parent="ZoomAnchor/Spaceship"]
+visible = false
+position = Vector2(74, 3)
+
+[node name="Label" type="Label" parent="ZoomAnchor/Spaceship/Anchor?"]
+offset_left = -21.0
+offset_top = -237.0
+offset_right = 42.0
+offset_bottom = -66.0
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("9_0rd4u")
+theme_override_font_sizes/font_size = 160
+text = "?"
+horizontal_alignment = 1
+
+[node name="Env" type="Node2D" parent="ZoomAnchor"]
+position = Vector2(1342, 337)
+
+[node name="Planet0" type="Sprite2D" parent="ZoomAnchor/Env"]
+position = Vector2(-79, -169)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_i1r4j")
+
+[node name="Planet1" type="Sprite2D" parent="ZoomAnchor/Env"]
+position = Vector2(793, 199)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_6ljui")
+
+[node name="Planet2" type="Sprite2D" parent="ZoomAnchor/Env"]
+position = Vector2(1573, -191)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_ejp8i")
+
+[node name="Party" type="Node2D" parent="ZoomAnchor/Env"]
+position = Vector2(2357, 160)
+scale = Vector2(1e-05, 1e-05)
+
+[node name="Polygon2D" type="Polygon2D" parent="ZoomAnchor/Env/Party"]
+position = Vector2(0.319092, 28.1469)
+rotation = -0.175529
+color = Color(1, 0.82, 0.6, 1)
+polygon = PackedVector2Array(-10, 0, -25, -800, 25, -800, 10, 0)
+
+[node name="Polygon2D2" type="Polygon2D" parent="ZoomAnchor/Env/Party"]
+position = Vector2(0.319092, 28.1469)
+rotation = -0.120414
+color = Color(0.993333, 0.6, 1, 1)
+polygon = PackedVector2Array(-10, 0, -25, -800, 25, -800, 10, 0)
+
+[node name="Polygon2D3" type="Polygon2D" parent="ZoomAnchor/Env/Party"]
+position = Vector2(0.319092, 28.1468)
+rotation = -0.0611964
+color = Color(0.713333, 1, 0.6, 1)
+polygon = PackedVector2Array(-10, 0, -25, -800, 25, -800, 10, 0)
+
+[node name="Polygon2D4" type="Polygon2D" parent="ZoomAnchor/Env/Party"]
+position = Vector2(0.319092, 28.1469)
+rotation = -0.00229986
+color = Color(0.6, 0.873333, 1, 1)
+polygon = PackedVector2Array(-10, 0, -25, -800, 25, -800, 10, 0)
+
+[node name="Polygon2D5" type="Polygon2D" parent="ZoomAnchor/Env/Party"]
+position = Vector2(0.319092, 28.1469)
+rotation = 0.055916
+color = Color(1, 0.986667, 0.6, 1)
+polygon = PackedVector2Array(-10, 0, -25, -800, 25, -800, 10, 0)
+
+[node name="Polygon2D6" type="Polygon2D" parent="ZoomAnchor/Env/Party"]
+position = Vector2(0.319092, 28.1468)
+rotation = 0.111397
+color = Color(1, 0.6, 0.607843, 1)
+polygon = PackedVector2Array(-10, 0, -25, -800, 25, -800, 10, 0)
+
+[node name="Planet3" type="Sprite2D" parent="ZoomAnchor/Env"]
+position = Vector2(2355, 158)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_wv4ph")
+
+[node name="Star" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.196078)
+position = Vector2(537, 213)
+rotation = -0.850372
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star2" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(189, 51)
+rotation = 0.672177
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star3" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.588235)
+position = Vector2(486, -168)
+rotation = -1.99943
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star4" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.411765)
+position = Vector2(1223, -159)
+rotation = 0.501642
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star5" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.196078)
+position = Vector2(1079, 177)
+rotation = -0.849865
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star6" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.196078)
+position = Vector2(1885, 38)
+rotation = -0.414561
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star7" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.439216)
+position = Vector2(2331, -91.9999)
+rotation = -0.816403
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star16" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.439216)
+position = Vector2(3183, 116)
+rotation = -0.816403
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star8" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.196078)
+position = Vector2(1902, -245)
+rotation = -2.20963
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star14" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.196078)
+position = Vector2(2822, 137)
+rotation = -3.87027
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star15" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.196078)
+position = Vector2(2995, -153)
+rotation = -3.87027
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star9" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.196078)
+position = Vector2(22, -185)
+rotation = -0.740004
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star10" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.196078)
+position = Vector2(-431, -117)
+rotation = -0.400518
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star11" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.47451)
+position = Vector2(-733, 185)
+rotation = 0.0620321
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star12" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.196078)
+position = Vector2(-1203, -115)
+rotation = 0.742895
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="Star13" type="Sprite2D" parent="ZoomAnchor/Env"]
+modulate = Color(1, 1, 1, 0.423529)
+position = Vector2(-1136, 132)
+rotation = -1.47937
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_pmffe")
+
+[node name="GameTitle" type="Label" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("9_0rd4u")
+theme_override_font_sizes/font_size = 80
+text = "GAME TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayerGlobal" type="AnimationPlayer" parent="."]
+autoplay = "intro"
+libraries = {
+"": SubResource("AnimationLibrary_uliyd")
+}
+
+[node name="AnimationPlayerQuestionMark" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2mh4d")
+}
+
+[node name="AnimationPlayerParty" type="AnimationPlayer" parent="."]
+speed_scale = 2.0
+libraries = {
+"": SubResource("AnimationLibrary_bylb8")
+}

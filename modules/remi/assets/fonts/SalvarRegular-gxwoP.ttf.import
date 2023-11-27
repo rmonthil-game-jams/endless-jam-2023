@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://djp2q48rlxdbs"
-path="res://.godot/imported/Hacked-KerX.ttf-ba351a81d5844adad57553aa67950665.fontdata"
+uid="uid://cawutowfije1"
+path="res://.godot/imported/SalvarRegular-gxwoP.ttf-db6f78433b296595af04a2d4a087bbb7.fontdata"
 
 [deps]
 
-source_file="res://modules/remi/assets/fonts/Hacked-KerX.ttf"
-dest_files=["res://.godot/imported/Hacked-KerX.ttf-ba351a81d5844adad57553aa67950665.fontdata"]
+source_file="res://modules/remi/assets/fonts/SalvarRegular-gxwoP.ttf"
+dest_files=["res://.godot/imported/SalvarRegular-gxwoP.ttf-db6f78433b296595af04a2d4a087bbb7.fontdata"]
 
 [params]
 

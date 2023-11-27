@@ -21,7 +21,7 @@ window/stretch/mode="canvas_items"
 
 [editor]
 
-movie_writer/movie_file="/home/rmonthil/video_game/videos/experimenting_with_reactive_design/image_sequence.png"
+movie_writer/movie_file="/home/rmonthil/video_game/videos/rush.avi"
 movie_writer/disable_vsync=true
 movie_writer/fps=27
 

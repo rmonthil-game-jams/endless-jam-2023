@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="175.64214"
+   height="57.752003"
+   viewBox="0 0 46.471981 15.280217"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="spaceship_flame.svg"
+   xml:space="preserve"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"><defs
+     id="defs2" /><sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.15495974"
+     inkscape:cx="367.83747"
+     inkscape:cy="-1474.5765"
+     inkscape:document-units="mm"
+     inkscape:current-layer="g10"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1916"
+     inkscape:window-height="1037"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" /><metadata
+     id="metadata5"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><g
+     inkscape:groupmode="layer"
+     id="g10"
+     inkscape:label="back"
+     transform="translate(-294.71154,-105.96216)"
+     style="display:inline"><path
+       style="display:inline;fill:#ffb380;fill-opacity:1;stroke:none;stroke-width:1.5875;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 341.18352,120.88298 c 0,0 -16.45134,0.63726 -24.66117,0.21464 -7.30608,-0.37609 -21.81081,-2.4435 -21.81081,-2.4435 0,0 12.01101,-4.19772 18.0692,-6.13687 4.35693,-1.3946 8.69641,-2.87571 13.14249,-3.95276 4.62817,-1.12116 14.04709,-2.60233 14.04709,-2.60233"
+       id="path131"
+       sodipodi:nodetypes="cacaac"
+       inkscape:label="spaceship flame" /></g></svg>

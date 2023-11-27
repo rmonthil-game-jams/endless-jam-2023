@@ -243,7 +243,7 @@ func _apply_up(upgrade : Dictionary):
 	$CanvasLayer/UpgradeMenu.hide()
 	for upgrade_button in $CanvasLayer/UpgradeMenu/HBoxContainer.get_children():
 		upgrade_button.queue_free()
-	$CanvasLayer/Room/Number.text = str(cur_room + 1)
+	$CanvasLayer/Room/MarginContainer/Number.text = str(cur_room + 1)
 	finished_upgrade.emit()
 	
 @export var POINTER_NODE : PackedScene
