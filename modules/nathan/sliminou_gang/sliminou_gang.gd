@@ -68,6 +68,59 @@ const speaches_template : Array[String] = [
 		"Ton potentiel est illimité",
 		"Tu as une imagination digne de Rémi"
 	]
+	
+const speaches_template_EN : Array[String] = [
+		"You are unique and exceptional",
+		"Your smile brightens every day",
+		"Your kindness is unforgettable",
+		"Your intelligence is inspiring",
+		"Every day you grow in wisdom",
+		"Your dreams are as wide as the universe",
+		"Your creativity is a source of admiration",
+		"You have an irresistible charm",
+		"Your optimism is contagious",
+		"You're a ray of sunshine in my life",
+		"Your determination is impressive",
+		"Your courage is an unshakeable strength",
+		"The beauty of your mind is captivating",
+		"Your kindness warms hearts",
+		"You're an endless source of inspiration",
+		"Your humility makes you even greater",
+		"Every one of your actions counts",
+		"You are a rare and precious jewel",
+		"Your energy is revitalizing",
+		"You make the stars shine with your presence",
+		"Your achievements are extraordinary",
+		"The way you treat others is admirable.",
+		"Your style is always elegant",
+		"You're a star shining in the darkness",
+		"Your charisma is magnetic",
+		"Your kindness does the world good",
+		"Your spirit is a fountain of wisdom",
+		"You are an artist of life",
+		"Your ideas are brilliant and innovative",
+		"Your humor brightens the day",
+		"Your passion is an inextinguishable flame",
+		"Your empathy is deeply touching",
+		"Your self-esteem is deserved",
+		"You are the definition of success",
+		"Your love of life is contagious",
+		"Your authenticity is refreshing",
+		"Your qualities are infinite",
+		"Your free spirit is inspiring",
+		"You're a rising star",
+		"Your perseverance is exemplary",
+		"Your presence is a gift",
+		"Your optimism is a breath of fresh air",
+		"Your ideas are a source of wonder",
+		"Your inner strength is impressive",
+		"Your choices reveal your wisdom",
+		"Your charm is unforgettable",
+		"Your kindness is good for the heart",
+		"You're a lighthouse in a storm",
+		"Your potential is unlimited",
+		"You have an imagination worthy of a Rémi"
+	]
 # MOB STATE
 #var life_points : float = 5.0
 #enum STATE {loading_attack, attacking, canceled, idle, loading_jump, jumping, doubling}
@@ -85,13 +138,13 @@ const speaches_template : Array[String] = [
 func _ready():
 	_set_difficulty(DIFFICULTY) # REMI: _set_difficulty
 	gang_size = 1
-	speaches = speaches_template.duplicate()
+	speaches = speaches_template_EN.duplicate()
 	speaches.shuffle()
 	
 	
 func _get_a_speach():
 	if speaches.size()== 0 :
-		speaches = speaches_template.duplicate()
+		speaches = speaches_template_EN.duplicate()
 		speaches.shuffle()
 	return speaches.pop_back()
 
