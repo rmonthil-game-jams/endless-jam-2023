@@ -915,3 +915,5 @@ speed_scale = 2.0
 libraries = {
 "": SubResource("AnimationLibrary_bylb8")
 }
+
+[connection signal="animation_finished" from="AnimationPlayerGlobal" to="." method="_on_animation_player_global_animation_finished"]
