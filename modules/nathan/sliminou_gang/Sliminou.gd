@@ -204,9 +204,9 @@ func _play_jump_animation():
 	
 	# REMI: add target fx
 	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
-	target_fx.w = 90.0
-	target_fx.h = 86.0
-	target_fx.position = Vector2(45.0, 43.0) # carefull these are local coordinates
+	target_fx.w = $Body/WeakSpot/WeakSpotButton.custom_minimum_size.x
+	target_fx.h = $Body/WeakSpot/WeakSpotButton.custom_minimum_size.y
+	target_fx.position = $Body/WeakSpot/WeakSpotButton.custom_minimum_size/2.0 # carefull these are local coordinates
 	$Body/WeakSpot/WeakSpotButton.add_child(target_fx)
 	
 	#JUMPING
@@ -236,9 +236,9 @@ func _attempt_to_attack(speach : Node2D):
 	speach.show()
 	# REMI: add target fx
 	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
-	target_fx.w = 110.0
-	target_fx.h = 66.0
-	target_fx.position = Vector2(55.0, 33.0) # carefull these are local coordinates
+	target_fx.w = $Body/Mouth/MouthButton.custom_minimum_size.x
+	target_fx.h = $Body/Mouth/MouthButton.custom_minimum_size.y
+	target_fx.position = $Body/Mouth/MouthButton.custom_minimum_size/2.0 # carefull these are local coordinates
 	$Body/Mouth/MouthButton.add_child(target_fx)
 
 func _attacking(speach : Node2D):
