@@ -79,7 +79,7 @@ func _ready():
 	set_difficulty(DIFFICULTY)
 
 	mob_hp_progress_bar.max_value=MAX_LIFE_POINTS
-	_set_hp_bar(MAX_LIFE_POINTS)
+	_set_hp_bar()
 
 	# avoid using await in the _ready function
 	_play_appearing_animation.call_deferred()
@@ -336,7 +336,7 @@ func _head_open_pressed():
 
 func _hit(damage_points : float):
 	life_points -= damage_points
-	_set_hp_bar(max(life_points,0))
+	_set_hp_bar()
 	_attempt_to_play_hit_animation()
 	# TODO: DEATH ANIMATION
 	if life_points <= 0.0:
@@ -354,7 +354,7 @@ func _attempt_to_play_hit_animation():
 
 var hp_bar_tween : Tween
 
-func _set_hp_bar(_hp):
+func _set_hp_bar():
 	if hp_bar_tween:
 		hp_bar_tween.kill()
 	hp_bar_tween = get_tree().create_tween()
