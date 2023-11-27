@@ -42,59 +42,94 @@ func _ready():
 	character = get_tree().get_nodes_in_group("character").front()
 	
 	$Body/SpriteRoot/Sprite2DNormal.pressed.connect(_try_get_hit)
-	$Body/SpriteRoot/Sprite2DBeingHit.pressed.connect(_try_get_hit)
 	
 	$Body/SpriteRoot/Sprite2DNormal.show()
-	$Body/SpriteRoot/Sprite2DBeingHit.hide()
 	$Body/SpriteRoot/Sprite2DAttacking.hide()
 	$Body/SpriteRoot/Sprite2DBeingBlocked.hide()
 	mob_hp_progress_bar.max_value = life_points
 	_set_hp_bar(life_points)
 	
+	
 	# other
 	hands = $Hands.get_children()
 	for hand in hands:
-		hand.get_node("TextureButtonAttacking").pressed.connect(_try_get_hit_hand)
+		hand.get_node("TextureButtonAttacking").pressed.connect(_try_get_hit_hand.bind(hand))
 	
 	_phase_idle()
 
 func _phase_idle():
 	state = "idle"
+	_play_target_on_mob()
 	$Body/SpriteRoot/Sprite2DNormal.show()
-	$Body/SpriteRoot/Sprite2DBeingHit.hide()
 	$Body/SpriteRoot/Sprite2DAttacking.hide()
 	$Body/SpriteRoot/Sprite2DBeingBlocked.hide()
 	$Hands.hide()
 	await get_tree().create_timer(HAND_ATTACK_INTERVAL).timeout
 	_phase_attack()
-	
+
 func _phase_attack():
 	state = "attacking"
-	$Hands.show()
+	
 	$Body/SpriteRoot/Sprite2DNormal.hide()
-	$Body/SpriteRoot/Sprite2DBeingHit.hide()
 	$Body/SpriteRoot/Sprite2DAttacking.show()
 	$Body/SpriteRoot/Sprite2DBeingBlocked.hide()
-	await get_tree().create_timer(HAND_ATTACK_DURATION).timeout
+	
+	for hand in $Hands.get_children():
+		hand.modulate.a = 0
+	
+	$Hands.show()
+	var hand_appear : Tween = create_tween()
+	for hand in $Hands.get_children():
+		hand_appear.parallel().tween_property(hand, "modulate:a", 1, 0.25).set_trans(Tween.TRANS_CUBIC)
+		var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
+		target_fx.position = Vector2.ZERO # carefull these are local coordinates
+		target_fx.w = 350
+		target_fx.h = 300
+		hand.add_child(target_fx)
+	
+	await hand_appear.tween_interval(HAND_ATTACK_DURATION).finished
+	
 	if state == "attacking":
 		character.hit(HAND_DAMAGE_PER_ATTACK)
+		_phase_idle()
+
+func _stop_being_shocked():
 	_phase_idle()
 
-func _try_get_hit_hand():
+var BLOCKED_RECOVER_DURATION : float = 0.5
+func _try_get_hit_hand(hand : Node2D):
 	if state == "attacking":
 		state = "blocked"
+		$Body/SpriteRoot/Sprite2DNormal.hide()
 		$Body/SpriteRoot/Sprite2DAttacking.hide()
 		$Body/SpriteRoot/Sprite2DBeingBlocked.show()
+		
+		var blocked_fx = preload("res://modules/remi/fx/blocked.tscn").instantiate()
+		blocked_fx.position = hand.position # carefull these are local coordinates
+		add_child(blocked_fx)
+		
+		var hand_disapear_anim : Tween = create_tween()
+		hand_disapear_anim.tween_property(hand, "modulate:a", 0, 0.25).set_trans(Tween.TRANS_CUBIC)
+		await hand_disapear_anim.finished
+		
 		$Hands.hide()
+		
+		var surprised_tween : Tween = create_tween()
+		surprised_tween.tween_interval(BLOCKED_RECOVER_DURATION)
+		surprised_tween.tween_callback(_stop_being_shocked)
+
+func _play_target_on_mob():
+	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
+	target_fx.position = Vector2.ZERO # carefull these are local coordinates
+	target_fx.w = 450
+	target_fx.h = 400
+	add_child(target_fx)
 
 var hit_timer : Timer
 func _try_get_hit():
 	if state == "idle":
-		$Body/SpriteRoot/Sprite2DBeingHit.show()
-		$Body/SpriteRoot/Sprite2DNormal.hide()
 		_hit(character.damage_per_attack)
 #		await get_tree().create_timer(1.0).timeout
-#		$Body/SpriteRoot/Sprite2DBeingHit.show()
 #		$Body/SpriteRoot/Sprite2DNormal.hide()
 		
 func _hit(damage_points : float):

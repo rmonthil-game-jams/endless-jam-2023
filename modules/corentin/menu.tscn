@@ -427,8 +427,9 @@ stretch_mode = 3
 
 [node name="Click" type="AudioStreamPlayer2D" parent="Audio"]
 stream = ExtResource("21_tqmko")
-volume_db = 4.078
+volume_db = 2.0
 attenuation = 2.0
+max_polyphony = 5
 
 [connection signal="button_up" from="CanvasLayer/Start/StartButton" to="." method="_on_texture_button_button_up"]
 [connection signal="button_up" from="CanvasLayer/Go/Try Again" to="." method="_on_retry_button_up"]

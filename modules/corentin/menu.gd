@@ -116,4 +116,4 @@ func _on_retry_button_up():
 
 func _input(event):
 	if event is InputEventMouseButton && event.button_index == MouseButton.MOUSE_BUTTON_LEFT && event.is_pressed():
-		$Audio/Click.play.call_deferred()
+		$Audio/Click.play.bind(0.05).call_deferred()

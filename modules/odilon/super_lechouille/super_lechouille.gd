@@ -16,8 +16,8 @@ var RANDOM_WAF_PITCH_MODIFIER : float = randf_range(-0.4, 0.4)
 
 # MOB SUB PARAMETERS
 ## Animation probabilities (integer easier to manipulate : in %)
-var WAIT_PROBABILITY : int = 20
-var ATTACK_PROBABILITY : float = 30
+var WAIT_PROBABILITY : int #= 20
+var ATTACK_PROBABILITY : float# = 30
 var JUMP_PROBABILITY : float = 50
 
 ## ATTACKING
@@ -59,19 +59,19 @@ var clickable_tween : Tween
 
 ## called when the node enters the scene tree for the first time.
 func _ready():
-	$AnimatedBody/Head/TextureButtonOpen.pressed.connect(_head_open_pressed)
-	$AnimatedBody/Head/TextureButtonAttacking.pressed.connect(_head_attacking_pressed)
+	$AnimatedBody/RotatingAnchor/Head/TextureButtonOpen.pressed.connect(_head_open_pressed)
+	$AnimatedBody/RotatingAnchor/Head/TextureButtonAttacking.pressed.connect(_head_attacking_pressed)
 	# Small variations if many
 	var speed_variation = randf_range(-0.1, 0.1)
-	$AnimatedBody/Head/AnimationPlayer.speed_scale += speed_variation
-	$AnimatedBody/Tail/TailAnim.speed_scale += speed_variation
+	$AnimatedBody/RotatingAnchor/Head/AnimationPlayer.speed_scale += speed_variation
+	$AnimatedBody/RotatingAnchor/Tail/TailAnim.speed_scale += speed_variation
 	
-	$AnimatedBody/Head/AnimationPlayer.play("move")
-	$AnimatedBody/Tail/TailAnim.play("Move")
+	$AnimatedBody/RotatingAnchor/Head/AnimationPlayer.play("move")
+	$AnimatedBody/RotatingAnchor/Tail/TailAnim.play("Move")
 	
 	var anim_delta = randf()
-	$AnimatedBody/Head/AnimationPlayer.advance.call_deferred(anim_delta)
-	$AnimatedBody/Tail/TailAnim.advance.call_deferred(anim_delta)
+	$AnimatedBody/RotatingAnchor/Head/AnimationPlayer.advance.call_deferred(anim_delta)
+	$AnimatedBody/RotatingAnchor/Tail/TailAnim.advance.call_deferred(anim_delta)
 	
 	$AnimatedBody/Waf.pitch_scale += RANDOM_WAF_PITCH_MODIFIER
 	
@@ -79,6 +79,7 @@ func _ready():
 	set_difficulty(DIFFICULTY)
 
 	mob_hp_progress_bar.max_value=MAX_LIFE_POINTS
+	_set_hp_bar(MAX_LIFE_POINTS)
 
 	# avoid using await in the _ready function
 	_play_appearing_animation.call_deferred()
@@ -92,7 +93,7 @@ func _play_appear_fx():
 	target_fx.position = Vector2.UP * 50 # carefull these are local coordinates
 	target_fx.play_sound = false
 	$AnimatedBody/Waf.play()
-	$AnimatedBody/Head.add_child(target_fx)
+	$AnimatedBody/RotatingAnchor/Head.add_child(target_fx)
 
 
 
@@ -148,8 +149,8 @@ func _choose_animation():
 
 func _play_waiting_animation():
 	state = "waiting"
-	$AnimatedBody/Body/Sprite2DNormal.show()
-	$AnimatedBody/Body/Sprite2DAttacking.hide()
+	$AnimatedBody/RotatingAnchor/Body/Sprite2DNormal.show()
+	$AnimatedBody/RotatingAnchor/Body/Sprite2DAttacking.hide()
 
 	var idle_duration = randf_range(MAX_IDLE_DURATION / 2, MAX_IDLE_DURATION)
 
@@ -168,13 +169,15 @@ func _get_hud_max_offset():
 func get_viewport_size():
 	return get_viewport().get_visible_rect().size * 2
 
+var turn_around_tween : Tween
+
 var current_jump_strength : Vector2
 var pos_before_jump : Vector2
 var current_jump_duration : float
 func _play_jumping_animation():
 	state = "jumping"
 
-	$AnimatedBody/UnitJumpPath/PathFollow2D.progress = 0
+	$UnitJumpPath/PathFollow2D.progress = 0
 	current_jump_strength = Vector2(randf_range(-1, 1), randf_range(0.5, 1))
 
 	# Adjust jump target st. it stays in bounds of the screen
@@ -191,23 +194,33 @@ func _play_jumping_animation():
 		current_jump_strength.x = -abs(current_jump_strength.x)
 	else:
 		# If body want's to go outside, try the opposite direction
-		var target_x = $AnimatedBody.global_position.x + ($AnimatedBody/UnitJumpPath.curve.get_point_position(2).x - $AnimatedBody/UnitJumpPath.curve.get_point_position(0).x) * current_jump_strength.x
+		var target_x = $AnimatedBody.global_position.x + ($UnitJumpPath.curve.get_point_position(2).x - $UnitJumpPath.curve.get_point_position(0).x) * current_jump_strength.x
 		# print(target_x, " ", pmin, " ", pmax, " ", $AnimatedBody.global_position.x)
 		if (target_x <= pmin) or (target_x >= pmax):
 			current_jump_strength.x = -current_jump_strength.x
 
 	pos_before_jump = $AnimatedBody.position
 	current_jump_duration = randf_range(MAX_JUMP_DURATION/2, MAX_JUMP_DURATION)
+	
+	# Start jump by turning in the right direction if needed (note that the sprite is facing left for scale>0)
+	if signf(current_jump_strength.x) == signf($AnimatedBody.scale.x):
+		if turn_around_tween != null and turn_around_tween.is_running():
+			turn_around_tween.kill() # Should not happen, but who knows
+		turn_around_tween = create_tween()
+		
+		turn_around_tween.tween_property($AnimatedBody/RotatingAnchor, "scale:x", -signf(current_jump_strength.x), min(0.1, current_jump_duration / 2)).set_trans(Tween.TRANS_CUBIC)
+		#await turn_around_tween.finished
+	
 	# Script will continue in "_process"
 
 
 var pos_before_attack
 func _play_attacking_animation():
 	state = "attacking"
-	$AnimatedBody/Body/Sprite2DNormal.hide()
-	$AnimatedBody/Head/TextureButtonOpen.hide()
-	$AnimatedBody/Body/Sprite2DAttacking.show()
-	$AnimatedBody/Head/TextureButtonAttacking.show()
+	$AnimatedBody/RotatingAnchor/Body/Sprite2DNormal.hide()
+	$AnimatedBody/RotatingAnchor/Head/TextureButtonOpen.hide()
+	$AnimatedBody/RotatingAnchor/Body/Sprite2DAttacking.show()
+	$AnimatedBody/RotatingAnchor/Head/TextureButtonAttacking.show()
 
 	var CLOSE_SCALE = 2.5
 
@@ -293,10 +306,10 @@ func _play_comeback_from_attack_animation():
 	t2.tween_callback($AnimatedBody/Waf.play)
 	await t2.finished
 
-	$AnimatedBody/Body/Sprite2DAttacking.hide()
-	$AnimatedBody/Head/TextureButtonAttacking.hide()
-	$AnimatedBody/Body/Sprite2DNormal.show()
-	$AnimatedBody/Head/TextureButtonOpen.show()
+	$AnimatedBody/RotatingAnchor/Body/Sprite2DAttacking.hide()
+	$AnimatedBody/RotatingAnchor/Head/TextureButtonAttacking.hide()
+	$AnimatedBody/RotatingAnchor/Body/Sprite2DNormal.show()
+	$AnimatedBody/RotatingAnchor/Head/TextureButtonOpen.show()
 
 	# REMI: PROBLEM HERE (so i commented), YOU WHERE POTENTIALLY PLAYING TWO ANIMATION AT THE SAME TIME
 	# REMI: WHICH THEN MESSES UP WITH YOUR WHOLE STATE MACHINE
@@ -418,12 +431,27 @@ func _on_tongue_pressed():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float):
 	if state == "jumping":
-		$AnimatedBody/UnitJumpPath/PathFollow2D.progress_ratio += _delta / current_jump_duration
+		$UnitJumpPath/PathFollow2D.progress_ratio += _delta / current_jump_duration
+		var progress : float = $UnitJumpPath/PathFollow2D.progress_ratio
 		
-		var rel_pos = $AnimatedBody/UnitJumpPath/PathFollow2D.position - $AnimatedBody/UnitJumpPath.curve.get_point_position(0)
+		# Use the grouped legs sprite for jump. Note that if I leave a weird bug, that would display both sprites during the animation,
+		# we may have a smoother feeling of animation (but let's not do it because it's buggy though)
+		if $AnimatedBody/RotatingAnchor/Body/Sprite2DNormal.visible and progress > 0.2 and progress < 0.8:
+			$AnimatedBody/RotatingAnchor/Body/Sprite2DNormal.hide()
+			$AnimatedBody/RotatingAnchor/Body/Sprite2DJump.show()
+		elif $AnimatedBody/RotatingAnchor/Body/Sprite2DJump.visible and progress > 0.8:
+			$AnimatedBody/RotatingAnchor/Body/Sprite2DJump.hide()
+			$AnimatedBody/RotatingAnchor/Body/Sprite2DNormal.show()
+			
+		
+		var rel_pos = $UnitJumpPath/PathFollow2D.position - $UnitJumpPath.curve.get_point_position(0)
 		var corrected_rel_pos = Vector2(rel_pos.x*current_jump_strength.x, rel_pos.y*current_jump_strength.y)
 		$AnimatedBody.position = pos_before_jump + corrected_rel_pos
+		# During jump, also do a very small rotation (using the normal is quite useful here)
+		#$AnimatedBody.rotation = $UnitJumpPath/PathFollow2D.rotation
 
-		if $AnimatedBody/UnitJumpPath/PathFollow2D.progress_ratio >= 1:
+		if $UnitJumpPath/PathFollow2D.progress_ratio >= 1:
 			state = "end_jump"
+			$AnimatedBody/RotatingAnchor/Body/Sprite2DJump.hide()
+			$AnimatedBody/RotatingAnchor/Body/Sprite2DNormal.show()
 			_choose_animation.call_deferred()

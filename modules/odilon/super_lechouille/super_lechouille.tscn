@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bttiwps2jwhi7"]
+[gd_scene load_steps=21 format=3 uid="uid://bttiwps2jwhi7"]
 
 [ext_resource type="Script" path="res://modules/odilon/super_lechouille/super_lechouille.gd" id="1_nuls4"]
 [ext_resource type="Texture2D" uid="uid://5pp0yyevgs8x" path="res://modules/aurelie/assets/graphics/superlechouille_queue.svg" id="2_lg6ta"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c8kc54alm42iy" path="res://modules/remi/fx/mob_hp_bar.tscn" id="5_w0fak"]
 [ext_resource type="Texture2D" uid="uid://q4iabqk3avkq" path="res://modules/aurelie/assets/graphics/superlechouille_corpsdroite_normal.svg" id="6_i51o3"]
 [ext_resource type="Texture2D" uid="uid://bqkh81rmunyw6" path="res://modules/aurelie/assets/graphics/superlechouille_corpssansteteniqueue.svg" id="7_fjab2"]
+[ext_resource type="Texture2D" uid="uid://dao4mwufjckxj" path="res://modules/aurelie/assets/graphics/superlechouille_pattesrapprochees.svg" id="7_qonua"]
 [ext_resource type="Texture2D" uid="uid://bqcv527k1bc6i" path="res://modules/aurelie/assets/graphics/superlechouille_corps_saut_normal.svg" id="8_0cd4j"]
 [ext_resource type="PackedScene" uid="uid://dlvwfmqkkgucd" path="res://modules/odilon/fx/normalized_sound.tscn" id="9_8gxdo"]
 [ext_resource type="Texture2D" uid="uid://b2xjbqn7o3n2d" path="res://modules/remi/assets/graphics/superlechouille_langue_overlay_normal.svg" id="9_obh41"]
@@ -16,6 +17,12 @@
 [ext_resource type="AudioStream" uid="uid://qad8syeyvl8f" path="res://modules/remi/assets/audio/used/lechouille/waf_1.wav" id="11_cawcr"]
 [ext_resource type="Texture2D" uid="uid://bgc34qw4o38vb" path="res://modules/remi/assets/graphics/superlechouille_langue_overlay_hover.svg" id="11_ec3y7"]
 [ext_resource type="AudioStream" uid="uid://cb1f0bq0mekoc" path="res://modules/remi/assets/audio/used/lechouille/waf_2.wav" id="12_vm2n7"]
+
+[sub_resource type="Curve2D" id="Curve2D_om8kl"]
+_data = {
+"points": PackedVector2Array(-99.5338, 24.5685, 99.5338, -24.5685, 0, 0, -91.8599, 0.0771465, 91.8599, -0.0771465, 148, -88, -87.5645, -26.4583, 87.5645, 26.4583, 300, 0)
+}
+point_count = 3
 
 [sub_resource type="Animation" id="Animation_qmooj"]
 resource_name = "Move"
@@ -38,73 +45,18 @@ _data = {
 "Move": SubResource("Animation_qmooj")
 }
 
-[sub_resource type="Curve2D" id="Curve2D_om8kl"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, -154.856, 0.707107, 154.856, -0.707107, 151, -115, 0, 0, 0, 0, 300, 0)
-}
-point_count = 3
-
 [node name="SuperLechouille" type="Node2D"]
 script = ExtResource("1_nuls4")
 
-[node name="AnimatedBody" type="Node2D" parent="."]
-
-[node name="Tail" type="Node2D" parent="AnimatedBody"]
-position = Vector2(114, 113)
-rotation = -0.286802
-
-[node name="TailAnim" type="AnimationPlayer" parent="AnimatedBody/Tail"]
-speed_scale = 2.0
-libraries = {
-"": SubResource("AnimationLibrary_unxpi")
-}
-
-[node name="Sprite2DTail" type="Sprite2D" parent="AnimatedBody/Tail"]
-position = Vector2(-6, -44)
-rotation = -0.361283
-texture = ExtResource("2_lg6ta")
-
-[node name="Body" type="Node2D" parent="AnimatedBody"]
-position = Vector2(-30, 0)
-
-[node name="Sprite2DLeft" type="Sprite2D" parent="AnimatedBody/Body"]
-visible = false
-position = Vector2(-78, 2)
-texture = ExtResource("5_0lgl2")
-
-[node name="Sprite2DRight" type="Sprite2D" parent="AnimatedBody/Body"]
-visible = false
-texture = ExtResource("6_i51o3")
-
-[node name="Sprite2DNormal" type="Sprite2D" parent="AnimatedBody/Body"]
-position = Vector2(73, 151)
-texture = ExtResource("7_fjab2")
-
-[node name="Sprite2DAttacking" type="Sprite2D" parent="AnimatedBody/Body"]
-visible = false
-position = Vector2(73, 151)
-texture = ExtResource("7_fjab2")
-
-[node name="Sprite2DJump" type="Sprite2D" parent="AnimatedBody/Body"]
-visible = false
-position = Vector2(40, 22)
-texture = ExtResource("8_0cd4j")
-
-[node name="Head" parent="AnimatedBody" instance=ExtResource("3_2queh")]
-position = Vector2(0, -18)
-
-[node name="UnitJumpPath" type="Path2D" parent="AnimatedBody"]
+[node name="UnitJumpPath" type="Path2D" parent="."]
 position = Vector2(124, -46)
 curve = SubResource("Curve2D_om8kl")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="AnimatedBody/UnitJumpPath"]
-rotation = -0.650877
+[node name="PathFollow2D" type="PathFollow2D" parent="UnitJumpPath"]
+rotation = -0.241998
 loop = false
 
-[node name="MobHPBar" parent="AnimatedBody" instance=ExtResource("5_w0fak")]
-z_index = 2
-position = Vector2(21, -210)
-scale = Vector2(0.639997, 0.639997)
+[node name="AnimatedBody" type="Node2D" parent="."]
 
 [node name="Waf" parent="AnimatedBody" instance=ExtResource("9_8gxdo")]
 stream = ExtResource("10_sgcja")
@@ -115,6 +67,62 @@ stream = ExtResource("11_cawcr")
 [node name="DeathSound" parent="AnimatedBody" instance=ExtResource("9_8gxdo")]
 stream = ExtResource("12_vm2n7")
 pitch_scale = 0.8
+
+[node name="RotatingAnchor" type="Node2D" parent="AnimatedBody"]
+
+[node name="Tail" type="Node2D" parent="AnimatedBody/RotatingAnchor"]
+position = Vector2(114, 113)
+rotation = -0.286802
+
+[node name="TailAnim" type="AnimationPlayer" parent="AnimatedBody/RotatingAnchor/Tail"]
+speed_scale = 2.0
+libraries = {
+"": SubResource("AnimationLibrary_unxpi")
+}
+
+[node name="Sprite2DTail" type="Sprite2D" parent="AnimatedBody/RotatingAnchor/Tail"]
+position = Vector2(-6, -44)
+rotation = -0.361283
+texture = ExtResource("2_lg6ta")
+
+[node name="Body" type="Node2D" parent="AnimatedBody/RotatingAnchor"]
+position = Vector2(-30, 0)
+
+[node name="Sprite2DLeft" type="Sprite2D" parent="AnimatedBody/RotatingAnchor/Body"]
+visible = false
+position = Vector2(-78, 2)
+texture = ExtResource("5_0lgl2")
+
+[node name="Sprite2DRight" type="Sprite2D" parent="AnimatedBody/RotatingAnchor/Body"]
+visible = false
+texture = ExtResource("6_i51o3")
+
+[node name="Sprite2DNormal" type="Sprite2D" parent="AnimatedBody/RotatingAnchor/Body"]
+position = Vector2(73, 151)
+texture = ExtResource("7_fjab2")
+
+[node name="Sprite2DAttacking" type="Sprite2D" parent="AnimatedBody/RotatingAnchor/Body"]
+visible = false
+position = Vector2(73, 151)
+texture = ExtResource("7_fjab2")
+
+[node name="Sprite2DJumpModel" type="Sprite2D" parent="AnimatedBody/RotatingAnchor/Body"]
+visible = false
+position = Vector2(40, 22)
+texture = ExtResource("8_0cd4j")
+
+[node name="Sprite2DJump" type="Sprite2D" parent="AnimatedBody/RotatingAnchor/Body"]
+visible = false
+position = Vector2(80, 151)
+texture = ExtResource("7_qonua")
+
+[node name="Head" parent="AnimatedBody/RotatingAnchor" instance=ExtResource("3_2queh")]
+position = Vector2(0, -18)
+
+[node name="MobHPBar" parent="AnimatedBody" instance=ExtResource("5_w0fak")]
+z_index = 2
+position = Vector2(21, -210)
+scale = Vector2(0.639997, 0.639997)
 
 [node name="Tongue" type="Node2D" parent="."]
 visible = false

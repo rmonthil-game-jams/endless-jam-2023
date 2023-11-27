@@ -5,3 +5,4 @@ extends AudioStreamPlayer2D
 func _ready():
 	# Standardized parameters here
 	attenuation = 2
+	max_polyphony = 4
