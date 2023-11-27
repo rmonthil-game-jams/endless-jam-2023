@@ -178,8 +178,8 @@ func _attempt_to_open_hand(hand : Node2D):
 		var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
 		target_fx.w = 273.0
 		target_fx.h = 227.0
-		target_fx.position = hand.position # carefull these are local coordinates
-		add_child(target_fx)
+		target_fx.position = Vector2.ZERO # carefull these are local coordinates
+		hand.add_child(target_fx)
 
 func _attempt_to_close_hand(hand : Node2D):
 	if not hands_state[hand]["state"] == "close":
@@ -194,6 +194,12 @@ func _attempt_to_attack(hand : Node2D):
 		hand.get_node("TextureButtonOpen").hide()
 		hand.get_node("TextureButtonClosed").hide()
 		hand.get_node("TextureButtonAttacking").show()
+		# add target fx
+		var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
+		target_fx.w = 273.0
+		target_fx.h = 227.0
+		target_fx.position = Vector2.ZERO # carefull these are local coordinates
+		hand.add_child(target_fx)
 
 func _attempt_damaging_character(hand : Node2D):
 	if hands_state[hand]["state"] == "attacking":

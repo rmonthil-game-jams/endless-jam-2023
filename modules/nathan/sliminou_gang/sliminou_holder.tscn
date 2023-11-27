@@ -5,3 +5,4 @@
 [node name="SliminouHolder" type="Node2D"]
 
 [node name="Sliminou" parent="." instance=ExtResource("1_0fj01")]
+position = Vector2(0, 137)

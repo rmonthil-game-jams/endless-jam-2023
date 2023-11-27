@@ -42,4 +42,4 @@ position = Vector2(-338, -99)
 [node name="Kisses" type="Node2D" parent="."]
 
 [node name="MobHPBar" parent="." instance=ExtResource("6_gu1sx")]
-position = Vector2(-2, -418)
+position = Vector2(-23, -397)

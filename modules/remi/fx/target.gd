@@ -8,7 +8,7 @@ extends Node2D
 # target_fx.h = fx_h
 # add_child(target_fx)
 
-const INITIAL_DISTANCE : float = 200.0
+const INITIAL_DISTANCE : float = 400.0
 
 var w : float
 var h : float

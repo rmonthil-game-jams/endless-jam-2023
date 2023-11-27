@@ -48,7 +48,8 @@ func _set_difficulty(value : float):
 	LIFE = 5 + log(1 + DIFFICULTY)
 
 
-	
+# REMI: hp bar
+@onready var mob_hp_progress_bar : TextureProgressBar = $MobHPBar/HBoxContainer/MobHpBar
 
 # MOB STATE
 var life_points : float = 5.0
@@ -81,6 +82,9 @@ func _ready():
 	$Body/WeakSpot/WeakSpotButton.pressed.connect(_hit.bind(STANDARD_PLAYER_DAMAGE))
 	$Speach/SpeachBubble.get_node("SpeachText").visible_ratio = 0.0
 	_play_waiting_animation.call_deferred(0,false)
+	
+	# REMI: hp bar
+	mob_hp_progress_bar.max_value = life_points
 
 # REMI: QUITE A FEW TWEAKS
 func _play_dedoubling():
@@ -198,6 +202,13 @@ func _play_jump_animation():
 	tween.parallel().tween_property($Body, "scale", Vector2(1.0, bouncing_value), JUMP_DURATION/3).set_trans(Tween.TRANS_ELASTIC)
 	tween.parallel().tween_callback($Body/Hands._on_jump_loading)
 	
+	# REMI: add target fx
+	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
+	target_fx.w = 90.0
+	target_fx.h = 86.0
+	target_fx.position = Vector2(45.0, 43.0) # carefull these are local coordinates
+	$Body/WeakSpot/WeakSpotButton.add_child(target_fx)
+	
 	#JUMPING
 	tween.tween_callback($Body/WeakSpot.show)
 	tween.tween_property($Body, "position", Vector2(0.0, -JUMP_HEIGHT), JUMP_DURATION).set_trans(Tween.TRANS_CUBIC)
@@ -223,6 +234,12 @@ func _attempt_to_attack(speach : Node2D):
 	$Body/Mouth/AnimationPlayer.play("MouthBabbling")
 	$Body/Mouth/MouthButton.disabled = false
 	speach.show()
+	# REMI: add target fx
+	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
+	target_fx.w = 110.0
+	target_fx.h = 66.0
+	target_fx.position = Vector2(55.0, 33.0) # carefull these are local coordinates
+	$Body/Mouth/MouthButton.add_child(target_fx)
 
 func _attacking(speach : Node2D):
 	if not state == STATE.canceled :
@@ -254,6 +271,11 @@ func _attempt_to_cancel(speach : Node2D):
 		tween.tween_callback($Body/Hurt_Sprite.hide)
 		tween.parallel().tween_callback($Body/Sprite2DNormal.show)
 		tween.tween_callback(_clean_attack.bind($Speach/SpeachBubble))
+		
+		# REMI: add blocked fx
+		var blocked_fx = preload("res://modules/remi/fx/blocked.tscn").instantiate()
+		blocked_fx.position = Vector2(45.0, 43.0) # carefull these are local coordinates
+		$Body/Mouth/MouthButton.add_child(blocked_fx)
 
 
 func _mouth_attacking_pressed(mouth : Node2D):
@@ -268,6 +290,7 @@ func _hit(damage_points : float):
 		shaken_angle = randf_range(-PI/3, PI/3)
 	
 	life_points -= damage_points
+	_set_hp_bar(max(0.0, life_points))
 	
 	tween.kill()
 	tween = create_tween()
@@ -300,3 +323,15 @@ func _hit(damage_points : float):
 		tween.tween_callback($Body/Sprite2DNormal.show)
 		tween.parallel().tween_callback($Body/Hurt_FullSprite.hide)
 		tween.tween_callback(_play_waiting_animation.bind(IDLE_LOOP_NUMBER, false))
+
+var hp_bar_tween : Tween
+
+func _set_hp_bar(hp):
+	if hp_bar_tween:
+		hp_bar_tween.kill()
+	hp_bar_tween = get_tree().create_tween()
+	hp_bar_tween.tween_property(mob_hp_progress_bar, "value", life_points, 0.25)
+
+# REMI HP BAR CONTROL WITHOUT INTERFERING MUCH
+func _process(delta : float):
+	$MobHPBar.position = $Body.position + Vector2.UP * 350.0
