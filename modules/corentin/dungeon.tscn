@@ -14,8 +14,8 @@
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_7npxm")
-MOB_SCENES = Array[PackedScene]([ExtResource("6_mrkxm"), ExtResource("3_d03fu"), ExtResource("4_5ogu1"), ExtResource("5_pxdqg"), ExtResource("6_kxupp")])
-BOSS_SCENES = Array[PackedScene]([ExtResource("2_wo6eh")])
+MOB_SCENES = Array[PackedScene]([ExtResource("6_mrkxm"), ExtResource("4_5ogu1"), ExtResource("5_pxdqg"), ExtResource("6_kxupp")])
+BOSS_SCENES = Array[PackedScene]([ExtResource("2_wo6eh"), ExtResource("3_d03fu")])
 BOSS_ROOM_PERIOD = 5
 
 [node name="Background" type="Node2D" parent="."]
