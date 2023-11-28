@@ -351,19 +351,20 @@ func _chose_upgrade_tier(lootbuff : float):
 	return -1
 
 func hit(damage_points : float):
-	life_points -= damage_points
-	_set_hpbar_level(life_points)
-	$Audio/Hit.play.call_deferred()
-	# label fx
-	var label_fx = preload("res://modules/remi/fx/label.tscn").instantiate()
-	label_fx.position = Vector2(get_viewport_rect().size.x/2.0, get_viewport_rect().size.y - 20.0) # carefull these are local coordinates
-	label_fx.COLOR = Color(1.0, 0.6, 0.6)
-	label_fx.TEXT = "- " + str(snapped(life_points, 0.1))
-	$CanvasLayerOverlay.add_child(label_fx)
-	# cam shake
-	$Camera2D.shake.call_deferred(0.2, 15, 24)
-	# hit anim
-	_hit_animation.call_deferred() # also checks for character death
+	if not state == "dying":
+		life_points -= damage_points
+		_set_hpbar_level(life_points)
+		$Audio/Hit.play.call_deferred()
+		# label fx
+		var label_fx = preload("res://modules/remi/fx/label.tscn").instantiate()
+		label_fx.position = Vector2(get_viewport_rect().size.x/2.0, get_viewport_rect().size.y - 20.0) # carefull these are local coordinates
+		label_fx.COLOR = Color(1.0, 0.6, 0.6)
+		label_fx.TEXT = "- " + str(snapped(life_points, 0.1))
+		$CanvasLayerOverlay.add_child(label_fx)
+		# cam shake
+		$Camera2D.shake.call_deferred(0.2, 15, 24)
+		# hit anim
+		_hit_animation.call_deferred() # also checks for character death
 
 func heal(heal_points : float):
 	life_points = min(life_points + heal_points, max_life_points)
@@ -385,6 +386,7 @@ var max_life_points : float = 10.0
 var life_points : float = 10.0
 var hp_regen : float = 0.0
 var damage_per_attack : float = 1.0
+var state : String = ""
 
 signal set_maxhp (max_hp : float)
 func _ready():
@@ -427,14 +429,24 @@ func _set_hud_astronaut_color(value: Color):
 
 func _attempt_dying():
 	if life_points <= 0:
-		# anim
+		state = "dying"
+		# hit anim
 		if tween_heal != null:
 			tween_heal.kill()
 		if tween_hit != null:
 			tween_hit.kill()
 		tween_hit = create_tween()
-		tween_hit.tween_method(_set_hud_astronaut_color, Color(1, 1, 1, 1), Color(1, 0.25, 0.25, 1), .5).set_trans(Tween.TRANS_CUBIC)
+		tween_hit.tween_method(_set_hud_astronaut_color, Color(1, 1, 1, 1), Color(1.0, 0.25, 0.25, 1.0), 0.25).set_trans(Tween.TRANS_CUBIC)
+		tween_hit.parallel().tween_property(astronaut, "rotation", randf_range(-0.125, 0.125), 0.25).set_trans(Tween.TRANS_ELASTIC)
+		
+		tween_hit.tween_method(_set_hud_astronaut_color, Color(1.0, 0.25, 0.25, 1.0), Color(1, 1, 1, 1), 0.25).set_trans(Tween.TRANS_CUBIC)
+		tween_hit.parallel().tween_property(astronaut, "rotation", 0.0, 0.25).set_trans(Tween.TRANS_ELASTIC)
+		tween_hit.tween_callback(_attempt_dying)
 		await tween_hit.finished
+		# death anim
+		$CanvasLayer/ColorRect.show()
+		$AnimationPlayer.play("death")
+		await $AnimationPlayer.animation_finished
 		# signal
 		just_died.emit()
 

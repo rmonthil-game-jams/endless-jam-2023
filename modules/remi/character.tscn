@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://da0knsa3x3m8s"]
+[gd_scene load_steps=20 format=3 uid="uid://da0knsa3x3m8s"]
 
 [ext_resource type="Script" path="res://modules/remi/character.gd" id="1_80owj"]
 [ext_resource type="Texture2D" uid="uid://e8bbqf57kb6s" path="res://modules/remi/assets/graphics/hud_life_bar_under.svg" id="2_pvr1i"]
@@ -16,6 +16,43 @@
 [ext_resource type="AudioStream" uid="uid://dngeljoje5vjy" path="res://modules/remi/assets/audio/used/general/tween_0.wav" id="16_lao06"]
 [ext_resource type="AudioStream" uid="uid://dycslqy3tb1ee" path="res://modules/remi/assets/audio/used/general/i_1.wav" id="17_y7hws"]
 [ext_resource type="AudioStream" uid="uid://fki1qrqiqtkj" path="res://modules/remi/assets/audio/used/general/tttt_0.wav" id="18_yw7d6"]
+
+[sub_resource type="Animation" id="Animation_r3igi"]
+resource_name = "death"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.25, 0.25, 0), Color(1, 0.25, 0.25, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_t0lrn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.501961, 0.203922, 0.34902, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bmvpu"]
+_data = {
+"RESET": SubResource("Animation_t0lrn"),
+"death": SubResource("Animation_r3igi")
+}
 
 [node name="Character" type="Node2D" groups=["character"]]
 script = ExtResource("1_80owj")
@@ -298,6 +335,16 @@ layout_mode = 2
 size_flags_vertical = 3
 columns = 3
 
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.501961, 0.203922, 0.34902, 1)
+
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
 script = ExtResource("11_dulko")
@@ -315,3 +362,9 @@ stream = ExtResource("18_yw7d6")
 volume_db = 2.0
 attenuation = 2.0
 max_polyphony = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+speed_scale = 2.0
+libraries = {
+"": SubResource("AnimationLibrary_bmvpu")
+}

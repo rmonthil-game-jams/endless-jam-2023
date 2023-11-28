@@ -31,9 +31,6 @@ texture = ExtResource("2_e6tvr")
 position = Vector2(0, 150)
 
 [node name="Character" parent="." instance=ExtResource("3_wdgi3")]
-MAX_POINTERS = 3
-TIER_SELECTIVITY = 0.6
-MAXTIER = 3
 
 [node name="ChangeRoomSound" parent="." instance=ExtResource("5_l5h4f")]
 stream = ExtResource("6_cg2yb")
