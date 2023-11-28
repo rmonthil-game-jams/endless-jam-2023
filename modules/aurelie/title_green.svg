@@ -191,9 +191,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="1502.113"
-     inkscape:cy="245.1161"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="1069.2843"
+     inkscape:cy="419.72551"
      inkscape:document-units="mm"
      inkscape:current-layer="g15-54"
      showgrid="false"
@@ -201,7 +201,20 @@
      inkscape:window-height="1025"
      inkscape:window-x="67"
      inkscape:window-y="27"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="419.55359,97.895832"
+       orientation="0,1"
+       id="guide1168"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="305.21578,2.3623512"
+       orientation="0,1"
+       id="guide1170"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
   <metadata
      id="metadata1592">
     <rdf:RDF>
@@ -210,7 +223,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -220,11 +233,7 @@
      id="layer1"
      transform="translate(231.67235,62.448088)">
     <g
-       aria-label="THE ENDLESS
- 
-SPACE DUNGEON
- 
-OF  L    VE"
+       aria-label="THE ENDLESS   SPACE DUNGEON   OF  L    VE"
        transform="matrix(1.3749479,0,0,1.5059381,1355.4096,-817.9088)"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:74.66666412px;line-height:0.5;font-family:Drexs;-inkscape-font-specification:Drexs;letter-spacing:0px;word-spacing:0px;fill:#abedcc;fill-opacity:1"
        id="flowRoot962">
@@ -386,22 +395,6 @@ OF  L    VE"
          style="fill:#abedcc;fill-opacity:1"
          id="g14316"
          transform="matrix(1.0361103,0,0,1.0361103,13.823804,-5.1856284)">
-        <g
-           style="fill:#abedcc;fill-opacity:1"
-           id="g6612-1"
-           transform="matrix(1.1632725,0,0,1.1632725,-20.366645,-393.2197)">
-          <text
-             id="text4958-3-2-2"
-             y="471.18039"
-             x="-472.39685"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:107.42082977px;line-height:0.5;font-family:Drexs;-inkscape-font-specification:Drexs;letter-spacing:0px;word-spacing:0px;fill:#abedcc;fill-opacity:1;stroke-width:0.26458332"
-             xml:space="preserve"><tspan
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Edge of the Galaxy';-inkscape-font-specification:'Edge of the Galaxy';fill:#abedcc;fill-opacity:1;stroke-width:0.26458332"
-               y="471.18039"
-               x="-472.39685"
-               id="tspan4956-2-5-8"
-               sodipodi:role="line">N</tspan></text>
-        </g>
         <g
            style="fill:#abedcc;fill-opacity:1"
            transform="matrix(1.1632725,0,0,1.1632725,-680.06036,-75.12935)"
@@ -641,18 +634,6 @@ OF  L    VE"
          style="fill:#abedcc;fill-opacity:1"
          id="g14280"
          transform="translate(0,2.9082296)">
-        <text
-           transform="matrix(1.1632725,0,0,1.1632725,-216.86004,-434.25946)"
-           xml:space="preserve"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:110.22784424px;line-height:0.5;font-family:Drexs;-inkscape-font-specification:Drexs;letter-spacing:0px;word-spacing:0px;fill:#abedcc;fill-opacity:1;stroke-width:0.27149716"
-           x="-77.064529"
-           y="237.10953"
-           id="text4958-3-7-5"><tspan
-             sodipodi:role="line"
-             id="tspan4956-2-3-8"
-             x="-77.064529"
-             y="237.10953"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Edge of the Galaxy';-inkscape-font-specification:'Edge of the Galaxy';fill:#abedcc;fill-opacity:1;stroke-width:0.27149716">M</tspan></text>
         <g
            id="g5020-9"
            transform="matrix(1.026131,0,0,1.026131,-931.08933,34.940656)"
@@ -943,19 +924,7 @@ OF  L    VE"
     <g
        style="fill:#abedcc;fill-opacity:1"
        id="g13199"
-       transform="matrix(0.91605417,0,0,0.91605417,1348.8249,840.38675)">
-      <text
-         id="text4958-3-8-0-5-0"
-         y="-166.84996"
-         x="-781.59912"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:107.42082977px;line-height:0.5;font-family:Drexs;-inkscape-font-specification:Drexs;letter-spacing:0px;word-spacing:0px;fill:#abedcc;fill-opacity:1;stroke-width:0.26458332"
-         xml:space="preserve"
-         transform="matrix(1.1632725,0,0,1.1632725,-216.86004,-434.25946)"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Edge of the Galaxy';-inkscape-font-specification:'Edge of the Galaxy';fill:#abedcc;fill-opacity:1;stroke-width:0.26458332"
-           y="-166.84996"
-           x="-781.59912"
-           id="tspan4956-2-1-0-6-9"
-           sodipodi:role="line">R</tspan></text>
+       transform="matrix(0.89793678,0,0,0.89793678,1327.8885,827.57822)">
       <g
          style="fill:#abedcc;fill-opacity:1"
          clip-path="url(#clipPath13168)"
@@ -1162,23 +1131,7 @@ OF  L    VE"
     <g
        style="fill:#abedcc;fill-opacity:1"
        id="g13407"
-       transform="matrix(0.88736919,0,0,0.88736919,1905.8857,822.9912)">
-      <g
-         style="fill:#abedcc;fill-opacity:1"
-         id="g13380"
-         transform="matrix(1.1792991,0,0,1.1792991,-209.88249,-424.39954)">
-        <text
-           xml:space="preserve"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:107.42082977px;line-height:0.5;font-family:Drexs;-inkscape-font-specification:Drexs;letter-spacing:0px;word-spacing:0px;fill:#abedcc;fill-opacity:1;stroke-width:0.26458332"
-           x="-1383.8921"
-           y="-173.27557"
-           id="text4958-3-8-0-9"><tspan
-             sodipodi:role="line"
-             id="tspan4956-2-1-0-8"
-             x="-1383.8921"
-             y="-173.27557"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Edge of the Galaxy';-inkscape-font-specification:'Edge of the Galaxy';fill:#abedcc;fill-opacity:1;stroke-width:0.26458332">E</tspan></text>
-      </g>
+       transform="matrix(0.88945899,0,0,0.87796688,1908.1522,816.6087)">
       <g
          clip-path="url(#clipPath13348)"
          id="g15-65-0"
@@ -1301,22 +1254,11 @@ OF  L    VE"
     <g
        style="fill:#abedcc;fill-opacity:1"
        id="g14560"
-       transform="matrix(1.1986729,0,0,1.1986729,544.8416,241.88956)">
-      <text
-         id="text4958-3-8-0-3"
-         y="19.29253"
-         x="-382.79022"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:93.40497589px;line-height:0.5;font-family:Drexs;-inkscape-font-specification:Drexs;letter-spacing:0px;word-spacing:0px;fill:#abedcc;fill-opacity:1;stroke-width:0.23006152"
-         xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Edge of the Galaxy';-inkscape-font-specification:'Edge of the Galaxy';fill:#abedcc;fill-opacity:1;stroke-width:0.23006152"
-           y="19.29253"
-           x="-382.79022"
-           id="tspan4956-2-1-0-9"
-           sodipodi:role="line">O</tspan></text>
+       transform="matrix(1.1986729,0,0,1.1986729,545.09677,241.92258)">
       <g
          style="fill:#abedcc;fill-opacity:1"
          clip-path="url(#clipPath13452)"
-         transform="matrix(0.85579221,0,0,1.1564602,-284.66896,201.79661)"
+         transform="matrix(0.85579221,0,0,1.1564602,-284.66896,201.35515)"
          id="g1856-3">
         <g
            style="fill:#abedcc;fill-opacity:1"
@@ -1510,33 +1452,17 @@ OF  L    VE"
          style="display:inline;fill:#abedcc;fill-opacity:1">
         <g
            style="fill:#abedcc;fill-opacity:1"
-           transform="matrix(1.2704497,0,0,1.2704497,170.68257,-425.44339)"
+           transform="matrix(1.2546214,0,0,1.2546214,164.08545,-421.30356)"
            id="g4869-5-7">
           <g
              style="fill:#abedcc;fill-opacity:1"
-             transform="translate(4.1030817,1.5386557)"
+             transform="translate(5.2364841,2.3839614)"
              id="g14404">
-            <g
-               style="fill:#abedcc;fill-opacity:1"
-               id="g13581"
-               transform="matrix(0.84109385,0,0,0.84109385,192.12467,132.24171)">
-              <text
-                 id="text4958-3-8-0-5"
-                 y="157.88626"
-                 x="-526.22662"
-                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:107.42082977px;line-height:0.5;font-family:Drexs;-inkscape-font-specification:Drexs;letter-spacing:0px;word-spacing:0px;fill:#abedcc;fill-opacity:1;stroke-width:0.26458332"
-                 xml:space="preserve"><tspan
-                   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Edge of the Galaxy';-inkscape-font-specification:'Edge of the Galaxy';fill:#abedcc;fill-opacity:1;stroke-width:0.26458332"
-                   y="157.88626"
-                   x="-526.22662"
-                   id="tspan4956-2-1-0-7"
-                   sodipodi:role="line">T</tspan></text>
-            </g>
             <g
                style="display:inline;fill:#abedcc;fill-opacity:1"
                inkscape:label="Calque 1"
                id="layer1-2-96-6-1-5"
-               transform="matrix(4.6139677,0,0,4.6139677,-1046.9344,1066.8339)"
+               transform="matrix(4.6139677,0,0,4.6139677,-1047.3623,1062.5549)"
                clip-path="url(#clipPath13854)">
               <g
                  style="fill:#abedcc;fill-opacity:1"
@@ -1874,7 +1800,7 @@ OF  L    VE"
            clip-path="url(#clipPath4875-1-2)"
            inkscape:label="Calque 1"
            id="layer1-29-33-8"
-           transform="matrix(1.0751926,0,0,1.0751926,-95.672518,-315.59549)"
+           transform="matrix(1.0751926,0,0,1.0751926,-46.962142,-308.01619)"
            style="display:inline;fill:#abedcc;fill-opacity:1">
           <g
              style="fill:#abedcc;fill-opacity:1"
@@ -2036,20 +1962,8 @@ OF  L    VE"
         </g>
         <g
            style="fill:#abedcc;fill-opacity:1"
-           transform="translate(-0.04113814,0.93294655)"
+           transform="translate(-2.2400645,1.6372922)"
            id="g14340">
-          <text
-             transform="matrix(1.2313604,0,0,1.2313604,189.61405,-114.74192)"
-             xml:space="preserve"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:92.53546906px;line-height:0.5;font-family:Drexs;-inkscape-font-specification:Drexs;letter-spacing:0px;word-spacing:0px;fill:#abedcc;fill-opacity:1;stroke-width:0.22791988"
-             x="-306.13782"
-             y="18.403938"
-             id="text4958-3-8-0-32-0"><tspan
-               sodipodi:role="line"
-               id="tspan4956-2-1-0-4-0"
-               x="-306.13782"
-               y="18.403938"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Edge of the Galaxy';-inkscape-font-specification:'Edge of the Galaxy';fill:#abedcc;fill-opacity:1;stroke-width:0.22791988">S</tspan></text>
           <g
              style="fill:#abedcc;fill-opacity:1"
              transform="matrix(1.0617863,0,0,1.0617863,-283.02545,-309.44037)"
@@ -2186,26 +2100,13 @@ OF  L    VE"
             </g>
           </g>
         </g>
-        <text
-           inkscape:transform-center-y="-6.090441"
-           inkscape:transform-center-x="-60.12461"
-           id="text4958-3-8-0-32-0-1"
-           y="-90.97599"
-           x="2.4376881"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:115.38319397px;line-height:0.5;font-family:Drexs;-inkscape-font-specification:Drexs;letter-spacing:0px;word-spacing:0px;fill:#abedcc;fill-opacity:1;stroke-width:0.28419507"
-           xml:space="preserve"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Edge of the Galaxy';-inkscape-font-specification:'Edge of the Galaxy';fill:#abedcc;fill-opacity:1;stroke-width:0.28419507"
-             y="-90.97599"
-             x="2.4376881"
-             id="tspan4956-2-1-0-4-0-6"
-             sodipodi:role="line">S</tspan></text>
         <g
-           inkscape:transform-center-y="-11.66634"
-           inkscape:transform-center-x="-55.219144"
+           inkscape:transform-center-y="-11.585443"
+           inkscape:transform-center-x="-54.83619"
            clip-path="url(#clipPath4875-1-7)"
            inkscape:label="Calque 1"
            id="layer1-29-33-06"
-           transform="matrix(1.0751926,0,0,1.0751926,-94.324855,-310.619)"
+           transform="matrix(1.067736,0,0,1.067736,-94.510945,-309.03553)"
            style="display:inline;fill:#abedcc;fill-opacity:1">
           <g
              style="fill:#abedcc;fill-opacity:1"
@@ -2256,7 +2157,7 @@ OF  L    VE"
             <g
                style="fill:#abedcc;fill-opacity:1"
                id="g5-76-5"
-               transform="translate(25.967958,1.3167874)">
+               transform="translate(71.271819,8.3660381)">
               <ellipse
                  style="fill:#abedcc;fill-opacity:1;stroke:#000000;stroke-width:0.13148899;stroke-dasharray:none;stroke-opacity:1"
                  id="ellipse4-3-7"
@@ -2299,15 +2200,15 @@ OF  L    VE"
             <ellipse
                style="fill:#abedcc;fill-opacity:1;stroke:none;stroke-width:1.58749998;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
                id="ellipse7-9-9"
-               cy="355.13126"
-               cx="98.685577"
+               cy="356.53571"
+               cx="97.153435"
                rx="23.165909"
                ry="27.783468" />
             <ellipse
                style="fill:#abedcc;fill-opacity:1;stroke:none;stroke-width:1.58749998;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
                id="ellipse6-9-0"
-               cy="355.13126"
-               cx="98.685577"
+               cy="362.18051"
+               cx="143.98944"
                rx="16.797602"
                ry="20.187847" />
             <path
@@ -2319,8 +2220,8 @@ OF  L    VE"
             <circle
                style="fill:#abedcc;fill-opacity:1;stroke:none;stroke-width:1.58700001;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
                id="path14-1-2"
-               cx="141.08582"
-               cy="325.72733"
+               cx="186.38968"
+               cy="332.77658"
                r="7.279778" />
             <circle
                style="fill:#abedcc;fill-opacity:1;stroke:none;stroke-width:1.58700001;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
@@ -2348,5 +2249,5 @@ OF  L    VE"
            height="956.81665"
            x="-174.28572"
            y="-77.976357" /></flowRegion><flowPara
-         id="flowPara3887"></flowPara></flowRoot>  </g>
+         id="flowPara3887" /></flowRoot>  </g>
 </svg>
