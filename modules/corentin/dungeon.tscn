@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bebm1sx3rjxnt"]
+[gd_scene load_steps=13 format=3 uid="uid://bebm1sx3rjxnt"]
 
 [ext_resource type="Script" path="res://modules/corentin/dungeon.gd" id="1_7npxm"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_e6tvr"]
@@ -11,21 +11,36 @@
 [ext_resource type="AudioStream" uid="uid://d1q6vpxp4lj0i" path="res://modules/remi/assets/audio/used/general/woosh_2.wav" id="6_cg2yb"]
 [ext_resource type="PackedScene" uid="uid://chk831ldmfjkm" path="res://modules/odilon/super_lechouille/fight.tscn" id="6_kxupp"]
 [ext_resource type="PackedScene" uid="uid://dl37003wsb2n1" path="res://modules/corentin/mob_trash/mob_trash.tscn" id="6_mrkxm"]
+[ext_resource type="Texture2D" uid="uid://bcyjos2fenite" path="res://modules/aurelie/assets/graphics/back_boss_colonise.svg" id="9_3m0w2"]
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_7npxm")
 MOB_SCENES = Array[PackedScene]([ExtResource("6_mrkxm"), ExtResource("4_5ogu1"), ExtResource("5_pxdqg"), ExtResource("6_kxupp")])
 BOSS_SCENES = Array[PackedScene]([ExtResource("2_wo6eh"), ExtResource("3_d03fu")])
 BOSS_ROOM_PERIOD = 5
+KDIFF = 0.5
+KEXPDIFF = 0.15
+KSTARTDIFF = 0.1
+KBOSSDIFF = 1.5
+BOSS_LOOT_BUFF = 1.0
 
 [node name="Background" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Background"]
 texture = ExtResource("2_e6tvr")
 
+[node name="Sprite2DBoss0" type="Sprite2D" parent="Background"]
+visible = false
+texture = ExtResource("9_3m0w2")
+
 [node name="Sprite2D2" type="Sprite2D" parent="Background"]
 scale = Vector2(0.444278, 0.463389)
 texture = ExtResource("2_e6tvr")
+
+[node name="Sprite2D2Boss0" type="Sprite2D" parent="Background"]
+visible = false
+scale = Vector2(0.444278, 0.463389)
+texture = ExtResource("9_3m0w2")
 
 [node name="RoomContent" type="Node2D" parent="."]
 position = Vector2(0, 150)
