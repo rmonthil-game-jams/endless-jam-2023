@@ -311,11 +311,11 @@ func _generate_upgrades(lootbuff : float):
 		var mat : ShaderMaterial
 		match selected_up["tier"]:
 			1: 
-				mat = load("res://modules/corentin/Shaders/normal_mat.tres")
+				mat = preload("res://modules/corentin/Shaders/normal_mat.tres")
 			2: 
-				mat = load("res://modules/corentin/Shaders/rare_mat.tres")
+				mat = preload("res://modules/corentin/Shaders/rare_mat.tres")
 			3:
-				mat = load("res://modules/corentin/Shaders/epic_mat.tres")
+				mat = preload("res://modules/corentin/Shaders/epic_mat.tres")
 		upgrade_button.material = mat
 		$CanvasLayer/UpgradeMenu/HBoxContainer.add_child(upgrade_button)
 		# quick anim
@@ -493,3 +493,6 @@ func _set_hpbar_level(hp):
 	hp_tween.tween_property(character_hp_bar, "value", hp, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
+func _input(event):
+	if event is InputEventMouseButton && event.button_index == MouseButton.MOUSE_BUTTON_LEFT && event.is_pressed():
+		$Audio/GeneralClick.play.bind(0.05).call_deferred()

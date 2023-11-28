@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bryybme68tf54"]
+[gd_scene load_steps=34 format=3 uid="uid://bryybme68tf54"]
 
 [ext_resource type="Script" path="res://modules/corentin/menu.gd" id="1_hhpha"]
 [ext_resource type="PackedScene" uid="uid://bebm1sx3rjxnt" path="res://modules/corentin/dungeon.tscn" id="2_t6ukj"]
@@ -21,7 +21,6 @@
 [ext_resource type="Texture2D" uid="uid://chv0uhvhq2m5f" path="res://modules/remi/assets/graphics/settings_hard_hover.svg" id="16_ecdlm"]
 [ext_resource type="Texture2D" uid="uid://8el7j3715k14" path="res://modules/remi/assets/graphics/settings_normal_disabled.svg" id="19_n6j8r"]
 [ext_resource type="FontFile" uid="uid://b0ihnar8ojegy" path="res://modules/remi/assets/fonts/Drexs-z8gB3.ttf" id="20_agosy"]
-[ext_resource type="AudioStream" uid="uid://fki1qrqiqtkj" path="res://modules/remi/assets/audio/used/general/tttt_0.wav" id="21_tqmko"]
 [ext_resource type="Texture2D" uid="uid://dmhjc7l1gk8jx" path="res://modules/remi/assets/graphics/settings_hard_disabled.svg" id="23_nna6y"]
 [ext_resource type="Texture2D" uid="uid://cyd4fllsiutm1" path="res://modules/remi/assets/graphics/overlay.svg" id="23_tg46e"]
 
@@ -422,14 +421,6 @@ texture_pressed = ExtResource("15_j2xpy")
 texture_hover = ExtResource("16_ecdlm")
 texture_disabled = ExtResource("23_nna6y")
 stretch_mode = 3
-
-[node name="Audio" type="Node" parent="."]
-
-[node name="Click" type="AudioStreamPlayer2D" parent="Audio"]
-stream = ExtResource("21_tqmko")
-volume_db = 2.0
-attenuation = 2.0
-max_polyphony = 5
 
 [connection signal="button_up" from="CanvasLayer/Start/StartButton" to="." method="_on_texture_button_button_up"]
 [connection signal="button_up" from="CanvasLayer/Go/Try Again" to="." method="_on_retry_button_up"]
