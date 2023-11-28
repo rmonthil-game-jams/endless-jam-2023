@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://da0knsa3x3m8s"]
+[gd_scene load_steps=19 format=3 uid="uid://da0knsa3x3m8s"]
 
 [ext_resource type="Script" path="res://modules/remi/character.gd" id="1_80owj"]
 [ext_resource type="Texture2D" uid="uid://butxrv0bo4kk3" path="res://modules/remi/assets/graphics/hud_misc.svg" id="2_4n2mt"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://dlvwfmqkkgucd" path="res://modules/odilon/fx/normalized_sound.tscn" id="15_svdb1"]
 [ext_resource type="AudioStream" uid="uid://dngeljoje5vjy" path="res://modules/remi/assets/audio/used/general/tween_0.wav" id="16_lao06"]
 [ext_resource type="AudioStream" uid="uid://dycslqy3tb1ee" path="res://modules/remi/assets/audio/used/general/i_1.wav" id="17_y7hws"]
+[ext_resource type="AudioStream" uid="uid://fki1qrqiqtkj" path="res://modules/remi/assets/audio/used/general/tttt_0.wav" id="18_yw7d6"]
 
 [node name="Character" type="Node2D" groups=["character"]]
 script = ExtResource("1_80owj")
@@ -327,3 +328,9 @@ stream = ExtResource("16_lao06")
 
 [node name="Heal" parent="Audio" instance=ExtResource("15_svdb1")]
 stream = ExtResource("17_y7hws")
+
+[node name="GeneralClick" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("18_yw7d6")
+volume_db = 2.0
+attenuation = 2.0
+max_polyphony = 6
