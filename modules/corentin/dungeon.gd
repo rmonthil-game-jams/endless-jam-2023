@@ -81,10 +81,14 @@ func _advance():
 			available_boss_indexs = range(BOSS_SCENES.size())
 			available_boss_indexs.pop_at(mob_index) # avoid getting the same mob twice in a row
 			available_boss_indexs.shuffle()
+	
+	var CLIC_CLIC_DELAY : float = 0.1
+	if "SOUND_SPAWN_DELAY" in new_mob:
+		CLIC_CLIC_DELAY += new_mob.SOUND_SPAWN_DELAY
+		print("Added delay: ", new_mob.SOUND_SPAWN_DELAY)
+	BackgroundMusic.play_combat(CLIC_CLIC_DELAY)
 
 	$RoomContent.add_child(new_mob)
-	var CLIC_CLIC_DELAY : float = 0.5
-	BackgroundMusic.play_combat(CLIC_CLIC_DELAY)
 	new_mob.just_died.connect(_on_current_mob_just_died)
 
 

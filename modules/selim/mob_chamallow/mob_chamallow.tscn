@@ -101,9 +101,6 @@ texture = ExtResource("5_r4ct6")
 visible = false
 texture = ExtResource("9_4cbv6")
 
-[node name="Sprite2DBlockedP1" type="Sprite2D" parent="AttackP1"]
-visible = false
-
 [node name="TextureButtonAttackP1" type="TextureButton" parent="AttackP1"]
 visible = false
 anchors_preset = 8

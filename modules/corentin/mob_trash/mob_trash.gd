@@ -16,9 +16,9 @@ var HAND_ATTACK_INTERVAL : float
 
 func _set_difficulty(value : float):
 	DIFFICULTY = value
-	HAND_ATTACK_DURATION = 5.0 / (1.0 + log(1.0 + DIFFICULTY))
+	HAND_ATTACK_DURATION = 3.0 / (1.0 + log(1.0 + DIFFICULTY))
 	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-	HAND_ATTACK_INTERVAL = 5.0 / (1.0 + log(1.0 + DIFFICULTY))
+	HAND_ATTACK_INTERVAL = 3.0 / (1.0 + log(1.0 + DIFFICULTY))
 
 # MOB HP BAR
 @onready var mob_hp_progress_bar : TextureProgressBar = $MobHPBar/HBoxContainer/MobHpBar
@@ -43,12 +43,18 @@ func _ready():
 	
 	$Body/SpriteRoot/Sprite2DNormal.pressed.connect(_try_get_hit)
 	
+	modulate.a = 0
 	$Body/SpriteRoot/Sprite2DNormal.show()
 	$Body/SpriteRoot/Sprite2DAttacking.hide()
 	$Body/SpriteRoot/Sprite2DBeingBlocked.hide()
+	$Body/SpriteRoot/Sprite2DNormal.disabled = true
 	mob_hp_progress_bar.max_value = life_points
 	_set_hp_bar(life_points)
 	
+	var delay_appear_tween : Tween = create_tween()
+	#delay_appear_tween.tween_interval(0.7)
+	delay_appear_tween.tween_property(self, "modulate:a", 1.0, 0.4).set_trans(Tween.TRANS_CUBIC)
+	await delay_appear_tween.finished
 	
 	# other
 	hands = $Hands.get_children()
@@ -96,7 +102,7 @@ func _phase_attack():
 func _stop_being_shocked():
 	_phase_idle()
 
-var BLOCKED_RECOVER_DURATION : float = 0.5
+var BLOCKED_RECOVER_DURATION : float = 0.2
 func _try_get_hit_hand(hand : Node2D):
 	if state == "attacking":
 		state = "blocked"
@@ -124,6 +130,21 @@ func _play_target_on_mob():
 	target_fx.w = 450
 	target_fx.h = 400
 	add_child(target_fx)
+	
+	# Small mob animation when he gets targetable again
+	var scale_tw = create_tween()
+	scale_tw.tween_property($Body, "scale", Vector2(1.1, 1.1), 0.2).set_trans(Tween.TRANS_ELASTIC)
+	scale_tw.tween_property($Body, "scale", Vector2(1, 1), 0.2).set_trans(Tween.TRANS_ELASTIC)
+	
+	var rotate_tw : Tween = create_tween()
+	rotate_tw.tween_property($Body, "rotation_degrees", 10, 0.1).set_trans(Tween.TRANS_ELASTIC)
+	rotate_tw.tween_property($Body, "rotation_degrees", -10, 0.05).set_trans(Tween.TRANS_ELASTIC)
+	rotate_tw.tween_property($Body, "rotation_degrees", 10, 0.05).set_trans(Tween.TRANS_ELASTIC)
+	rotate_tw.tween_property($Body, "rotation_degrees", 0, 0.05).set_trans(Tween.TRANS_ELASTIC)
+	await rotate_tw.tween_interval(target_fx.ANIMATION_TIME - 0.25).finished
+	
+	# Sound effect appeared, we can start clicking
+	$Body/SpriteRoot/Sprite2DNormal.disabled = false
 
 var hit_timer : Timer
 func _try_get_hit():
