@@ -10,6 +10,8 @@ extends Node2D
 
 const INITIAL_DISTANCE : float = 400.0
 
+const ANIMATION_TIME : float = 0.4 # Animation is really 0.75s, but it works best to put this time to syncrhonize stuff on it
+
 var w : float
 var h : float
 

@@ -12,6 +12,9 @@ var DROP_SLICE : AudioStream = preload("res://modules/hugo/assets/audio/2.dropsl
 var SLICE_COMBAT : AudioStream = preload("res://modules/hugo/assets/audio/3.combatslice.wav")
 var COMBAT : AudioStream = preload("res://modules/hugo/assets/audio/4.combat.wav")
 
+# If you want, you can use this variable to setup your wait timings when spawning a mob
+var START_FIGHT_AUDIO_DELAY = 1 #seconds
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_set_volume(MENU_DB)

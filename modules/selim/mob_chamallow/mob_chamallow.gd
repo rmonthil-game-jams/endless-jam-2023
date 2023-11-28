@@ -31,7 +31,7 @@ func _set_difficulty(value : float): # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE
 	DAMAGE_PER_ATTACK_P1 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 	DAMAGE_PER_ATTACK_P2 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 	TIME_BETWEEN_ATTACKS_P1 = 2.5 / (1.0 + 1.3 * log(1.0 + DIFFICULTY))
-	TIME_BETWEEN_ATTACKS_P2 = 4.5 / (1.0 + log(1.0 + DIFFICULTY))
+	TIME_BETWEEN_ATTACKS_P2 = 4.0 / (1.0 + log(1.0 + DIFFICULTY))
 	life_points = 18 + ( 4 * (1.0 + DIFFICULTY))
 	full_mob_hp = life_points
 
@@ -99,6 +99,7 @@ func _phase_1():
 	state = "phase_1"
 	$Body/TextureButtonP1.show()
 	$Body/Sprite2DPhase1.hide()
+	$Body/Sprite2DAtttackingP1.hide()
 	
 	# add target fx
 	var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
