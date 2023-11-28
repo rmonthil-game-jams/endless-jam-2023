@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bryybme68tf54"]
+[gd_scene load_steps=35 format=3 uid="uid://bryybme68tf54"]
 
 [ext_resource type="Script" path="res://modules/corentin/menu.gd" id="1_hhpha"]
 [ext_resource type="PackedScene" uid="uid://bebm1sx3rjxnt" path="res://modules/corentin/dungeon.tscn" id="2_t6ukj"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cmjxtknf2hip6" path="res://modules/remi/assets/graphics/settings_easy_pressed.svg" id="7_baeed"]
 [ext_resource type="Texture2D" uid="uid://bn83vgc25a1hb" path="res://modules/remi/assets/graphics/settings_easy_hover.svg" id="8_c2mcx"]
 [ext_resource type="FontFile" uid="uid://cawutowfije1" path="res://modules/remi/assets/fonts/SalvarRegular-gxwoP.ttf" id="8_tvbcq"]
+[ext_resource type="Material" uid="uid://ckabik00r1583" path="res://modules/corentin/Shaders/hudAstronaut_mat.tres" id="10_s5kg5"]
 [ext_resource type="Texture2D" uid="uid://b1kwyynxal2sl" path="res://modules/remi/assets/graphics/settings_normal_normal.svg" id="11_4bwyv"]
 [ext_resource type="Texture2D" uid="uid://ct732owo0nr4p" path="res://modules/remi/assets/graphics/settings_normal_pressed.svg" id="12_f3o5e"]
 [ext_resource type="Texture2D" uid="uid://cxlhqj2es27g3" path="res://modules/remi/assets/graphics/settings_border.svg" id="12_r0aal"]
@@ -278,34 +279,6 @@ offset_bottom = 321.0
 grow_vertical = 0
 scale = Vector2(0.5, 0.5)
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Settings"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = -52.0
-offset_top = -430.0
-offset_right = 863.0
-offset_bottom = 53.0
-grow_vertical = 0
-texture = ExtResource("12_r0aal")
-
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Settings"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 395.0
-offset_top = -430.0
-offset_right = 1310.0
-offset_bottom = 53.0
-grow_horizontal = 0
-grow_vertical = 0
-texture = ExtResource("12_r0aal")
-flip_h = true
-
 [node name="Exit" type="Button" parent="CanvasLayer/Settings"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 1
@@ -421,6 +394,83 @@ texture_pressed = ExtResource("15_j2xpy")
 texture_hover = ExtResource("16_ecdlm")
 texture_disabled = ExtResource("23_nna6y")
 stretch_mode = 3
+
+[node name="Overlay" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Overlay"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="StatsPanel" type="TextureRect" parent="Overlay/Control"]
+material = ExtResource("10_s5kg5")
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -464.0
+offset_top = 18.0
+offset_right = 451.0
+offset_bottom = 501.0
+grow_horizontal = 0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+texture = ExtResource("12_r0aal")
+flip_h = true
+flip_v = true
+metadata/_edit_use_anchors_ = true
+
+[node name="HP_hud" type="TextureRect" parent="Overlay/Control"]
+material = ExtResource("10_s5kg5")
+offset_left = 6.0
+offset_top = 18.0
+offset_right = 921.0
+offset_bottom = 501.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+texture = ExtResource("12_r0aal")
+flip_v = true
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect3" type="TextureRect" parent="Overlay/Control"]
+material = ExtResource("10_s5kg5")
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = -251.0
+offset_right = 921.0
+offset_bottom = 232.0
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+texture = ExtResource("12_r0aal")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect4" type="TextureRect" parent="Overlay/Control"]
+material = ExtResource("10_s5kg5")
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -464.0
+offset_top = -251.0
+offset_right = 451.0
+offset_bottom = 232.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+texture = ExtResource("12_r0aal")
+flip_h = true
+metadata/_edit_use_anchors_ = true
 
 [connection signal="button_up" from="CanvasLayer/Start/StartButton" to="." method="_on_texture_button_button_up"]
 [connection signal="button_up" from="CanvasLayer/Go/Try Again" to="." method="_on_retry_button_up"]

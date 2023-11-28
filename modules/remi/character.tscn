@@ -1,7 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://da0knsa3x3m8s"]
+[gd_scene load_steps=17 format=3 uid="uid://da0knsa3x3m8s"]
 
 [ext_resource type="Script" path="res://modules/remi/character.gd" id="1_80owj"]
-[ext_resource type="Texture2D" uid="uid://butxrv0bo4kk3" path="res://modules/remi/assets/graphics/hud_misc.svg" id="2_4n2mt"]
 [ext_resource type="Texture2D" uid="uid://e8bbqf57kb6s" path="res://modules/remi/assets/graphics/hud_life_bar_under.svg" id="2_pvr1i"]
 [ext_resource type="PackedScene" uid="uid://c0ooppj2lsy5u" path="res://modules/corentin/pointer.tscn" id="2_v4deo"]
 [ext_resource type="Texture2D" uid="uid://dbteomwcevbjf" path="res://modules/remi/assets/graphics/hud_life_bar_over.svg" id="3_0yr67"]
@@ -9,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://bmf21cahl3c0w" path="res://modules/remi/assets/graphics/hud_astronaut.svg" id="8_37epb"]
 [ext_resource type="Texture2D" uid="uid://cyd4fllsiutm1" path="res://modules/remi/assets/graphics/overlay.svg" id="9_a02gy"]
 [ext_resource type="Material" uid="uid://ckabik00r1583" path="res://modules/corentin/Shaders/hudAstronaut_mat.tres" id="9_hppl6"]
-[ext_resource type="Texture2D" uid="uid://cxlhqj2es27g3" path="res://modules/remi/assets/graphics/settings_border.svg" id="11_4cjk1"]
 [ext_resource type="Script" path="res://modules/remi/Camera2D.gd" id="11_dulko"]
 [ext_resource type="FontFile" uid="uid://cawutowfije1" path="res://modules/remi/assets/fonts/SalvarRegular-gxwoP.ttf" id="12_5msr8"]
 [ext_resource type="FontFile" uid="uid://b0ihnar8ojegy" path="res://modules/remi/assets/fonts/Drexs-z8gB3.ttf" id="13_on0xv"]
@@ -25,7 +23,16 @@ POINTER_NODE = ExtResource("2_v4deo")
 
 [node name="CanvasLayerOverlay" type="CanvasLayer" parent="."]
 
-[node name="Overlay" type="TextureRect" parent="CanvasLayerOverlay"]
+[node name="Control" type="Control" parent="CanvasLayerOverlay"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Overlay" type="TextureRect" parent="CanvasLayerOverlay/Control"]
 offset_left = -33.0
 offset_top = -73.0
 offset_right = 2424.0
@@ -37,89 +44,51 @@ texture = ExtResource("9_a02gy")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
 
-[node name="ColorRectHit" type="ColorRect" parent="CanvasLayer"]
-visible = false
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 0, 0, 1)
+mouse_filter = 2
 
-[node name="ColorRectHeal" type="ColorRect" parent="CanvasLayer"]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 1, 0, 1)
-
-[node name="LabelHit" type="Label" parent="CanvasLayer"]
-visible = false
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -26.0
-offset_right = 20.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(1, 0.4, 0.7, 1)
-theme_override_fonts/font = ExtResource("14_coi18")
-theme_override_font_sizes/font_size = 60
-text = "- 1"
-horizontal_alignment = 1
-
-[node name="LabelHeal" type="Label" parent="CanvasLayer"]
-visible = false
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -26.0
-offset_right = 20.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.4, 1, 0.6, 1)
-theme_override_fonts/font = ExtResource("14_coi18")
-theme_override_font_sizes/font_size = 60
-text = "+ 1"
-horizontal_alignment = 1
-
-[node name="HP_hud" type="TextureRect" parent="CanvasLayer"]
-offset_left = 6.0
-offset_top = 8.0
-offset_right = 921.0
-offset_bottom = 491.0
+[node name="HP_hud" type="Control" parent="CanvasLayer/Control"]
+material = ExtResource("9_hppl6")
+layout_mode = 3
+anchors_preset = 0
+offset_top = 26.0
+offset_right = 801.0
+offset_bottom = 509.0
 scale = Vector2(0.5, 0.5)
 mouse_filter = 2
-texture = ExtResource("2_4n2mt")
 
-[node name="HPBar" type="HBoxContainer" parent="CanvasLayer/HP_hud"]
+[node name="HPBar" type="HBoxContainer" parent="CanvasLayer/Control/HP_hud"]
 layout_mode = 1
 offset_left = 94.0
-offset_top = 28.0
+offset_top = 26.0
 offset_right = 916.0
-offset_bottom = 69.0
+offset_bottom = 67.0
 mouse_filter = 2
 theme_override_constants/separation = 20
 
-[node name="Label" type="Label" parent="CanvasLayer/HP_hud/HPBar"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/HP_hud/HPBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/HP_hud/HPBar/MarginContainer"]
+material = ExtResource("9_hppl6")
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7125, 0.95, 0.827292, 1)
 theme_override_fonts/font = ExtResource("13_on0xv")
 theme_override_font_sizes/font_size = 32
 text = "HEALTH"
+vertical_alignment = 1
 
-[node name="CharacterHPBar" type="TextureProgressBar" parent="CanvasLayer/HP_hud/HPBar"]
-custom_minimum_size = Vector2(500, 27)
+[node name="CharacterHPBar" type="TextureProgressBar" parent="CanvasLayer/Control/HP_hud/HPBar"]
+material = ExtResource("9_hppl6")
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 mouse_filter = 2
 step = 0.0
@@ -128,10 +97,11 @@ texture_under = ExtResource("2_pvr1i")
 texture_over = ExtResource("3_0yr67")
 texture_progress = ExtResource("4_jwpv6")
 
-[node name="AstronautAnchor" type="Node2D" parent="CanvasLayer/HP_hud"]
-position = Vector2(192, 210)
+[node name="AstronautAnchor" type="Node2D" parent="CanvasLayer/Control/HP_hud"]
+visible = false
+position = Vector2(194, 238)
 
-[node name="HudAstronaut" type="TextureRect" parent="CanvasLayer/HP_hud/AstronautAnchor"]
+[node name="HudAstronaut" type="TextureRect" parent="CanvasLayer/Control/HP_hud/AstronautAnchor"]
 material = ExtResource("9_hppl6")
 anchors_preset = 8
 anchor_left = 0.5
@@ -147,6 +117,159 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("8_37epb")
 
+[node name="Room" type="HBoxContainer" parent="CanvasLayer/Control"]
+offset_left = 706.0
+offset_top = 26.0
+offset_right = 1103.0
+offset_bottom = 104.0
+mouse_filter = 2
+theme_override_constants/separation = 20
+alignment = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Room"]
+material = ExtResource("9_hppl6")
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.8, 0.593333, 1)
+theme_override_fonts/font = ExtResource("12_5msr8")
+theme_override_font_sizes/font_size = 70
+text = "ROOM"
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Room"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_bottom = -7
+
+[node name="Number" type="Label" parent="CanvasLayer/Control/Room/MarginContainer"]
+material = ExtResource("9_hppl6")
+layout_mode = 2
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("14_coi18")
+theme_override_font_sizes/font_size = 70
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Vitality" type="HBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -222.0
+offset_top = 104.0
+offset_right = -49.0
+offset_bottom = 129.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Vitality"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Vitality/MarginContainer"]
+material = ExtResource("9_hppl6")
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7125, 0.95, 0.827292, 1)
+theme_override_fonts/font = ExtResource("13_on0xv")
+theme_override_font_sizes/font_size = 16
+text = "VITALITY"
+vertical_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/Vitality"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RegenProgressBar" type="TextureProgressBar" parent="CanvasLayer/Control/Vitality/CenterContainer"]
+material = ExtResource("9_hppl6")
+custom_minimum_size = Vector2(100, 10)
+layout_mode = 2
+mouse_filter = 2
+max_value = 20.0
+nine_patch_stretch = true
+texture_under = ExtResource("2_pvr1i")
+texture_over = ExtResource("3_0yr67")
+texture_progress = ExtResource("4_jwpv6")
+
+[node name="Damage" type="HBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -222.0
+offset_top = 126.0
+offset_right = -49.0
+offset_bottom = 151.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Damage"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Damage/MarginContainer"]
+material = ExtResource("9_hppl6")
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7125, 0.95, 0.827292, 1)
+theme_override_fonts/font = ExtResource("13_on0xv")
+theme_override_font_sizes/font_size = 16
+text = "STRENGTH"
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/Damage"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DamageProgressBar" type="TextureProgressBar" parent="CanvasLayer/Control/Damage/CenterContainer"]
+material = ExtResource("9_hppl6")
+custom_minimum_size = Vector2(82, 10)
+layout_mode = 2
+mouse_filter = 2
+max_value = 20.0
+nine_patch_stretch = true
+texture_under = ExtResource("2_pvr1i")
+texture_over = ExtResource("3_0yr67")
+texture_progress = ExtResource("4_jwpv6")
+
+[node name="Update" type="HBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -222.0
+offset_top = 148.0
+offset_right = -49.0
+offset_bottom = 173.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Update"]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Update/MarginContainer"]
+material = ExtResource("9_hppl6")
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7125, 0.95, 0.827292, 1)
+theme_override_fonts/font = ExtResource("13_on0xv")
+theme_override_font_sizes/font_size = 16
+text = "UPDATE"
+vertical_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/Update"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="UpdateProgressBar" type="TextureProgressBar" parent="CanvasLayer/Control/Update/CenterContainer"]
+material = ExtResource("9_hppl6")
+custom_minimum_size = Vector2(105, 10)
+layout_mode = 2
+mouse_filter = 2
+max_value = 3.0
+nine_patch_stretch = true
+texture_under = ExtResource("2_pvr1i")
+texture_over = ExtResource("3_0yr67")
+texture_progress = ExtResource("4_jwpv6")
+
 [node name="UpgradeMenu" type="VBoxContainer" parent="CanvasLayer"]
 visible = false
 anchors_preset = 8
@@ -154,10 +277,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -347.0
-offset_top = -165.0
-offset_right = 348.0
-offset_bottom = 254.0
+offset_left = -217.0
+offset_top = -176.0
+offset_right = 218.0
+offset_bottom = 260.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -174,148 +297,6 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 columns = 3
-
-[node name="StatsPanel" type="TextureRect" parent="CanvasLayer"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -464.0
-offset_top = 8.0
-offset_right = 451.0
-offset_bottom = 491.0
-grow_horizontal = 0
-scale = Vector2(0.5, 0.5)
-mouse_filter = 2
-texture = ExtResource("11_4cjk1")
-flip_h = true
-flip_v = true
-
-[node name="Room" type="HBoxContainer" parent="CanvasLayer"]
-offset_left = 706.0
-offset_top = 17.0
-offset_right = 1103.0
-offset_bottom = 95.0
-mouse_filter = 2
-theme_override_constants/separation = 20
-alignment = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/Room"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.8, 0.593333, 1)
-theme_override_fonts/font = ExtResource("12_5msr8")
-theme_override_font_sizes/font_size = 70
-text = "ROOM"
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Room"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/margin_top = 7
-theme_override_constants/margin_bottom = -7
-
-[node name="Number" type="Label" parent="CanvasLayer/Room/MarginContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
-theme_override_fonts/font = ExtResource("14_coi18")
-theme_override_font_sizes/font_size = 70
-text = "1"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Vitality" type="HBoxContainer" parent="CanvasLayer"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -222.0
-offset_top = 101.0
-offset_right = -49.0
-offset_bottom = 123.0
-grow_horizontal = 0
-mouse_filter = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/Vitality"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7125, 0.95, 0.827292, 1)
-theme_override_fonts/font = ExtResource("13_on0xv")
-theme_override_font_sizes/font_size = 16
-text = "VITALITY"
-
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Vitality"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="RegenProgressBar" type="TextureProgressBar" parent="CanvasLayer/Vitality/CenterContainer"]
-custom_minimum_size = Vector2(100, 10)
-layout_mode = 2
-mouse_filter = 2
-max_value = 20.0
-nine_patch_stretch = true
-texture_under = ExtResource("2_pvr1i")
-texture_over = ExtResource("3_0yr67")
-texture_progress = ExtResource("4_jwpv6")
-
-[node name="Damage" type="HBoxContainer" parent="CanvasLayer"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -222.0
-offset_top = 123.0
-offset_right = -49.0
-offset_bottom = 145.0
-grow_horizontal = 0
-mouse_filter = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/Damage"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7125, 0.95, 0.827292, 1)
-theme_override_fonts/font = ExtResource("13_on0xv")
-theme_override_font_sizes/font_size = 16
-text = "STRENGTH"
-
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Damage"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="DamageProgressBar" type="TextureProgressBar" parent="CanvasLayer/Damage/CenterContainer"]
-custom_minimum_size = Vector2(82, 10)
-layout_mode = 2
-mouse_filter = 2
-max_value = 20.0
-nine_patch_stretch = true
-texture_under = ExtResource("2_pvr1i")
-texture_over = ExtResource("3_0yr67")
-texture_progress = ExtResource("4_jwpv6")
-
-[node name="Update" type="HBoxContainer" parent="CanvasLayer"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -222.0
-offset_top = 145.0
-offset_right = -49.0
-offset_bottom = 167.0
-grow_horizontal = 0
-mouse_filter = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/Update"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7125, 0.95, 0.827292, 1)
-theme_override_fonts/font = ExtResource("13_on0xv")
-theme_override_font_sizes/font_size = 16
-text = "UPDATE"
-
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Update"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="UpdateProgressBar" type="TextureProgressBar" parent="CanvasLayer/Update/CenterContainer"]
-custom_minimum_size = Vector2(105, 10)
-layout_mode = 2
-mouse_filter = 2
-max_value = 3.0
-nine_patch_stretch = true
-texture_under = ExtResource("2_pvr1i")
-texture_over = ExtResource("3_0yr67")
-texture_progress = ExtResource("4_jwpv6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)

@@ -18,6 +18,7 @@ func _ready():
 	# init anim
 	$CanvasLayer/Start.modulate.a = 0.0
 	$CanvasLayer/Settings.modulate.a = 0.0
+	$Overlay/Control.modulate.a = 0.0
 	# play anim
 	_play_appear_animation.call_deferred()
 
@@ -26,6 +27,7 @@ func _play_appear_animation():
 	var tween = create_tween()
 	tween.tween_property($CanvasLayer/Start, "modulate:a", 1.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property($CanvasLayer/Settings, "modulate:a", 1.0, 1.0).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property($Overlay/Control, "modulate:a", 1.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

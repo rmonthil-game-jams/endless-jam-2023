@@ -18,6 +18,7 @@ var TIME_BETWEEN_ATTACKS_P2 : float
 var ATTACK_WINDOW_OFFSET : Vector2 = Vector2(0.0, -200.0)
 var X_MARGIN : int = 450
 var Y_MARGIN : int = 450
+var ATTACK_WINDOW_RANGE_INTER_MARGING : float = 100.0
 var ATTACK_WINDOW_RANGE : Vector2
 var ATTACK_SCALE : Vector2 = Vector2(1.0, 1.0) # REMI: TRY TO AVOID RESCALING IMAGES PERMANENTLY
 var DAMAGE_MULTIPLIER : int = 0
@@ -171,11 +172,11 @@ func _phase_2_attack():
 		$AttacksP2/AttackP21.modulate.a = 0.0
 		$AttacksP2/AttackP21.scale = Vector2(0.125, 0.125)
 		$AttacksP2/AttackP21.position = Vector2.UP * 300.0
-		var target_position_1 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+		var target_position_1 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], -ATTACK_WINDOW_RANGE_INTER_MARGING), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
 		$AttacksP2/AttackP22.modulate.a = 0.0
 		$AttacksP2/AttackP22.scale = Vector2(0.125, 0.125)
 		$AttacksP2/AttackP22.position = Vector2.UP * 300.0
-		var target_position_2 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+		var target_position_2 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(ATTACK_WINDOW_RANGE_INTER_MARGING, ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
 		
 		$AttacksP2/AttackP21/TextureButtonAttackP2.show()
 		$AttacksP2/AttackP22/TextureButtonAttackP2.show()
@@ -225,15 +226,15 @@ func _phase_2_attack():
 	$AttacksP2/AttackP21.modulate.a = 0.0
 	$AttacksP2/AttackP21.scale = Vector2(0.125, 0.125)
 	$AttacksP2/AttackP21.position = Vector2.UP * 300.0
-	var target_position_1 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+	var target_position_1 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], -0.5 * ATTACK_WINDOW_RANGE[0]/3.0 - ATTACK_WINDOW_RANGE_INTER_MARGING), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
 	$AttacksP2/AttackP22.modulate.a = 0.0
 	$AttacksP2/AttackP22.scale = Vector2(0.125, 0.125)
 	$AttacksP2/AttackP22.position = Vector2.UP * 300.0
-	var target_position_2 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+	var target_position_2 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-0.5 * ATTACK_WINDOW_RANGE[0]/3.0 + ATTACK_WINDOW_RANGE_INTER_MARGING, 0.5 * ATTACK_WINDOW_RANGE[0]/3.0 - ATTACK_WINDOW_RANGE_INTER_MARGING), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
 	$AttacksP2/AttackP23.modulate.a = 0.0
 	$AttacksP2/AttackP23.scale = Vector2(0.125, 0.125)
 	$AttacksP2/AttackP23.position = Vector2.UP * 300.0
-	var target_position_3 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(-ATTACK_WINDOW_RANGE[0], ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
+	var target_position_3 : Vector2 = ATTACK_WINDOW_OFFSET + Vector2(rng.randf_range(0.5 * ATTACK_WINDOW_RANGE[0]/3.0 + ATTACK_WINDOW_RANGE_INTER_MARGING, ATTACK_WINDOW_RANGE[0]), rng.randf_range(-ATTACK_WINDOW_RANGE[1], ATTACK_WINDOW_RANGE[1]))
 	
 	$AttacksP2/AttackP21/TextureButtonAttackP2.show()
 	$AttacksP2/AttackP22/TextureButtonAttackP2.show()
