@@ -135,3 +135,7 @@ func _on_retry_button_up():
 func _input(event):
 	if event is InputEventMouseButton && event.button_index == MouseButton.MOUSE_BUTTON_LEFT && event.is_pressed():
 		$Audio/GeneralClick.play.bind(0.05).call_deferred()
+
+
+func _on_credits_pressed():
+	get_tree().change_scene_to_file("res://modules/remi/credits.tscn")

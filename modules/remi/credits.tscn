@@ -1,0 +1,221 @@
+[gd_scene load_steps=14 format=3 uid="uid://dh77ldpcixk5p"]
+
+[ext_resource type="Script" path="res://modules/remi/credits.gd" id="1_t6xbh"]
+[ext_resource type="Texture2D" uid="uid://bahoflyuxu2lk" path="res://modules/aurelie/credits/aurelie.svg" id="3_05gtm"]
+[ext_resource type="FontFile" uid="uid://cawutowfije1" path="res://modules/remi/assets/fonts/SalvarRegular-gxwoP.ttf" id="4_qxn6m"]
+[ext_resource type="Texture2D" uid="uid://gil5i6g285s2" path="res://modules/aurelie/credits/corentin.svg" id="5_cnonl"]
+[ext_resource type="Texture2D" uid="uid://ds2xrrxcvev52" path="res://modules/aurelie/credits/natheo.svg" id="6_735mn"]
+[ext_resource type="Texture2D" uid="uid://dbii7f4m51jqw" path="res://modules/aurelie/credits/hugo.svg" id="7_3mj82"]
+[ext_resource type="Texture2D" uid="uid://bfb540ptmtolw" path="res://modules/aurelie/credits/odilon.svg" id="7_yonbo"]
+[ext_resource type="Texture2D" uid="uid://dfqwqbg8vkdvj" path="res://modules/aurelie/credits/sacha.svg" id="8_7hpgw"]
+[ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="8_fscm7"]
+[ext_resource type="Texture2D" uid="uid://urbuqkfgti7k" path="res://modules/aurelie/credits/selim.svg" id="9_y25nl"]
+[ext_resource type="Texture2D" uid="uid://d1834eaf7fh3l" path="res://modules/aurelie/credits/remi.svg" id="10_ru8d2"]
+[ext_resource type="PackedScene" uid="uid://dlvwfmqkkgucd" path="res://modules/odilon/fx/normalized_sound.tscn" id="11_jipdm"]
+[ext_resource type="AudioStream" uid="uid://d1q6vpxp4lj0i" path="res://modules/remi/assets/audio/used/general/woosh_2.wav" id="12_blovs"]
+
+[node name="Credits" type="Node2D"]
+script = ExtResource("1_t6xbh")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+texture = ExtResource("8_fscm7")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background"]
+visible = false
+scale = Vector2(0.444278, 0.463389)
+texture = ExtResource("8_fscm7")
+
+[node name="Content" type="Node2D" parent="."]
+position = Vector2(0, 150)
+
+[node name="Aurélie" type="Sprite2D" parent="Content"]
+visible = false
+texture = ExtResource("3_05gtm")
+
+[node name="Label" type="Label" parent="Content/Aurélie"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -848.5
+offset_top = -555.0
+offset_right = 335.5
+offset_bottom = -458.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_font_sizes/font_size = 80
+text = "AURELIE LOUIS-NAPOLEON"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Corentin" type="Sprite2D" parent="Content"]
+visible = false
+texture = ExtResource("5_cnonl")
+
+[node name="Label" type="Label" parent="Content/Corentin"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -875.5
+offset_top = -659.5
+offset_right = 308.5
+offset_bottom = -562.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_font_sizes/font_size = 80
+text = "CORENTIN \"CATA\" LELEZ"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Nathéo" type="Sprite2D" parent="Content"]
+visible = false
+texture = ExtResource("6_735mn")
+
+[node name="Label" type="Label" parent="Content/Nathéo"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -846.5
+offset_top = -653.5
+offset_right = 337.5
+offset_bottom = -556.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_font_sizes/font_size = 80
+text = "NATHEO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hugo" type="Sprite2D" parent="Content"]
+visible = false
+texture = ExtResource("7_3mj82")
+
+[node name="Label" type="Label" parent="Content/Hugo"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -846.5
+offset_top = -653.5
+offset_right = 337.5
+offset_bottom = -556.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_font_sizes/font_size = 80
+text = "HUGO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sacha" type="Sprite2D" parent="Content"]
+visible = false
+texture = ExtResource("8_7hpgw")
+
+[node name="Label" type="Label" parent="Content/Sacha"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -848.5
+offset_top = -507.5
+offset_right = 335.5
+offset_bottom = -410.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_font_sizes/font_size = 80
+text = "SACHA FOSHINO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Selim" type="Sprite2D" parent="Content"]
+visible = false
+texture = ExtResource("9_y25nl")
+
+[node name="Label" type="Label" parent="Content/Selim"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -846.5
+offset_top = -653.5
+offset_right = 337.5
+offset_bottom = -556.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_font_sizes/font_size = 80
+text = "SELIM MECANA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Odilon" type="Sprite2D" parent="Content"]
+visible = false
+texture = ExtResource("7_yonbo")
+
+[node name="Label" type="Label" parent="Content/Odilon"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -858.5
+offset_top = -653.5
+offset_right = 325.5
+offset_bottom = -556.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_font_sizes/font_size = 80
+text = "ODILON VATONNE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Remi" type="Sprite2D" parent="Content"]
+visible = false
+texture = ExtResource("10_ru8d2")
+
+[node name="Label" type="Label" parent="Content/Remi"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -846.5
+offset_top = -653.5
+offset_right = 337.5
+offset_bottom = -556.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_font_sizes/font_size = 80
+text = "REMI MONTHILLER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChangeRoomSound" parent="." instance=ExtResource("11_jipdm")]
+stream = ExtResource("12_blovs")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)

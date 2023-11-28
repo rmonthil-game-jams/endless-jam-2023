@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bebm1sx3rjxnt"]
+[gd_scene load_steps=14 format=3 uid="uid://bebm1sx3rjxnt"]
 
 [ext_resource type="Script" path="res://modules/corentin/dungeon.gd" id="1_7npxm"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_e6tvr"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://d1q6vpxp4lj0i" path="res://modules/remi/assets/audio/used/general/woosh_2.wav" id="6_cg2yb"]
 [ext_resource type="PackedScene" uid="uid://dl37003wsb2n1" path="res://modules/corentin/mob_trash/mob_trash.tscn" id="6_mrkxm"]
 [ext_resource type="Texture2D" uid="uid://bcyjos2fenite" path="res://modules/aurelie/assets/graphics/back_boss_colonise.svg" id="9_3m0w2"]
+[ext_resource type="Texture2D" uid="uid://dj1r15nv0m03j" path="res://modules/aurelie/assets/graphics/back_boss.svg" id="10_xnacn"]
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_7npxm")
@@ -30,6 +31,10 @@ texture = ExtResource("2_e6tvr")
 visible = false
 texture = ExtResource("9_3m0w2")
 
+[node name="Sprite2DPreBoss0" type="Sprite2D" parent="Background"]
+visible = false
+texture = ExtResource("10_xnacn")
+
 [node name="Sprite2D2" type="Sprite2D" parent="Background"]
 scale = Vector2(0.444278, 0.463389)
 texture = ExtResource("2_e6tvr")
@@ -38,6 +43,11 @@ texture = ExtResource("2_e6tvr")
 visible = false
 scale = Vector2(0.444278, 0.463389)
 texture = ExtResource("9_3m0w2")
+
+[node name="Sprite2D2PreBoss0" type="Sprite2D" parent="Background"]
+visible = false
+scale = Vector2(0.444278, 0.463389)
+texture = ExtResource("10_xnacn")
 
 [node name="RoomContent" type="Node2D" parent="."]
 position = Vector2(0, 150)

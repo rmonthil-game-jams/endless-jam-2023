@@ -22,8 +22,12 @@ func _advance():
 	
 	# switch depending of room
 	if room % BOSS_ROOM_PERIOD:
-		$Background/Sprite2D2.show()
-		$Background/Sprite2D2.modulate.a = 0.0
+		if (room + 1) % BOSS_ROOM_PERIOD:
+			$Background/Sprite2D2.show()
+			$Background/Sprite2D2.modulate.a = 0.0
+		else:
+			$Background/Sprite2D2PreBoss0.show()
+			$Background/Sprite2D2PreBoss0.modulate.a = 0.0
 	else:
 		$Background/Sprite2D2Boss0.show()
 		$Background/Sprite2D2Boss0.modulate.a = 0.0
@@ -37,12 +41,20 @@ func _advance():
 		1.0
 	).set_trans(Tween.TRANS_CUBIC)
 	if room % BOSS_ROOM_PERIOD:
-		tween.parallel().tween_property(
-			$Background/Sprite2D2, 
-			"modulate:a", 
-			1.0,
-			1.0
-		).set_trans(Tween.TRANS_CUBIC)
+		if (room + 1) % BOSS_ROOM_PERIOD:
+			tween.parallel().tween_property(
+				$Background/Sprite2D2, 
+				"modulate:a", 
+				1.0,
+				1.0
+			).set_trans(Tween.TRANS_CUBIC)
+		else:
+			tween.parallel().tween_property(
+				$Background/Sprite2D2PreBoss0, 
+				"modulate:a", 
+				1.0,
+				1.0
+			).set_trans(Tween.TRANS_CUBIC)
 	else:
 		tween.parallel().tween_property(
 			$Background/Sprite2D2Boss0, 
@@ -55,12 +67,17 @@ func _advance():
 	$Background.position = Vector2.ZERO
 	$Background.scale = Vector2.ONE
 	if room % BOSS_ROOM_PERIOD:
-		$Background/Sprite2D.show()
-		$Background/Sprite2DBoss0.hide()
-		$Background/Sprite2D2.hide()
+		if (room + 1) % BOSS_ROOM_PERIOD:
+			$Background/Sprite2D.show()
+			$Background/Sprite2DBoss0.hide()
+			$Background/Sprite2D2.hide()
+		else:
+			$Background/Sprite2DPreBoss0.show()
+			$Background/Sprite2D.hide()
+			$Background/Sprite2D2PreBoss0.hide()
 	else:
 		$Background/Sprite2DBoss0.show()
-		$Background/Sprite2D.hide()
+		$Background/Sprite2DPreBoss0.hide()
 		$Background/Sprite2D2Boss0.hide()
 
 	# then instance mob
