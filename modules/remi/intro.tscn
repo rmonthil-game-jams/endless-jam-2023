@@ -867,12 +867,12 @@ horizontal_alignment = 1
 
 [node name="SpaceshipSound" type="AudioStreamPlayer2D" parent="ZoomAnchor/Spaceship"]
 stream = ExtResource("4_qbarp")
-volume_db = 9.0
+volume_db = 11.0
 pitch_scale = 0.25
 
 [node name="SpaceshipSound2" type="AudioStreamPlayer2D" parent="ZoomAnchor/Spaceship"]
 stream = ExtResource("5_2qm0g")
-volume_db = 9.0
+volume_db = 11.0
 pitch_scale = 0.25
 
 [node name="Env" type="Node2D" parent="ZoomAnchor"]

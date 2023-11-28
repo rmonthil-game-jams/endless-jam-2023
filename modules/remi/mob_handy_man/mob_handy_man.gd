@@ -7,6 +7,9 @@ signal just_died
 # MOB PARAMETERS
 var DIFFICULTY : float = 0.0: set = _set_difficulty
 
+# For proper sound sync
+const SOUND_SPAWN_DELAY : float = 1.9
+
 # MOB SUB PARAMETERS
 ## WAITING
 var HAND_MOVE_DURATION : float
@@ -24,8 +27,12 @@ func _set_difficulty(value : float):
 	DIFFICULTY = value
 	HAND_MOVE_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
 	HAND_MOVE_RADIUS = min(500.0, 100.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
-	HAND_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
-	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + 0.8*log(1.0 + DIFFICULTY))
+	# ODILON: Was a bit too hard in general. Just make it slightly easier for first boss fights
+	# HAND_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
+	HAND_ATTACK_DURATION_FACTOR = 2.5 / (1.0 + log(1.0 + DIFFICULTY))
+	# ODILON: Make this more punitive
+	# HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + 0.8*log(1.0 + DIFFICULTY))
+	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + 0.5*sqrt(DIFFICULTY))
 	HAND_ATTACK_INTERVAL = 2.0 / (1.0 + 0.8*log(1.0 + DIFFICULTY))
 	life_points = 18 + (5 * (1.0 + DIFFICULTY))
 

@@ -12,10 +12,12 @@ var DIFFICULTY : float = 0.0: set = _set_difficulty # REMI: _set_difficulty
 # MOB SUB PARAMETERS
 ## DUPLICATE
 var DUPLICATE_LOOP_NUMBER : int
+var FORCE_DUPLICATE_AMOUNT : int # To ensure that the fight gets a bit complicated at some point
 const SCREEN_WIDTH : float = 1000.0
 const DUPLICATE_DISTANCE_X = 400.0
 const DUPLICATE_DISTANCE_Y = 100.0
 const DISTANCE_SIZE_RATIO : float = 1e-3
+
 ## IDLE
 const IDLE_LOOP_NUMBER : int = 1
 var DANCE_MOVE_DURATION : float
@@ -37,11 +39,13 @@ func _set_difficulty(value : float):
 	
 	DUPLICATE_LOOP_NUMBER = max(round(8.0 - DIFFICULTY/2.0),2.0) #NUMBER OF IDLE PHASES BEFORE DUPLICATION
 	#ATTENTION : DUPLICATE_LOOP_NUMBER / 2 > LIFE / STANDARD_PLAYER_DAMAGE  (sinon pas le temps de tuer avant la duplication)
+	# In other words now : DUPLICATE_LOOP_NUMBER must be at least 2 to ensure there will always be an attack before duplication
 	
+	FORCE_DUPLICATE_AMOUNT = min(floorf(0 + DIFFICULTY / 4), 6) # Ensures the fight remains a bit difficult at high difficulty
 	
 	DANCE_MOVE_DURATION = 1.0 / (1.0 + log(1.0 + DIFFICULTY/5.0)) #THE SMALLER, THE QUICKER THE IDLE PHASE : MOB LOOKS ANGRIER AND ATTACK/VULNERABILITY PHASE COMES MORE OFTEN
 	JUMP_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY)) #THE SMALLER THE QUICKER IT GETS AND THE HARDER IT GETS (VULNERABILITY PHASE)
-	FALL_DURATION = 2.0*JUMP_DURATION/2.0
+	FALL_DURATION = JUMP_DURATION
 	JUMP_HEIGHT = 400.0 #min(1500.0, 500.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY))) #THE HIGHER THE EASIER (VULNERABILITY PHASE)
 	SPEACH_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + log(1.0 + DIFFICULTY)) #THE SHORTER, THE HARDER TO COUNTER THE ATTACK
 	SPEACH_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
@@ -89,6 +93,7 @@ func _ready():
 
 # REMI: QUITE A FEW TWEAKS
 func _play_dedoubling():
+	print("creating")
 	var new_sliminou_holder : Node2D = load("res://modules/nathan/sliminou_gang/sliminou_holder.tscn").instantiate()
 	new_sliminou_holder.get_node("Sliminou").DIFFICULTY = DIFFICULTY
 	
@@ -123,28 +128,41 @@ func _play_dedoubling():
 	tween = create_tween()
 	tween.tween_callback($Body/Sprite2DDuplication.show)
 	tween.tween_callback($Body/Sprite2DNormal.hide)
-	tween.tween_property($Body, "rotation", -PI/8, 0.25).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Body, "rotation", PI/6, 0.25).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Body, "rotation", -PI/5, 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Body, "rotation", -PI/8, 0.2).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Body, "rotation", PI/6, 0.2).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Body, "rotation", -PI/5, 0.2).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_callback($Duplicate.show)
-	tween.tween_property($Body, "scale", Vector2(1.1,1.1), 0.125).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Body, "scale", Vector2(1.1,1.1), 0.1).set_trans(Tween.TRANS_CUBIC)
 	
-	tween.tween_property($Body, "rotation", 0, 0.25).set_trans(Tween.TRANS_ELASTIC)
-	tween.tween_property($Duplicate, "scale", Vector2(1.0, 1.0), 0.25).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Body, "scale", Vector2(1,1), 0.25).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Body, "rotation", 0, 0.2).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property($Duplicate, "scale", Vector2(1.0, 1.0), 0.2).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Body, "scale", Vector2(1,1), 0.2).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_callback($Body/Sprite2DDuplication.hide)
 	tween.tween_callback($Body/Sprite2DNormal.show)
-	tween.tween_property($Duplicate, "position", position_target, 0.25).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property($Duplicate, "scale", Vector2(new_size_ratio/get_parent().scale.x, new_size_ratio/get_parent().scale.y),0.25).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Duplicate, "position", position_target, 0.2).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property($Duplicate, "scale", Vector2(new_size_ratio/get_parent().scale.x, new_size_ratio/get_parent().scale.y),0.2).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_callback($Duplicate.hide)
 	tween.tween_callback(get_parent().get_parent().add_child.bind(new_sliminou_holder))
 	
 	await tween.finished
 	
+	
+	new_sliminou_holder.get_node("Sliminou").FORCE_DUPLICATE_AMOUNT = FORCE_DUPLICATE_AMOUNT - 1
+	FORCE_DUPLICATE_AMOUNT = 0
+	
 	$Duplicate.position = Vector2(0.0,0.0)
-	_play_waiting_animation.call_deferred(1,false)
+	# Odilon : A value of 1 makes this enter a weird loop where we will never attack anymore, thus always duplicating (no attack&no jump)
+	# One has to reset the countdown to >=2 for anything to work properly
+	duplicate_countdown = DUPLICATE_LOOP_NUMBER
+	# Odilon : A value of 1 makes this enter a weird loop where we will never attack anymore, thus always duplicating (no attack&no jump)
+	_play_waiting_animation.call_deferred(1,false) 
 	
 func _play_waiting_animation(loop_num : int, next_is_jump : bool, force_dance_spawn_delay : bool = false):
+	if (FORCE_DUPLICATE_AMOUNT > 0):
+		FORCE_DUPLICATE_AMOUNT -= 1
+		_play_dedoubling()
+		return
+	
 	state = STATE.idle
 	duplicate_countdown -= 1 
 	var random_vector : Vector2
