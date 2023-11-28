@@ -15,6 +15,17 @@ func _ready():
 	_on_easy_button_down()
 	state = "main menu"
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	# init anim
+	$CanvasLayer/Start.modulate.a = 0.0
+	$CanvasLayer/Settings.modulate.a = 0.0
+	# play anim
+	_play_appear_animation.call_deferred()
+
+func _play_appear_animation():
+	# tween
+	var tween = create_tween()
+	tween.tween_property($CanvasLayer/Start, "modulate:a", 1.0, 1.0).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property($CanvasLayer/Settings, "modulate:a", 1.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

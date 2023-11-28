@@ -164,8 +164,8 @@ func _play_waiting_animation():
 
 	main_tween = create_tween()
 	for plant in plants:
-			main_tween.parallel().tween_property(plant, "scale", 
-				Vector2.ONE, 2.0).set_trans(Tween.TRANS_EXPO)
+		main_tween.parallel().tween_property(plant, "scale", 
+			Vector2.ONE, 2.0).set_trans(Tween.TRANS_EXPO)
 	await main_tween.finished
 	
 	$Cuteplant/Body/Sprite2DNormal.show()
@@ -175,9 +175,9 @@ func _play_waiting_animation():
 	
 	main_tween = create_tween()
 	for plant in plants:
-			main_tween.parallel().tween_property(plant, "rotation", 
-				plants_state[plant]["rotation"], 
-				0.3).as_relative().from_current().set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_property(plant, "rotation", 
+			plants_state[plant]["rotation"], 
+			0.3).as_relative().from_current().set_trans(Tween.TRANS_CUBIC)
 	await main_tween.finished
 
 	# shuffle randomly the list of suns
@@ -242,8 +242,6 @@ func _play_gathering_animation():
 
 	# gather suns towards the hands
 	for plant in copy_of_plants:
-
-		main_tween = create_tween()
 
 		# Firstly, sun is shaking and player can shrink its energy
 		_attempt_to_absorb_sun(plant)

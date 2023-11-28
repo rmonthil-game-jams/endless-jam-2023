@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dfs1dbah1d0n5"]
+[gd_scene load_steps=19 format=3 uid="uid://dfs1dbah1d0n5"]
 
 [ext_resource type="Script" path="res://modules/remi/intro.gd" id="1_eknrt"]
 [ext_resource type="PackedScene" uid="uid://d1h4nkcqe1b26" path="res://modules/remi/spaceship.tscn" id="2_6748w"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://di2w1e4qplnq1" path="res://modules/remi/assets/graphics/planet_1.svg" id="4_6ljui"]
 [ext_resource type="Texture2D" uid="uid://chls4m8fbf5s5" path="res://modules/remi/assets/graphics/planet_2.svg" id="5_ejp8i"]
 [ext_resource type="Texture2D" uid="uid://busv1hnr74ggu" path="res://modules/remi/assets/graphics/planet_3.svg" id="6_wv4ph"]
+[ext_resource type="Texture2D" uid="uid://3r7xn6s0afdc" path="res://modules/remi/assets/graphics/heart.svg" id="7_65hes"]
 [ext_resource type="Texture2D" uid="uid://cmcfpc1hr7y1d" path="res://modules/remi/assets/graphics/star.svg" id="7_pmffe"]
 [ext_resource type="FontFile" uid="uid://cawutowfije1" path="res://modules/remi/assets/fonts/SalvarRegular-gxwoP.ttf" id="9_0rd4u"]
 
@@ -181,48 +182,46 @@ tracks/4/keys = {
 "update": 0,
 "values": [Vector2(1, 1), Vector2(-1, 1), Vector2(-1, 1), Vector2(1, 1), Vector2(0.1, 0.1)]
 }
-tracks/5/type = "method"
+tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("AnimationPlayerParty")
+tracks/5/path = NodePath("ZoomAnchor:scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(3.5),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": ["party", -1, 1.0, false],
-"method": &"play"
-}]
+"times": PackedFloat32Array(0, 6.6, 7.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(3.49, 3.49)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("ZoomAnchor:scale")
+tracks/6/path = NodePath("ZoomAnchor:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0, 6.6, 7.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(1, 1), Vector2(3.49, 3.49)]
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(-804, -1455)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("ZoomAnchor:position")
+tracks/7/path = NodePath("ZoomAnchor:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 6.6, 7.5),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(6.6, 7.5),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, 0), Vector2(-804, -1455)]
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("ZoomAnchor:modulate")
+tracks/8/path = NodePath("ColorRect:modulate")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -231,25 +230,13 @@ tracks/8/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
 }
-tracks/9/type = "value"
+tracks/9/type = "method"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("ColorRect:modulate")
+tracks/9/path = NodePath("GameTitle")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(6.6, 7.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
-}
-tracks/10/type = "method"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("GameTitle")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
 "times": PackedFloat32Array(7.5),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -257,17 +244,31 @@ tracks/10/keys = {
 "method": &"show"
 }]
 }
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("GameTitle:modulate")
-tracks/11/interp = 2
-tracks/11/loop_wrap = true
-tracks/11/keys = {
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("GameTitle:modulate")
+tracks/10/interp = 2
+tracks/10/loop_wrap = true
+tracks/10/keys = {
 "times": PackedFloat32Array(7.5, 9, 10, 12),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/11/type = "method"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimationPlayerParty")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(3.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["party", -1, 1.0, false],
+"method": &"play"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uliyd"]
@@ -352,330 +353,377 @@ _data = {
 "question": SubResource("Animation_r1xxv")
 }
 
-[sub_resource type="Animation" id="Animation_h2vry"]
+[sub_resource type="Animation" id="Animation_lv8bi"]
+resource_name = "party"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ZoomAnchor/Env/Party/Sprite2D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.5, 0.5), Vector2(0.348367, 0.348367), Vector2(0.543935, 0.543935), Vector2(1e-05, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ZoomAnchor/Env/Party/Sprite2D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-128, -180), Vector2(73.0005, -225), Vector2(28.8143, -132.755), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ZoomAnchor/Env/Party/Sprite2D:rotation")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.261799, 0.523598, -0.261799, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ZoomAnchor/Env/Party/Sprite2D2:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.6, 1, 1.6, 2, 2.4, 2.8, 3, 3.6, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(128, -156), Vector2(-146.997, -91.515), Vector2(103, -294), Vector2(-3, -12), Vector2(-78.6805, -380.26), Vector2(185.745, -253.152), Vector2(-75.5004, -320.5), Vector2(132.205, -230.485), Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ZoomAnchor/Env/Party/Sprite2D2:rotation")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.6, 1, 1.6, 2, 2.4, 2.8, 3, 3.6, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 2.09439, -0.523598, 0.785397, -2.82569, 0.0, 2.09439, -0.523598, 2.61799, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ZoomAnchor/Env/Party/Sprite2D2:scale")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.6, 1, 1.6, 2, 2.4, 2.8, 3, 3.6, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.8, 0.8), Vector2(0.539139, 0.519095), Vector2(0.557586, 0.609895), Vector2(0.7, 0.7), Vector2(0.297867, 0.261655), Vector2(0.433131, 0.437571), Vector2(0.6445, 0.630764), Vector2(0.417559, 0.507454), Vector2(1e-05, 1e-05)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ZoomAnchor/Env/Party/Sprite2D3:position")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4, 1, 1.8, 2.3, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-96, -224), Vector2(72, -116), Vector2(-175.484, -231.929), Vector2(76.223, -329.23), Vector2(-11.999, -403), Vector2(0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ZoomAnchor/Env/Party/Sprite2D3:rotation")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.4, 1, 1.8, 2.3, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.698132, -0.523598, 0.523598, -0.261799, 0.523598, 0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ZoomAnchor/Env/Party/Sprite2D3:scale")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.4, 1, 1.8, 2.3, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.5, 0.5), Vector2(0.638367, 0.719484), Vector2(0.637871, 0.473085), Vector2(0.381459, 0.452055), Vector2(-0.42845, 0.499337), Vector2(1e-05, 1e-05)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("ZoomAnchor/Env/Party/Sprite2D4:position")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.2, 2, 2.6, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-128, -320), Vector2(80.0001, -259), Vector2(-111.024, -405.554), Vector2(261, -238), Vector2(0, 0)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("ZoomAnchor/Env/Party/Sprite2D4:rotation")
+tracks/10/interp = 2
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.2, 2, 2.6, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -1.309, 1.0472, 0.523598, -0.785397, 0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("ZoomAnchor/Env/Party/Sprite2D4:scale")
+tracks/11/interp = 2
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.7, 1.2, 2, 2.6, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(0.8, 0.8), Vector2(0.625657, 0.832815), Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("ZoomAnchor/Env/Party/Sprite2D5:position")
+tracks/12/interp = 2
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.9, 1.4, 1.7, 2.2, 2.8, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-256, -140), Vector2(103.855, -318.114), Vector2(-282, -106), Vector2(-189, -325), Vector2(18, -146), Vector2(-202, -266), Vector2(-43, -249), Vector2(0, 0)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("ZoomAnchor/Env/Party/Sprite2D5:rotation")
+tracks/13/interp = 2
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 1.4, 1.7, 2.2, 2.8, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 2.63545, -0.570723, -0.144862, -3.29344, 1.2706, 0.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("ZoomAnchor/Env/Party/Sprite2D5:scale")
+tracks/14/interp = 2
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.9, 1.4, 1.7, 2.2, 2.8, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.4, 0.4), Vector2(0.484722, 0.585067), Vector2(0.666, 0.474), Vector2(0.478, 0.605), Vector2(0.528, 0.572), Vector2(0.928, 0.9), Vector2(0.872, 1.007), Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="Animation" id="Animation_awkj0"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ZoomAnchor/Env/Party:scale")
-tracks/0/interp = 2
+tracks/0/path = NodePath("ZoomAnchor/Env/Party/Sprite2D:scale")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(1e-05, 1e-05)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("ZoomAnchor/Env/Party/Polygon2D:scale")
-tracks/1/interp = 2
+tracks/1/path = NodePath("ZoomAnchor/Env/Party/Sprite2D:position")
+tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [Vector2(0, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("ZoomAnchor/Env/Party/Polygon2D2:scale")
-tracks/2/interp = 2
+tracks/2/path = NodePath("ZoomAnchor/Env/Party/Sprite2D:rotation")
+tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [0.0]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("ZoomAnchor/Env/Party/Polygon2D3:scale")
-tracks/3/interp = 2
+tracks/3/path = NodePath("ZoomAnchor/Env/Party/Sprite2D2:position")
+tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [Vector2(0, 0)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("ZoomAnchor/Env/Party/Polygon2D4:scale")
+tracks/4/path = NodePath("ZoomAnchor/Env/Party/Sprite2D2:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [0.0]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("ZoomAnchor/Env/Party/Polygon2D5:scale")
+tracks/5/path = NodePath("ZoomAnchor/Env/Party/Sprite2D2:scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [Vector2(1e-05, 1e-05)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("ZoomAnchor/Env/Party/Polygon2D6:scale")
+tracks/6/path = NodePath("ZoomAnchor/Env/Party/Sprite2D3:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [Vector2(0, 0)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("ZoomAnchor/Env/Party/Polygon2D:rotation")
+tracks/7/path = NodePath("ZoomAnchor/Env/Party/Sprite2D3:rotation")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-0.175529]
+"values": [0.0]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("ZoomAnchor/Env/Party/Polygon2D2:rotation")
+tracks/8/path = NodePath("ZoomAnchor/Env/Party/Sprite2D3:scale")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-0.120414]
+"values": [Vector2(1e-05, 1e-05)]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("ZoomAnchor/Env/Party/Polygon2D3:rotation")
+tracks/9/path = NodePath("ZoomAnchor/Env/Party/Sprite2D4:position")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-0.0611964]
+"values": [Vector2(0, 0)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("ZoomAnchor/Env/Party/Polygon2D4:rotation")
+tracks/10/path = NodePath("ZoomAnchor/Env/Party/Sprite2D4:rotation")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-0.00229986]
+"values": [0.0]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("ZoomAnchor/Env/Party/Polygon2D5:rotation")
+tracks/11/path = NodePath("ZoomAnchor/Env/Party/Sprite2D4:scale")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.055916]
+"values": [Vector2(1e-05, 1e-05)]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("ZoomAnchor/Env/Party/Polygon2D6:rotation")
+tracks/12/path = NodePath("ZoomAnchor/Env/Party/Sprite2D5:position")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.111397]
+"values": [Vector2(0, 0)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("ZoomAnchor/Env/Party/Sprite2D5:rotation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("ZoomAnchor/Env/Party/Sprite2D5:scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
 }
 
-[sub_resource type="Animation" id="Animation_rqohd"]
-resource_name = "party"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ZoomAnchor/Env/Party:scale")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ZoomAnchor/Env/Party/Polygon2D:scale")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("ZoomAnchor/Env/Party/Polygon2D2:scale")
-tracks/2/interp = 2
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1), Vector2(0.2, 0.2), Vector2(1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("ZoomAnchor/Env/Party/Polygon2D3:scale")
-tracks/3/interp = 2
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4), Vector2(1, 1), Vector2(0.4, 0.4)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("ZoomAnchor/Env/Party/Polygon2D4:scale")
-tracks/4/interp = 2
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.6, 0.6), Vector2(1, 1), Vector2(0.6, 0.6), Vector2(1, 1), Vector2(1, 1), Vector2(0.6, 0.6), Vector2(1, 1), Vector2(0.6, 0.6), Vector2(1, 1)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("ZoomAnchor/Env/Party/Polygon2D5:scale")
-tracks/5/interp = 2
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1), Vector2(0.3, 0.3)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("ZoomAnchor/Env/Party/Polygon2D6:scale")
-tracks/6/interp = 2
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1), Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1), Vector2(0.7, 0.7), Vector2(1, 1)]
-}
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("ZoomAnchor/Env/Party/Polygon2D:rotation")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.5, 1, 1.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [-0.175529, 0.174533, -0.175529, 0.174533]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("ZoomAnchor/Env/Party/Polygon2D2:rotation")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.7, 1, 1.2, 1.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [-0.120414, -0.174533, 0.174533, -0.120414, -0.174533, 0.174533]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("ZoomAnchor/Env/Party/Polygon2D3:rotation")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.7, 1, 1.3, 1.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [-0.0611964, -0.174533, 0.174533, -0.0611964, -0.174533, 0.174533]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("ZoomAnchor/Env/Party/Polygon2D4:rotation")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8, 1, 1.4, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [-0.00229986, -0.174533, 0.174533, -0.00229986, -0.174533, 0.174533]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("ZoomAnchor/Env/Party/Polygon2D5:rotation")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.6, 0.9, 1, 1.6, 1.9),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.055916, -0.174533, 0.174533, 0.055916, -0.174533, 0.174533]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("ZoomAnchor/Env/Party/Polygon2D6:rotation")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.7, 1, 1.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [0.111397, -0.174533, 0.111397, -0.174533]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_bylb8"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1ld8j"]
 _data = {
-"RESET": SubResource("Animation_h2vry"),
-"party": SubResource("Animation_rqohd")
+"RESET": SubResource("Animation_awkj0"),
+"party": SubResource("Animation_lv8bi")
 }
 
 [node name="Intro" type="CanvasLayer"]
@@ -703,7 +751,7 @@ offset_left = -21.0
 offset_top = -237.0
 offset_right = 42.0
 offset_bottom = -66.0
-theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_colors/font_color = Color(1, 0.619608, 1, 1)
 theme_override_fonts/font = ExtResource("9_0rd4u")
 theme_override_font_sizes/font_size = 160
 text = "?"
@@ -711,66 +759,6 @@ horizontal_alignment = 1
 
 [node name="Env" type="Node2D" parent="ZoomAnchor"]
 position = Vector2(1342, 337)
-
-[node name="Planet0" type="Sprite2D" parent="ZoomAnchor/Env"]
-position = Vector2(-79, -169)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_i1r4j")
-
-[node name="Planet1" type="Sprite2D" parent="ZoomAnchor/Env"]
-position = Vector2(793, 199)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("4_6ljui")
-
-[node name="Planet2" type="Sprite2D" parent="ZoomAnchor/Env"]
-position = Vector2(1573, -191)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("5_ejp8i")
-
-[node name="Party" type="Node2D" parent="ZoomAnchor/Env"]
-position = Vector2(2357, 160)
-scale = Vector2(1e-05, 1e-05)
-
-[node name="Polygon2D" type="Polygon2D" parent="ZoomAnchor/Env/Party"]
-position = Vector2(0.319092, 28.1469)
-rotation = -0.175529
-color = Color(1, 0.82, 0.6, 1)
-polygon = PackedVector2Array(-10, 0, -25, -800, 25, -800, 10, 0)
-
-[node name="Polygon2D2" type="Polygon2D" parent="ZoomAnchor/Env/Party"]
-position = Vector2(0.319092, 28.1469)
-rotation = -0.120414
-color = Color(0.993333, 0.6, 1, 1)
-polygon = PackedVector2Array(-10, 0, -25, -800, 25, -800, 10, 0)
-
-[node name="Polygon2D3" type="Polygon2D" parent="ZoomAnchor/Env/Party"]
-position = Vector2(0.319092, 28.1468)
-rotation = -0.0611964
-color = Color(0.713333, 1, 0.6, 1)
-polygon = PackedVector2Array(-10, 0, -25, -800, 25, -800, 10, 0)
-
-[node name="Polygon2D4" type="Polygon2D" parent="ZoomAnchor/Env/Party"]
-position = Vector2(0.319092, 28.1469)
-rotation = -0.00229986
-color = Color(0.6, 0.873333, 1, 1)
-polygon = PackedVector2Array(-10, 0, -25, -800, 25, -800, 10, 0)
-
-[node name="Polygon2D5" type="Polygon2D" parent="ZoomAnchor/Env/Party"]
-position = Vector2(0.319092, 28.1469)
-rotation = 0.055916
-color = Color(1, 0.986667, 0.6, 1)
-polygon = PackedVector2Array(-10, 0, -25, -800, 25, -800, 10, 0)
-
-[node name="Polygon2D6" type="Polygon2D" parent="ZoomAnchor/Env/Party"]
-position = Vector2(0.319092, 28.1468)
-rotation = 0.111397
-color = Color(1, 0.6, 0.607843, 1)
-polygon = PackedVector2Array(-10, 0, -25, -800, 25, -800, 10, 0)
-
-[node name="Planet3" type="Sprite2D" parent="ZoomAnchor/Env"]
-position = Vector2(2355, 158)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("6_wv4ph")
 
 [node name="Star" type="Sprite2D" parent="ZoomAnchor/Env"]
 modulate = Color(1, 1, 1, 0.196078)
@@ -884,6 +872,54 @@ rotation = -1.47937
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("7_pmffe")
 
+[node name="Party" type="Node2D" parent="ZoomAnchor/Env"]
+position = Vector2(2357, 160)
+
+[node name="Sprite2D" type="Sprite2D" parent="ZoomAnchor/Env/Party"]
+modulate = Color(1, 0.619608, 1, 1)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("7_65hes")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ZoomAnchor/Env/Party"]
+modulate = Color(1, 0.619608, 1, 1)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("7_65hes")
+
+[node name="Sprite2D3" type="Sprite2D" parent="ZoomAnchor/Env/Party"]
+modulate = Color(1, 0.619608, 1, 1)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("7_65hes")
+
+[node name="Sprite2D4" type="Sprite2D" parent="ZoomAnchor/Env/Party"]
+modulate = Color(1, 0.619608, 1, 1)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("7_65hes")
+
+[node name="Sprite2D5" type="Sprite2D" parent="ZoomAnchor/Env/Party"]
+modulate = Color(1, 0.619608, 1, 1)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("7_65hes")
+
+[node name="Planet0" type="Sprite2D" parent="ZoomAnchor/Env"]
+position = Vector2(-79, -169)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_i1r4j")
+
+[node name="Planet1" type="Sprite2D" parent="ZoomAnchor/Env"]
+position = Vector2(793, 199)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_6ljui")
+
+[node name="Planet2" type="Sprite2D" parent="ZoomAnchor/Env"]
+position = Vector2(1573, -191)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_ejp8i")
+
+[node name="Planet3" type="Sprite2D" parent="ZoomAnchor/Env"]
+position = Vector2(2355, 158)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_wv4ph")
+
 [node name="GameTitle" type="Label" parent="."]
 visible = false
 modulate = Color(1, 1, 1, 0)
@@ -892,10 +928,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_colors/font_color = Color(1, 0.619608, 1, 1)
 theme_override_fonts/font = ExtResource("9_0rd4u")
 theme_override_font_sizes/font_size = 80
-text = "GAME TITLE"
+text = "THE ENDLESS 
+
+SPACE DUNGEON
+
+OF LOVE MONSTERS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -913,7 +953,7 @@ libraries = {
 [node name="AnimationPlayerParty" type="AnimationPlayer" parent="."]
 speed_scale = 2.0
 libraries = {
-"": SubResource("AnimationLibrary_bylb8")
+"": SubResource("AnimationLibrary_1ld8j")
 }
 
 [connection signal="animation_finished" from="AnimationPlayerGlobal" to="." method="_on_animation_player_global_animation_finished"]

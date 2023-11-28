@@ -1,16 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://bebm1sx3rjxnt"]
+[gd_scene load_steps=12 format=3 uid="uid://bebm1sx3rjxnt"]
 
 [ext_resource type="Script" path="res://modules/corentin/dungeon.gd" id="1_7npxm"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="2_e6tvr"]
 [ext_resource type="PackedScene" uid="uid://d3clduo33km57" path="res://modules/remi/mob_handy_man/mob_handy_man.tscn" id="2_wo6eh"]
+[ext_resource type="PackedScene" uid="uid://jsbtpbjcy8rj" path="res://modules/natheo/mob_cuteplant/mob_cuteplant.tscn" id="3_d03fu"]
 [ext_resource type="PackedScene" uid="uid://da0knsa3x3m8s" path="res://modules/remi/character.tscn" id="3_wdgi3"]
+[ext_resource type="PackedScene" uid="uid://75etcwgcek82" path="res://modules/selim/mob_chamallow/mob_chamallow.tscn" id="4_5ogu1"]
 [ext_resource type="PackedScene" uid="uid://dlvwfmqkkgucd" path="res://modules/odilon/fx/normalized_sound.tscn" id="5_l5h4f"]
+[ext_resource type="PackedScene" uid="uid://bvo61s1yid5cv" path="res://modules/nathan/sliminou_gang/sliminou_gang.tscn" id="5_pxdqg"]
 [ext_resource type="AudioStream" uid="uid://d1q6vpxp4lj0i" path="res://modules/remi/assets/audio/used/general/woosh_2.wav" id="6_cg2yb"]
+[ext_resource type="PackedScene" uid="uid://chk831ldmfjkm" path="res://modules/odilon/super_lechouille/fight.tscn" id="6_kxupp"]
 [ext_resource type="PackedScene" uid="uid://dl37003wsb2n1" path="res://modules/corentin/mob_trash/mob_trash.tscn" id="6_mrkxm"]
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_7npxm")
-MOB_SCENES = Array[PackedScene]([ExtResource("6_mrkxm")])
+MOB_SCENES = Array[PackedScene]([ExtResource("6_mrkxm"), ExtResource("3_d03fu"), ExtResource("4_5ogu1"), ExtResource("5_pxdqg"), ExtResource("6_kxupp")])
 BOSS_SCENES = Array[PackedScene]([ExtResource("2_wo6eh")])
 BOSS_ROOM_PERIOD = 5
 
