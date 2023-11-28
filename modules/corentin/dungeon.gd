@@ -71,7 +71,8 @@ func _advance():
 		new_mob.DIFFICULTY = _new_mob_difficulty()
 		if available_mob_indexs.size() < 1:
 			available_mob_indexs = range(MOB_SCENES.size())
-			available_mob_indexs.pop_at(mob_index) # avoid getting the same mob twice in a row
+			if MOB_SCENES.size()>1:
+				available_mob_indexs.pop_at(mob_index) # avoid getting the same mob twice in a row
 			available_mob_indexs.shuffle()
 	else:
 		var mob_index : int = available_boss_indexs.pop_back()
@@ -79,7 +80,8 @@ func _advance():
 		new_mob.DIFFICULTY = _new_mob_difficulty() * KBOSSDIFF
 		if available_boss_indexs.size() < 1:
 			available_boss_indexs = range(BOSS_SCENES.size())
-			available_boss_indexs.pop_at(mob_index) # avoid getting the same mob twice in a row
+			if BOSS_SCENES.size()>1:
+				available_boss_indexs.pop_at(mob_index) # avoid getting the same mob twice in a row
 			available_boss_indexs.shuffle()
 	
 	var CLIC_CLIC_DELAY : float = 0.1

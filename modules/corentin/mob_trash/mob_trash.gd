@@ -7,6 +7,10 @@ signal just_died
 # MOB PARAMETERS
 var DIFFICULTY : float = 0.0: set = _set_difficulty
 
+
+var WIN_X : int = 1500
+var WIN_Y : int = 1000
+
 # MOB SUB PARAMETERS
 ## ATTACKING
 var HAND_ATTACK_DURATION : float 
@@ -17,7 +21,7 @@ var HAND_ATTACK_INTERVAL : float
 func _set_difficulty(value : float):
 	DIFFICULTY = value
 	HAND_ATTACK_DURATION = 3.0 / (1.0 + log(1.0 + DIFFICULTY))
-	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
+	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + 3*log(1.0 + DIFFICULTY))
 	HAND_ATTACK_INTERVAL = 3.0 / (1.0 + log(1.0 + DIFFICULTY))
 
 # MOB HP BAR
@@ -86,6 +90,8 @@ func _phase_attack():
 	$Hands.show()
 	var hand_appear : Tween = create_tween()
 	for hand in $Hands.get_children():
+		var coords = Vector2((randf()*-0.5)*WIN_X, (randf()*-0.5)*WIN_Y)
+		hand.position = coords
 		hand_appear.parallel().tween_property(hand, "modulate:a", 1, 0.25).set_trans(Tween.TRANS_CUBIC)
 		var target_fx = preload("res://modules/remi/fx/target.tscn").instantiate()
 		target_fx.position = Vector2.ZERO # carefull these are local coordinates
