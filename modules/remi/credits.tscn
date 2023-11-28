@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://dh77ldpcixk5p"]
+[gd_scene load_steps=14 format=3 uid="uid://dh77ldpcixk5p"]
 
 [ext_resource type="Script" path="res://modules/remi/credits.gd" id="1_t6xbh"]
 [ext_resource type="Texture2D" uid="uid://bahoflyuxu2lk" path="res://modules/aurelie/credits/aurelie.svg" id="3_05gtm"]
 [ext_resource type="FontFile" uid="uid://cawutowfije1" path="res://modules/remi/assets/fonts/SalvarRegular-gxwoP.ttf" id="4_qxn6m"]
 [ext_resource type="Texture2D" uid="uid://gil5i6g285s2" path="res://modules/aurelie/credits/corentin.svg" id="5_cnonl"]
 [ext_resource type="Texture2D" uid="uid://ds2xrrxcvev52" path="res://modules/aurelie/credits/natheo.svg" id="6_735mn"]
+[ext_resource type="Texture2D" uid="uid://dbii7f4m51jqw" path="res://modules/aurelie/credits/hugo.svg" id="7_3mj82"]
 [ext_resource type="Texture2D" uid="uid://bfb540ptmtolw" path="res://modules/aurelie/credits/odilon.svg" id="7_yonbo"]
 [ext_resource type="Texture2D" uid="uid://dfqwqbg8vkdvj" path="res://modules/aurelie/credits/sacha.svg" id="8_7hpgw"]
 [ext_resource type="Texture2D" uid="uid://y3a178nwncq8" path="res://modules/remi/assets/graphics/back.svg" id="8_fscm7"]
@@ -31,7 +32,6 @@ position = Vector2(0, 150)
 
 [node name="Aurélie" type="Sprite2D" parent="Content"]
 visible = false
-position = Vector2(48, 6)
 texture = ExtResource("3_05gtm")
 
 [node name="Label" type="Label" parent="Content/Aurélie"]
@@ -55,7 +55,6 @@ vertical_alignment = 1
 
 [node name="Corentin" type="Sprite2D" parent="Content"]
 visible = false
-position = Vector2(48, 6)
 texture = ExtResource("5_cnonl")
 
 [node name="Label" type="Label" parent="Content/Corentin"]
@@ -79,7 +78,6 @@ vertical_alignment = 1
 
 [node name="Nathéo" type="Sprite2D" parent="Content"]
 visible = false
-position = Vector2(48, 6)
 texture = ExtResource("6_735mn")
 
 [node name="Label" type="Label" parent="Content/Nathéo"]
@@ -103,8 +101,7 @@ vertical_alignment = 1
 
 [node name="Hugo" type="Sprite2D" parent="Content"]
 visible = false
-position = Vector2(48, 6)
-texture = ExtResource("7_yonbo")
+texture = ExtResource("7_3mj82")
 
 [node name="Label" type="Label" parent="Content/Hugo"]
 anchors_preset = 8
@@ -127,7 +124,6 @@ vertical_alignment = 1
 
 [node name="Sacha" type="Sprite2D" parent="Content"]
 visible = false
-position = Vector2(48, 6)
 texture = ExtResource("8_7hpgw")
 
 [node name="Label" type="Label" parent="Content/Sacha"]
@@ -151,7 +147,6 @@ vertical_alignment = 1
 
 [node name="Selim" type="Sprite2D" parent="Content"]
 visible = false
-position = Vector2(48, 6)
 texture = ExtResource("9_y25nl")
 
 [node name="Label" type="Label" parent="Content/Selim"]
@@ -175,7 +170,6 @@ vertical_alignment = 1
 
 [node name="Odilon" type="Sprite2D" parent="Content"]
 visible = false
-position = Vector2(48, 6)
 texture = ExtResource("7_yonbo")
 
 [node name="Label" type="Label" parent="Content/Odilon"]
@@ -199,7 +193,6 @@ vertical_alignment = 1
 
 [node name="Remi" type="Sprite2D" parent="Content"]
 visible = false
-position = Vector2(48, 6)
 texture = ExtResource("10_ru8d2")
 
 [node name="Label" type="Label" parent="Content/Remi"]
