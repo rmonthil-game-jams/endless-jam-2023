@@ -430,19 +430,6 @@ func _set_hud_astronaut_color(value: Color):
 func _attempt_dying():
 	if life_points <= 0:
 		state = "dying"
-		# hit anim
-		if tween_heal != null:
-			tween_heal.kill()
-		if tween_hit != null:
-			tween_hit.kill()
-		tween_hit = create_tween()
-		tween_hit.tween_method(_set_hud_astronaut_color, Color(1, 1, 1, 1), Color(1.0, 0.25, 0.25, 1.0), 0.25).set_trans(Tween.TRANS_CUBIC)
-		tween_hit.parallel().tween_property(astronaut, "rotation", randf_range(-0.125, 0.125), 0.25).set_trans(Tween.TRANS_ELASTIC)
-		
-		tween_hit.tween_method(_set_hud_astronaut_color, Color(1.0, 0.25, 0.25, 1.0), Color(1, 1, 1, 1), 0.25).set_trans(Tween.TRANS_CUBIC)
-		tween_hit.parallel().tween_property(astronaut, "rotation", 0.0, 0.25).set_trans(Tween.TRANS_ELASTIC)
-		tween_hit.tween_callback(_attempt_dying)
-		await tween_hit.finished
 		# death anim
 		$CanvasLayer/ColorRect.show()
 		$AnimationPlayer.play("death")

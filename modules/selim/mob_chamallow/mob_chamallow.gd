@@ -18,7 +18,7 @@ var TIME_BETWEEN_ATTACKS_P2 : float
 var ATTACK_WINDOW_OFFSET : Vector2 = Vector2(0.0, -200.0)
 var X_MARGIN : int = 450
 var Y_MARGIN : int = 450
-var ATTACK_WINDOW_RANGE_INTER_MARGING : float = 100.0
+var ATTACK_WINDOW_RANGE_INTER_MARGING : float = 200.0
 var ATTACK_WINDOW_RANGE : Vector2
 var ATTACK_SCALE : Vector2 = Vector2(1.0, 1.0) # REMI: TRY TO AVOID RESCALING IMAGES PERMANENTLY
 var DAMAGE_MULTIPLIER : int = 0
@@ -351,21 +351,21 @@ func _transition_to_phase_2():
 	# REMI: first it gets bigger
 	main_tween = create_tween()
 	main_tween.tween_property($Body/Sprite2DTrans, "scale", Vector2(1.6, 1.6), 0.25).set_trans(Tween.TRANS_ELASTIC)
-	main_tween.parallel().tween_property($Body/Sprite2DTrans, "modulate", Color(1.0, 0.0, 0.0), 0.25).set_trans(Tween.TRANS_ELASTIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "modulate", Color(0.5, 0.0, 0.0), 0.25).set_trans(Tween.TRANS_ELASTIC)
 	await main_tween.finished
 	# REMI: then loop animation
 	main_tween = create_tween()
-	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(1.0, 1.0, 1.0), 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(0.5, 0.5, 0.5), 0.125).set_trans(Tween.TRANS_CUBIC)
 	main_tween.parallel().tween_property($Body/Sprite2DTrans, "scale", Vector2(1.65, 1.65), 0.125).set_trans(Tween.TRANS_CUBIC)
 	main_tween.parallel().tween_property($Body/Sprite2DTrans, "rotation", -0.0625, 0.125).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(1.0, 0.0, 0.0), 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(0.5, 0.0, 0.0), 0.125).set_trans(Tween.TRANS_CUBIC)
 	main_tween.parallel().tween_property($Body/Sprite2DTrans, "scale", Vector2(1.55, 1.55), 0.125).set_trans(Tween.TRANS_CUBIC)
 	main_tween.parallel().tween_property($Body/Sprite2DTrans, "rotation", 0.0625, 0.125).set_trans(Tween.TRANS_CUBIC)
 	main_tween.set_loops(4)
 	await main_tween.finished
 	# REMI: then go back to previous size
 	main_tween = create_tween()
-	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(1.0, 1.0, 1.0), 0.25).set_trans(Tween.TRANS_ELASTIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(0.5, 0.5, 0.5), 0.25).set_trans(Tween.TRANS_ELASTIC)
 	main_tween.parallel().tween_property($Body/Sprite2DTrans, "scale", Vector2(1.0, 1.0), 0.25).set_trans(Tween.TRANS_ELASTIC)
 	main_tween.parallel().tween_property($Body/Sprite2DTrans, "rotation", 0.0, 0.25).set_trans(Tween.TRANS_ELASTIC)
 	main_tween.tween_callback($Body/Sprite2DTrans.hide)
