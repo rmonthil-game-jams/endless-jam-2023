@@ -39,7 +39,7 @@ func _set_difficulty(value : float):
 	#ATTENTION : DUPLICATE_LOOP_NUMBER / 2 > LIFE / STANDARD_PLAYER_DAMAGE  (sinon pas le temps de tuer avant la duplication)
 	
 	
-	DANCE_MOVE_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY/4.0)) #THE SMALLER, THE QUICKER THE IDLE PHASE : MOB LOOKS ANGRIER AND ATTACK/VULNERABILITY PHASE COMES MORE OFTEN
+	DANCE_MOVE_DURATION = 1.0 / (1.0 + log(1.0 + DIFFICULTY/5.0)) #THE SMALLER, THE QUICKER THE IDLE PHASE : MOB LOOKS ANGRIER AND ATTACK/VULNERABILITY PHASE COMES MORE OFTEN
 	JUMP_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY)) #THE SMALLER THE QUICKER IT GETS AND THE HARDER IT GETS (VULNERABILITY PHASE)
 	FALL_DURATION = 2.0*JUMP_DURATION/2.0
 	JUMP_HEIGHT = 400.0 #min(1500.0, 500.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY))) #THE HIGHER THE EASIER (VULNERABILITY PHASE)
@@ -81,7 +81,7 @@ func _ready():
 	$Body/Mouth/MouthButton.pressed.connect(_mouth_attacking_pressed.bind($Body/Mouth))
 	$Body/WeakSpot/WeakSpotButton.pressed.connect(_hit.bind(STANDARD_PLAYER_DAMAGE))
 	$Speach/SpeachBubble.get_node("SpeachText").visible_ratio = 0.0
-	_play_waiting_animation.call_deferred(0,false)
+	_play_waiting_animation.call_deferred(0,false,true)
 	
 	# REMI: hp bar
 	mob_hp_progress_bar.max_value = life_points
@@ -144,20 +144,28 @@ func _play_dedoubling():
 	$Duplicate.position = Vector2(0.0,0.0)
 	_play_waiting_animation.call_deferred(1,false)
 	
-func _play_waiting_animation(loop_num : int, next_is_jump : bool):
+func _play_waiting_animation(loop_num : int, next_is_jump : bool, force_dance_spawn_delay : bool = false):
 	state = STATE.idle
 	duplicate_countdown -= 1 
 	var random_vector : Vector2
 	var target_position : Vector2
-	var random_time_variation : float 
+	var dance_move_duration : float
 	
 	tween = create_tween()
 	for loop_index in range(loop_num):
 		random_vector = Vector2(1.0, 0.0) * (randf_range(-1.0, 1.0)) * DANCE_MOVE_RADIUS
 		target_position = random_vector
-		random_time_variation = randf_range(-DANCE_MOVE_DURATION/4.0, DANCE_MOVE_DURATION/4.0)
-		tween.tween_property($Body, "position", target_position, DANCE_MOVE_DURATION + random_time_variation).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Body, "position", Vector2(0.0, 0.0), DANCE_MOVE_DURATION/1.5).set_trans(Tween.TRANS_CUBIC)
+		dance_move_duration = DANCE_MOVE_DURATION + randf_range(-DANCE_MOVE_DURATION/4.0, DANCE_MOVE_DURATION/4.0)
+		tween.tween_property($Body, "position", target_position, dance_move_duration).set_trans(Tween.TRANS_CUBIC)
+	
+	var comeback_delay : float
+	if force_dance_spawn_delay:
+		# This is to synchronize animation with "click click" sound
+		comeback_delay = 0.3
+	else:
+		comeback_delay = DANCE_MOVE_DURATION/1.5
+	
+	tween.tween_property($Body, "position", Vector2(0.0, 0.0), comeback_delay).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
 	
 	if duplicate_countdown <= 0 :
