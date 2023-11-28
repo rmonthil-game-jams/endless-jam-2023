@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://bf8dxx0hsdbkh"]
+
+[ext_resource type="Script" path="res://modules/odilon/fx/background_music.gd" id="1_w1csl"]
+
+[sub_resource type="Animation" id="Animation_av3rh"]
+resource_name = "Fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Internals/PrevTrack:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(8.19625, 0.0824694),
+"update": 0,
+"values": [0.0, -80.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Internals/CurrentTrack:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.179483, 5.85634),
+"update": 0,
+"values": [-80.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pvxur"]
+_data = {
+"Fade": SubResource("Animation_av3rh")
+}
+
+[node name="BackgroundMusic" type="Node"]
+script = ExtResource("1_w1csl")
+
+[node name="Internals" type="Node" parent="."]
+
+[node name="FadeAnimation" type="AnimationPlayer" parent="Internals"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_pvxur")
+}
+
+[node name="CurrentTrack" type="AudioStreamPlayer" parent="Internals"]
+
+[node name="PrevTrack" type="AudioStreamPlayer" parent="Internals"]
+volume_db = -80.0
