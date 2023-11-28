@@ -1,15 +1,19 @@
-[gd_scene load_steps=20 format=3 uid="uid://dfs1dbah1d0n5"]
+[gd_scene load_steps=24 format=3 uid="uid://dfs1dbah1d0n5"]
 
 [ext_resource type="Script" path="res://modules/remi/intro.gd" id="1_eknrt"]
 [ext_resource type="PackedScene" uid="uid://d1h4nkcqe1b26" path="res://modules/remi/spaceship.tscn" id="2_6748w"]
 [ext_resource type="FontFile" uid="uid://dfimsv7j1ko8g" path="res://modules/remi/assets/fonts/EdgeOfTheGalaxyPoster-3zRAp.otf" id="3_axyfr"]
 [ext_resource type="Texture2D" uid="uid://cosjb2iy0w7bn" path="res://modules/remi/assets/graphics/planet_0.svg" id="3_i1r4j"]
 [ext_resource type="Texture2D" uid="uid://di2w1e4qplnq1" path="res://modules/remi/assets/graphics/planet_1.svg" id="4_6ljui"]
+[ext_resource type="AudioStream" uid="uid://d2tswy6uq3hcn" path="res://modules/remi/assets/audio/used/general/zoom_3.wav" id="4_qbarp"]
+[ext_resource type="AudioStream" uid="uid://bwpeoonnyyrcs" path="res://modules/odilon/assets/audio/used/zoom_3_inverted.wav" id="5_2qm0g"]
 [ext_resource type="Texture2D" uid="uid://chls4m8fbf5s5" path="res://modules/remi/assets/graphics/planet_2.svg" id="5_ejp8i"]
 [ext_resource type="Texture2D" uid="uid://busv1hnr74ggu" path="res://modules/remi/assets/graphics/planet_3.svg" id="6_wv4ph"]
 [ext_resource type="Texture2D" uid="uid://3r7xn6s0afdc" path="res://modules/remi/assets/graphics/heart.svg" id="7_65hes"]
 [ext_resource type="Texture2D" uid="uid://cmcfpc1hr7y1d" path="res://modules/remi/assets/graphics/star.svg" id="7_pmffe"]
 [ext_resource type="FontFile" uid="uid://cawutowfije1" path="res://modules/remi/assets/fonts/SalvarRegular-gxwoP.ttf" id="9_0rd4u"]
+[ext_resource type="AudioStream" uid="uid://cnvdojlftptdm" path="res://modules/remi/assets/audio/used/general/splash_1.wav" id="12_2ud5t"]
+[ext_resource type="AudioStream" uid="uid://ll787eal87ka" path="res://modules/remi/assets/audio/used/general/woosh_0.wav" id="12_mcsqe"]
 
 [sub_resource type="Animation" id="Animation_t75by"]
 length = 0.001
@@ -271,6 +275,49 @@ tracks/11/keys = {
 "method": &"play"
 }]
 }
+tracks/12/type = "method"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("ZoomAnchor/Spaceship/SpaceshipSound")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0.3, 3.3),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [],
+"method": &"stop"
+}]
+}
+tracks/13/type = "method"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("ZoomAnchor/Spaceship/SpaceshipSound2")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(5.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.15],
+"method": &"play"
+}]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("ZoomAnchor/Spaceship/SpaceshipSound2:volume_db")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(6.6, 8),
+"transitions": PackedFloat32Array(21.112, 0.0693483),
+"update": 0,
+"values": [0.0, -80.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uliyd"]
 _data = {
@@ -347,6 +394,21 @@ tracks/2/keys = {
 "update": 0,
 "values": [0.0, -0.139626, 0.139626, -0.0698132, 0.0698132, 0.0]
 }
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ZoomAnchor/Spaceship/SpaceshipSound")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("12_2ud5t")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2mh4d"]
 _data = {
@@ -720,6 +782,51 @@ tracks/14/keys = {
 "update": 0,
 "values": [Vector2(1e-05, 1e-05), Vector2(0.4, 0.4), Vector2(0.484722, 0.585067), Vector2(0.666, 0.474), Vector2(0.478, 0.605), Vector2(0.528, 0.572), Vector2(0.928, 0.9), Vector2(0.872, 1.007), Vector2(1e-05, 1e-05)]
 }
+tracks/15/type = "audio"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("ZoomAnchor/Env/Party/PartyPlayer0")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("12_mcsqe")
+}],
+"times": PackedFloat32Array(0.1)
+}
+tracks/15/use_blend = true
+tracks/16/type = "audio"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("ZoomAnchor/Env/Party/PartyPlayer0")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("12_mcsqe")
+}],
+"times": PackedFloat32Array(0.3)
+}
+tracks/16/use_blend = true
+tracks/17/type = "audio"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("ZoomAnchor/Env/Party/PartyPlayer0")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("12_mcsqe")
+}],
+"times": PackedFloat32Array(0.5)
+}
+tracks/17/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1ld8j"]
 _data = {
@@ -757,6 +864,14 @@ theme_override_fonts/font = ExtResource("3_axyfr")
 theme_override_font_sizes/font_size = 160
 text = "?"
 horizontal_alignment = 1
+
+[node name="SpaceshipSound" type="AudioStreamPlayer2D" parent="ZoomAnchor/Spaceship"]
+stream = ExtResource("4_qbarp")
+pitch_scale = 0.25
+
+[node name="SpaceshipSound2" type="AudioStreamPlayer2D" parent="ZoomAnchor/Spaceship"]
+stream = ExtResource("5_2qm0g")
+pitch_scale = 0.25
 
 [node name="Env" type="Node2D" parent="ZoomAnchor"]
 position = Vector2(1342, 337)
@@ -900,6 +1015,9 @@ texture = ExtResource("7_65hes")
 modulate = Color(1, 0.619608, 1, 1)
 scale = Vector2(1e-05, 1e-05)
 texture = ExtResource("7_65hes")
+
+[node name="PartyPlayer0" type="AudioStreamPlayer2D" parent="ZoomAnchor/Env/Party"]
+max_polyphony = 3
 
 [node name="Planet0" type="Sprite2D" parent="ZoomAnchor/Env"]
 position = Vector2(-79, -169)

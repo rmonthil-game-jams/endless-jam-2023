@@ -85,6 +85,7 @@ func _ready():
 	
 	# REMI: hp bar
 	mob_hp_progress_bar.max_value = life_points
+	_set_hp_bar(life_points)
 
 # REMI: QUITE A FEW TWEAKS
 func _play_dedoubling():

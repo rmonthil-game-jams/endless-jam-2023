@@ -11,7 +11,7 @@ tracks/0/path = NodePath("Internals/PrevTrack:volume_db")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.6),
 "transitions": PackedFloat32Array(8.19625, 0.0824694),
 "update": 0,
 "values": [0.0, -80.0]
@@ -23,7 +23,7 @@ tracks/1/path = NodePath("Internals/CurrentTrack:volume_db")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.6),
 "transitions": PackedFloat32Array(0.179483, 5.85634),
 "update": 0,
 "values": [-80.0, 0.0]
