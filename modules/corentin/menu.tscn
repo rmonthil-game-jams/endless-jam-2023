@@ -426,6 +426,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="HP_hud" type="TextureRect" parent="Overlay/Control"]
 material = ExtResource("10_s5kg5")
+layout_mode = 0
 offset_left = 6.0
 offset_top = 18.0
 offset_right = 921.0

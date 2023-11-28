@@ -19,6 +19,9 @@ func _ready():
 	$CanvasLayer/Start.modulate.a = 0.0
 	$CanvasLayer/Settings.modulate.a = 0.0
 	$Overlay/Control.modulate.a = 0.0
+	
+	BackgroundMusic.play_menu.call_deferred()
+	
 	# play anim
 	_play_appear_animation.call_deferred()
 
@@ -101,6 +104,7 @@ func _on_texture_button_button_up():
 	tween.tween_property(node_dungeon, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
 
 func _on_game_over():
+	BackgroundMusic.play_menu()
 	var tween : Tween = create_tween()
 	$CanvasLayer/Go/RoomReached.text = "ROOM REACHED: " + str(max(0,node_dungeon.room))
 	state = "game over"

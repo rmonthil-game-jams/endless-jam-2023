@@ -45,6 +45,8 @@ func _advance():
 		new_mob.DIFFICULTY = _new_mob_difficulty() * KBOSSDIFF
 
 	$RoomContent.add_child(new_mob)
+	var CLIC_CLIC_DELAY : float = 0.5
+	BackgroundMusic.play_combat(CLIC_CLIC_DELAY)
 	new_mob.just_died.connect(_on_current_mob_just_died)
 
 
@@ -62,6 +64,7 @@ func _new_mob_difficulty():
 
 
 func _on_current_mob_just_died():
+	BackgroundMusic.play_upgrade_menu()
 		# clean
 	for child in $RoomContent.get_children():
 		child.queue_free()
