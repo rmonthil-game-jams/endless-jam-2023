@@ -307,6 +307,33 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_dflln")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_66tyx")
 text = "EXIT"
 
+[node name="Credits" type="Button" parent="CanvasLayer/Settings"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1722.0
+offset_top = -284.0
+offset_right = 2135.0
+offset_bottom = -177.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.48, 0.8, 0.64, 1)
+theme_override_colors/font_pressed_color = Color(0.85, 1, 0.925, 1)
+theme_override_colors/font_hover_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_colors/font_focus_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_colors/font_disabled_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("8_tvbcq")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vvdgm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_s22xb")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0lnbl")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_dflln")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_66tyx")
+text = "CREDITS"
+
 [node name="Sound" type="HBoxContainer" parent="CanvasLayer/Settings"]
 layout_mode = 1
 anchors_preset = 2
@@ -485,6 +512,7 @@ max_polyphony = 6
 [connection signal="button_up" from="CanvasLayer/Start/StartButton" to="." method="_on_texture_button_button_up"]
 [connection signal="button_up" from="CanvasLayer/Go/Try Again" to="." method="_on_retry_button_up"]
 [connection signal="button_up" from="CanvasLayer/Settings/Exit" to="." method="_on_exit_button_up"]
+[connection signal="pressed" from="CanvasLayer/Settings/Credits" to="." method="_on_credits_pressed"]
 [connection signal="value_changed" from="CanvasLayer/Settings/Sound/CenterContainer/SoundBar" to="CanvasLayer/Settings/Sound/CenterContainer/SoundBar" method="_on_value_changed"]
 [connection signal="button_down" from="CanvasLayer/Settings/Difficulty/HBoxContainer/Easy" to="." method="_on_easy_button_down"]
 [connection signal="button_down" from="CanvasLayer/Settings/Difficulty/HBoxContainer/Medium" to="." method="_on_medium_button_down"]
