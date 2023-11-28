@@ -3,4 +3,5 @@
 [ext_resource type="Script" path="res://modules/odilon/fx/normalized_sound.gd" id="1_jl61v"]
 
 [node name="NormalizedSound" type="AudioStreamPlayer2D"]
+volume_db = 5.0
 script = ExtResource("1_jl61v")

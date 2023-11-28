@@ -6,3 +6,4 @@ func _ready():
 	# Standardized parameters here
 	attenuation = 2
 	max_polyphony = 4
+	volume_db = 5

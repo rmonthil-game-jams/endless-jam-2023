@@ -46,6 +46,6 @@ libraries = {
 }
 
 [node name="CurrentTrack" type="AudioStreamPlayer" parent="Internals"]
+volume_db = -80.0
 
 [node name="PrevTrack" type="AudioStreamPlayer" parent="Internals"]
-volume_db = -80.0

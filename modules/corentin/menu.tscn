@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bryybme68tf54"]
+[gd_scene load_steps=36 format=3 uid="uid://bryybme68tf54"]
 
 [ext_resource type="Script" path="res://modules/corentin/menu.gd" id="1_hhpha"]
 [ext_resource type="PackedScene" uid="uid://bebm1sx3rjxnt" path="res://modules/corentin/dungeon.tscn" id="2_t6ukj"]
@@ -24,6 +24,7 @@
 [ext_resource type="FontFile" uid="uid://b0ihnar8ojegy" path="res://modules/remi/assets/fonts/Drexs-z8gB3.ttf" id="20_agosy"]
 [ext_resource type="Texture2D" uid="uid://dmhjc7l1gk8jx" path="res://modules/remi/assets/graphics/settings_hard_disabled.svg" id="23_nna6y"]
 [ext_resource type="Texture2D" uid="uid://cyd4fllsiutm1" path="res://modules/remi/assets/graphics/overlay.svg" id="23_tg46e"]
+[ext_resource type="AudioStream" uid="uid://fki1qrqiqtkj" path="res://modules/remi/assets/audio/used/general/tttt_0.wav" id="25_x74e2"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vvdgm"]
 
@@ -322,7 +323,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
 theme_override_fonts/font = ExtResource("8_tvbcq")
 theme_override_font_sizes/font_size = 80
-text = "SOUND:"
+text = "SOUND "
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Settings/Sound"]
 layout_mode = 2
@@ -472,6 +473,14 @@ mouse_filter = 2
 texture = ExtResource("12_r0aal")
 flip_h = true
 metadata/_edit_use_anchors_ = true
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="GeneralClick" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("25_x74e2")
+volume_db = 5.0
+attenuation = 2.0
+max_polyphony = 6
 
 [connection signal="button_up" from="CanvasLayer/Start/StartButton" to="." method="_on_texture_button_button_up"]
 [connection signal="button_up" from="CanvasLayer/Go/Try Again" to="." method="_on_retry_button_up"]

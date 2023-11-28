@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://da0knsa3x3m8s"]
+[gd_scene load_steps=22 format=3 uid="uid://da0knsa3x3m8s"]
 
 [ext_resource type="Script" path="res://modules/remi/character.gd" id="1_80owj"]
 [ext_resource type="Texture2D" uid="uid://e8bbqf57kb6s" path="res://modules/remi/assets/graphics/hud_life_bar_under.svg" id="2_pvr1i"]
@@ -10,12 +10,29 @@
 [ext_resource type="Material" uid="uid://ckabik00r1583" path="res://modules/corentin/Shaders/hudAstronaut_mat.tres" id="9_hppl6"]
 [ext_resource type="Script" path="res://modules/remi/Camera2D.gd" id="11_dulko"]
 [ext_resource type="FontFile" uid="uid://cawutowfije1" path="res://modules/remi/assets/fonts/SalvarRegular-gxwoP.ttf" id="12_5msr8"]
+[ext_resource type="Material" uid="uid://c8d26pspayqki" path="res://modules/corentin/Shaders/normal_mat.tres" id="13_eb73w"]
 [ext_resource type="FontFile" uid="uid://b0ihnar8ojegy" path="res://modules/remi/assets/fonts/Drexs-z8gB3.ttf" id="13_on0xv"]
 [ext_resource type="FontFile" uid="uid://dfimsv7j1ko8g" path="res://modules/remi/assets/fonts/EdgeOfTheGalaxyPoster-3zRAp.otf" id="14_coi18"]
+[ext_resource type="Material" uid="uid://dupvxybqhkipk" path="res://modules/corentin/Shaders/rare_mat.tres" id="14_rmfi8"]
 [ext_resource type="PackedScene" uid="uid://dlvwfmqkkgucd" path="res://modules/odilon/fx/normalized_sound.tscn" id="15_svdb1"]
+[ext_resource type="Material" uid="uid://dmb1j2fdjoro" path="res://modules/corentin/Shaders/epic_mat.tres" id="15_xnv2x"]
 [ext_resource type="AudioStream" uid="uid://dngeljoje5vjy" path="res://modules/remi/assets/audio/used/general/tween_0.wav" id="16_lao06"]
 [ext_resource type="AudioStream" uid="uid://dycslqy3tb1ee" path="res://modules/remi/assets/audio/used/general/i_1.wav" id="17_y7hws"]
-[ext_resource type="AudioStream" uid="uid://fki1qrqiqtkj" path="res://modules/remi/assets/audio/used/general/tttt_0.wav" id="18_yw7d6"]
+
+[sub_resource type="Animation" id="Animation_t0lrn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.501961, 0.203922, 0.34902, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_r3igi"]
 resource_name = "death"
@@ -31,21 +48,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Color(1, 0.25, 0.25, 0), Color(1, 0.25, 0.25, 1), Color(0, 0, 0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_t0lrn"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.501961, 0.203922, 0.34902, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bmvpu"]
@@ -351,6 +353,32 @@ color = Color(0.501961, 0.203922, 0.34902, 1)
 zoom = Vector2(0.5, 0.5)
 script = ExtResource("11_dulko")
 
+[node name="ShaderCache" type="Node" parent="."]
+
+[node name="normal_mat_cached" type="TextureButton" parent="ShaderCache"]
+material = ExtResource("13_eb73w")
+offset_left = -39.0
+offset_top = 8.0
+offset_right = 1.0
+offset_bottom = 38.0
+disabled = true
+
+[node name="rare_mat_cached" type="TextureButton" parent="ShaderCache"]
+material = ExtResource("14_rmfi8")
+offset_left = -39.0
+offset_top = 2.0
+offset_right = 1.0
+offset_bottom = 42.0
+disabled = true
+
+[node name="epic_mat_cached" type="TextureButton" parent="ShaderCache"]
+material = ExtResource("15_xnv2x")
+offset_left = -39.0
+offset_top = 3.0
+offset_right = 1.0
+offset_bottom = 43.0
+disabled = true
+
 [node name="Audio" type="Node2D" parent="."]
 
 [node name="Hit" parent="Audio" instance=ExtResource("15_svdb1")]
@@ -358,12 +386,6 @@ stream = ExtResource("16_lao06")
 
 [node name="Heal" parent="Audio" instance=ExtResource("15_svdb1")]
 stream = ExtResource("17_y7hws")
-
-[node name="GeneralClick" type="AudioStreamPlayer2D" parent="Audio"]
-stream = ExtResource("18_yw7d6")
-volume_db = 2.0
-attenuation = 2.0
-max_polyphony = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 speed_scale = 2.0
