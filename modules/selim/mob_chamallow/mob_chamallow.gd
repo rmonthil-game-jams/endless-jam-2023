@@ -27,7 +27,7 @@ var DEAD : bool = false
 
 func _set_difficulty(value : float): # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE THAT BEFORE
 	DIFFICULTY = value
-	HAND_ATTACK_DURATION_FACTOR = 1.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	HAND_ATTACK_DURATION_FACTOR = 0.8 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	DAMAGE_PER_ATTACK_P1 = round(1.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
 	DAMAGE_PER_ATTACK_P2 = round(2.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
 	TIME_BETWEEN_ATTACKS_P1 = 2.5 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
