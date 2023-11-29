@@ -6,6 +6,9 @@ signal just_died
 # MOB PARAMETERS
 var DIFFICULTY : float = 0.0: set = _set_difficulty
 
+# For proper sound sync
+const SOUND_SPAWN_DELAY : float = 1.4
+
 # MOB SUB PARAMETERS
 
 ## HANDS GEOMETRY
@@ -43,7 +46,7 @@ func _set_difficulty(value : float):
 	DIFFICULTY = value
 	
 	# Time of one rotation during which we can hit the mob
-	WAITING_ROTATION_DURATION = 5.0 / (1.0 + log(1.0 + DIFFICULTY))
+	WAITING_ROTATION_DURATION = 6.0 / (1.0 + log(1.0 + DIFFICULTY))
 	
 	# Time of sun shaking during which we can hit the sun to reduce its energy
 	SUN_SHAKING_DURATION = 6.0 / (1.0 + 1.5*log(1.0 + DIFFICULTY))
@@ -58,7 +61,11 @@ func _set_difficulty(value : float):
 	# Thus, as we reduce the suns energy, it reduces the final dmgs
 	DMG_MAX_PER_SUN = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
 	
-	life_points = 18 + 3*(1.0 + DIFFICULTY) 
+	# ODILON: This was too high for the first boss fights. Reducing this a little, but keep a good scaling though
+	# ODILON: Note that this scales faster at higer difficulties
+	#life_points = 18 + 3*(1.0 + DIFFICULTY) 
+	life_points = 14 + DIFFICULTY * sqrt(DIFFICULTY)
+	
 	#print(life_points)
 
 
@@ -149,8 +156,8 @@ func _play_appearing_animation():
 #	# animation
 	modulate.a = 0.0
 	main_tween = create_tween()
-	main_tween.tween_property(self, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Cuteplant/Body, "modulate", Color(0.5, 0.5, 0.5), 0.5).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property(self, "modulate:a", 1.0, 0.2).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Cuteplant/Body, "modulate", Color(0.5, 0.5, 0.5), 0.3).set_trans(Tween.TRANS_CUBIC)
 	await main_tween.finished
 	
 	_play_waiting_animation.call_deferred()
@@ -165,7 +172,7 @@ func _play_waiting_animation():
 	main_tween = create_tween()
 	for plant in plants:
 		main_tween.parallel().tween_property(plant, "scale", 
-			Vector2.ONE, 2.0).set_trans(Tween.TRANS_EXPO)
+			Vector2.ONE, 1.5).set_trans(Tween.TRANS_EXPO)
 	await main_tween.finished
 	
 	$Cuteplant/Body/Sprite2DNormal.show()

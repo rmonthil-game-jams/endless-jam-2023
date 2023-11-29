@@ -16,8 +16,8 @@ var RANDOM_WAF_PITCH_MODIFIER : float = randf_range(-0.4, 0.4)
 
 # MOB SUB PARAMETERS
 ## Animation probabilities (integer easier to manipulate : in %)
-var WAIT_PROBABILITY : int #= 20
-var ATTACK_PROBABILITY : float# = 30
+var WAIT_PROBABILITY : int = 0
+var ATTACK_PROBABILITY : float = 30
 var JUMP_PROBABILITY : float = 50
 
 ## ATTACKING
@@ -43,7 +43,7 @@ func set_difficulty(d : float):
 	SLURP_TIME = 3.0 / (1.0 + log(1.0 + 2*DIFFICULTY)) # INVERSE OF ATTACK SPEED
 	SLURP_LIFE = 3.0 #* (1.0 + log(1.0 + DIFFICULTY))
 	SLURP_LATENCY = 0.2 / (1.0 + 1*log(1.0 + DIFFICULTY))
-	MAX_SLURP_DAMAGE_PER_ATTACK = 2.0 * (1 + log(1.0 + DIFFICULTY))
+	MAX_SLURP_DAMAGE_PER_ATTACK = 3.0 * (1 + log(1.0 + DIFFICULTY))
 	MAX_LIFE_POINTS = 10 + 2 * (1 + DIFFICULTY)
 	life_points = MAX_LIFE_POINTS
 	ATTACK_PROBABILITY = 10 + 3*log(1 + DIFFICULTY)
@@ -101,8 +101,9 @@ func _play_appearing_animation():
 	state = "appearing"
 	modulate.a = 0.0
 
+	# Necessary for sound sync
 	var tween : Tween = create_tween()
-	tween.tween_property(self, "modulate:a", 1.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(self, "modulate:a", 1.0, 0.35).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
 	
 	_play_appear_fx()
@@ -203,13 +204,12 @@ func _play_jumping_animation():
 	current_jump_duration = randf_range(MAX_JUMP_DURATION/2, MAX_JUMP_DURATION)
 	
 	# Start jump by turning in the right direction if needed (note that the sprite is facing left for scale>0)
-	if signf(current_jump_strength.x) == signf($AnimatedBody.scale.x):
+	if signf(current_jump_strength.x) == signf($AnimatedBody/RotatingAnchor.scale.x):
 		if turn_around_tween != null and turn_around_tween.is_running():
 			turn_around_tween.kill() # Should not happen, but who knows
 		turn_around_tween = create_tween()
-		
 		turn_around_tween.tween_property($AnimatedBody/RotatingAnchor, "scale:x", -signf(current_jump_strength.x), min(0.1, current_jump_duration / 2)).set_trans(Tween.TRANS_CUBIC)
-		#await turn_around_tween.finished
+		await turn_around_tween.finished
 	
 	# Script will continue in "_process"
 
@@ -228,8 +228,8 @@ func _play_attacking_animation():
 
 	# Disapear from screen (get closer to player)
 	var tween : Tween = create_tween()
-	tween.tween_property($AnimatedBody, "global_position", Vector2(pos_before_attack.x, get_viewport_size().y+500), 0.5).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property($AnimatedBody, "scale", Vector2(CLOSE_SCALE, CLOSE_SCALE), 0.5).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($AnimatedBody, "global_position", Vector2(pos_before_attack.x, get_viewport_size().y+500), 0.4).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property($AnimatedBody, "scale", Vector2(CLOSE_SCALE, CLOSE_SCALE), 0.4).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_callback($AnimatedBody/AggressiveWaf.play)
 	tween.tween_callback($AnimatedBody.hide)
 	await tween.finished
@@ -326,7 +326,7 @@ func _attempt_damaging_character():
 		var tongue_remain_life : float = _tongue_remaining_life()
 		if tongue_remain_life > 0:
 			var slurp_dammage : int = (tongue_remain_life / SLURP_LIFE) * MAX_SLURP_DAMAGE_PER_ATTACK
-			if (slurp_dammage >= 1):
+			if (slurp_dammage >= 0):
 				character.hit(slurp_dammage)
 
 
@@ -395,18 +395,18 @@ func _on_tongue_blocked():
 	# animation
 	var tween : Tween
 	tween = create_tween()
-	tween.tween_property($Tongue, "scale", Vector2(0.8, 0.8), 0.125).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Tongue, "scale", Vector2(1.0, 1.0), 0.125).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Tongue, "scale", Vector2(0.8, 0.8), 0.1).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Tongue, "scale", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_CUBIC)
 	tween.set_loops(2)
 	await tween.finished
 	tween = create_tween()
-	tween.tween_property($Tongue, "rotation", 0.125, 0.125).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Tongue, "rotation", -0.125, 0.125).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Tongue, "rotation", 0.125, 0.1).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Tongue, "rotation", -0.125, 0.1).set_trans(Tween.TRANS_CUBIC)
 	tween.set_loops(2)
 	await tween.finished
 	tween = create_tween()
-	tween.tween_property($Tongue, "rotation", 0.0, 0.125).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Tongue, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Tongue, "rotation", 0.0, 0.1).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Tongue, "modulate:a", 0.0, 0.3).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
 	# core
 	tongue_clicks = 0
