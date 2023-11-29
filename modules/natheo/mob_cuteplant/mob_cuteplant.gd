@@ -34,8 +34,11 @@ const GATHER_POSITION = Vector2(0.0, 140.0)
 ## DAMAGE
 var DMG_MAX_PER_SUN : float
 
+## MAX pOINTS
+var MAX_LIFE_POINTS : float
+
 # MOB PROPERTIES
-@onready var mob_hp_progress_bar : TextureProgressBar = $MobHPBar/HBoxContainer/MobHpBar
+@onready var mob_hp_progress_bar : ProgressBar = $MobHPBar/HBoxContainer/MobHpBar
 
 # MOB STATE
 var life_points : float = 40.0
@@ -46,29 +49,26 @@ func _set_difficulty(value : float):
 	DIFFICULTY = value
 	
 	# Time of one rotation during which we can hit the mob
-	WAITING_ROTATION_DURATION = 6.0 / (1.0 + log(1.0 + DIFFICULTY))
+	WAITING_ROTATION_DURATION = 6.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	
 	# Time of sun shaking during which we can hit the sun to reduce its energy
-	SUN_SHAKING_DURATION = 6.0 / (1.0 + 1.5*log(1.0 + DIFFICULTY))
+	SUN_SHAKING_DURATION = 6.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	
 	# Decrease of sun relative energy (1 is max, and at SUN_REDUCING_MINIMUM, the sun is destroyed)
-	SUN_REDUCING_SCALE = 0.1 # NEED TO DEPEND ON ATTACK
+	SUN_REDUCING_SCALE = 1.0/8.0 # NEED TO DEPEND ON ATTACK
 	
 	# MAXIMUM DMG OF ONE SUN
 	# DMG IS COMPUTED AS THE MAXIMUM DMG OF ONE SUN
 	# TIMES THE NUMBER OF SUNS UNDESTROYED
 	# TIMES THE SUM RELATIVE ENERGY THAT LEFT ON THE UNDESTROYED SUNS
 	# Thus, as we reduce the suns energy, it reduces the final dmgs
-	DMG_MAX_PER_SUN = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
+	DMG_MAX_PER_SUN = round(2.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
 	
 	# ODILON: This was too high for the first boss fights. Reducing this a little, but keep a good scaling though
 	# ODILON: Note that this scales faster at higer difficulties
 	#life_points = 18 + 3*(1.0 + DIFFICULTY) 
-	life_points = 14 + DIFFICULTY * sqrt(DIFFICULTY)
-	
-	#print(life_points)
-
-
+	MAX_LIFE_POINTS = round(30.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	life_points = MAX_LIFE_POINTS
 
 ## initialization is unecessary because they are already initialized to these values
 var main_tween : Tween = null
@@ -80,7 +80,7 @@ var character : Node = null
 
 ## called when the node enters the scene tree for the first time.
 func _ready():
-	
+	_set_difficulty(DIFFICULTY)
 	# setup suns
 	plants = $Cuteplant/Plants.get_children()
 	for plant in plants:
@@ -452,6 +452,16 @@ func _hit(damage_points : float):
 	life_points -= damage_points
 	_set_hp_bar()
 	_attempt_to_play_hit_animation()
+	
+	# label fx
+	var label_fx = preload("res://modules/remi/fx/label.tscn").instantiate()
+	label_fx.position = get_local_mouse_position()
+	label_fx.COLOR = Color(1.0, 0.6, 0.6)
+	label_fx.TEXT = "- " + str(snapped(damage_points, 0.1))
+	label_fx.scale = Vector2.ONE
+	add_child(label_fx)
+	# end label fx
+	
 	# TODO: DEATH ANIMATION
 	if life_points <= 0.0:
 		_attempt_to_play_death_animation()
@@ -459,6 +469,7 @@ func _hit(damage_points : float):
 var hp_bar_tween : Tween
 
 func _set_hp_bar():
+	$MobHPBar/HBoxContainer/MarginContainer2/Numbers.text = str(snapped(max(life_points, 0.0), 0.1))+" / "+str(snapped(MAX_LIFE_POINTS, 0.1))
 	if hp_bar_tween:
 		hp_bar_tween.kill()
 	hp_bar_tween = get_tree().create_tween()
@@ -503,19 +514,24 @@ func _attempt_to_play_death_animation():
 			hit_tween = create_tween()
 			hit_tween.tween_property($Cuteplant/Body, "modulate", Color(1.0, 1.0, 1.0), 0.125).set_trans(Tween.TRANS_CUBIC)
 			await hit_tween.finished
+		# hide hp bar first
+		main_tween = create_tween()
+		main_tween.tween_property($MobHPBar, "modulate:a", 0.0, 0.25).set_trans(Tween.TRANS_CUBIC)
+		await main_tween.finished
+		# proper death anim
 		$Cuteplant/Body/Sprite2DNormal.hide()
 		$Cuteplant/Body/Sprite2DAttack.hide()
 		$Cuteplant/Body/Sprite2DBeam.hide()
 		$Cuteplant/Body/Sprite2DHit.show()
 		main_tween = create_tween()
-		main_tween.tween_property($Cuteplant, "rotation", 0.0, 0.5)
+		main_tween.tween_property($Cuteplant, "rotation", 0.0, 0.3)
 		for plant in plants:
 			main_tween.tween_property(plant, "position:y", 800.0, 0.3).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 		await main_tween.finished
 		main_tween = create_tween()
-		main_tween.parallel().tween_property($Cuteplant/Body, "rotation", 6.0*2.0*PI, 2.0).as_relative().from_current()
-		main_tween.parallel().tween_property($Cuteplant/Body, "scale", Vector2.ZERO, 2.0)
-		main_tween.parallel().tween_property(self, "modulate:a", 0.0, 2.0).set_trans(Tween.TRANS_CUBIC)
+		main_tween.parallel().tween_property($Cuteplant/Body, "rotation", 6.0*2.0*PI, 1.0).as_relative().from_current()
+		main_tween.parallel().tween_property($Cuteplant/Body, "scale", Vector2.ZERO, 1.0)
+		main_tween.parallel().tween_property(self, "modulate:a", 0.0, 1.0).set_trans(Tween.TRANS_CUBIC)
 		await main_tween.finished
 		just_died.emit()
 

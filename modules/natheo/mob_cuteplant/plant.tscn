@@ -14,7 +14,6 @@
 [node name="Body" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Body"]
-visible = false
 
 [node name="TextureButtonGrowth" type="TextureButton" parent="Body"]
 anchors_preset = 8
@@ -22,15 +21,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -88.5
-offset_top = -151.5
-offset_right = 88.5
-offset_bottom = 151.5
+offset_left = -185.0
+offset_top = -221.0
+offset_right = 182.0
+offset_bottom = 216.0
 grow_horizontal = 2
 grow_vertical = 2
+keep_pressed_outside = true
 texture_normal = ExtResource("1_y6tv4")
 texture_pressed = ExtResource("2_s4sb3")
 texture_hover = ExtResource("3_iea1j")
+stretch_mode = 3
 
 [node name="TextureButtonWait" type="TextureButton" parent="Body"]
 anchors_preset = 8
@@ -45,6 +46,7 @@ offset_bottom = 151.5
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("4_j58qt")
+stretch_mode = 3
 
 [node name="Sun" type="Node2D" parent="."]
 
@@ -58,15 +60,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -129.5
-offset_top = -126.0
-offset_right = 129.5
-offset_bottom = 126.0
+offset_left = -184.0
+offset_top = -189.0
+offset_right = 179.0
+offset_bottom = 189.0
 grow_horizontal = 2
 grow_vertical = 2
+keep_pressed_outside = true
 texture_normal = ExtResource("5_lggvt")
 texture_pressed = ExtResource("6_2c0xb")
 texture_hover = ExtResource("7_820gd")
+stretch_mode = 3
 
 [node name="TextureButtonWait" type="TextureButton" parent="Sun"]
 anchors_preset = 8

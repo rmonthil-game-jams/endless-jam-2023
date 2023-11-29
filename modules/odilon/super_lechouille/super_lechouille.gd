@@ -28,7 +28,7 @@ var life_points : float = 30.0
 var state : String # useles at the moment but who knows in the future?
 
 # private
-var MAX_LIFE_POINTS : float = 30.0
+var MAX_LIFE_POINTS : float
 var MAX_IDLE_DURATION : float
 var MAX_JUMP_DURATION : float
 var SLURP_TIME : float
@@ -38,15 +38,15 @@ var MAX_SLURP_DAMAGE_PER_ATTACK : float
 ## THIS IS THE PER-DOG DIFFICULTY. SEE "FIGHT" TO MODULATE THIS WITH THE GLOBAL DIFFICULTY !
 func set_difficulty(d : float):
 	DIFFICULTY = d
-	MAX_IDLE_DURATION = 0.7 / (1.0 + log(1.0 + DIFFICULTY)) # The more difficult, shorter it will be
-	MAX_JUMP_DURATION = 1.1 / (1.0 + log(1.0 + DIFFICULTY)) # The more difficult, shorter it will be
-	SLURP_TIME = 3.0 / (1.0 + log(1.0 + 2*DIFFICULTY)) # INVERSE OF ATTACK SPEED
-	SLURP_LIFE = 3.0 #* (1.0 + log(1.0 + DIFFICULTY))
-	SLURP_LATENCY = 0.2 / (1.0 + 1*log(1.0 + DIFFICULTY))
-	MAX_SLURP_DAMAGE_PER_ATTACK = 3.0 * (1 + log(1.0 + DIFFICULTY))
-	MAX_LIFE_POINTS = 10 + 2 * (1 + DIFFICULTY)
+	MAX_IDLE_DURATION = 0.7 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT)) # The more difficult, shorter it will be
+	MAX_JUMP_DURATION = 1.1 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT)) # The more difficult, shorter it will be
+	SLURP_TIME = 2.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT)) # INVERSE OF ATTACK SPEED
+	SLURP_LIFE = 3.0
+	SLURP_LATENCY = 0.2 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	MAX_SLURP_DAMAGE_PER_ATTACK = round(3.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	MAX_LIFE_POINTS = round(10.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
 	life_points = MAX_LIFE_POINTS
-	ATTACK_PROBABILITY = 10 + 3*log(1 + DIFFICULTY)
+	ATTACK_PROBABILITY = 15.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	
 
 
@@ -55,7 +55,7 @@ var clickable_tween : Tween
 @onready var character = get_tree().get_nodes_in_group("character").front()
 
 # MOB HP BAR
-@onready var mob_hp_progress_bar : TextureProgressBar = $AnimatedBody/MobHPBar/HBoxContainer/MobHpBar
+@onready var mob_hp_progress_bar : ProgressBar = $AnimatedBody/MobHPBar/HBoxContainer/MobHpBar
 
 ## called when the node enters the scene tree for the first time.
 func _ready():
@@ -282,7 +282,7 @@ func _play_licking_animation():
 	slurp_tween = create_tween();
 	slurp_tween.tween_property($Tongue, "modulate:a", 1,  SLURP_LATENCY).set_trans(Tween.TRANS_CUBIC)
 	slurp_tween.parallel().tween_callback(_play_tongue_appear_fx)
-	slurp_tween.chain().tween_property($Tongue, "global_position:y", -screen_size.y/2 + _get_hud_max_offset().y, SLURP_TIME).set_trans(Tween.TRANS_CUBIC) # REMI: REMOVED -$Tongue.size.y
+	slurp_tween.chain().tween_property($Tongue, "global_position:y", -screen_size.y/2 + _get_hud_max_offset().y, SLURP_TIME).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	slurp_tween.tween_property($Tongue, "modulate:a", 0,  SLURP_LATENCY).set_trans(Tween.TRANS_CUBIC)
 	await slurp_tween.finished
 	tongue_alive = false
@@ -338,6 +338,16 @@ func _hit(damage_points : float):
 	life_points -= damage_points
 	_set_hp_bar()
 	_attempt_to_play_hit_animation()
+	
+	# label fx
+	var label_fx = preload("res://modules/remi/fx/label.tscn").instantiate()
+	label_fx.position = get_local_mouse_position()
+	label_fx.COLOR = Color(1.0, 0.6, 0.6)
+	label_fx.TEXT = "- " + str(snapped(damage_points, 0.1))
+	label_fx.scale = Vector2.ONE
+	add_child(label_fx)
+	# end label fx
+	
 	# TODO: DEATH ANIMATION
 	if life_points <= 0.0:
 		_attempt_to_play_death_animation()
@@ -355,6 +365,7 @@ func _attempt_to_play_hit_animation():
 var hp_bar_tween : Tween
 
 func _set_hp_bar():
+	$AnimatedBody/MobHPBar/HBoxContainer/MarginContainer2/Numbers.text = str(snapped(max(life_points, 0.0), 0.1))+" / "+str(snapped(MAX_LIFE_POINTS, 0.1))
 	if hp_bar_tween:
 		hp_bar_tween.kill()
 	hp_bar_tween = get_tree().create_tween()
@@ -369,10 +380,17 @@ func _attempt_to_play_death_animation():
 		state = "dying"
 		if clickable_tween:
 			clickable_tween.kill()
+		
+		# hide hp bar first
+		clickable_tween = create_tween()
+		clickable_tween.tween_property($AnimatedBody/MobHPBar, "modulate:a", 0.0, 0.125).set_trans(Tween.TRANS_CUBIC)
+		await clickable_tween.finished
+		
 		clickable_tween = create_tween()
 		clickable_tween.tween_property(self, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC)
 		clickable_tween.parallel().tween_callback(_play_death_sound)
 		await clickable_tween.finished
+		
 		just_died.emit()
 
 

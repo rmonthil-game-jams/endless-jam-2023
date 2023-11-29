@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://cmjxtknf2hip6" path="res://modules/remi/assets/graphics/settings_easy_pressed.svg" id="7_baeed"]
 [ext_resource type="Texture2D" uid="uid://bn83vgc25a1hb" path="res://modules/remi/assets/graphics/settings_easy_hover.svg" id="8_c2mcx"]
 [ext_resource type="FontFile" uid="uid://cawutowfije1" path="res://modules/remi/assets/fonts/SalvarRegular-gxwoP.ttf" id="8_tvbcq"]
-[ext_resource type="Material" uid="uid://ckabik00r1583" path="res://modules/corentin/Shaders/hudAstronaut_mat.tres" id="10_s5kg5"]
 [ext_resource type="Texture2D" uid="uid://b1kwyynxal2sl" path="res://modules/remi/assets/graphics/settings_normal_normal.svg" id="11_4bwyv"]
 [ext_resource type="Texture2D" uid="uid://ct732owo0nr4p" path="res://modules/remi/assets/graphics/settings_normal_pressed.svg" id="12_f3o5e"]
 [ext_resource type="Texture2D" uid="uid://cxlhqj2es27g3" path="res://modules/remi/assets/graphics/settings_border.svg" id="12_r0aal"]
@@ -22,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://chv0uhvhq2m5f" path="res://modules/remi/assets/graphics/settings_hard_hover.svg" id="16_ecdlm"]
 [ext_resource type="Texture2D" uid="uid://8el7j3715k14" path="res://modules/remi/assets/graphics/settings_normal_disabled.svg" id="19_n6j8r"]
 [ext_resource type="FontFile" uid="uid://b0ihnar8ojegy" path="res://modules/remi/assets/fonts/Drexs-z8gB3.ttf" id="20_agosy"]
+[ext_resource type="Material" uid="uid://ckabik00r1583" path="res://modules/corentin/shaders/hudAstronaut_mat.tres" id="23_be1ov"]
 [ext_resource type="Texture2D" uid="uid://dmhjc7l1gk8jx" path="res://modules/remi/assets/graphics/settings_hard_disabled.svg" id="23_nna6y"]
 [ext_resource type="Texture2D" uid="uid://cyd4fllsiutm1" path="res://modules/remi/assets/graphics/overlay.svg" id="23_tg46e"]
 [ext_resource type="AudioStream" uid="uid://fki1qrqiqtkj" path="res://modules/remi/assets/audio/used/general/tttt_0.wav" id="25_x74e2"]
@@ -435,7 +435,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="StatsPanel" type="TextureRect" parent="Overlay/Control"]
-material = ExtResource("10_s5kg5")
+material = ExtResource("23_be1ov")
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -453,7 +453,7 @@ flip_v = true
 metadata/_edit_use_anchors_ = true
 
 [node name="HP_hud" type="TextureRect" parent="Overlay/Control"]
-material = ExtResource("10_s5kg5")
+material = ExtResource("23_be1ov")
 layout_mode = 0
 offset_left = 6.0
 offset_top = 18.0
@@ -466,7 +466,7 @@ flip_v = true
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect3" type="TextureRect" parent="Overlay/Control"]
-material = ExtResource("10_s5kg5")
+material = ExtResource("23_be1ov")
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -482,7 +482,7 @@ texture = ExtResource("12_r0aal")
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect4" type="TextureRect" parent="Overlay/Control"]
-material = ExtResource("10_s5kg5")
+material = ExtResource("23_be1ov")
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0

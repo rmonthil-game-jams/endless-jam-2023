@@ -121,8 +121,7 @@ position = Vector2(0, -18)
 
 [node name="MobHPBar" parent="AnimatedBody" instance=ExtResource("5_w0fak")]
 z_index = 2
-position = Vector2(21, -210)
-scale = Vector2(0.639997, 0.639997)
+position = Vector2(1.90735e-06, -284)
 
 [node name="Tongue" type="Node2D" parent="."]
 visible = false
@@ -145,6 +144,7 @@ offset_right = 242.5
 offset_bottom = 312.5
 grow_horizontal = 2
 grow_vertical = 2
+keep_pressed_outside = true
 texture_normal = ExtResource("9_obh41")
 texture_pressed = ExtResource("10_6bo2m")
 texture_hover = ExtResource("11_ec3y7")

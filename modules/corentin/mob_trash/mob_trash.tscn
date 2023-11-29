@@ -18,16 +18,19 @@ script = ExtResource("1_k3nbm")
 position = Vector2(-220, -256)
 
 [node name="Sprite2DNormal" type="TextureButton" parent="Body/SpriteRoot"]
+keep_pressed_outside = true
 texture_normal = ExtResource("2_lwc5x")
 texture_pressed = ExtResource("3_mle08")
 texture_hover = ExtResource("3_iurqm")
 
 [node name="Sprite2DAttacking" type="TextureButton" parent="Body/SpriteRoot"]
 visible = false
+keep_pressed_outside = true
 texture_normal = ExtResource("3_r56o0")
 
 [node name="Sprite2DBeingBlocked" type="TextureButton" parent="Body/SpriteRoot"]
 visible = false
+keep_pressed_outside = true
 texture_normal = ExtResource("6_cog0n")
 
 [node name="Hands" type="Node2D" parent="."]
@@ -37,4 +40,4 @@ visible = false
 position = Vector2(449, -148)
 
 [node name="MobHPBar" parent="." instance=ExtResource("6_viy8q")]
-position = Vector2(-2, -418)
+position = Vector2(31, -339)

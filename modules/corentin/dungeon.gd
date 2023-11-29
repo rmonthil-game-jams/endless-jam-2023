@@ -104,7 +104,6 @@ func _advance():
 	var CLIC_CLIC_DELAY : float = 0.1
 	if "SOUND_SPAWN_DELAY" in new_mob:
 		CLIC_CLIC_DELAY += new_mob.SOUND_SPAWN_DELAY
-		print("Added delay: ", new_mob.SOUND_SPAWN_DELAY)
 	BackgroundMusic.play_combat(CLIC_CLIC_DELAY)
 
 	$RoomContent.add_child(new_mob)

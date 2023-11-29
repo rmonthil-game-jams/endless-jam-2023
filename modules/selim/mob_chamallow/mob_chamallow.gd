@@ -27,23 +27,23 @@ var DEAD : bool = false
 
 func _set_difficulty(value : float): # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE THAT BEFORE
 	DIFFICULTY = value
-	HAND_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + 0.8*log(1.0 + DIFFICULTY))
-	DAMAGE_PER_ATTACK_P1 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-	DAMAGE_PER_ATTACK_P2 = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-	TIME_BETWEEN_ATTACKS_P1 = 2.5 / (1.0 + 1.3 * log(1.0 + DIFFICULTY))
-	TIME_BETWEEN_ATTACKS_P2 = 4.0 / (1.0 + log(1.0 + DIFFICULTY))
-	life_points = 18 + ( 4 * (1.0 + DIFFICULTY))
-	full_mob_hp = life_points
+	HAND_ATTACK_DURATION_FACTOR = 1.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	DAMAGE_PER_ATTACK_P1 = round(1.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	DAMAGE_PER_ATTACK_P2 = round(2.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	TIME_BETWEEN_ATTACKS_P1 = 2.5 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	TIME_BETWEEN_ATTACKS_P2 = 4.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	life_points = round(10.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	MAX_LIFE_POINTS = life_points
 
 # MOB STATE
-var full_mob_hp : float
+var MAX_LIFE_POINTS : float
 var life_points
 var state : String # useles at the moment but who knows in the future?
 
 # private
 
 # REMI: MOB HP BAR
-@onready var mob_hp_progress_bar : TextureProgressBar = $MobHPBar/HBoxContainer/MobHpBar
+@onready var mob_hp_progress_bar : ProgressBar = $MobHPBar/HBoxContainer/MobHpBar
 
 ## initialization is unecessary because they are already initialized to these values
 var main_tween : Tween = null
@@ -130,9 +130,9 @@ func _phase_1_attack():
 	
 	# appear
 	main_tween = create_tween()
-	main_tween.tween_property($AttackP1, "modulate:a", 1.0, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($AttackP1, "scale", ATTACK_SCALE, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($AttackP1, "position", target_position, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttackP1, "modulate:a", 1.0, 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($AttackP1, "scale", ATTACK_SCALE, 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($AttackP1, "position", target_position, 0.125).set_trans(Tween.TRANS_CUBIC)
 	# attack
 	await  main_tween.finished
 	# enable button
@@ -332,10 +332,18 @@ func _end_phase_2_attack_1():
 func _body_attacks(damage : float):
 	life_points -= damage
 	_set_hp_bar(max(life_points,0))
+	# label fx
+	var label_fx = preload("res://modules/remi/fx/label.tscn").instantiate()
+	label_fx.position = get_local_mouse_position()
+	label_fx.COLOR = Color(1.0, 0.6, 0.6)
+	label_fx.TEXT = "- " + str(snapped(damage, 0.1))
+	label_fx.scale = Vector2.ONE
+	add_child(label_fx)
+	# end label fx
 	if life_points <= 0.0:
 		DEAD = true
 		_death_animation()
-	elif life_points <= full_mob_hp/2 && state == "phase_1":
+	elif life_points <= MAX_LIFE_POINTS/2 && state == "phase_1":
 		TRAN = true
 		_transition_to_phase_2()
 	elif state == "phase_2":
@@ -356,19 +364,19 @@ func _transition_to_phase_2():
 	await main_tween.finished
 	# REMI: then loop animation
 	main_tween = create_tween()
-	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(0.5, 0.5, 0.5), 0.125).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($Body/Sprite2DTrans, "scale", Vector2(1.65, 1.65), 0.125).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($Body/Sprite2DTrans, "rotation", -0.0625, 0.125).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(0.5, 0.0, 0.0), 0.125).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($Body/Sprite2DTrans, "scale", Vector2(1.55, 1.55), 0.125).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($Body/Sprite2DTrans, "rotation", 0.0625, 0.125).set_trans(Tween.TRANS_CUBIC)
-	main_tween.set_loops(4)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(0.5, 0.5, 0.5), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "scale", Vector2(1.65, 1.65), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "rotation", -0.0625, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(0.5, 0.0, 0.0), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "scale", Vector2(1.55, 1.55), 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "rotation", 0.0625, 0.125 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_CUBIC)
+	main_tween.set_loops(3)
 	await main_tween.finished
 	# REMI: then go back to previous size
 	main_tween = create_tween()
 	main_tween.tween_property($Body/Sprite2DTrans, "modulate", Color(0.5, 0.5, 0.5), 0.25).set_trans(Tween.TRANS_ELASTIC)
 	main_tween.parallel().tween_property($Body/Sprite2DTrans, "scale", Vector2(1.0, 1.0), 0.25).set_trans(Tween.TRANS_ELASTIC)
-	main_tween.parallel().tween_property($Body/Sprite2DTrans, "rotation", 0.0, 0.25).set_trans(Tween.TRANS_ELASTIC)
+	main_tween.parallel().tween_property($Body/Sprite2DTrans, "rotation", 0.0, 0.25 * HAND_ATTACK_DURATION_FACTOR).set_trans(Tween.TRANS_ELASTIC)
 	main_tween.tween_callback($Body/Sprite2DTrans.hide)
 	await main_tween.finished
 	
@@ -422,6 +430,7 @@ func _death_animation():
 	main_tween.kill()
 	for body in bodies:
 		body.hide()
+	$Body/Sprite2DAttacked.modulate.a = 0.0
 	$Body/Sprite2DAttacked.show()
 	
 	# hide hp bar first
@@ -430,20 +439,20 @@ func _death_animation():
 	await main_tween.finished
 	
 	main_tween = create_tween()
-	main_tween.tween_property($Body/Sprite2DAttacked, "modulate", $Body/Sprite2DAttacked2.modulate, 1.0).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($Body/Sprite2DAttacked, "position", Vector2(0.0, -100), 1.0).set_trans(Tween.TRANS_CUBIC)
-	main_tween.parallel().tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -100), 1.0).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DAttacked, "modulate", $Body/Sprite2DAttacked.modulate, 0.25).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DAttacked, "position", Vector2(0.0, -100), 0.25).set_trans(Tween.TRANS_CUBIC)
+	main_tween.parallel().tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -100), 0.25).set_trans(Tween.TRANS_CUBIC)
 	await main_tween.finished	
 	$Body/Sprite2DDefeat.show()
 	$Body/Sprite2DAttacked.hide()
 	main_tween = create_tween()	
-	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -150), 0.2).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -100), 0.25).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -150), 0.25).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -100), 0.25).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -150), 0.25).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -100), 0.25).set_trans(Tween.TRANS_CUBIC)
-	main_tween.tween_property($Body/Sprite2DDefeat, "scale", Vector2(0.0, 0.0), 0.5).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -150), 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -100), 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -150), 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -100), 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -150), 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "position", Vector2(0.0, -100), 0.125).set_trans(Tween.TRANS_CUBIC)
+	main_tween.tween_property($Body/Sprite2DDefeat, "scale", Vector2(0.0, 0.0), 0.25).set_trans(Tween.TRANS_CUBIC)
 	await main_tween.finished
 		
 	just_died.emit()
@@ -453,6 +462,7 @@ func _death_animation():
 var hp_bar_tween : Tween
 
 func _set_hp_bar(hp):
+	$MobHPBar/HBoxContainer/MarginContainer2/Numbers.text = str(snapped(max(life_points, 0.0), 0.1))+" / "+str(snapped(MAX_LIFE_POINTS, 0.1))
 	if hp_bar_tween:
 		hp_bar_tween.kill()
 	hp_bar_tween = get_tree().create_tween()

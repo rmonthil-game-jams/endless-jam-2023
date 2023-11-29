@@ -12,6 +12,7 @@ var node_dungeon : Node2D = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Input.set_custom_mouse_cursor(preload("res://modules/remi/assets/graphics/cursor.png"))
 	_on_easy_button_down()
 	state = "main menu"
 	process_mode = Node.PROCESS_MODE_ALWAYS

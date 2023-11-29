@@ -14,9 +14,9 @@ var DIFFICULTY : float = 0.0: set = _set_difficulty # REMI: _set_difficulty
 var DUPLICATE_LOOP_NUMBER : int
 var FORCE_DUPLICATE_AMOUNT : int # To ensure that the fight gets a bit complicated at some point
 const SCREEN_WIDTH : float = 1000.0
-const DUPLICATE_DISTANCE_X = 400.0
+const DUPLICATE_DISTANCE_X = 300.0
 const DUPLICATE_DISTANCE_Y = 100.0
-const DISTANCE_SIZE_RATIO : float = 1e-3
+const DISTANCE_SIZE_RATIO : float = 2e-3
 
 ## IDLE
 const IDLE_LOOP_NUMBER : int = 1
@@ -30,33 +30,35 @@ var JUMP_HEIGHT : float
 ## ATTACKING
 var SPEACH_ATTACK_DURATION_FACTOR : float
 var SPEACH_DAMAGE_PER_ATTACK : float
-var LIFE : float
+var MAX_LIFE_POINTS : float
 ## TODO: NUMBER OF HANDS DEPENDANT OF DIFFICULTY ?
 
 # REMI: _set_difficulty
 func _set_difficulty(value : float):
 	DIFFICULTY = value
 	
-	DUPLICATE_LOOP_NUMBER = max(round(8.0 - DIFFICULTY/2.0),2.0) #NUMBER OF IDLE PHASES BEFORE DUPLICATION
+	DUPLICATE_LOOP_NUMBER = randi_range(4, 8) #NUMBER OF IDLE PHASES BEFORE DUPLICATION
 	#ATTENTION : DUPLICATE_LOOP_NUMBER / 2 > LIFE / STANDARD_PLAYER_DAMAGE  (sinon pas le temps de tuer avant la duplication)
 	# In other words now : DUPLICATE_LOOP_NUMBER must be at least 2 to ensure there will always be an attack before duplication
 	
-	FORCE_DUPLICATE_AMOUNT = min(floorf(0 + DIFFICULTY / 4), 6) # Ensures the fight remains a bit difficult at high difficulty
+	FORCE_DUPLICATE_AMOUNT = min(floorf(1.0 * (2.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT))), 8.0) # Ensures the fight remains a bit difficult at high difficulty
 	
-	DANCE_MOVE_DURATION = 1.0 / (1.0 + log(1.0 + DIFFICULTY/5.0)) #THE SMALLER, THE QUICKER THE IDLE PHASE : MOB LOOKS ANGRIER AND ATTACK/VULNERABILITY PHASE COMES MORE OFTEN
-	JUMP_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY)) #THE SMALLER THE QUICKER IT GETS AND THE HARDER IT GETS (VULNERABILITY PHASE)
+	DANCE_MOVE_DURATION = 0.25 #THE SMALLER, THE QUICKER THE IDLE PHASE : MOB LOOKS ANGRIER AND ATTACK/VULNERABILITY PHASE COMES MORE OFTEN
+	JUMP_DURATION = 2.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT)) #THE SMALLER THE QUICKER IT GETS AND THE HARDER IT GETS (VULNERABILITY PHASE)
 	FALL_DURATION = JUMP_DURATION
-	JUMP_HEIGHT = 400.0 #min(1500.0, 500.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY))) #THE HIGHER THE EASIER (VULNERABILITY PHASE)
-	SPEACH_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + log(1.0 + DIFFICULTY)) #THE SHORTER, THE HARDER TO COUNTER THE ATTACK
-	SPEACH_DAMAGE_PER_ATTACK = 1.0 * (1.0 + log(1.0 + DIFFICULTY))
-	LIFE = 5 + log(1 + DIFFICULTY)
+	
+	JUMP_HEIGHT = 300.0 #min(1500.0, 500.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY))) #THE HIGHER THE EASIER (VULNERABILITY PHASE)
+	SPEACH_ATTACK_DURATION_FACTOR = 1.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT)) #THE SHORTER, THE HARDER TO COUNTER THE ATTACK
+	SPEACH_DAMAGE_PER_ATTACK = round(1.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	MAX_LIFE_POINTS = round(5.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	life_points = MAX_LIFE_POINTS
 
 
 # REMI: hp bar
-@onready var mob_hp_progress_bar : TextureProgressBar = $MobHPBar/HBoxContainer/MobHpBar
+@onready var mob_hp_progress_bar : ProgressBar = $MobHPBar/HBoxContainer/MobHpBar
 
 # MOB STATE
-var life_points : float = 5.0
+var life_points : float
 enum STATE {loading_attack, attacking, canceled, idle, loading_jump, jumping, doubling}
 var state : STATE # useles at the moment but who knows in the future?
 
@@ -75,7 +77,7 @@ func _ready():
 	# set difficulty
 	_set_difficulty(DIFFICULTY)
 	duplicate_countdown = DUPLICATE_LOOP_NUMBER
-	life_points = LIFE
+	life_points = MAX_LIFE_POINTS
 
 	$Body/WeakSpot/AnimationPlayer.play("HeartBeat")
 	
@@ -88,19 +90,18 @@ func _ready():
 	_play_waiting_animation.call_deferred(0,false,true)
 	
 	# REMI: hp bar
-	mob_hp_progress_bar.max_value = life_points
+	mob_hp_progress_bar.max_value = MAX_LIFE_POINTS
 	_set_hp_bar(life_points)
 
 # REMI: QUITE A FEW TWEAKS
 func _play_dedoubling():
-	print("creating")
 	var new_sliminou_holder : Node2D = load("res://modules/nathan/sliminou_gang/sliminou_holder.tscn").instantiate()
-	new_sliminou_holder.get_node("Sliminou").DIFFICULTY = DIFFICULTY
+	new_sliminou_holder.get_node("Sliminou").DIFFICULTY = DIFFICULTY / 2.0
 	
 	var position_target : Vector2
 	if get_parent().position.x > 2.0 * DUPLICATE_DISTANCE_X:
 		position_target.x = -DUPLICATE_DISTANCE_X
-	elif get_parent().position.x < 2.0 * DUPLICATE_DISTANCE_X:
+	elif get_parent().position.x < -2.0 * DUPLICATE_DISTANCE_X:
 		position_target.x = DUPLICATE_DISTANCE_X
 	elif (randf_range(0.0, 1.0) <= 0.5):
 		position_target.x = DUPLICATE_DISTANCE_X
@@ -108,12 +109,16 @@ func _play_dedoubling():
 		position_target.x = -DUPLICATE_DISTANCE_X
 	if get_parent().position.y > 2.0 * DUPLICATE_DISTANCE_Y:
 		position_target.y = -DUPLICATE_DISTANCE_Y
-	elif get_parent().position.y < 2.0 * DUPLICATE_DISTANCE_Y:
+		$Duplicate.z_index = 1
+	elif get_parent().position.y < -2.0 * DUPLICATE_DISTANCE_Y:
 		position_target.y = DUPLICATE_DISTANCE_Y
+		$Duplicate.z_index = 2
 	elif (randf_range(0.0, 1.0) <= 0.5):
 		position_target.y = DUPLICATE_DISTANCE_Y
+		$Duplicate.z_index = 1
 	else:
 		position_target.y = -DUPLICATE_DISTANCE_Y
+		$Duplicate.z_index = 2
 	
 	position_target += Vector2(randf_range(-20.0, -20.0), randf_range(-10.0, -10.0))
 	
@@ -123,29 +128,31 @@ func _play_dedoubling():
 	
 	get_parent().get_parent()._register_spawning(1)
 
-	$Duplicate.scale = Vector2(0.5,0.2)
+	$Duplicate.scale = Vector2(1.0,0.0)
 	
 	tween = create_tween()
-	tween.tween_callback($Body/Sprite2DDuplication.show)
-	tween.tween_callback($Body/Sprite2DNormal.hide)
-	tween.tween_property($Body, "rotation", -PI/8, 0.2).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Body, "rotation", PI/6, 0.2).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Body, "rotation", -PI/5, 0.2).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_callback($Duplicate.show)
-	tween.tween_property($Body, "scale", Vector2(1.1,1.1), 0.1).set_trans(Tween.TRANS_CUBIC)
 	
-	tween.tween_property($Body, "rotation", 0, 0.2).set_trans(Tween.TRANS_ELASTIC)
-	tween.tween_property($Duplicate, "scale", Vector2(1.0, 1.0), 0.2).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property($Body, "scale", Vector2(1,1), 0.2).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_callback($Body/Sprite2DDuplication.hide)
-	tween.tween_callback($Body/Sprite2DNormal.show)
-	tween.tween_property($Duplicate, "position", position_target, 0.2).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property($Duplicate, "scale", Vector2(new_size_ratio/get_parent().scale.x, new_size_ratio/get_parent().scale.y),0.2).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_callback($Body/Sprite2DDuplication.show)
+	tween.parallel().tween_callback($Body/Sprite2DNormal.hide)
+	tween.tween_property($Body, "rotation", -PI/8, JUMP_DURATION/6.0).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property($Body, "rotation", PI/6, JUMP_DURATION/6.0).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property($Body, "rotation", -PI/5, JUMP_DURATION/6.0).set_trans(Tween.TRANS_ELASTIC)
+	tween.parallel().tween_callback($Duplicate.show)	
+	tween.parallel().tween_property($Body, "scale", Vector2(1.5,1.5), JUMP_DURATION/8.0).set_trans(Tween.TRANS_ELASTIC)
+	
+	tween.tween_property($Body, "rotation", 0, JUMP_DURATION/6).set_trans(Tween.TRANS_ELASTIC)
+	tween.parallel().tween_property($Duplicate, "scale", Vector2(1.0, 1.0), JUMP_DURATION/6.0).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property($Body, "scale", Vector2(1,1), JUMP_DURATION/6.0).set_trans(Tween.TRANS_ELASTIC)
+	tween.parallel().tween_callback($Body/Sprite2DDuplication.hide)
+	tween.parallel().tween_callback($Body/Sprite2DNormal.show)
+	tween.parallel().tween_property($Duplicate, "position:y", -JUMP_HEIGHT, JUMP_DURATION/3.0).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property($Duplicate, "position", position_target, 2.0*JUMP_DURATION/9.0).set_trans(Tween.TRANS_LINEAR)
+	tween.parallel().tween_property($Duplicate, "scale", Vector2(new_size_ratio/get_parent().scale.x, new_size_ratio/get_parent().scale.y), 2.0*JUMP_DURATION/9.0).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_callback($Duplicate.hide)
-	tween.tween_callback(get_parent().get_parent().add_child.bind(new_sliminou_holder))
 	
 	await tween.finished
 	
+	get_parent().get_parent().add_child(new_sliminou_holder)
 	
 	new_sliminou_holder.get_node("Sliminou").FORCE_DUPLICATE_AMOUNT = FORCE_DUPLICATE_AMOUNT - 1
 	FORCE_DUPLICATE_AMOUNT = 0
@@ -277,7 +284,9 @@ func _attempt_damaging_character():
 		character.hit(SPEACH_DAMAGE_PER_ATTACK)
 
 func _attempt_to_cancel(speach : Node2D):
-	if state == STATE.loading_attack : 
+	if state == STATE.loading_attack :
+		
+		$Body/Mouth/MouthButton.disabled = true
 				
 		state = STATE.canceled
 		
@@ -301,7 +310,7 @@ func _attempt_to_cancel(speach : Node2D):
 		
 		# REMI: add blocked fx
 		var blocked_fx = preload("res://modules/remi/fx/blocked.tscn").instantiate()
-		blocked_fx.position = Vector2(45.0, 43.0) # carefull these are local coordinates
+		blocked_fx.position = $Body/Mouth/MouthButton.custom_minimum_size/2.0 # carefull these are local coordinates
 		$Body/Mouth/MouthButton.add_child(blocked_fx)
 
 
@@ -319,6 +328,15 @@ func _hit(damage_points : float):
 	life_points -= damage_points
 	_set_hp_bar(max(0.0, life_points))
 	
+	# label fx
+	var label_fx = preload("res://modules/remi/fx/label.tscn").instantiate()
+	label_fx.position = get_local_mouse_position()
+	label_fx.COLOR = Color(1.0, 0.6, 0.6)
+	label_fx.TEXT = "- " + str(snapped(damage_points, 0.1))
+	label_fx.scale = Vector2.ONE
+	add_child(label_fx)
+	# end label fx
+	
 	tween.kill()
 	tween = create_tween()
 	
@@ -335,8 +353,12 @@ func _hit(damage_points : float):
 	tween.parallel().tween_property($Body, "position", Vector2(0.0,0.0),refall_duration).set_trans(Tween.TRANS_ELASTIC)
 	
 	if life_points <= 0.0:
+		# hide hp bar first
+		tween = create_tween()
+		tween.parallel().tween_property($MobHPBar, "modulate:a", 0.0, 0.125).set_trans(Tween.TRANS_CUBIC)
 		tween.parallel().tween_property($Body, "rotation", shaken_angle*2,refall_duration).set_trans(Tween.TRANS_LINEAR)
 		tween.tween_interval(0.5)
+		tween.tween_property(self, "modulate:a", 0.0, 0.125).set_trans(Tween.TRANS_CUBIC)
 		await tween.finished
 		get_parent().get_parent()._register_spawning(-1)
 		queue_free()
@@ -354,6 +376,7 @@ func _hit(damage_points : float):
 var hp_bar_tween : Tween
 
 func _set_hp_bar(hp):
+	$MobHPBar/HBoxContainer/MarginContainer2/Numbers.text = str(snapped(max(life_points, 0.0), 0.1))+" / "+str(snapped(MAX_LIFE_POINTS, 0.1))
 	if hp_bar_tween:
 		hp_bar_tween.kill()
 	hp_bar_tween = get_tree().create_tween()

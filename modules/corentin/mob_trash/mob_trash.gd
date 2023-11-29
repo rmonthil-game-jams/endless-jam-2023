@@ -20,15 +20,18 @@ var HAND_ATTACK_INTERVAL : float
 
 func _set_difficulty(value : float):
 	DIFFICULTY = value
-	HAND_ATTACK_DURATION = 3.0 / (1.0 + log(1.0 + DIFFICULTY))
-	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + 3*log(1.0 + DIFFICULTY))
-	HAND_ATTACK_INTERVAL = 3.0 / (1.0 + log(1.0 + DIFFICULTY))
+	HAND_ATTACK_DURATION = 3.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	HAND_DAMAGE_PER_ATTACK = round(1.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	HAND_ATTACK_INTERVAL = 3.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	MAX_LIFE_POINTS =  round(12.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	life_points = MAX_LIFE_POINTS
 
 # MOB HP BAR
-@onready var mob_hp_progress_bar : TextureProgressBar = $MobHPBar/HBoxContainer/MobHpBar
+@onready var mob_hp_progress_bar : ProgressBar = $MobHPBar/HBoxContainer/MobHpBar
 
 # MOB STATE
-var life_points : float = 20.0
+var MAX_LIFE_POINTS : float
+var life_points : float
 var state : String # useles at the moment but who knows in the future?
 
 # private
@@ -52,7 +55,7 @@ func _ready():
 	$Body/SpriteRoot/Sprite2DAttacking.hide()
 	$Body/SpriteRoot/Sprite2DBeingBlocked.hide()
 	$Body/SpriteRoot/Sprite2DNormal.disabled = true
-	mob_hp_progress_bar.max_value = life_points
+	mob_hp_progress_bar.max_value = MAX_LIFE_POINTS
 	_set_hp_bar(life_points)
 	
 	var delay_appear_tween : Tween = create_tween()
@@ -161,13 +164,31 @@ func _try_get_hit():
 		
 func _hit(damage_points : float):
 	life_points -= damage_points
+	# label fx
+	var label_fx = preload("res://modules/remi/fx/label.tscn").instantiate()
+	label_fx.position = get_local_mouse_position()
+	label_fx.COLOR = Color(1.0, 0.6, 0.6)
+	label_fx.TEXT = "- " + str(snapped(damage_points, 0.1))
+	label_fx.scale = Vector2.ONE
+	add_child(label_fx)
+	# end label fx
 	_set_hp_bar(max(life_points,0))
 	if life_points <= 0.0:
+		# hide hp bar first
+		main_tween = create_tween()
+		main_tween.tween_property($MobHPBar, "modulate:a", 0.0, 0.125).set_trans(Tween.TRANS_CUBIC)
+		await main_tween.finished
+		# then body
+		main_tween = create_tween()
+		main_tween.tween_property($Body, "modulate:a", 0.0, 0.25).set_trans(Tween.TRANS_CUBIC)
+		await main_tween.finished
+		# signal
 		just_died.emit()
 
 var hp_bar_tween : Tween
 
 func _set_hp_bar(hp):
+	$MobHPBar/HBoxContainer/MarginContainer2/Numbers.text = str(snapped(max(life_points, 0.0), 0.1))+" / "+str(snapped(MAX_LIFE_POINTS, 0.1))
 	if hp_bar_tween:
 		hp_bar_tween.kill()
 	hp_bar_tween = get_tree().create_tween()

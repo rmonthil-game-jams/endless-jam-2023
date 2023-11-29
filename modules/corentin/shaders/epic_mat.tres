@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dmb1j2fdjoro"]
 
-[ext_resource type="Shader" uid="uid://c47216odwv6yd" path="res://modules/corentin/Shaders/epic.tres" id="1_8en44"]
+[ext_resource type="Shader" uid="uid://c47216odwv6yd" path="res://modules/corentin/shaders/epic.tres" id="1_8en44"]
 
 [resource]
 shader = ExtResource("1_8en44")

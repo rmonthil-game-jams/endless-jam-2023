@@ -1,42 +1,65 @@
 [gd_scene load_steps=5 format=3 uid="uid://c8kc54alm42iy"]
 
-[ext_resource type="Texture2D" uid="uid://e8bbqf57kb6s" path="res://modules/remi/assets/graphics/hud_life_bar_under.svg" id="1_onkuq"]
-[ext_resource type="Texture2D" uid="uid://dbteomwcevbjf" path="res://modules/remi/assets/graphics/hud_life_bar_over.svg" id="2_omxys"]
-[ext_resource type="Texture2D" uid="uid://coyqq37vgsfmg" path="res://modules/remi/assets/graphics/hud_life_bar_progress.svg" id="3_j2est"]
-[ext_resource type="Texture2D" uid="uid://cgc2tdd3yir06" path="res://modules/remi/assets/graphics/hud_mob_pointer.svg" id="5_0wdih"]
+[ext_resource type="Material" uid="uid://ckabik00r1583" path="res://modules/corentin/shaders/hudAstronaut_mat.tres" id="4_0vc3r"]
+[ext_resource type="FontFile" uid="uid://dfimsv7j1ko8g" path="res://modules/remi/assets/fonts/EdgeOfTheGalaxyPoster-3zRAp.otf" id="5_1maem"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lk1ph"]
+bg_color = Color(0.36, 0.6, 0.476, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.670588, 0.929412, 0.8, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eqema"]
+bg_color = Color(0.72, 0.9, 0.807, 1)
+border_color = Color(0.670588, 0.929412, 0.8, 1)
+corner_radius_top_left = 2
+corner_radius_bottom_left = 2
 
 [node name="MobHPBar" type="Node2D"]
-scale = Vector2(0.64, 0.64)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 51.0
-offset_top = -156.0
-offset_right = 551.0
-offset_bottom = -116.0
-grow_vertical = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.5
+offset_top = -26.5
+offset_right = 290.5
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+theme_override_constants/separation = 10
 alignment = 1
 
-[node name="MobHpBar" type="TextureProgressBar" parent="HBoxContainer"]
-custom_minimum_size = Vector2(500, 27)
+[node name="MobHpBar" type="ProgressBar" parent="HBoxContainer"]
+material = ExtResource("4_0vc3r")
+custom_minimum_size = Vector2(400, 30)
 layout_mode = 2
-size_flags_horizontal = 4
 mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_lk1ph")
+theme_override_styles/fill = SubResource("StyleBoxFlat_eqema")
+max_value = 10.0
 step = 0.0
-nine_patch_stretch = true
-texture_under = ExtResource("1_onkuq")
-texture_over = ExtResource("2_omxys")
-texture_progress = ExtResource("3_j2est")
+value = 5.0
+show_percentage = false
 
-[node name="TextureRect" type="TextureRect" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -105.0
-offset_right = 534.0
-grow_vertical = 0
-mouse_filter = 2
-texture = ExtResource("5_0wdih")
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -12
+
+[node name="Numbers" type="Label" parent="HBoxContainer/MarginContainer2"]
+material = ExtResource("4_0vc3r")
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7125, 0.95, 0.827292, 1)
+theme_override_fonts/font = ExtResource("5_1maem")
+theme_override_font_sizes/font_size = 42
+text = "10 / 10"
+vertical_alignment = 1

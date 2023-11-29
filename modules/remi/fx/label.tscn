@@ -4,7 +4,7 @@
 [ext_resource type="FontFile" uid="uid://dfimsv7j1ko8g" path="res://modules/remi/assets/fonts/EdgeOfTheGalaxyPoster-3zRAp.otf" id="2_xi2bg"]
 
 [node name="Label" type="Node2D"]
-z_index = 2
+z_index = 10
 script = ExtResource("1_6d1va")
 
 [node name="Label" type="Label" parent="."]

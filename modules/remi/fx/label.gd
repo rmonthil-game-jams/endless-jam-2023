@@ -23,9 +23,10 @@ func _ready():
 
 func _play_animation():
 	# animation
-	var tween : Tween = create_tween()
-	tween.tween_property(self, "modulate:a", 1.0, 0.125).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property(self, "position:y", position.y - 40.0, 0.5).set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(self, "modulate:a", 0.0, 0.375).set_trans(Tween.TRANS_CUBIC)
-	await tween.finished
+	var tween_modulate : Tween = create_tween()
+	tween_modulate.tween_property(self, "modulate:a", 1.0, 0.125).set_trans(Tween.TRANS_CUBIC)
+	tween_modulate.tween_property(self, "modulate:a", 0.0, 0.375).set_trans(Tween.TRANS_CUBIC)
+	var tween_position : Tween = create_tween()
+	tween_position.parallel().tween_property(self, "position:y", position.y - 100.0, 0.5).set_trans(Tween.TRANS_CUBIC)
+	await tween_position.finished
 	queue_free()

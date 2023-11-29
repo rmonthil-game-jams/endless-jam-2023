@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://dh77ldpcixk5p"]
+[gd_scene load_steps=15 format=3 uid="uid://dh77ldpcixk5p"]
 
 [ext_resource type="Script" path="res://modules/remi/credits.gd" id="1_t6xbh"]
 [ext_resource type="Texture2D" uid="uid://bahoflyuxu2lk" path="res://modules/aurelie/credits/aurelie.svg" id="3_05gtm"]
-[ext_resource type="FontFile" uid="uid://cawutowfije1" path="res://modules/remi/assets/fonts/SalvarRegular-gxwoP.ttf" id="4_qxn6m"]
+[ext_resource type="FontFile" uid="uid://dfimsv7j1ko8g" path="res://modules/remi/assets/fonts/EdgeOfTheGalaxyPoster-3zRAp.otf" id="4_wcg73"]
 [ext_resource type="Texture2D" uid="uid://gil5i6g285s2" path="res://modules/aurelie/credits/corentin.svg" id="5_cnonl"]
 [ext_resource type="Texture2D" uid="uid://ds2xrrxcvev52" path="res://modules/aurelie/credits/natheo.svg" id="6_735mn"]
+[ext_resource type="Texture2D" uid="uid://cnflnd6aw1ugy" path="res://modules/aurelie/credits/nathan.svg" id="6_avlj0"]
 [ext_resource type="Texture2D" uid="uid://dbii7f4m51jqw" path="res://modules/aurelie/credits/hugo.svg" id="7_3mj82"]
 [ext_resource type="Texture2D" uid="uid://bfb540ptmtolw" path="res://modules/aurelie/credits/odilon.svg" id="7_yonbo"]
 [ext_resource type="Texture2D" uid="uid://dfqwqbg8vkdvj" path="res://modules/aurelie/credits/sacha.svg" id="8_7hpgw"]
@@ -40,16 +41,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -848.5
-offset_top = -555.0
-offset_right = 335.5
-offset_bottom = -458.0
+offset_left = -785.0
+offset_top = -517.0
+offset_right = 399.0
+offset_bottom = -420.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
-theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_fonts/font = ExtResource("4_wcg73")
 theme_override_font_sizes/font_size = 80
-text = "AURELIE LOUIS-NAPOLEON"
+text = "AURELIE  LOUIS  NAPOLEON"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -63,39 +64,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -875.5
-offset_top = -659.5
-offset_right = 308.5
-offset_bottom = -562.5
+offset_left = -840.5
+offset_top = -621.5
+offset_right = 343.5
+offset_bottom = -524.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
-theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_fonts/font = ExtResource("4_wcg73")
 theme_override_font_sizes/font_size = 80
-text = "CORENTIN \"CATA\" LELEZ"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Nathéo" type="Sprite2D" parent="Content"]
-visible = false
-texture = ExtResource("6_735mn")
-
-[node name="Label" type="Label" parent="Content/Nathéo"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -846.5
-offset_top = -653.5
-offset_right = 337.5
-offset_bottom = -556.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
-theme_override_fonts/font = ExtResource("4_qxn6m")
-theme_override_font_sizes/font_size = 80
-text = "NATHEO"
+text = "CORENTIN  \"CATA\"  LELEZ"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -109,62 +87,62 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -846.5
-offset_top = -653.5
-offset_right = 337.5
-offset_bottom = -556.5
+offset_left = -836.0
+offset_top = -582.5
+offset_right = 348.0
+offset_bottom = -485.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
-theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_fonts/font = ExtResource("4_wcg73")
 theme_override_font_sizes/font_size = 80
-text = "HUGO"
+text = "HUGO  \"HULPIX\"  CLEMENT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Sacha" type="Sprite2D" parent="Content"]
+[node name="Nathan" type="Sprite2D" parent="Content"]
 visible = false
-texture = ExtResource("8_7hpgw")
+texture = ExtResource("6_avlj0")
 
-[node name="Label" type="Label" parent="Content/Sacha"]
+[node name="Label" type="Label" parent="Content/Nathan"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -848.5
-offset_top = -507.5
-offset_right = 335.5
-offset_bottom = -410.5
+offset_left = -840.5
+offset_top = -623.0
+offset_right = 343.5
+offset_bottom = -526.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
-theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_fonts/font = ExtResource("4_wcg73")
 theme_override_font_sizes/font_size = 80
-text = "SACHA FOSHINO"
+text = "NATHAN  BERNARD"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Selim" type="Sprite2D" parent="Content"]
+[node name="Nathéo" type="Sprite2D" parent="Content"]
 visible = false
-texture = ExtResource("9_y25nl")
+texture = ExtResource("6_735mn")
 
-[node name="Label" type="Label" parent="Content/Selim"]
+[node name="Label" type="Label" parent="Content/Nathéo"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -846.5
-offset_top = -653.5
-offset_right = 337.5
-offset_bottom = -556.5
+offset_left = -840.5
+offset_top = -623.0
+offset_right = 343.5
+offset_bottom = -526.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
-theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_fonts/font = ExtResource("4_wcg73")
 theme_override_font_sizes/font_size = 80
-text = "SELIM MECANA"
+text = "NATHEO  BEAUCHAMP"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -178,16 +156,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -858.5
-offset_top = -653.5
-offset_right = 325.5
-offset_bottom = -556.5
+offset_left = -840.5
+offset_top = -587.0
+offset_right = 343.5
+offset_bottom = -490.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
-theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_fonts/font = ExtResource("4_wcg73")
 theme_override_font_sizes/font_size = 80
-text = "ODILON VATONNE"
+text = "ODILON  VATONNE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -201,16 +179,62 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -846.5
-offset_top = -653.5
-offset_right = 337.5
-offset_bottom = -556.5
+offset_left = -840.5
+offset_top = -576.5
+offset_right = 343.5
+offset_bottom = -479.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
-theme_override_fonts/font = ExtResource("4_qxn6m")
+theme_override_fonts/font = ExtResource("4_wcg73")
 theme_override_font_sizes/font_size = 80
-text = "REMI MONTHILLER"
+text = "REMI  MONTHILLER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sacha" type="Sprite2D" parent="Content"]
+visible = false
+texture = ExtResource("8_7hpgw")
+
+[node name="Label" type="Label" parent="Content/Sacha"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -780.5
+offset_top = -521.0
+offset_right = 403.5
+offset_bottom = -424.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("4_wcg73")
+theme_override_font_sizes/font_size = 80
+text = "SACHA  FOSCHINO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Selim" type="Sprite2D" parent="Content"]
+visible = false
+texture = ExtResource("9_y25nl")
+
+[node name="Label" type="Label" parent="Content/Selim"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -840.5
+offset_top = -537.5
+offset_right = 343.5
+offset_bottom = -440.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.670588, 0.929412, 0.8, 1)
+theme_override_fonts/font = ExtResource("4_wcg73")
+theme_override_font_sizes/font_size = 80
+text = "SELIM  MECANA"
 horizontal_alignment = 1
 vertical_alignment = 1
 

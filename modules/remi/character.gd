@@ -213,15 +213,10 @@ func _apply_up(upgrade : Dictionary):
 			
 			"max_life_points" : 
 				max_life_points += upgrade["max_life_points"]
-				_set_hpbar_max(max_life_points)
-				if upgrade["max_life_points"]>= 0:
-					heal(upgrade["max_life_points"])
-				else:
-					hit(-upgrade["max_life_points"])
-				
+				_set_hpbar_max(max_life_points, upgrade["max_life_points"])
 			"damage_per_attack" :
 				damage_per_attack += upgrade["damage_per_attack"]
-				$CanvasLayer/Control/Damage/CenterContainer/DamageProgressBar.value = damage_per_attack
+				_set_damage(damage_per_attack)
 			"life_points" :
 				heal(upgrade["life_points"])
 				
@@ -231,10 +226,10 @@ func _apply_up(upgrade : Dictionary):
 				
 			"upgrade_level":
 				upgrade_level += upgrade["upgrade_level"]
-				$CanvasLayer/Control/Update/CenterContainer/UpdateProgressBar.value = upgrade_level
+				_set_update(upgrade_level)
 			"hp_regen" : 
 				hp_regen += upgrade["hp_regen"]
-				$CanvasLayer/Control/Vitality/CenterContainer/RegenProgressBar.value = hp_regen
+				_set_vitality(hp_regen)
 			"add_pointer":
 				_add_pointer()
 	
@@ -242,6 +237,11 @@ func _apply_up(upgrade : Dictionary):
 	for upgrade_button in $CanvasLayer/UpgradeMenu/HBoxContainer.get_children():
 		upgrade_button.queue_free()
 	$CanvasLayer/Control/Room/MarginContainer/Number.text = str(cur_room + 1)
+	
+	# hp_regen
+	if hp_regen > 0.0:
+		heal(hp_regen)
+	
 	finished_upgrade.emit()
 	
 @export var POINTER_NODE : PackedScene
@@ -256,10 +256,6 @@ var upgrade_level : float = 0
 var upgrade_options : int = 3
 var cur_room : int = 1
 func _loot(lootbuff : float, room : float):
-	
-	if hp_regen > 0.0:
-		heal(hp_regen)
-	
 	# start anim
 	var tween : Tween = create_tween()
 	# init
@@ -270,8 +266,6 @@ func _loot(lootbuff : float, room : float):
 	await tween.finished
 	cur_room = room
 	_generate_upgrades(lootbuff)
-	
-
 
 func _generate_upgrades(lootbuff : float):
 	var all_unused_upgrades = upgrades.duplicate(true)
@@ -390,14 +384,11 @@ var state : String = ""
 
 signal set_maxhp (max_hp : float)
 func _ready():
-	_set_hpbar_max(max_life_points)
+	_set_hpbar_max(max_life_points, 0.0)
 	_set_hpbar_level(max_life_points)
 	$CanvasLayer/Control/Vitality/CenterContainer/RegenProgressBar.value = hp_regen
 	$CanvasLayer/Control/Damage/CenterContainer/DamageProgressBar.value = damage_per_attack
 	$CanvasLayer/Control/Update/CenterContainer/UpdateProgressBar.value = upgrade_level
-	# TODO: WHEN CURSOR SHAPES ARE DONE
-	# Input.set_custom_mouse_cursor(preload("res://path/to/cursor.(svg|png|etc...)"))
-	# Input.set_custom_mouse_cursor(preload("res://path/to/cursor.(svg|png|etc...)"))
 	_play_appear_animation.call_deferred()
 
 func _play_appear_animation():
@@ -414,8 +405,6 @@ func _hit_animation():
 	# anim
 	if tween_hit != null:
 		tween_hit.kill()
-	if tween_heal != null:
-		tween_heal.kill()
 	tween_hit = create_tween()
 	tween_hit.tween_method(_set_hud_astronaut_color, Color(1, 1, 1, 1), Color(1.0, 0.25, 0.25, 1.0), 0.25).set_trans(Tween.TRANS_CUBIC)
 	tween_hit.parallel().tween_property(astronaut, "rotation", randf_range(-0.125, 0.125), 0.25).set_trans(Tween.TRANS_ELASTIC)
@@ -428,7 +417,7 @@ func _set_hud_astronaut_color(value: Color):
 	shader_material.set_shader_parameter("ColorParameter", value)
 
 func _attempt_dying():
-	if life_points <= 0:
+	if life_points < 1:
 		state = "dying"
 		# death anim
 		$CanvasLayer/ColorRect.show()
@@ -443,34 +432,71 @@ func _heal_animation():
 	# anim
 	if tween_heal != null:
 		tween_heal.kill()
-	if tween_hit != null:
-		tween_hit.kill()
 	tween_heal = create_tween()
 	tween_heal.tween_method(_set_hud_astronaut_color, Color(1, 1, 1, 1), Color(0.25, 1.0, 0.25, 1.0), 0.25).set_trans(Tween.TRANS_CUBIC)
 	tween_heal.parallel().tween_property(astronaut, "rotation", randf_range(-0.125, 0.125), 0.25).set_trans(Tween.TRANS_ELASTIC)
 	
 	tween_heal.tween_method(_set_hud_astronaut_color, Color(0.25, 1.0, 0.25, 1.0), Color(1, 1, 1, 1), 0.25).set_trans(Tween.TRANS_CUBIC)
 	tween_heal.parallel().tween_property(astronaut, "rotation", 0.0, 0.25).set_trans(Tween.TRANS_ELASTIC)
-	tween_heal.tween_callback(_attempt_dying)
 
-const PX_PER_HP : int = 25
+const PX_PER_HP : int = 600.0 / 100.0
 const HEALTH_TRANS_TIME : float = 0.5
 
 var max_hp_tween : Tween
 
-@onready var character_hp_bar : TextureProgressBar = $CanvasLayer/Control/HP_hud/HPBar/CharacterHPBar
+@onready var character_hp_bar : ProgressBar = $CanvasLayer/Control/HP_hud/HPBar/CharacterHPBar
 
-func _set_hpbar_max(max_hp : int):
-	character_hp_bar.custom_minimum_size.x = min(max_hp * PX_PER_HP, 400.0)
+func _set_hpbar_max(max_hp : float, diff : float):
+	$CanvasLayer/Control/HP_hud/HPBar/MarginContainer2/Numbers.text = str(snapped(life_points, 0.1))+" / "+str(snapped(max_life_points, 0.1))
 	if max_hp_tween:
 		max_hp_tween.kill()
 	max_hp_tween = get_tree().create_tween()
+	max_hp_tween.tween_property(character_hp_bar, "custom_minimum_size:x", min(max_hp * PX_PER_HP, 600.0), HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	max_hp_tween.tween_property(character_hp_bar, "max_value", max_hp, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	await max_hp_tween.finished
+	if diff > 0:
+		heal(diff)
+	elif diff < 0:
+		hit(-diff)
 
 var hp_tween : Tween
 
 func _set_hpbar_level(hp):
+	$CanvasLayer/Control/HP_hud/HPBar/MarginContainer2/Numbers.text = str(snapped(life_points, 0.1))+" / "+str(snapped(max_life_points, 0.1))
 	if hp_tween:
 		hp_tween.kill()
 	hp_tween = get_tree().create_tween()
 	hp_tween.tween_property(character_hp_bar, "value", hp, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+var vitality_tween : Tween
+@onready var vitality_bar : ProgressBar = $CanvasLayer/Control/Vitality/CenterContainer/RegenProgressBar
+func _set_vitality(value : float):
+	$CanvasLayer/Control/Vitality/MarginContainer2/Number.text = str(snapped(value, 0.1))
+	if vitality_tween:
+		vitality_tween.kill()
+	vitality_tween = get_tree().create_tween()
+	vitality_tween.tween_property(vitality_bar, "custom_minimum_size:x", min(value * 300.0/20.0, 300.0), HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	vitality_tween.parallel().tween_property(vitality_bar, "max_value", value, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	vitality_tween.parallel().tween_property(vitality_bar, "value", value, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+var damage_tween : Tween
+@onready var damage_bar : ProgressBar = $CanvasLayer/Control/Damage/CenterContainer/DamageProgressBar
+func _set_damage(value : float):
+	$CanvasLayer/Control/Damage/MarginContainer2/Number.text = str(snapped(value, 0.1))
+	if damage_tween:
+		damage_tween.kill()
+	damage_tween = get_tree().create_tween()
+	damage_tween.tween_property(damage_bar, "custom_minimum_size:x", min(value * 300.0/20.0, 300.0), HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	damage_tween.parallel().tween_property(damage_bar, "max_value", value, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	damage_tween.parallel().tween_property(damage_bar, "value", value, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+var update_tween : Tween
+@onready var update_bar : ProgressBar = $CanvasLayer/Control/Update/CenterContainer/UpdateProgressBar
+func _set_update(value : float):
+	$CanvasLayer/Control/Update/MarginContainer2/Number.text = str(snapped(value, 0.1))
+	if update_tween:
+		update_tween.kill()
+	update_tween = get_tree().create_tween()
+	update_tween.tween_property(update_bar, "custom_minimum_size:x", min(value * 300.0/3.0, 300.0), HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	update_tween.parallel().tween_property(update_bar, "max_value", value, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	update_tween.parallel().tween_property(update_bar, "value", value, HEALTH_TRANS_TIME).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)

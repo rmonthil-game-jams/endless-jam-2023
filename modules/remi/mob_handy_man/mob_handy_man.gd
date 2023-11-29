@@ -22,22 +22,24 @@ var HAND_DAMAGE_PER_ATTACK : float
 var HAND_ATTACK_INTERVAL : float 
 const KISS_DURATION : float = 2.0
 ## TODO: NUMBER OF HANDS DEPENDANT OF DIFFICULTY ?
+var MAX_LIFE_POINTS : float
 
 func _set_difficulty(value : float):
 	DIFFICULTY = value
-	HAND_MOVE_DURATION = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
-	HAND_MOVE_RADIUS = min(500.0, 100.0 * (1.0 + 0.1 * log(1.0 + DIFFICULTY)))
+	HAND_MOVE_DURATION = 1.5 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	HAND_MOVE_RADIUS = min(500.0, 100.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT)))
 	# ODILON: Was a bit too hard in general. Just make it slightly easier for first boss fights
 	# HAND_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
-	HAND_ATTACK_DURATION_FACTOR = 2.5 / (1.0 + log(1.0 + DIFFICULTY))
+	HAND_ATTACK_DURATION_FACTOR = 1.5 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	# ODILON: Make this more punitive
 	# HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + 0.8*log(1.0 + DIFFICULTY))
-	HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + 0.5*sqrt(DIFFICULTY))
-	HAND_ATTACK_INTERVAL = 2.0 / (1.0 + 0.8*log(1.0 + DIFFICULTY))
-	life_points = 18 + (5 * (1.0 + DIFFICULTY))
+	HAND_DAMAGE_PER_ATTACK = round(1.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	HAND_ATTACK_INTERVAL = 2.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	MAX_LIFE_POINTS = round(30.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	life_points = MAX_LIFE_POINTS
 
 # MOB HP BAR
-@onready var mob_hp_progress_bar : TextureProgressBar = $MobHPBar/HBoxContainer/MobHpBar
+@onready var mob_hp_progress_bar : ProgressBar = $MobHPBar/HBoxContainer/MobHpBar
 
 # MOB STATE
 var life_points : float = 40.0
@@ -231,6 +233,16 @@ func _hit(damage_points : float):
 	life_points -= damage_points
 	_set_hp_bar()
 	_attempt_to_play_hit_animation()
+	
+	# label fx
+	var label_fx = preload("res://modules/remi/fx/label.tscn").instantiate()
+	label_fx.position = get_local_mouse_position()
+	label_fx.COLOR = Color(1.0, 0.6, 0.6)
+	label_fx.TEXT = "- " + str(snapped(damage_points, 0.1))
+	label_fx.scale = Vector2.ONE
+	add_child(label_fx)
+	# end label fx
+	
 	# TODO: DEATH ANIMATION
 	if life_points <= 0.0:
 		_attempt_to_play_death_animation()
@@ -238,6 +250,7 @@ func _hit(damage_points : float):
 var hp_bar_tween : Tween
 
 func _set_hp_bar():
+	$MobHPBar/HBoxContainer/MarginContainer2/Numbers.text = str(snapped(max(life_points, 0.0), 0.1))+" / "+str(snapped(MAX_LIFE_POINTS, 0.1))
 	if hp_bar_tween:
 		hp_bar_tween.kill()
 	hp_bar_tween = get_tree().create_tween()
@@ -274,6 +287,12 @@ func _attempt_to_play_death_animation():
 			hit_tween = create_tween()
 			hit_tween.tween_property($Body, "modulate", Color(1.0, 1.0, 1.0), 0.125).set_trans(Tween.TRANS_CUBIC)
 			await hit_tween.finished
+		
+		# hide hp bar first
+		main_tween = create_tween()
+		main_tween.tween_property($MobHPBar, "modulate:a", 0.0, 0.125).set_trans(Tween.TRANS_CUBIC)
+		await main_tween.finished
+		
 		main_tween = create_tween()
 		main_tween.tween_callback($Body/SpriteRoot/Sprite2DNormal.hide)
 		main_tween.tween_callback($Body/SpriteRoot/Sprite2DBeingHit.show)

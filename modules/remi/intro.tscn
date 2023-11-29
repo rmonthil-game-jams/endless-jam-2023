@@ -11,9 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://busv1hnr74ggu" path="res://modules/remi/assets/graphics/planet_3.svg" id="6_wv4ph"]
 [ext_resource type="Texture2D" uid="uid://3r7xn6s0afdc" path="res://modules/remi/assets/graphics/heart.svg" id="7_65hes"]
 [ext_resource type="Texture2D" uid="uid://cmcfpc1hr7y1d" path="res://modules/remi/assets/graphics/star.svg" id="7_pmffe"]
-[ext_resource type="FontFile" uid="uid://cawutowfije1" path="res://modules/remi/assets/fonts/SalvarRegular-gxwoP.ttf" id="9_0rd4u"]
 [ext_resource type="AudioStream" uid="uid://cnvdojlftptdm" path="res://modules/remi/assets/audio/used/general/splash_1.wav" id="12_2ud5t"]
 [ext_resource type="AudioStream" uid="uid://ll787eal87ka" path="res://modules/remi/assets/audio/used/general/woosh_0.wav" id="12_mcsqe"]
+[ext_resource type="Texture2D" uid="uid://d3cbs5fepalkm" path="res://modules/aurelie/title_color.svg" id="15_rraw0"]
 
 [sub_resource type="Animation" id="Animation_t75by"]
 length = 0.001
@@ -221,7 +221,7 @@ tracks/7/keys = {
 "times": PackedFloat32Array(6.6, 7.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
@@ -230,7 +230,7 @@ tracks/8/path = NodePath("ColorRect:modulate")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(6.6, 7.5),
+"times": PackedFloat32Array(8.5, 12),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
@@ -238,36 +238,10 @@ tracks/8/keys = {
 tracks/9/type = "method"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("GameTitle")
+tracks/9/path = NodePath("AnimationPlayerParty")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
-"times": PackedFloat32Array(7.5),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"show"
-}]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("GameTitle:modulate")
-tracks/10/interp = 2
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(7.5, 9, 10, 12),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/11/type = "method"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("AnimationPlayerParty")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
 "times": PackedFloat32Array(3.5),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -275,13 +249,13 @@ tracks/11/keys = {
 "method": &"play"
 }]
 }
-tracks/12/type = "method"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("ZoomAnchor/Spaceship/SpaceshipSound")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
+tracks/10/type = "method"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("ZoomAnchor/Spaceship/SpaceshipSound")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
 "times": PackedFloat32Array(0.3, 3.3),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -292,13 +266,13 @@ tracks/12/keys = {
 "method": &"stop"
 }]
 }
-tracks/13/type = "method"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("ZoomAnchor/Spaceship/SpaceshipSound2")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
+tracks/11/type = "method"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("ZoomAnchor/Spaceship/SpaceshipSound2")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
 "times": PackedFloat32Array(5.1),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -306,17 +280,43 @@ tracks/13/keys = {
 "method": &"play"
 }]
 }
-tracks/14/type = "value"
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/path = NodePath("ZoomAnchor/Spaceship/SpaceshipSound2:volume_db")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/keys = {
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("ZoomAnchor/Spaceship/SpaceshipSound2:volume_db")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
 "times": PackedFloat32Array(6.6, 8),
 "transitions": PackedFloat32Array(21.112, 0.0693483),
 "update": 0,
 "values": [0.0, -80.0]
+}
+tracks/13/type = "method"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("GameTitle")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(7.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show"
+}]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("GameTitle:modulate")
+tracks/14/interp = 2
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(7.5, 8.5, 12),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uliyd"]
@@ -872,7 +872,6 @@ pitch_scale = 0.25
 
 [node name="SpaceshipSound2" type="AudioStreamPlayer2D" parent="ZoomAnchor/Spaceship"]
 stream = ExtResource("5_2qm0g")
-volume_db = 11.0
 pitch_scale = 0.25
 
 [node name="Env" type="Node2D" parent="ZoomAnchor"]
@@ -1042,7 +1041,7 @@ position = Vector2(2355, 158)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("6_wv4ph")
 
-[node name="GameTitle" type="Label" parent="."]
+[node name="GameTitle" type="MarginContainer" parent="."]
 visible = false
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
@@ -1050,16 +1049,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.619608, 1, 1)
-theme_override_fonts/font = ExtResource("9_0rd4u")
-theme_override_font_sizes/font_size = 80
-text = "THE ENDLESS 
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
 
-SPACE DUNGEON
-
-OF LOVE MONSTERS"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="GameTitle" type="TextureRect" parent="GameTitle"]
+layout_mode = 2
+texture = ExtResource("15_rraw0")
+expand_mode = 5
 
 [node name="AnimationPlayerGlobal" type="AnimationPlayer" parent="."]
 autoplay = "intro"

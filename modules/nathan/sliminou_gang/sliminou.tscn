@@ -1,7 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://so6jo25adcnv"]
+[gd_scene load_steps=22 format=3 uid="uid://so6jo25adcnv"]
 
 [ext_resource type="Script" path="res://modules/nathan/sliminou_gang/Sliminou.gd" id="1_bnk5t"]
 [ext_resource type="Texture2D" uid="uid://dmrwh8ciu01y5" path="res://modules/aurelie/assets/graphics/sliminou_corps_sansmainsansbouche.svg" id="2_cffvo"]
+[ext_resource type="Texture2D" uid="uid://bixrqwrtuxxqb" path="res://modules/aurelie/assets/graphics/sliminou_mainsaut.svg" id="3_b8ty3"]
 [ext_resource type="Texture2D" uid="uid://bwt1u2pqto0ue" path="res://modules/aurelie/assets/graphics/sliminou_bouche_quiparle_normal.svg" id="3_kpx0w"]
 [ext_resource type="Texture2D" uid="uid://crcnyki0kterb" path="res://modules/aurelie/assets/graphics/sliminou_coeur_normal.svg" id="4_aisgu"]
 [ext_resource type="Texture2D" uid="uid://oavb0txtx538" path="res://modules/aurelie/assets/graphics/sliminou_bouche_interrompue.svg" id="4_qjm31"]
@@ -12,9 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://xspygj2rqnni" path="res://modules/aurelie/assets/graphics/sliminou_corps_quiseduplique_sansmains_avecbouche.svg" id="7_ibo3m"]
 [ext_resource type="Texture2D" uid="uid://jlx8bek4y26q" path="res://modules/aurelie/assets/graphics/sliminou_corps_quiprenddesdegats_sansmainsavecbouche.svg" id="11_nnpef"]
 [ext_resource type="Texture2D" uid="uid://bc5qn0q1bdky" path="res://modules/aurelie/assets/graphics/sliminou_corps_quiprenddesdegats_sansmainssansbouche.svg" id="12_epygu"]
-[ext_resource type="PackedScene" uid="uid://bshbl2fbnuny8" path="res://hands.tscn" id="13_6051p"]
+[ext_resource type="PackedScene" uid="uid://bshbl2fbnuny8" path="res://modules/nathan/sliminou_gang/hands.tscn" id="13_6051p"]
 [ext_resource type="Texture2D" uid="uid://cgc2tdd3yir06" path="res://modules/remi/assets/graphics/hud_mob_pointer.svg" id="14_o57er"]
-[ext_resource type="FontFile" uid="uid://b0ihnar8ojegy" path="res://modules/remi/assets/fonts/Drexs-z8gB3.ttf" id="15_3rxi5"]
+[ext_resource type="FontFile" uid="uid://dfimsv7j1ko8g" path="res://modules/remi/assets/fonts/EdgeOfTheGalaxyPoster-3zRAp.otf" id="15_dhgel"]
 [ext_resource type="PackedScene" uid="uid://c8kc54alm42iy" path="res://modules/remi/fx/mob_hp_bar.tscn" id="15_obxql"]
 
 [sub_resource type="Animation" id="Animation_qlju1"]
@@ -107,6 +108,21 @@ _data = {
 y_sort_enabled = true
 script = ExtResource("1_bnk5t")
 
+[node name="Duplicate" type="Node2D" parent="."]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Duplicate"]
+position = Vector2(1, -167)
+texture = ExtResource("11_nnpef")
+
+[node name="FlyHand" type="Sprite2D" parent="Duplicate"]
+position = Vector2(-112, 33)
+texture = ExtResource("3_b8ty3")
+
+[node name="FlyHand2" type="Sprite2D" parent="Duplicate"]
+position = Vector2(112, 58)
+texture = ExtResource("3_b8ty3")
+
 [node name="Body" type="Node2D" parent="."]
 
 [node name="Sprite2DNormal" type="Sprite2D" parent="Body"]
@@ -197,18 +213,11 @@ offset_top = -305.0
 offset_right = -55.0
 offset_bottom = -114.0
 theme_override_colors/font_color = Color(0.7125, 0.95, 0.827292, 1)
-theme_override_fonts/font = ExtResource("15_3rxi5")
+theme_override_fonts/font = ExtResource("15_dhgel")
 theme_override_font_sizes/font_size = 40
 text = "Test"
 vertical_alignment = 2
 autowrap_mode = 3
-
-[node name="Duplicate" type="Node2D" parent="."]
-visible = false
-
-[node name="Sprite2D" type="Sprite2D" parent="Duplicate"]
-position = Vector2(1, -167)
-texture = ExtResource("11_nnpef")
 
 [node name="MobHPBar" parent="." instance=ExtResource("15_obxql")]
 position = Vector2(0, -362)
