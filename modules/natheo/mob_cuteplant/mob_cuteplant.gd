@@ -49,10 +49,10 @@ func _set_difficulty(value : float):
 	DIFFICULTY = value
 	
 	# Time of one rotation during which we can hit the mob
-	WAITING_ROTATION_DURATION = 6.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	WAITING_ROTATION_DURATION = 4.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	
 	# Time of sun shaking during which we can hit the sun to reduce its energy
-	SUN_SHAKING_DURATION = 4.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	SUN_SHAKING_DURATION = 2.5 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	
 	# Decrease of sun relative energy (1 is max, and at SUN_REDUCING_MINIMUM, the sun is destroyed)
 	SUN_REDUCING_SCALE = 1.0/8.0 # NEED TO DEPEND ON ATTACK
