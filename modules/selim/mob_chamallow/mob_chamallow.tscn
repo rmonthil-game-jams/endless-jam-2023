@@ -26,12 +26,11 @@
 script = ExtResource("1_ck7tl")
 
 [node name="MobHPBar" parent="." instance=ExtResource("10_1xthe")]
-position = Vector2(-1, -197)
+position = Vector2(0, -333)
 
 [node name="Body" type="Node2D" parent="."]
 
 [node name="Sprite2DPhase1" type="Sprite2D" parent="Body"]
-visible = false
 texture = ExtResource("2_acbid")
 
 [node name="Sprite2DPhase2" type="Sprite2D" parent="Body"]

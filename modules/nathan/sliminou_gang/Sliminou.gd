@@ -15,8 +15,8 @@ var DUPLICATE_LOOP_NUMBER : int
 var FORCE_DUPLICATE_AMOUNT : int # To ensure that the fight gets a bit complicated at some point
 const SCREEN_WIDTH : float = 1000.0
 const DUPLICATE_DISTANCE_X = 300.0
-const DUPLICATE_DISTANCE_Y = 100.0
-const DISTANCE_SIZE_RATIO : float = 2e-3
+const DUPLICATE_DISTANCE_Y = 150.0
+const DISTANCE_SIZE_RATIO : float = 1.5e-3
 
 ## IDLE
 const IDLE_LOOP_NUMBER : int = 1
@@ -41,7 +41,7 @@ func _set_difficulty(value : float):
 	#ATTENTION : DUPLICATE_LOOP_NUMBER / 2 > LIFE / STANDARD_PLAYER_DAMAGE  (sinon pas le temps de tuer avant la duplication)
 	# In other words now : DUPLICATE_LOOP_NUMBER must be at least 2 to ensure there will always be an attack before duplication
 	
-	FORCE_DUPLICATE_AMOUNT = min(floorf(1.0 * (2.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT))), 8.0) # Ensures the fight remains a bit difficult at high difficulty
+	FORCE_DUPLICATE_AMOUNT = min(floorf(0.5 * (3.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT))), 6.0) # Ensures the fight remains a bit difficult at high difficulty
 	
 	DANCE_MOVE_DURATION = 0.25 #THE SMALLER, THE QUICKER THE IDLE PHASE : MOB LOOKS ANGRIER AND ATTACK/VULNERABILITY PHASE COMES MORE OFTEN
 	JUMP_DURATION = 2.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT)) #THE SMALLER THE QUICKER IT GETS AND THE HARDER IT GETS (VULNERABILITY PHASE)
@@ -107,7 +107,7 @@ func _play_dedoubling():
 		position_target.x = DUPLICATE_DISTANCE_X
 	else:
 		position_target.x = -DUPLICATE_DISTANCE_X
-	if get_parent().position.y > 2.0 * DUPLICATE_DISTANCE_Y:
+	if get_parent().position.y > 1.0 * DUPLICATE_DISTANCE_Y:
 		position_target.y = -DUPLICATE_DISTANCE_Y
 		$Duplicate.z_index = 1
 	elif get_parent().position.y < -2.0 * DUPLICATE_DISTANCE_Y:
