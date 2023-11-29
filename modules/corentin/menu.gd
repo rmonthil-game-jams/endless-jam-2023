@@ -107,7 +107,7 @@ func _on_texture_button_button_up():
 func _on_game_over():
 	BackgroundMusic.play_menu()
 	var tween : Tween = create_tween()
-	$CanvasLayer/Go/RoomReached.text = "ROOM REACHED: " + str(max(0,node_dungeon.room))
+	$CanvasLayer/Go/RoomReached.text = "ROOM    REACHED:    " + str(max(0,node_dungeon.room))
 	state = "game over"
 	# free dungeon
 	node_dungeon.queue_free()

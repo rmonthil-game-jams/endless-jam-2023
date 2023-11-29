@@ -49,7 +49,7 @@ func _set_difficulty(value : float):
 	DIFFICULTY = value
 	
 	# Time of one rotation during which we can hit the mob
-	WAITING_ROTATION_DURATION = 4.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	WAITING_ROTATION_DURATION = 4.5 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	
 	# Time of sun shaking during which we can hit the sun to reduce its energy
 	SUN_SHAKING_DURATION = 2.5 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
@@ -62,7 +62,7 @@ func _set_difficulty(value : float):
 	# TIMES THE NUMBER OF SUNS UNDESTROYED
 	# TIMES THE SUM RELATIVE ENERGY THAT LEFT ON THE UNDESTROYED SUNS
 	# Thus, as we reduce the suns energy, it reduces the final dmgs
-	DMG_MAX_PER_SUN = round(2.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	DMG_MAX_PER_SUN = round(1.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
 	
 	# ODILON: This was too high for the first boss fights. Reducing this a little, but keep a good scaling though
 	# ODILON: Note that this scales faster at higer difficulties
