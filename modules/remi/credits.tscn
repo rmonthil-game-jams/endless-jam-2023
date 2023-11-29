@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://d1q6vpxp4lj0i" path="res://modules/remi/assets/audio/used/general/woosh_2.wav" id="12_blovs"]
 
 [node name="Credits" type="Node2D"]
+scale = Vector2(1.02, 1.02)
 script = ExtResource("1_t6xbh")
 
 [node name="Background" type="Node2D" parent="."]
