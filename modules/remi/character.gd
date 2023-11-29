@@ -14,7 +14,7 @@ var upgrades : Dictionary = {
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 1,
-				"max_life_points" : 4,
+				"max_life_points" : 6,
 			},
 	"HP2" : {
 				"name" : "Health Bonus +",
@@ -25,7 +25,7 @@ var upgrades : Dictionary = {
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 2,
-				"max_life_points" : 8,
+				"max_life_points" : 12,
 			},
 	"HP3" : {
 				"name" : "Health Bonus ++",
@@ -36,7 +36,7 @@ var upgrades : Dictionary = {
 				"weight" : 1,
 				"type" : "HP UP",
 				"tier" : 3,
-				"max_life_points" : 12,
+				"max_life_points" : 25,
 			},
 	"HPR1" : {
 				"name" : "Health Regen Bonus",
