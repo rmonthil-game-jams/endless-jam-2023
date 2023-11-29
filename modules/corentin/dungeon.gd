@@ -82,15 +82,26 @@ func _advance():
 
 	# then instance mob
 	var new_mob : Node2D
+	
 	if room % BOSS_ROOM_PERIOD:
-		var mob_index : int = available_mob_indexs.pop_back()
-		new_mob = MOB_SCENES[mob_index].instantiate()
-		new_mob.DIFFICULTY = _new_mob_difficulty()
-		if available_mob_indexs.size() < 1:
-			available_mob_indexs = range(MOB_SCENES.size())
-			if MOB_SCENES.size()>1:
-				available_mob_indexs.pop_at(mob_index) # avoid getting the same mob twice in a row
-			available_mob_indexs.shuffle()
+		if room == 1:
+			var mob_index = 0
+			new_mob = MOB_SCENES[mob_index].instantiate()
+			new_mob.DIFFICULTY = _new_mob_difficulty()
+			if available_mob_indexs.size() < 1:
+				available_mob_indexs = range(MOB_SCENES.size())
+				if MOB_SCENES.size()>1:
+					available_mob_indexs.pop_at(mob_index) # avoid getting the same mob twice in a row
+				available_mob_indexs.shuffle()
+		else:
+			var mob_index : int = available_mob_indexs.pop_back()
+			new_mob = MOB_SCENES[mob_index].instantiate()
+			new_mob.DIFFICULTY = _new_mob_difficulty()
+			if available_mob_indexs.size() < 1:
+				available_mob_indexs = range(MOB_SCENES.size())
+				if MOB_SCENES.size()>1:
+					available_mob_indexs.pop_at(mob_index) # avoid getting the same mob twice in a row
+				available_mob_indexs.shuffle()
 	else:
 		var mob_index : int = available_boss_indexs.pop_back()
 		new_mob = BOSS_SCENES[mob_index].instantiate()

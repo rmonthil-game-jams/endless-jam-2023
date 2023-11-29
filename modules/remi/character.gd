@@ -44,10 +44,10 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_vitality_1_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_vitality_1_pressed.svg",
 				"tooltip" : "Increases health generation after each fight by a small amount",
-				"weight" : 1,
+				"weight" : 0.5,
 				"type" : "HP R UP",
 				"tier" : 1,
-				"hp_regen" : 1,
+				"hp_regen" : 2,
 			},
 	"HPR2" : {
 				"name" : "Health Regen Bonus +",
@@ -55,10 +55,10 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_vitality_2_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_vitality_2_pressed.svg",
 				"tooltip" : "Increases health generation after each fight by a small amount",
-				"weight" : 1,
+				"weight" : 0.5,
 				"type" : "HP R UP",
 				"tier" : 2,
-				"hp_regen" : 2,
+				"hp_regen" : 4,
 			},
 	"HPR3" : {
 				"name" : "Health Regen Bonus ++",
@@ -66,10 +66,10 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_vitality_3_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_vitality_3_pressed.svg",
 				"tooltip" : "Increases health generation after each fight by a small amount",
-				"weight" : 1,
+				"weight" : 0.5,
 				"type" : "HP R UP",
 				"tier" : 3,
-				"hp_regen" : 4,
+				"hp_regen" : 8,
 			},
 	"DMG1" : {
 				"name" : "Damage per Click",
@@ -77,7 +77,7 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_strength_1_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_strength_1_pressed.svg",
 				"tooltip" : "Increases damage inflicted by a small amount",
-				"weight" : 1,
+				"weight" : 1.5,
 				"type" : "DMG UP",
 				"tier" : 1,
 				"damage_per_attack" : 0.5,
@@ -88,7 +88,7 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_strength_2_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_strength_2_pressed.svg",
 				"tooltip" : "Increases damage inflicted by a significant amount",
-				"weight" : 1,
+				"weight" : 1.5,
 				"type" : "DMG UP",
 				"tier" : 2,
 				"damage_per_attack" : 0.8,
@@ -99,7 +99,7 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_strength_3_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_strength_3_pressed.svg",
 				"tooltip" : "Increases damage inflicted by a large amount",
-				"weight" : 1,
+				"weight" : 1.5,
 				"type" : "DMG UP",
 				"tier" : 3,
 				"damage_per_attack" : 1.8,
@@ -110,10 +110,10 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_heal_1_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_heal_1_pressed.svg",
 				"tooltip" : "Regenerates your health by a small amount",
-				"weight" : 1,
+				"weight" : 0.4,
 				"type" : "HEAL",
 				"tier" : 1,
-				"life_points" : 50,
+				"life_points" : 40,
 			},
 	"HEAL2" : {
 				"name" : "Healing potion +",
@@ -121,10 +121,10 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_heal_2_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_heal_2_pressed.svg",
 				"tooltip" : "Regenerates your health by a significant amount",
-				"weight" : 1,
+				"weight" : 0.4,
 				"type" : "HEAL",
 				"tier" : 2,
-				"life_points" : 100,
+				"life_points" : 80,
 			},
 	"HEAL3" : {
 				"name" : "Healing potion ++",
@@ -132,10 +132,10 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_heal_3_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_heal_3_pressed.svg",
 				"tooltip" : "Regenerates your health by a large amount",
-				"weight" : 1,
+				"weight" : 0.4,
 				"type" : "HEAL",
 				"tier" : 3,
-				"life_points" : 200,
+				"life_points" : 160,
 			},
 	"BSK2" : {
 				"name" : "Berserk +",
@@ -146,8 +146,8 @@ var upgrades : Dictionary = {
 				"weight" : 0.5,
 				"type" : "BSK",
 				"tier" : 2,
-				"max_life_points" : -8,
-				"damage_per_attack" : 1.2,
+				"max_life_points" : -10,
+				"damage_per_attack" : 1.4,
 			},
 	"BSK3" : {
 				"name" : "Berserk ++",
@@ -158,8 +158,8 @@ var upgrades : Dictionary = {
 				"weight" : 0.5,
 				"type" : "BSK",
 				"tier" : 3,
-				"max_life_points" : -15,
-				"damage_per_attack" : 2,
+				"max_life_points" : -20,
+				"damage_per_attack" : 2.2,
 			},
 	"MORE" : {
 				"name" : "More Upgrade Options",
@@ -178,10 +178,10 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_update_1_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_update_1_pressed.svg",
 				"tooltip" : "Improves the quality of the upgrades by a small amount",
-				"weight" : 2,
+				"weight" : 1.5,
 				"type" : "BETTER",
 				"tier" : 1,
-				"upgrade_level" : 0.2,
+				"upgrade_level" : 0.15,
 			},
 	"BETTER2" : {
 				"name" : "Better Upgrade Options",
@@ -189,10 +189,10 @@ var upgrades : Dictionary = {
 				"normal" : "res://modules/remi/assets/graphics/up_update_2_normal.svg",
 				"pressed" : "res://modules/remi/assets/graphics/up_update_2_pressed.svg",
 				"tooltip" : "Improves the quality of the upgrades by a large amount",
-				"weight" : 2,
+				"weight" : 0.8,
 				"type" : "BETTER",
 				"tier" : 2,
-				"upgrade_level" : 0.5,
+				"upgrade_level" : 0.3,
 			},
 #	"EXTRA1" : {
 #				"name" : "Add Companion",
@@ -253,6 +253,7 @@ func _add_pointer():
 		$Pointers.add_child(new_pointer)
 
 var upgrade_level : float = 0
+var UPGRADE_LEVEL_OFFSET : float = -0.5
 var upgrade_options : int = 3
 var cur_room : int = 1
 func _loot(lootbuff : float, room : float):
@@ -320,14 +321,14 @@ func _generate_upgrades(lootbuff : float):
 		await tween.finished
 
 
-@export var TIER_SELECTIVITY : float = 0.6
+@export var TIER_SELECTIVITY : float = 0.5
 @export var MAXTIER : int = 3
 
 func _chose_upgrade_tier(lootbuff : float):
 	var tiers_prob : Array
 	var prob_tot : float = 0.0
 	for tier in range(MAXTIER):
-		tiers_prob.append(1/(TIER_SELECTIVITY*sqrt(2*PI))*exp(-1.0/2.0*pow((upgrade_level+lootbuff-tier)/TIER_SELECTIVITY,2.0)))
+		tiers_prob.append(1/(TIER_SELECTIVITY*sqrt(2*PI))*exp(-1.0/2.0*pow((upgrade_level+UPGRADE_LEVEL_OFFSET+lootbuff-tier)/TIER_SELECTIVITY,2.0)))
 		prob_tot += tiers_prob[tier]
 		
 	for tier in range(MAXTIER):

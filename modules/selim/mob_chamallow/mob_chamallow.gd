@@ -32,7 +32,7 @@ func _set_difficulty(value : float): # REMI: THIS WAS MY BAD, I SHOULD HAVE DONE
 	DAMAGE_PER_ATTACK_P2 = round(2.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
 	TIME_BETWEEN_ATTACKS_P1 = 2.5 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	TIME_BETWEEN_ATTACKS_P2 = 4.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
-	life_points = round(10.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	life_points = round(14.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
 	MAX_LIFE_POINTS = life_points
 
 # MOB STATE

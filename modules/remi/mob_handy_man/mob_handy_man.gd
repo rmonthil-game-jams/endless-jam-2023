@@ -26,16 +26,16 @@ var MAX_LIFE_POINTS : float
 
 func _set_difficulty(value : float):
 	DIFFICULTY = value
-	HAND_MOVE_DURATION = 1.5 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	HAND_MOVE_DURATION = 1.4 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	HAND_MOVE_RADIUS = min(500.0, 100.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT)))
 	# ODILON: Was a bit too hard in general. Just make it slightly easier for first boss fights
 	# HAND_ATTACK_DURATION_FACTOR = 2.0 / (1.0 + log(1.0 + DIFFICULTY))
-	HAND_ATTACK_DURATION_FACTOR = 1.5 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	HAND_ATTACK_DURATION_FACTOR = 1.3 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	# ODILON: Make this more punitive
 	# HAND_DAMAGE_PER_ATTACK = 1.0 * (1.0 + 0.8*log(1.0 + DIFFICULTY))
 	HAND_DAMAGE_PER_ATTACK = round(1.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
-	HAND_ATTACK_INTERVAL = 2.0 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
-	MAX_LIFE_POINTS = round(30.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
+	HAND_ATTACK_INTERVAL = 1.8 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	MAX_LIFE_POINTS = round(20.0 * (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.VALUE_EXPONENT)))
 	life_points = MAX_LIFE_POINTS
 
 # MOB HP BAR
