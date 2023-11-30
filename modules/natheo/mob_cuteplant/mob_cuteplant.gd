@@ -52,7 +52,7 @@ func _set_difficulty(value : float):
 	WAITING_ROTATION_DURATION = 4.5 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	
 	# Time of sun shaking during which we can hit the sun to reduce its energy
-	SUN_SHAKING_DURATION = 2.5 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
+	SUN_SHAKING_DURATION = 2.25 / (1.0 + GlobalDifficultyParameters.FACTOR * pow(DIFFICULTY, GlobalDifficultyParameters.DELAY_EXPONENT))
 	
 	# Decrease of sun relative energy (1 is max, and at SUN_REDUCING_MINIMUM, the sun is destroyed)
 	SUN_REDUCING_SCALE = 1.0/8.0 # NEED TO DEPEND ON ATTACK
@@ -339,6 +339,16 @@ func _play_releasing_animation():
 			else:
 				main_tween.tween_property($FlowerDeco, "rotation", -PI/2.0, 0.08).as_relative().from_current().set_trans(Tween.TRANS_CUBIC)
 			await main_tween.finished
+		
+		# label fx
+		var label_fx = preload("res://modules/remi/fx/label.tscn").instantiate()
+		label_fx.position = $FlowerDeco.position + Vector2.UP * 200.0
+		label_fx.COLOR = Color(1.0, 1.0, 0.6)
+		label_fx.TEXT = "+ " + str(snapped(SUN_REDUCING_SCALE * DMG_MAX_PER_SUN, 0.1))
+		label_fx.scale = Vector2.ONE
+		add_child(label_fx)
+		# end label fx
+		
 		main_tween = create_tween()
 		main_tween.tween_property($FlowerDeco, "rotation",  0.0, 0.08).set_trans(Tween.TRANS_CUBIC)
 		await main_tween.finished
@@ -479,6 +489,15 @@ func _set_hp_bar():
 func _reduce_sun(plant : Node2D):
 	plants_state[plant]["rel_energy"] -= SUN_REDUCING_SCALE
 	plant.get_node("Sun").scale = Vector2(plants_state[plant]["rel_energy"], plants_state[plant]["rel_energy"])	
+
+	# label fx
+	var label_fx = preload("res://modules/remi/fx/label.tscn").instantiate()
+	label_fx.position = get_local_mouse_position()
+	label_fx.COLOR = Color(1.0, 1.0, 0.6)
+	label_fx.TEXT = "- " + str(snapped(SUN_REDUCING_SCALE * DMG_MAX_PER_SUN, 0.1))
+	label_fx.scale = Vector2.ONE
+	add_child(label_fx)
+	# end label fx
 
 	if plants_state[plant]["rel_energy"] < SUN_REDUCING_MINIMUM:
 		plant.get_node("Sun").scale = Vector2(0.0, 0.0)

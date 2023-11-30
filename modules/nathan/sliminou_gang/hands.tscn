@@ -16,34 +16,42 @@ script = ExtResource("1_n0api")
 position = Vector2(-75, -75)
 
 [node name="NormalHand" type="Sprite2D" parent="Right"]
+modulate = Color(0.5, 0.5, 0.5, 1)
 texture = ExtResource("2_lqpu3")
 
 [node name="GroundHand" type="Sprite2D" parent="Right"]
 visible = false
+modulate = Color(0.5, 0.5, 0.5, 1)
 texture = ExtResource("3_hcl5u")
 
 [node name="OpenHand" type="Sprite2D" parent="Right"]
 visible = false
+modulate = Color(0.5, 0.5, 0.5, 1)
 texture = ExtResource("4_m0r2n")
 
 [node name="FlyHand" type="Sprite2D" parent="Right"]
 visible = false
+modulate = Color(0.5, 0.5, 0.5, 1)
 texture = ExtResource("5_71hvo")
 
 [node name="Left" type="Node2D" parent="."]
 position = Vector2(75, -75)
 
 [node name="NormalHand" type="Sprite2D" parent="Left"]
+modulate = Color(0.5, 0.5, 0.5, 1)
 texture = ExtResource("5_ypxcg")
 
 [node name="GroundHand" type="Sprite2D" parent="Left"]
 visible = false
+modulate = Color(0.5, 0.5, 0.5, 1)
 texture = ExtResource("6_2jc10")
 
 [node name="OpenHand" type="Sprite2D" parent="Left"]
 visible = false
+modulate = Color(0.5, 0.5, 0.5, 1)
 texture = ExtResource("7_gyb5n")
 
 [node name="FlyHand" type="Sprite2D" parent="Left"]
 visible = false
+modulate = Color(0.5, 0.5, 0.5, 1)
 texture = ExtResource("5_71hvo")

@@ -144,6 +144,7 @@ offset_right = 242.5
 offset_bottom = 312.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 keep_pressed_outside = true
 texture_normal = ExtResource("9_obh41")
 texture_pressed = ExtResource("10_6bo2m")
